@@ -1,36 +1,33 @@
 import React, { Component } from "react";
+import "./style.scss";
 
 export default class index extends Component {
 	render() {
 		return (
-			<div>
-				<nav className="navbar navbar-expand-lg navbar-light bg-light">
-					<div className="collapse navbar-collapse" id="navbarNavDropdown">
-						<ul className="navbar-nav">
-							<li className="nav-item active">
-								<a className="nav-link" href="/">
-									Home <span className="sr-only">(current)</span>
-								</a>
-							</li>
-							<li className="nav-item">
-								<a className="nav-link" href="/about">
-									About
-								</a>
-							</li>
-							<li className="nav-item">
-								<a className="nav-link" href="/products">
-									Products
-								</a>
-							</li>
-							<li className="nav-item">
-								<a className="nav-link" href="/contact">
-									Contact
-								</a>
-							</li>
-						</ul>
-					</div>
-				</nav>
-			</div>
+			<nav className="nav-bar-container">
+				<ul className="menu">
+					<li className="nav-link nav-link__home">
+						<a className="links-home" href="/">
+							Home
+						</a>
+					</li>
+					<li className="nav-link nav-link__about">
+						<a className="links-home" href="/about">
+							About
+						</a>
+					</li>
+					<li className="nav-link nav-link__products">
+						<a className="links-home" href="/products">
+							Create my product
+						</a>
+					</li>
+					<li className="nav-link nav-link__contact">
+						<a className="links-home" href="/contact">
+							Contact
+						</a>
+					</li>
+				</ul>
+			</nav>
 		);
 	}
 }

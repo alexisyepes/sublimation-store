@@ -1,0 +1,44 @@
+@import "../../SCSS/variables.scss";
+@import "../../SCSS/animations.scss";
+@import "../../SCSS/mixins.scss";
+@import "../../SCSS/typography.scss";
+
+.menu {
+	margin: 0px;
+	background-color: $color-primary-dark;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	padding: 25px 15px;
+	list-style: none;
+	text-decoration: none;
+	color: white !important;
+
+	&li {
+		padding: 35px 15px;
+	}
+}
+
+.nav-link {
+	color: white;
+	font-size: 26px;
+	text-decoration: none;
+
+	&__home {
+		order: 0;
+	}
+	&__contact {
+		order: 1;
+	}
+	&__about {
+		order: 2;
+	}
+	&__products {
+		order: 3;
+	}
+}
+
+.links-home {
+	text-decoration: none;
+	color: white;
+}

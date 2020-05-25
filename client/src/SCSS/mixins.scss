@@ -1,0 +1,26 @@
+@mixin absCenter {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+@mixin margin-top-small {
+	margin-top: 10px;
+}
+
+@mixin margin-top-medium {
+	margin-top: 20px;
+}
+@mixin margin-top-big {
+	margin-top: 30px;
+}
+@mixin margin-top-huge {
+	margin-top: 40px;
+}
+
+@mixin button {
+	padding: 10px 20px;
+	border-radius: 10px;
+	font-size: 22px;
+}
