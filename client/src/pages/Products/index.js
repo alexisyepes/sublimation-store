@@ -375,12 +375,22 @@ export default class index extends Component {
 														{this.state.textOnMugs}
 													</h3>
 												</div>
-												<button onClick={this.increaseCounter}>
-													Move text Down
-												</button>
-												<button onClick={this.decreaseCounter}>
-													Move text Up
-												</button>
+												{this.state.textOnMugs ? (
+													<div className="move-text-btns tex-center">
+														<button
+															className="move-text-btns__down"
+															onClick={this.increaseCounter}
+														>
+															Move text Down
+														</button>
+														<button
+															className=" move-text-btns__up"
+															onClick={this.decreaseCounter}
+														>
+															Move text Up
+														</button>
+													</div>
+												) : null}
 												{this.state.bg.length > 0 ? (
 													<div className="bg-container-mugs text-center">
 														<img

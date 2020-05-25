@@ -186,7 +186,7 @@
 					height: 350px;
 					position: absolute;
 					top: 10%;
-					right: 43%;
+					right: 28%;
 					z-index: 2;
 
 					&__container {
@@ -200,9 +200,9 @@
 					.bg-image-mug {
 						position: absolute;
 						top: 5%;
-						left: 23%;
+						right: 26%;
 						width: 35%;
-						height: 90%;
+						height: 80%;
 						clip-path: polygon(
 							0 94%,
 							0 9%,
@@ -217,6 +217,19 @@
 							43% 100%,
 							19% 98%
 						);
+					}
+				}
+
+				.move-text-btns {
+					display: flex;
+
+					&__up {
+						width: 50%;
+						text-align: center;
+					}
+
+					&__down {
+						width: 50%;
 					}
 				}
 			}
