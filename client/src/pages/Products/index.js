@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import Select from "react-select";
+import html2canvas from "html2canvas";
+import Modal from "react-modal";
 import "./style.scss";
 
 let optionsBackgrounds = [
@@ -37,6 +39,53 @@ let optionsBackgrounds = [
 	},
 ];
 
+let optionsColor = [
+	{
+		value: "black",
+		label: "Black",
+	},
+	{
+		value: "white",
+		label: "White",
+	},
+	{
+		value: "blue",
+		label: "Blue",
+	},
+	{
+		value: "green",
+		label: "Green",
+	},
+	{
+		value: "yellow",
+		label: "Yellow",
+	},
+	{
+		value: "red",
+		label: "Red",
+	},
+	{
+		value: "purple",
+		label: "Purple",
+	},
+	{
+		value: "orange",
+		label: "Orange",
+	},
+];
+
+const customStyles = {
+	content: {
+		top: "50%",
+		left: "50%",
+		right: "auto",
+		bottom: "auto",
+		marginRight: "-50%",
+		transform: "translate(-50%, -50%)",
+	},
+	overlay: { zIndex: 1000 },
+};
+
 export default class index extends Component {
 	constructor(props) {
 		super(props);
@@ -69,14 +118,26 @@ export default class index extends Component {
 			bg: "",
 			textOnMugs: "",
 			counter: 50,
+			screenshot: "",
+			modalToConfirm: false,
 
 			// css
-			marginTop: "",
-			marginDown: "",
-			counterCss: 0,
-			// counterLessCss: 0,
+			marginTop: "10px",
+			marginDown: null,
+			marginRight: -10,
+			marginLeft: null,
+			counterCss: null,
+			counterCssSides: null,
+			counterFontSize: 35,
+			fontSize: null,
 		};
 	}
+
+	toggleModalToConfirmOrder = () => {
+		this.setState({
+			modalToConfirm: !this.state.modalToConfirm,
+		});
+	};
 
 	handleToggleStep1 = () => {
 		this.setState({
@@ -186,7 +247,12 @@ export default class index extends Component {
 		await this.setState({
 			bg: value.value,
 		});
-		console.log(this.state.bg);
+	};
+
+	onSelectedChangeColor = async (value) => {
+		await this.setState({
+			color: value.value,
+		});
 	};
 
 	onChangeHandler = (e) => {
@@ -209,15 +275,52 @@ export default class index extends Component {
 		this.moveDownText();
 	};
 
+	increaseCounterSides = async () => {
+		await this.setState({
+			counterCssSides: this.state.counterCssSides + 10,
+			marginRight: this.state.counterCssSides + "px",
+		});
+	};
+
+	decreaseCounterSides = async () => {
+		let counter = this.state.counterCssSides;
+
+		await this.setState({
+			counterCssSides: this.state.counterCssSides - 10,
+			marginRight: counter + "px",
+		});
+	};
+
 	moveDownText = async () => {
 		await this.setState({
 			marginTop: this.state.counterCss + "px",
 		});
 	};
 
-	moveUpText = async () => {
+	increaseFont = async () => {
 		await this.setState({
-			marginDown: this.state.counterLessCss + "px",
+			counterFontSize: this.state.counterFontSize + 2,
+			fontSize: this.state.counterFontSize + "px",
+		});
+	};
+
+	decreaseFont = async () => {
+		await this.setState({
+			counterFontSize: this.state.counterFontSize - 2,
+			fontSize: this.state.counterFontSize + "px",
+		});
+	};
+
+	screenshot = async () => {
+		this.toggleModalToConfirmOrder();
+		await html2canvas(document.body).then((canvas) => {
+			const imgData = canvas.toDataURL("image/png");
+
+			console.log(imgData);
+			this.setState({
+				screenshot: imgData,
+			});
+			// document.body.appendChild(canvas);
 		});
 	};
 
@@ -266,40 +369,11 @@ export default class index extends Component {
 							STEP 2
 						</button>
 						{this.state.toggleStep2 ? (
-							<div className="text-center">
-								<hr />
-								<h2 className="heading-product heading-product__upload">
-									&darr; UPLOAD YOUR PHOTO &darr;
-								</h2>
-								<hr />
-								<input
-									className="input-img"
-									type="file"
-									onChange={this._handleImageChange}
-								/>
-								<hr />
-								<h2 className="heading-product heading-product__bg">
-									&darr; CHOOSE BACKGROUND (Optional) &darr;
-								</h2>
-								<Select
-									options={optionsBackgrounds}
-									onChange={this.onSelectedChange}
-								/>
-								<hr />
-								<h2 className="heading-product heading-product__message">
-									&darr; ADD A MESSAGE &darr;{" "}
-									{50 - this.state.textOnMugs.length + " letters left"}
-								</h2>
-								<textarea
-									maxLength="50"
-									className="text-msg-input"
-									placeholder="Add your message here"
-									name="textOnMugs"
-									onChange={this.onChangeHandler}
-									type="text"
-								/>
-							</div>
+							<h1 className="text-center arrowToRight">
+								Build your product &#x21f6;
+							</h1>
 						) : null}
+
 						<div>
 							<button
 								onClick={this.handleToggleStep3}
@@ -324,19 +398,13 @@ export default class index extends Component {
 										&#10003; Confirm product and continue to step 2
 									</button>
 								) : (
-									<div>
+									<div className="startover-btn-container">
 										<button
 											onClick={this.updateComponent}
 											className="startOver-button"
 										>
 											&#8634; Click here to reset and start Over
 										</button>
-										{this.state.imagePreviewUrl.length > 0 ||
-										this.state.textOnMugs !== "" ? (
-											<button className="continue-button">
-												Click here to Continue &#10003;
-											</button>
-										) : null}
 									</div>
 								)}
 								{this.state.productImgArray[0].mug1.length > 0 ? (
@@ -348,6 +416,7 @@ export default class index extends Component {
 													src={this.state.productImg}
 													alt="product"
 												/>
+
 												{this.state.imagePreviewUrl.length > 0 ? (
 													<img
 														className="product-img-preview-mug"
@@ -369,6 +438,10 @@ export default class index extends Component {
 														style={{
 															marginTop: this.state.marginTop,
 															marginDown: this.state.marginDown,
+															marginRight: this.state.marginRight,
+															marginLeft: this.state.marginLeft,
+															fontSize: this.state.fontSize,
+															color: this.state.color,
 														}}
 														className="text-on-mugs__container text-center"
 													>
@@ -376,18 +449,52 @@ export default class index extends Component {
 													</h3>
 												</div>
 												{this.state.textOnMugs ? (
-													<div className="move-text-btns tex-center">
+													<div className="move-text-btns-container text-center">
+														<h2 className="move-text-btns__font-title">
+															&#x21e1; TEXT OPTIONS &#x21e1;
+														</h2>
+														<Select
+															menuPlacement="top"
+															placeholder="Text color"
+															className="move-text-btns move-text-btns__font-color"
+															onChange={this.onSelectedChangeColor}
+															options={optionsColor}
+														/>
 														<button
-															className="move-text-btns__down"
-															onClick={this.increaseCounter}
-														>
-															Move text Down
-														</button>
-														<button
-															className=" move-text-btns__up"
+															className="move-text-btns move-text-btns__up"
 															onClick={this.decreaseCounter}
 														>
-															Move text Up
+															Move text Up &#x21e7;
+														</button>
+														<button
+															className="move-text-btns move-text-btns__down"
+															onClick={this.increaseCounter}
+														>
+															Move text Down &#x21e9;
+														</button>
+														<button
+															className="move-text-btns move-text-btns__left"
+															onClick={this.increaseCounterSides}
+														>
+															Move text Left &#x21e6;
+														</button>
+														<button
+															className="move-text-btns move-text-btns__right"
+															onClick={this.decreaseCounterSides}
+														>
+															Move text Right &#x21e8;
+														</button>
+														<button
+															className="move-text-btns move-text-btns__increase-font"
+															onClick={this.increaseFont}
+														>
+															Increase Font
+														</button>
+														<button
+															className="move-text-btns move-text-btns__decrease-font"
+															onClick={this.decreaseFont}
+														>
+															Decrease Font
 														</button>
 													</div>
 												) : null}
@@ -402,6 +509,74 @@ export default class index extends Component {
 												) : null}
 											</div>
 										</div>
+									</div>
+								) : null}
+							</div>
+						) : null}
+						{this.state.toggleStep2 ? (
+							<div className="text-center step-2-container">
+								<h2
+									onClick={() => {
+										this.fileInput.click();
+									}}
+									className="heading-product heading-product__upload text-center"
+								>
+									&#x2912; CLICK TO UPLOAD PHOTO
+								</h2>
+								<Select
+									className="background-select"
+									menuPlacement="top"
+									placeholder="Choose background (optional)"
+									options={optionsBackgrounds}
+									onChange={this.onSelectedChange}
+								/>
+								<input
+									ref={(fileInput) => (this.fileInput = fileInput)}
+									className="input-img"
+									type="file"
+									onChange={this._handleImageChange}
+									style={{ display: "none" }}
+								/>
+								<h2 className="heading-product heading-product__message">
+									&darr; ADD A MESSAGE &darr;{" "}
+									{50 - this.state.textOnMugs.length + " letters left"}
+								</h2>
+								<div className="text-area-container">
+									<textarea
+										maxLength="50"
+										className="text-msg-input "
+										placeholder="Type your message here"
+										name="textOnMugs"
+										onChange={this.onChangeHandler}
+										type="text"
+									/>
+								</div>
+								{this.state.imagePreviewUrl.length > 0 ||
+								this.state.textOnMugs !== "" ? (
+									<div className="continue-button-container">
+										<button
+											onClick={this.screenshot}
+											className="continue-button"
+										>
+											Click here if you're done &#10003;
+										</button>
+
+										<Modal
+											style={customStyles}
+											isOpen={this.state.modalToConfirm}
+											onRequestClose={this.toggleModalToConfirmOrder}
+										>
+											<h2 className="text-center">
+												{" "}
+												Please confirm your order
+											</h2>
+											<img
+												width="1000px"
+												className="screenshot-img"
+												src={this.state.screenshot}
+												alt="scrsht"
+											/>
+										</Modal>
 									</div>
 								) : null}
 							</div>

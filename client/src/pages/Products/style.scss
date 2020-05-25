@@ -24,14 +24,25 @@
 .steps-container {
 	display: flex;
 	flex-direction: column;
+
+	.arrowToRight {
+		transition: all 0.1s;
+		animation: arrowRight ease-in-out 2s infinite;
+	}
+}
+
+.startover-btn-container {
+	text-align: right;
 }
 
 .startOver-button {
 	@include button;
 	margin-bottom: 20px;
+	top: -50px;
+	position: relative;
 	background-color: rgb(160, 11, 11);
 	color: rgb(255, 255, 255);
-	width: 40%;
+	width: 30%;
 	box-shadow: 0px 10px 30px black;
 	cursor: pointer;
 	transition: all 0.2s;
@@ -46,12 +57,12 @@
 
 .continue-button {
 	@include button;
-	margin-left: 10px;
+	margin-top: 10px;
 	margin-bottom: 20px;
 	background-color: rgb(15, 223, 15);
 	font-weight: 700;
 	color: rgb(0, 0, 0);
-	width: 40%;
+	width: 41.5%;
 	box-shadow: 0px 10px 30px black;
 	cursor: pointer;
 	transition: all 0.2s;
@@ -88,6 +99,65 @@
 	}
 }
 
+.step-2-container {
+	background-color: rgb(39, 37, 37);
+	padding: 20px;
+	margin: 5px;
+	border-radius: 10px;
+
+	.background-select {
+		width: 41.5%;
+	}
+
+	.heading-product {
+		font-size: 20px;
+		padding: 10px;
+		border-radius: 10px;
+
+		&__upload {
+			background-color: rgb(163, 241, 176);
+			cursor: pointer;
+			width: 40%;
+
+			&:hover {
+				background-color: white;
+			}
+		}
+
+		&__bg {
+			background-color: pink;
+		}
+
+		&__message {
+			background-color: rgb(163, 241, 176);
+			width: 40%;
+		}
+	}
+
+	.input-img {
+		margin-top: 40px;
+		font-size: 24px;
+		margin: 0px 10px;
+	}
+
+	.text-msg-input {
+		font-size: 20px;
+		width: 41%;
+	}
+
+	.text-area-container {
+		text-align: left;
+	}
+
+	.continue-button-container {
+		text-align: left;
+
+		.screenshot-img {
+			width: 600px;
+		}
+	}
+}
+
 .confirm-product-button {
 	@include button;
 	margin-bottom: 30px;
@@ -114,14 +184,8 @@
 	}
 }
 
-.input-img {
-	margin-top: 40px;
-	font-size: 24px;
-	margin: 0px 10px;
-}
-
 .virtual-image-container {
-	margin: 20px;
+	margin: 0px 20px;
 	background-color: rgb(195, 207, 207);
 	width: 100%;
 	height: auto;
@@ -143,15 +207,12 @@
 				.product-img {
 					height: auto;
 					width: 50%;
-					// margin-left: auto;
-					// margin-right: auto;
-					// display: inline-block;
 				}
 
 				.product-img-preview-mug {
 					opacity: 80%;
 					width: 35%;
-					height: 90%;
+					height: 85%;
 					position: absolute;
 					top: 5%;
 					left: 26%;
@@ -202,7 +263,7 @@
 						top: 5%;
 						right: 26%;
 						width: 35%;
-						height: 80%;
+						height: 85%;
 						clip-path: polygon(
 							0 94%,
 							0 9%,
@@ -220,16 +281,86 @@
 					}
 				}
 
-				.move-text-btns {
+				.move-text-btns-container {
+					top: 40px;
 					display: flex;
+					position: relative;
+					width: 95%;
 
-					&__up {
-						width: 50%;
-						text-align: center;
-					}
+					.move-text-btns {
+						position: absolute;
+						font-size: 25px;
+						padding: 5px 0px;
+						border-radius: 10px;
+						background-color: $color-primary-dark;
+						color: white;
+						cursor: pointer;
+						margin-top: 20px;
+						transition: all 0.1s;
 
-					&__down {
-						width: 50%;
+						&:hover {
+							background-color: #fff;
+							transform: scale(1.1);
+							color: black;
+						}
+
+						&__up {
+							width: 48%;
+							left: 0;
+							top: 60px;
+						}
+
+						&__down {
+							width: 48%;
+							right: 0;
+							top: 60px;
+						}
+
+						&__right {
+							width: 48%;
+							right: 0;
+							top: 120px;
+						}
+
+						&__left {
+							width: 48%;
+							top: 120px;
+						}
+
+						&__increase-font {
+							width: 48%;
+							top: 180px;
+							background-color: rgb(109, 71, 71);
+						}
+
+						&__decrease-font {
+							width: 48%;
+							top: 180px;
+							right: 0;
+							background-color: rgb(109, 71, 71);
+						}
+
+						&__font-color {
+							z-index: 4;
+							width: 100%;
+							background-color: rgb(22, 155, 243);
+						}
+
+						&__font-title {
+							top: 260px;
+							width: 100%;
+							animation: color-bg ease-in-out 2s infinite;
+							background-color: rgb(22, 155, 243);
+
+							position: absolute;
+							font-size: 25px;
+							padding: 5px 0px;
+							border-radius: 10px;
+							background-color: $color-primary-dark;
+							color: white;
+							margin-top: 20px;
+							transition: all 0.1s;
+						}
 					}
 				}
 			}
@@ -249,28 +380,6 @@
 	border-radius: 10px;
 	box-shadow: 0px 10px 20px black;
 	background-color: rgb(45, 201, 201);
-}
-
-.heading-product {
-	font-size: 20px;
-	padding: 10px;
-
-	&__upload {
-		background-color: rgb(248, 167, 248);
-	}
-
-	&__bg {
-		background-color: pink;
-	}
-
-	&__message {
-		background-color: rgb(145, 197, 145);
-	}
-}
-
-.text-msg-input {
-	font-size: 20px;
-	width: 80%;
 }
 
 .bg-image-mug {

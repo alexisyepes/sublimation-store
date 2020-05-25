@@ -1,0 +1,19 @@
+@keyframes color-bg {
+	0% {
+		background-color: rgb(35, 59, 110);
+	}
+
+	100% {
+		background-color: rgb(128, 240, 206);
+	}
+}
+
+@keyframes arrowRight {
+	0% {
+		transform: translateX(-40px);
+	}
+
+	100% {
+		transform: translateX(20px);
+	}
+}
