@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import Select from "react-select";
 import html2canvas from "html2canvas";
 import Modal from "react-modal";
+import StripeCheckout from "react-stripe-checkout";
+// import { loadStripe } from "@stripe/stripe-js";
+import axios from "axios";
 import "./style.scss";
 
 let optionsBackgrounds = [
@@ -82,6 +85,9 @@ const customStyles = {
 		bottom: "auto",
 		marginRight: "-50%",
 		transform: "translate(-50%, -50%)",
+		backgroundColor: "black",
+		color: "white",
+		borderRadius: "5px",
 	},
 	overlay: { zIndex: 1000 },
 };
@@ -120,6 +126,11 @@ export default class index extends Component {
 			counter: 50,
 			screenshot: "",
 			modalToConfirm: false,
+			modalToCheckout: false,
+			notChecked: true,
+			errorMsg: "",
+			textFormatOptions: false,
+			mugPrice: 0,
 
 			// css
 			marginTop: "10px",
@@ -133,9 +144,26 @@ export default class index extends Component {
 		};
 	}
 
+	componentWillMount() {
+		Modal.setAppElement("body");
+	}
+
 	toggleModalToConfirmOrder = () => {
 		this.setState({
-			modalToConfirm: !this.state.modalToConfirm,
+			modalToConfirm: true,
+		});
+	};
+
+	modalToCheckoutOpen = () => {
+		this.setState({
+			modalToConfirm: true,
+		});
+	};
+
+	closeModal = () => {
+		this.setState({
+			modalToConfirm: false,
+			modalToCheckout: false,
 		});
 	};
 
@@ -161,6 +189,7 @@ export default class index extends Component {
 		this.setState({
 			productImg: this.state.productImgArray[0].mug1,
 			productImgBack: this.state.productImgArray[0].mug2,
+			mugPrice: 12.0,
 		});
 	};
 
@@ -213,14 +242,16 @@ export default class index extends Component {
 		let reader = new FileReader();
 		let file = e.target.files[0];
 
+		if (file && file.type.match("image.*")) {
+			reader.readAsDataURL(file);
+		}
+
 		reader.onloadend = () => {
 			this.setState({
 				file: file,
 				imagePreviewUrl: reader.result,
 			});
 		};
-
-		reader.readAsDataURL(file);
 	};
 
 	updateComponent = () => {
@@ -240,6 +271,7 @@ export default class index extends Component {
 			imagePreviewUrl: "",
 			bg: "",
 			textOnMugs: "",
+			notChecked: true,
 		});
 	};
 
@@ -258,6 +290,7 @@ export default class index extends Component {
 	onChangeHandler = (e) => {
 		this.setState({
 			[e.target.name]: e.target.value,
+			textFormatOptions: true,
 		});
 	};
 
@@ -312,16 +345,46 @@ export default class index extends Component {
 	};
 
 	screenshot = async () => {
+		if (this.state.notChecked === true) {
+			return this.setState({
+				errorMsg: "Check box before continuing",
+			});
+		}
 		this.toggleModalToConfirmOrder();
 		await html2canvas(document.body).then((canvas) => {
 			const imgData = canvas.toDataURL("image/png");
-
-			console.log(imgData);
 			this.setState({
 				screenshot: imgData,
+				toggleStep3: true,
+				toggleStep2: false,
+				textFormatOptions: false,
 			});
-			// document.body.appendChild(canvas);
 		});
+	};
+
+	toggleChangeTermsAndConditions = () => {
+		if (this.state.notChecked) {
+			this.setState({
+				errorMsg: "",
+			});
+		}
+		this.setState({
+			notChecked: !this.state.notChecked,
+		});
+	};
+
+	handleToken = async (token, addresses) => {
+		const response = await axios.post("/products/payment", {
+			token,
+			// product,
+		});
+		const { requiresAction, clientSecret, error } = response.data;
+		if (error) {
+			return console.log(error);
+		}
+		if (response.data.status === "success") {
+		}
+		console.log(response);
 	};
 
 	render() {
@@ -330,7 +393,7 @@ export default class index extends Component {
 				<h1 className="home__heading text-center">
 					Create your product in 3 easy steps
 				</h1>
-				<div className="steps-parent">
+				<div id="product-screen-container" className="steps-parent">
 					<div className="steps-container">
 						<button
 							onClick={this.handleToggleStep1}
@@ -383,7 +446,43 @@ export default class index extends Component {
 							>
 								STEP 3
 							</button>
-							{this.state.toggleStep3 ? <h3>Add to cart</h3> : null}
+							{this.state.toggleStep3 ? (
+								<div className="order-summary text-center">
+									<p>Price: ${this.state.mugPrice}</p>
+									<p>Tax: ${0.13 * this.state.mugPrice}</p>
+									<hr />
+									<p>
+										Total: ${0.13 * this.state.mugPrice + this.state.mugPrice}
+									</p>
+									<div className="btns-checkout">
+										{/* <button className="btns-checkout btns-checkout__cart">
+											<span aria-label="0" role="img">
+												&#x2719;
+											</span>{" "}
+											Create more products
+										</button> */}
+
+										<StripeCheckout
+											stripeKey="pk_test_5Oyk1YnGn6dPTwNAJ5KhOIcN00lcwk3Oqk" //change to Live key
+											token={this.handleToken}
+											// billingAddress
+											description={`Total: $${
+												0.13 * this.state.mugPrice + this.state.mugPrice
+											}`}
+											// image="/Images/supergold-medal.png"
+											amount={113 * this.state.mugPrice}
+											// name={product.name}
+										>
+											<button className="btns-checkout btns-checkout__checkout">
+												Checkout now {""}
+												<span aria-label="0" role="img">
+													&#128722;
+												</span>
+											</button>
+										</StripeCheckout>
+									</div>
+								</div>
+							) : null}
 						</div>
 					</div>
 					<div className="virtual-image-container">
@@ -448,7 +547,8 @@ export default class index extends Component {
 														{this.state.textOnMugs}
 													</h3>
 												</div>
-												{this.state.textOnMugs ? (
+												{this.state.textOnMugs &&
+												this.state.textFormatOptions ? (
 													<div className="move-text-btns-container text-center">
 														<h2 className="move-text-btns__font-title">
 															&#x21e1; TEXT OPTIONS &#x21e1;
@@ -512,7 +612,11 @@ export default class index extends Component {
 									</div>
 								) : null}
 							</div>
-						) : null}
+						) : (
+							<div className="arrowToLeft">
+								<h1 className="text-center">&#x21da; Begin with step 1</h1>
+							</div>
+						)}
 						{this.state.toggleStep2 ? (
 							<div className="text-center step-2-container">
 								<h2
@@ -554,33 +658,39 @@ export default class index extends Component {
 								{this.state.imagePreviewUrl.length > 0 ||
 								this.state.textOnMugs !== "" ? (
 									<div className="continue-button-container">
+										<p className="agree-with-order">
+											<input
+												className="checkbox-order"
+												onChange={this.toggleChangeTermsAndConditions}
+												type="checkbox"
+												name="checkbox"
+												value={this.state.notChecked}
+											/>
+											<b> I confirm my order is accurate</b>
+										</p>
+										<p className="error-msg-confirm-product color-yellow">
+											{this.state.errorMsg}
+										</p>
 										<button
 											onClick={this.screenshot}
 											className="continue-button"
 										>
 											Click here if you're done &#10003;
 										</button>
-
-										<Modal
-											style={customStyles}
-											isOpen={this.state.modalToConfirm}
-											onRequestClose={this.toggleModalToConfirmOrder}
-										>
-											<h2 className="text-center">
-												{" "}
-												Please confirm your order
-											</h2>
-											<img
-												width="1000px"
-												className="screenshot-img"
-												src={this.state.screenshot}
-												alt="scrsht"
-											/>
-										</Modal>
 									</div>
 								) : null}
 							</div>
 						) : null}
+						<Modal
+							style={customStyles}
+							isOpen={this.state.modalToConfirm}
+							onRequestClose={this.closeModal}
+						>
+							<span onClick={this.closeModal}>X</span>
+							<h2 className="text-center">
+								Your product has been created! You can procceed to step 3
+							</h2>
+						</Modal>
 					</div>
 				</div>
 			</div>

@@ -9,11 +9,12 @@
 }
 
 .home__heading {
-	font-size: 40px;
+	margin-top: 0;
+	font-size: 35px;
 	font-weight: 900;
 	background-color: rgb(243, 114, 9);
 	color: white;
-	padding: 10px;
+	padding: 5px;
 	text-shadow: 2px 2px black;
 }
 
@@ -29,6 +30,16 @@
 		transition: all 0.1s;
 		animation: arrowRight ease-in-out 2s infinite;
 	}
+}
+
+.arrowToLeft {
+	transition: all 0.1s;
+	animation: arrowRight ease-in-out 2s infinite;
+	font-size: 30px;
+	width: 100%;
+	margin: 15px;
+	color: rgb(58, 45, 21);
+	text-shadow: 2px 2px white;
 }
 
 .startover-btn-container {
@@ -55,27 +66,6 @@
 	}
 }
 
-.continue-button {
-	@include button;
-	margin-top: 10px;
-	margin-bottom: 20px;
-	background-color: rgb(15, 223, 15);
-	font-weight: 700;
-	color: rgb(0, 0, 0);
-	width: 41.5%;
-	box-shadow: 0px 10px 30px black;
-	cursor: pointer;
-	transition: all 0.2s;
-	backface-visibility: hidden;
-
-	&:hover {
-		background-color: rgb(115, 197, 90);
-		color: black;
-		box-shadow: 0px 20px 60px black;
-		transform: scale(1.1);
-	}
-}
-
 .step-btn {
 	outline: 0;
 	border: none;
@@ -96,6 +86,43 @@
 	}
 	&__3 {
 		background-color: rgb(149, 165, 149);
+	}
+}
+
+.order-summary {
+	font-weight: 700;
+	background-color: rgb(199, 218, 166);
+	font-size: 22px;
+	text-align: right;
+	padding: 10px;
+	margin: 10px;
+
+	.btns-checkout {
+		padding: 5px 20px;
+		font-size: 18px;
+		border-radius: 10px;
+		margin: 5px;
+		font-weight: 700;
+		cursor: pointer;
+		transition: all 0.2s;
+
+		&__cart {
+			background-color: rgb(255, 154, 21);
+			color: white;
+			width: 100%;
+			&:hover {
+				transform: scale(1.1);
+			}
+		}
+
+		&__checkout {
+			background-color: rgb(109, 250, 15);
+			width: 100%;
+			color: rgb(73, 67, 67);
+			&:hover {
+				transform: scale(1.1);
+			}
+		}
 	}
 }
 
@@ -151,6 +178,42 @@
 
 	.continue-button-container {
 		text-align: left;
+
+		.agree-with-order {
+			color: white;
+			font-size: 22px;
+			.checkbox-order {
+				transform: scale(2);
+				margin-right: 15px;
+				margin-left: 10px;
+			}
+		}
+
+		.error-msg-confirm-product {
+			font-size: 24px;
+			margin-left: 5%;
+		}
+
+		.continue-button {
+			@include button;
+			margin-top: 10px;
+			margin-bottom: 20px;
+			background-color: rgb(15, 223, 15);
+			font-weight: 700;
+			color: rgb(0, 0, 0);
+			width: 41.5%;
+			box-shadow: 0px 10px 30px black;
+			cursor: pointer;
+			transition: all 0.2s;
+			backface-visibility: hidden;
+
+			&:hover {
+				background-color: rgb(115, 197, 90);
+				color: black;
+				box-shadow: 0px 20px 60px black;
+				transform: scale(1.1);
+			}
+		}
 
 		.screenshot-img {
 			width: 600px;

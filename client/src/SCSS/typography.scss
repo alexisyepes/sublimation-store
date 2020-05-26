@@ -3,7 +3,7 @@
 }
 
 .font-medium {
-	font-size: 22;
+	font-size: 22 !important;
 }
 
 .font-big {
@@ -12,4 +12,12 @@
 
 .font-huge {
 	font-size: 35;
+}
+
+.color-white {
+	color: white;
+}
+
+.color-yellow {
+	color: rgb(255, 230, 5);
 }

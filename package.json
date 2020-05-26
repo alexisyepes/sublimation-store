@@ -30,6 +30,7 @@
 		"nodemailer": "^6.4.6",
 		"nodemailer-mailgun-transport": "^2.0.0",
 		"react-router-dom": "^5.2.0",
-		"stripe": "^8.53.0"
+		"stripe": "^8.55.0",
+		"uuid": "^8.1.0"
 	}
 }
