@@ -2,9 +2,8 @@ import React, { Component } from "react";
 import Select from "react-select";
 import html2canvas from "html2canvas";
 import Modal from "react-modal";
-import StripeCheckout from "react-stripe-checkout";
-// import { loadStripe } from "@stripe/stripe-js";
-import axios from "axios";
+// import axios from "axios";
+import CheckoutStripe from "../../components/StripeForm";
 import "./style.scss";
 
 let optionsBackgrounds = [
@@ -77,6 +76,23 @@ let optionsColor = [
 	},
 ];
 
+const customStylesCheckout = {
+	content: {
+		top: "50%",
+		left: "50%",
+		right: "auto",
+		bottom: "auto",
+		marginRight: "-50%",
+		transform: "translate(-50%, -50%)",
+		backgroundColor: "white",
+		color: "black",
+		borderRadius: "5px",
+		width: "600px",
+		overflow: "visible",
+	},
+	overlay: { zIndex: 1000 },
+};
+
 const customStyles = {
 	content: {
 		top: "50%",
@@ -91,6 +107,27 @@ const customStyles = {
 	},
 	overlay: { zIndex: 1000 },
 };
+
+const product = [
+	{
+		Mug: {
+			name: "mug",
+			price: 1200,
+		},
+		PetTag: {
+			name: "petTag",
+			price: 2000,
+		},
+		Shirt: {
+			name: "shirt",
+			price: 1400,
+		},
+		Pillow: {
+			name: "pillow",
+			price: 1600,
+		},
+	},
+];
 
 export default class index extends Component {
 	constructor(props) {
@@ -131,6 +168,11 @@ export default class index extends Component {
 			errorMsg: "",
 			textFormatOptions: false,
 			mugPrice: 0,
+			productToPay: [],
+			cart: 0,
+			firstName: "",
+			email: "",
+			billingDetails: false,
 
 			// css
 			marginTop: "10px",
@@ -156,13 +198,18 @@ export default class index extends Component {
 
 	modalToCheckoutOpen = () => {
 		this.setState({
-			modalToConfirm: true,
+			modalToCheckout: true,
 		});
 	};
 
 	closeModal = () => {
 		this.setState({
 			modalToConfirm: false,
+		});
+	};
+
+	closeModalCheckout = () => {
+		this.setState({
 			modalToCheckout: false,
 		});
 	};
@@ -255,6 +302,35 @@ export default class index extends Component {
 	};
 
 	updateComponent = () => {
+		if (
+			window.confirm(
+				`Are you sure you wish to empty your cart? This operation cannot be reversed!`
+			)
+		) {
+			this.setState({
+				btnStep1: true,
+				btnStep2: false,
+				btnStep3: false,
+				toggleStep1: false,
+				toggleStep2: false,
+				toggleStep3: false,
+				toggleSelectProductBtn: true,
+				step1: false,
+				step2: false,
+				step3: false,
+				productImg: "",
+				productImgBack: "",
+				imagePreviewUrl: "",
+				bg: "",
+				textOnMugs: "",
+				notChecked: true,
+				cart: [],
+				productToPay: [],
+			});
+		}
+	};
+
+	resetForNewProduct = () => {
 		this.setState({
 			btnStep1: true,
 			btnStep2: false,
@@ -351,15 +427,30 @@ export default class index extends Component {
 			});
 		}
 		this.toggleModalToConfirmOrder();
-		await html2canvas(document.body).then((canvas) => {
+		await html2canvas(document.body).then(async (canvas) => {
 			const imgData = canvas.toDataURL("image/png");
-			this.setState({
+			await this.setState({
 				screenshot: imgData,
 				toggleStep3: true,
 				toggleStep2: false,
 				textFormatOptions: false,
+				productToPay: this.state.productToPay.concat(product[0].Mug.price),
+				cart: this.state.cart + 1,
 			});
+			console.log(this.state.productToPay);
 		});
+	};
+
+	goBackToStep2 = async () => {
+		await this.setState({
+			toggleStep3: false,
+			toggleStep2: true,
+			textFormatOptions: true,
+			notChecked: true,
+			cart: this.state.cart - 1,
+			productToPay: this.state.productToPay.slice(0, -1),
+		});
+		console.log(this.state.productToPay);
 	};
 
 	toggleChangeTermsAndConditions = () => {
@@ -373,26 +464,24 @@ export default class index extends Component {
 		});
 	};
 
-	handleToken = async (token, addresses) => {
-		const response = await axios.post("/products/payment", {
-			token,
-			// product,
+	submitBillingDetails = (e) => {
+		e.preventDefault();
+		this.setState({
+			billingDetails: true,
 		});
-		const { requiresAction, clientSecret, error } = response.data;
-		if (error) {
-			return console.log(error);
-		}
-		if (response.data.status === "success") {
-		}
-		console.log(response);
 	};
 
 	render() {
 		return (
 			<div className="product-creation-container">
 				<h1 className="home__heading text-center">
-					Create your product in 3 easy steps
+					Create your product in 3 easy steps{" "}
 				</h1>
+				{this.state.cart > 0 && !this.state.modalToCheckout ? (
+					<div onClick={this.modalToCheckoutOpen} className="cart-container">
+						<span>&#128722; {this.state.cart}</span>
+					</div>
+				) : null}
 				<div id="product-screen-container" className="steps-parent">
 					<div className="steps-container">
 						<button
@@ -448,38 +537,54 @@ export default class index extends Component {
 							</button>
 							{this.state.toggleStep3 ? (
 								<div className="order-summary text-center">
-									<p>Price: ${this.state.mugPrice}</p>
+									<h1 className="text-center arrowToRight arrowDown">
+										&#8659;
+									</h1>
+									<p>Individual Item Price: ${this.state.mugPrice}</p>
 									<p>Tax: ${0.13 * this.state.mugPrice}</p>
 									<hr />
 									<p>
-										Total: ${0.13 * this.state.mugPrice + this.state.mugPrice}
+										Total in Cart: $
+										{this.state.productToPay.reduce((a, b) => a + b) * 0.01 +
+											this.state.productToPay.reduce((a, b) => a + b) *
+												0.01 *
+												0.13}{" "}
+										<span aria-label="0" role="img">
+											&#128722;
+										</span>
+										<button
+											onClick={this.updateComponent}
+											className="empty-cart-button"
+										>
+											<i className="fas fa-trash"></i> Empty cart
+										</button>
 									</p>
 									<div className="btns-checkout">
-										{/* <button className="btns-checkout btns-checkout__cart">
-											<span aria-label="0" role="img">
-												&#x2719;
-											</span>{" "}
-											Create more products
-										</button> */}
-
-										<StripeCheckout
-											stripeKey="pk_test_5Oyk1YnGn6dPTwNAJ5KhOIcN00lcwk3Oqk" //change to Live key
-											token={this.handleToken}
-											// billingAddress
-											description={`Total: $${
-												0.13 * this.state.mugPrice + this.state.mugPrice
-											}`}
-											// image="/Images/supergold-medal.png"
-											amount={113 * this.state.mugPrice}
-											// name={product.name}
+										<button
+											onClick={this.goBackToStep2}
+											className="modify-product-btn"
 										>
-											<button className="btns-checkout btns-checkout__checkout">
-												Checkout now {""}
-												<span aria-label="0" role="img">
-													&#128722;
-												</span>
-											</button>
-										</StripeCheckout>
+											Modify my product {""}
+											<span aria-label="0" role="img">
+												<i className="fas fa-cog"></i>
+											</span>
+										</button>
+
+										<button
+											onClick={this.resetForNewProduct}
+											className="btns-checkout btns-checkout__create-product"
+										>
+											&#x271C; Create more products {""}
+										</button>
+										<button
+											onClick={this.modalToCheckoutOpen}
+											className="btns-checkout btns-checkout__checkout"
+										>
+											Checkout now{" "}
+											<span aria-label="0" role="img">
+												&#128722;
+											</span>
+										</button>
 									</div>
 								</div>
 							) : null}
@@ -494,7 +599,11 @@ export default class index extends Component {
 										onClick={this.productSelectedConfirmed}
 										className="confirm-product-button"
 									>
-										&#10003; Confirm product and continue to step 2
+										<span aria-label="0" role="img">
+											{" "}
+											&#10003;
+										</span>
+										Confirm product and continue to step 2
 									</button>
 								) : (
 									<div className="startover-btn-container">
@@ -502,7 +611,7 @@ export default class index extends Component {
 											onClick={this.updateComponent}
 											className="startOver-button"
 										>
-											&#8634; Click here to reset and start Over
+											&#8634; (Empty cart) Reset and start Over
 										</button>
 									</div>
 								)}
@@ -588,13 +697,13 @@ export default class index extends Component {
 															className="move-text-btns move-text-btns__increase-font"
 															onClick={this.increaseFont}
 														>
-															Increase Font
+															Increase Font &#x2b;
 														</button>
 														<button
 															className="move-text-btns move-text-btns__decrease-font"
 															onClick={this.decreaseFont}
 														>
-															Decrease Font
+															Decrease Font &#x2212;
 														</button>
 													</div>
 												) : null}
@@ -690,6 +799,45 @@ export default class index extends Component {
 							<h2 className="text-center">
 								Your product has been created! You can procceed to step 3
 							</h2>
+						</Modal>
+						<Modal
+							style={customStylesCheckout}
+							isOpen={this.state.modalToCheckout}
+							onRequestClose={this.closeModalCheckout}
+						>
+							<span onClick={this.closeModalCheckout}>X</span>
+							<form onSubmit={this.submitBillingDetails}>
+								<input
+									name="firstName"
+									onChange={this.onChangeHandler}
+									type="text"
+									placeholder="First Name"
+								/>
+								<input
+									name="email"
+									onChange={this.onChangeHandler}
+									type="email"
+									placeholder="Email"
+								/>
+								<button>Next</button>
+							</form>
+
+							{this.state.billingDetails ? (
+								<CheckoutStripe
+									firstName={this.state.firstName}
+									email={this.state.email}
+									productWithCents={
+										this.state.productToPay.reduce((a, b) => a + b) * 0.01 +
+										this.state.productToPay.reduce((a, b) => a + b) *
+											0.01 *
+											0.13
+									}
+									product={
+										this.state.productToPay.reduce((a, b) => a + b) * 0.13 +
+										this.state.productToPay.reduce((a, b) => a + b)
+									}
+								/>
+							) : null}
 						</Modal>
 					</div>
 				</div>

@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const keys = require("../config/keys");
 const dbProduct = require("../models/products");
+const Stripe = require("stripe");
 const stripe = require("stripe")(keys.stripeSecretKey);
 const { v4: uuidv4 } = require("uuid");
 
@@ -27,35 +28,27 @@ router.post("/product", (req, res) => {
 });
 
 router.post("/products/payment", async (req, res) => {
-	console.log("Request:", req.body);
-	let error;
-	let status;
+	const { id, amount } = req.body;
 	try {
-		const { product, token } = req.body;
-		const customer = await stripe.customers.create({
-			email: token.email,
-			source: token.id,
+		const payment = await stripe.paymentIntents.create({
+			amount,
+			currency: "CAD",
+			description: "Mug Sublimation",
+			payment_method: id,
+			confirm: true,
 		});
-		const idempotency_key = uuidv4();
-		const charge = await stripe.charges.create(
-			{
-				amount: product.price,
-				currency: "cad",
-				customer: customer.id,
-				receipt_email: token.email,
-				description: `Purchased the ${product.name}, and subscribed`,
-			},
-			{
-				idempotency_key,
-			}
-		);
-		console.log("Charge:", { charge });
-		status = "success";
+
+		console.log(payment);
+
+		return res.status(200).json({
+			confirm: "Payment successfully submitted! Check your email for details",
+		});
 	} catch (error) {
-		console.error("Error:", error);
-		status = "failure";
+		console.log(error.message);
+		return res.status(400).json({
+			message: error.message,
+		});
 	}
-	res.json({ error, status });
 });
 
 module.exports = router;

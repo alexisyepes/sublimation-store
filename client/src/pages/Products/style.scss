@@ -18,6 +18,26 @@
 	text-shadow: 2px 2px black;
 }
 
+.cart-container {
+	text-align: center;
+	font-size: 30px;
+	position: fixed;
+	width: 100px;
+	top: 5%;
+	right: 2%;
+	background-color: rgb(255, 245, 112);
+	border: 1px solid black;
+	padding: 2px;
+	border-radius: 5px;
+	z-index: 3000;
+	cursor: pointer;
+	transition: all 0.2s;
+
+	&:hover {
+		transform: scale(1.2);
+	}
+}
+
 .steps-parent {
 	display: flex;
 }
@@ -53,7 +73,8 @@
 	position: relative;
 	background-color: rgb(160, 11, 11);
 	color: rgb(255, 255, 255);
-	width: 30%;
+	width: 15%;
+	font-size: 14px;
 	box-shadow: 0px 10px 30px black;
 	cursor: pointer;
 	transition: all 0.2s;
@@ -92,21 +113,65 @@
 .order-summary {
 	font-weight: 700;
 	background-color: rgb(199, 218, 166);
-	font-size: 22px;
+	font-size: 20px;
 	text-align: right;
 	padding: 10px;
 	margin: 10px;
+
+	.arrowDown {
+		margin: 0;
+		color: green;
+	}
+
+	.empty-cart-button {
+		background-color: darkred;
+		color: white;
+		margin-left: 10px;
+		font-size: 16px;
+		padding: 5px;
+		border-radius: 10px;
+		cursor: pointer;
+
+		&:hover {
+			background-color: red;
+		}
+	}
 
 	.btns-checkout {
 		padding: 5px 20px;
 		font-size: 18px;
 		border-radius: 10px;
 		margin: 5px;
+		margin-bottom: 20px;
 		font-weight: 700;
 		cursor: pointer;
 		transition: all 0.2s;
 
+		.modify-product-btn {
+			margin: 5px;
+			background-color: rgb(204, 204, 204);
+			width: 100%;
+			padding: 5px 20px;
+			font-size: 18px;
+			border-radius: 10px;
+			font-weight: 700;
+			cursor: pointer;
+			transition: all 0.2s;
+			&:hover {
+				transform: scale(1.1);
+			}
+		}
+
 		&__cart {
+			background-color: rgb(255, 154, 21);
+			color: white;
+			width: 100%;
+			&:hover {
+				transform: scale(1.1);
+			}
+		}
+
+		&__create-product {
 			background-color: rgb(255, 154, 21);
 			color: white;
 			width: 100%;

@@ -1,0 +1,18 @@
+.btns-checkout-stripe {
+	width: 100%;
+	margin: 10px 0;
+	padding: 5px 0;
+	background-color: rgb(158, 211, 163);
+	font-size: 18px;
+	font-weight: 700;
+	cursor: pointer;
+
+	&:hover {
+		background-color: rgb(199, 245, 204);
+	}
+}
+
+.card-element-wrapper {
+	border: 1px rgb(150, 138, 138) solid;
+	padding: 10px;
+}
