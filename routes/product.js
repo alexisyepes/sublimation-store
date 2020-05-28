@@ -28,6 +28,18 @@ router.post("/product", (req, res) => {
 		});
 });
 
+router.post("/email_to_ayp_sublimation", (req, res) => {
+	const { email, img } = req.body;
+
+	EmailToAYP(email, img, "New Product Sublimation", function (err, data) {
+		if (err) {
+			res.status(500).json({ message: "Internal Error!" });
+		} else {
+			res.json({ message: "Email Sent!" });
+		}
+	});
+});
+
 router.post("/products/payment", async (req, res) => {
 	const { id, amount, email, img } = req.body;
 	try {
@@ -54,13 +66,7 @@ router.post("/products/payment", async (req, res) => {
 					res.json({ message: "Email Sent!" });
 				}
 			});
-			EmailToAYP(email, img, "New Product Sublimation", function (err, data) {
-				if (err) {
-					res.status(500).json({ message: "Internal Error!" });
-				} else {
-					res.json({ message: "Email Sent!" });
-				}
-			});
+
 			return res.status(200).json({
 				confirm: "Payment successfully submitted! Check your email for details",
 			});

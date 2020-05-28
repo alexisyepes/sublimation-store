@@ -10,9 +10,9 @@ const cors = require("cors");
 const productRouter = require("./routes/product");
 
 require("dotenv").config();
+app.use(cors());
 
 app.use(sslRedirect());
-app.use(cors());
 
 // Define middleware here
 app.use(express.urlencoded({ extended: true }));

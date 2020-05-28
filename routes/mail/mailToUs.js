@@ -16,7 +16,7 @@ const transporter = nodemailer.createTransport(mailGun(auth));
 const sendMailToUs = (email, img) => {
 	const mailOptions = {
 		from: "info@aypwebcreations.com",
-		to: "aypsublimation.com",
+		to: "aypsublimation@gmail.com",
 		subject: "New products Sublimation!",
 		text:
 			"More products for sublimation" +

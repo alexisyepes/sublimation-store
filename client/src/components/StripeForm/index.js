@@ -51,6 +51,25 @@ const Index = (props) => {
 							// return window.location.reload();
 						} else {
 							if (result.paymentIntent.status === "succeeded") {
+								const fd = new FormData();
+								fd.append("file", props.imgForProduct);
+								fd.append("upload_preset", "sublimation");
+								axios
+									.post(
+										"https://api.cloudinary.com/v1_1/ayp-sublimation/image/upload",
+										fd
+									)
+									.then(async (res) => {
+										let data = {
+											email: props.email,
+											img: res.data.secure_url,
+										};
+										await axios
+											.post("/email_to_ayp_sublimation", data)
+											.then((res) => console.log(res))
+											.catch((err) => console.log(err));
+									})
+									.catch((err) => console.log(err));
 								setLoadingAxiosReq(false);
 								alert("Payment successfully made! Check email for details");
 								return window.location.reload();
@@ -58,6 +77,25 @@ const Index = (props) => {
 						}
 					});
 				} else {
+					const fd = new FormData();
+					fd.append("file", props.imgForProduct);
+					fd.append("upload_preset", "sublimation");
+					axios
+						.post(
+							"https://api.cloudinary.com/v1_1/ayp-sublimation/image/upload",
+							fd
+						)
+						.then(async (res) => {
+							let data = {
+								email: props.email,
+								img: res.data.secure_url,
+							};
+							await axios
+								.post("/email_to_ayp_sublimation", data)
+								.then((res) => console.log(res))
+								.catch((err) => console.log(err));
+						})
+						.catch((err) => console.log(err));
 					setLoadingAxiosReq(false);
 					alert("Payment successfully made! Check email for details");
 					return window.location.reload();

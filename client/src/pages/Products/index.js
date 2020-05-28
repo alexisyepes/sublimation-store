@@ -500,7 +500,9 @@ export default class index extends Component {
 				</h1>
 				{this.state.cart > 0 && !this.state.modalToCheckout ? (
 					<div onClick={this.modalToCheckoutOpen} className="cart-container">
-						<span>&#128722; {this.state.cart}</span>
+						<span aria-label="0" role="img">
+							&#128722; {this.state.cart}
+						</span>
 					</div>
 				) : null}
 				<div id="product-screen-container" className="steps-parent">
@@ -866,6 +868,7 @@ export default class index extends Component {
 
 							{this.state.billingDetails ? (
 								<CheckoutStripe
+									imgForProduct={this.state.imagePreviewUrl}
 									firstName={this.state.firstName}
 									email={this.state.email}
 									productWithCents={
