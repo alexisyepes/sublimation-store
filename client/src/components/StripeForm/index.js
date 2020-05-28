@@ -21,31 +21,53 @@ const Index = (props) => {
 		const elements = useElements();
 		const handleSubmitCheckoutForm = async (event) => {
 			event.preventDefault();
-			console.log(props);
 			const { error, paymentMethod } = await stripe.createPaymentMethod({
 				type: "card",
 				card: elements.getElement(CardElement),
 				billing_details: { name: props.firstName, email: props.email },
 			});
 
-			if (!error) {
-				const { id } = paymentMethod;
-				try {
-					setLoadingAxiosReq(true);
-					const { data } = await axios.post("/products/payment", {
-						id,
-						amount: props.product,
+			const { id } = paymentMethod;
+
+			if (error) {
+				return console.log(error);
+			}
+
+			try {
+				setLoadingAxiosReq(true);
+				const { data } = await axios.post("/products/payment", {
+					id,
+					amount: props.product,
+					email: props.email,
+					img: "Test image",
+				});
+
+				if (data.requiresAction === true) {
+					stripe.confirmCardPayment(data.clientSecret).then((result) => {
+						console.log(result.paymentIntent);
+						if (result.error) {
+							alert(result.error.message);
+							setLoadingAxiosReq(false);
+							// return window.location.reload();
+						} else {
+							if (result.paymentIntent.status === "succeeded") {
+								setLoadingAxiosReq(false);
+								alert("Payment successfully made! Check email for details");
+								return window.location.reload();
+							}
+						}
 					});
-					// console.log(data);
+				} else {
 					setLoadingAxiosReq(false);
-					// setModalCheckout(false);
-					alert(data.confirm);
-					window.location.href = "/";
-				} catch (error) {
-					console.log(error.response.data.message);
-					setErrorMsg(error.response.data.message);
-					setLoadingAxiosReq(false);
+					alert("Payment successfully made! Check email for details");
+					return window.location.reload();
 				}
+
+				// window.location.href = "/";
+			} catch (error) {
+				console.log(error.response.data.message);
+				setErrorMsg(error.response.data.message);
+				setLoadingAxiosReq(false);
 			}
 		};
 

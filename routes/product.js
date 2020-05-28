@@ -2,9 +2,10 @@ const express = require("express");
 const router = express.Router();
 const keys = require("../config/keys");
 const dbProduct = require("../models/products");
-const Stripe = require("stripe");
 const stripe = require("stripe")(keys.stripeSecretKey);
 const { v4: uuidv4 } = require("uuid");
+const EmailToAYP = require("./mail/mailToUs");
+const EmailToCustomer = require("./mail/mailToCustomer");
 
 if (process.env.NODE_ENV !== "production") {
 	require("dotenv").config();
@@ -28,7 +29,7 @@ router.post("/product", (req, res) => {
 });
 
 router.post("/products/payment", async (req, res) => {
-	const { id, amount } = req.body;
+	const { id, amount, email, img } = req.body;
 	try {
 		const payment = await stripe.paymentIntents.create({
 			amount,
@@ -38,11 +39,32 @@ router.post("/products/payment", async (req, res) => {
 			confirm: true,
 		});
 
-		console.log(payment);
-
-		return res.status(200).json({
-			confirm: "Payment successfully submitted! Check your email for details",
-		});
+		console.log(payment.status);
+		if (payment.status === "requires_action") {
+			return res.send({
+				requiresAction: true,
+				clientSecret: payment.client_secret,
+			});
+		}
+		if (payment.status === "succeeded") {
+			EmailToCustomer(email, "Product Confirmation", function (err, data) {
+				if (err) {
+					res.status(500).json({ message: "Internal Error!" });
+				} else {
+					res.json({ message: "Email Sent!" });
+				}
+			});
+			EmailToAYP(email, img, "New Product Sublimation", function (err, data) {
+				if (err) {
+					res.status(500).json({ message: "Internal Error!" });
+				} else {
+					res.json({ message: "Email Sent!" });
+				}
+			});
+			return res.status(200).json({
+				confirm: "Payment successfully submitted! Check your email for details",
+			});
+		}
 	} catch (error) {
 		console.log(error.message);
 		return res.status(400).json({

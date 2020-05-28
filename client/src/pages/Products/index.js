@@ -173,6 +173,7 @@ export default class index extends Component {
 			firstName: "",
 			email: "",
 			billingDetails: false,
+			checkOutStripe: false,
 
 			// css
 			marginTop: "10px",
@@ -197,6 +198,14 @@ export default class index extends Component {
 	};
 
 	modalToCheckoutOpen = () => {
+		if (!this.state.modalToCheckout) {
+			this.setState({
+				firstName: "",
+				email: "",
+				billingDetails: false,
+				checkOutStripe: false,
+			});
+		}
 		this.setState({
 			modalToCheckout: true,
 		});
@@ -370,6 +379,12 @@ export default class index extends Component {
 		});
 	};
 
+	onChangeHandlerBillingDetails = (e) => {
+		this.setState({
+			[e.target.name]: e.target.value,
+		});
+	};
+
 	increaseCounter = async () => {
 		await this.setState({
 			counterCss: this.state.counterCss + 10,
@@ -466,8 +481,14 @@ export default class index extends Component {
 
 	submitBillingDetails = (e) => {
 		e.preventDefault();
+		if (!this.state.firstName || !this.state.email) {
+			return this.setState({
+				errorMsg: "All the fields are required!",
+			});
+		}
 		this.setState({
 			billingDetails: true,
+			checkOutStripe: true,
 		});
 	};
 
@@ -617,6 +638,9 @@ export default class index extends Component {
 								)}
 								{this.state.productImgArray[0].mug1.length > 0 ? (
 									<div className="mugs-container">
+										<p className="product-sides product-sides__a">
+											Side A &#8594;
+										</p>
 										<div className="mugs-container__front">
 											<div>
 												<img
@@ -624,7 +648,6 @@ export default class index extends Component {
 													src={this.state.productImg}
 													alt="product"
 												/>
-
 												{this.state.imagePreviewUrl.length > 0 ? (
 													<img
 														className="product-img-preview-mug"
@@ -634,6 +657,9 @@ export default class index extends Component {
 												) : null}
 											</div>
 										</div>
+										<p className="product-sides product-sides__b">
+											&#8592; Side B
+										</p>
 										<div className="mugs-container__back">
 											<div>
 												<img
@@ -795,7 +821,9 @@ export default class index extends Component {
 							isOpen={this.state.modalToConfirm}
 							onRequestClose={this.closeModal}
 						>
-							<span onClick={this.closeModal}>X</span>
+							<span className="x-close-modal" onClick={this.closeModal}>
+								X
+							</span>
 							<h2 className="text-center">
 								Your product has been created! You can procceed to step 3
 							</h2>
@@ -803,38 +831,56 @@ export default class index extends Component {
 						<Modal
 							style={customStylesCheckout}
 							isOpen={this.state.modalToCheckout}
-							onRequestClose={this.closeModalCheckout}
+							// onRequestClose={this.closeModalCheckout}
 						>
-							<span onClick={this.closeModalCheckout}>X</span>
-							<form onSubmit={this.submitBillingDetails}>
-								<input
-									name="firstName"
-									onChange={this.onChangeHandler}
-									type="text"
-									placeholder="First Name"
-								/>
-								<input
-									name="email"
-									onChange={this.onChangeHandler}
-									type="email"
-									placeholder="Email"
-								/>
-								<button>Next</button>
-							</form>
+							<span className="x-close-modal" onClick={this.closeModalCheckout}>
+								X
+							</span>
+
+							{!this.state.checkOutStripe ? (
+								<form
+									className="checkout-form"
+									onSubmit={this.submitBillingDetails}
+								>
+									<h3 className="text-center">
+										Fill out your information to checkout
+									</h3>
+									<input
+										className="input-checkout"
+										name="firstName"
+										onChange={this.onChangeHandlerBillingDetails}
+										type="text"
+										placeholder="Full Name"
+									/>
+									<input
+										className="input-checkout"
+										name="email"
+										onChange={this.onChangeHandlerBillingDetails}
+										type="email"
+										placeholder="Email"
+									/>
+									<button className="btn-checkout">Next &#8594;</button>
+									<p className="text-center error-msg">{this.state.errorMsg}</p>
+								</form>
+							) : null}
 
 							{this.state.billingDetails ? (
 								<CheckoutStripe
 									firstName={this.state.firstName}
 									email={this.state.email}
 									productWithCents={
-										this.state.productToPay.reduce((a, b) => a + b) * 0.01 +
-										this.state.productToPay.reduce((a, b) => a + b) *
-											0.01 *
-											0.13
+										this.state.productToPay.length > 0
+											? this.state.productToPay.reduce((a, b) => a + b) * 0.01 +
+											  this.state.productToPay.reduce((a, b) => a + b) *
+													0.01 *
+													0.13
+											: null
 									}
 									product={
-										this.state.productToPay.reduce((a, b) => a + b) * 0.13 +
-										this.state.productToPay.reduce((a, b) => a + b)
+										this.state.productToPay.length > 0
+											? this.state.productToPay.reduce((a, b) => a + b) * 0.13 +
+											  this.state.productToPay.reduce((a, b) => a + b)
+											: 0
 									}
 								/>
 							) : null}
