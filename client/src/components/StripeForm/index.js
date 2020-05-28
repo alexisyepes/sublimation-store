@@ -66,13 +66,17 @@ const Index = (props) => {
 										};
 										await axios
 											.post("/email_to_ayp_sublimation", data)
-											.then((res) => console.log(res))
+											.then((res) => {
+												console.log(res);
+												// setLoadingAxiosReq(false);
+												alert(
+													"Payment successfully made! Check email for details"
+												);
+												return window.location.reload();
+											})
 											.catch((err) => console.log(err));
 									})
 									.catch((err) => console.log(err));
-								setLoadingAxiosReq(false);
-								alert("Payment successfully made! Check email for details");
-								return window.location.reload();
 							}
 						}
 					});
@@ -92,13 +96,14 @@ const Index = (props) => {
 							};
 							await axios
 								.post("/email_to_ayp_sublimation", data)
-								.then((res) => console.log(res))
+								.then(() => {
+									// setLoadingAxiosReq(false);
+									alert("Payment successfully made! Check email for details");
+									return window.location.reload();
+								})
 								.catch((err) => console.log(err));
 						})
 						.catch((err) => console.log(err));
-					setLoadingAxiosReq(false);
-					alert("Payment successfully made! Check email for details");
-					return window.location.reload();
 				}
 
 				// window.location.href = "/";

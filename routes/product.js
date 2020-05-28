@@ -38,6 +38,9 @@ router.post("/email_to_ayp_sublimation", (req, res) => {
 			res.json({ message: "Email Sent!" });
 		}
 	});
+	res.json({
+		message: "Done",
+	});
 });
 
 router.post("/products/payment", async (req, res) => {
