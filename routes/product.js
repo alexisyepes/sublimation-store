@@ -29,9 +29,12 @@ router.post("/product", (req, res) => {
 });
 
 router.post("/email_to_ayp_sublimation", (req, res) => {
-	const { email, img } = req.body;
+	const { email, img, screenshot } = req.body;
 
-	EmailToAYP(email, img, "New Product Sublimation", function (err, data) {
+	EmailToAYP(email, img, screenshot, "New Product Sublimation", function (
+		err,
+		data
+	) {
 		if (err) {
 			res.status(500).json({ message: "Internal Error!" });
 		} else {

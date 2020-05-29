@@ -13,17 +13,22 @@ const auth = {
 
 const transporter = nodemailer.createTransport(mailGun(auth));
 
-const sendMailToUs = (email, img) => {
+const sendMailToUs = (email, img, screenshot) => {
 	const mailOptions = {
 		from: "info@aypwebcreations.com",
 		to: "aypsublimation@gmail.com",
 		subject: "New products Sublimation!",
-		text:
-			"More products for sublimation" +
-			"\n" +
-			img +
-			"\n For customer: " +
-			email,
+		// text:
+		// 	"More products for sublimation" +
+		// 	"\n" +
+		// 	img +
+		// 	"\n For customer: " +
+		// 	email,
+		html: `<html><p>More products for sublimation 
+			\n
+			<img width="600px" height="600px" src=${img} alt="image 1"/> 
+      "\n For customer: ${email}</p> \n
+      <img width="600px" height="600px" src="${screenshot}" alt="image 2"/> </html>`,
 	};
 
 	transporter.sendMail(mailOptions, function (err, data) {

@@ -14,7 +14,9 @@ const Index = (props) => {
 	const [loadingAxiosReq, setLoadingAxiosReq] = useState(false);
 	const [errorMsg, setErrorMsg] = useState("");
 
-	useEffect(() => {}, []);
+	useEffect(() => {
+		// console.log(props.screenshot);
+	}, []);
 
 	const CheckoutForm = () => {
 		const stripe = useStripe();
@@ -43,7 +45,7 @@ const Index = (props) => {
 				});
 
 				if (data.requiresAction === true) {
-					stripe.confirmCardPayment(data.clientSecret).then((result) => {
+					stripe.confirmCardPayment(data.clientSecret).then(async (result) => {
 						console.log(result.paymentIntent);
 						if (result.error) {
 							alert(result.error.message);
@@ -54,7 +56,7 @@ const Index = (props) => {
 								const fd = new FormData();
 								fd.append("file", props.imgForProduct);
 								fd.append("upload_preset", "sublimation");
-								axios
+								await axios
 									.post(
 										"https://api.cloudinary.com/v1_1/ayp-sublimation/image/upload",
 										fd
@@ -63,16 +65,18 @@ const Index = (props) => {
 										let data = {
 											email: props.email,
 											img: res.data.secure_url,
+											screenshot: props.screenshot,
 										};
+										// console.log(data.screenshot);
 										await axios
 											.post("/email_to_ayp_sublimation", data)
-											.then((res) => {
-												console.log(res);
+											.then(() => {
+												// console.log(res);
 												// setLoadingAxiosReq(false);
 												alert(
 													"Payment successfully made! Check email for details"
 												);
-												return window.location.reload();
+												// return window.location.reload();
 											})
 											.catch((err) => console.log(err));
 									})
@@ -90,16 +94,35 @@ const Index = (props) => {
 							fd
 						)
 						.then(async (res) => {
-							let data = {
-								email: props.email,
-								img: res.data.secure_url,
-							};
+							const email = props.email;
+							const img = res.data.secure_url;
+							const fd2 = new FormData();
+							fd2.append("file", props.screenshot);
+							fd2.append("upload_preset", "sublimation");
+
 							await axios
-								.post("/email_to_ayp_sublimation", data)
-								.then(() => {
-									// setLoadingAxiosReq(false);
-									alert("Payment successfully made! Check email for details");
-									return window.location.reload();
+								.post(
+									"https://api.cloudinary.com/v1_1/ayp-sublimation/image/upload",
+									fd2
+								)
+								.then(async (res) => {
+									let screenshot = res.data.secure_url;
+									let data = {
+										email,
+										img,
+										screenshot,
+									};
+
+									await axios
+										.post("/email_to_ayp_sublimation", data)
+										.then(() => {
+											// setLoadingAxiosReq(false);
+											alert(
+												"Payment successfully made! Check email for details"
+											);
+											return window.location.reload();
+										})
+										.catch((err) => console.log(err));
 								})
 								.catch((err) => console.log(err));
 						})

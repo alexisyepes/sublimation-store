@@ -18,7 +18,7 @@ app.use(sslRedirect());
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(morgan("dev"));
-app.use(express.json());
+app.use(express.json({ limit: "50mb" }));
 
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {

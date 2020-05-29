@@ -19,6 +19,17 @@
 	}
 }
 
+.logo {
+	border-radius: 100px;
+	position: relative;
+	&__navbar {
+		position: absolute;
+		top: 25px;
+		left: 2%;
+		width: 4%;
+	}
+}
+
 .nav-link {
 	color: white;
 	font-size: 26px;

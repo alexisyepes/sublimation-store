@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Select from "react-select";
 import html2canvas from "html2canvas";
+import JSZip from "jszip";
 import Modal from "react-modal";
 // import axios from "axios";
 import CheckoutStripe from "../../components/StripeForm";
@@ -442,18 +443,34 @@ export default class index extends Component {
 			});
 		}
 		this.toggleModalToConfirmOrder();
-		await html2canvas(document.body).then(async (canvas) => {
-			const imgData = canvas.toDataURL("image/png");
-			await this.setState({
-				screenshot: imgData,
-				toggleStep3: true,
-				toggleStep2: false,
-				textFormatOptions: false,
-				productToPay: this.state.productToPay.concat(product[0].Mug.price),
-				cart: this.state.cart + 1,
-			});
-			console.log(this.state.productToPay);
-		});
+
+		// await html2canvas(document.body).then(async (canvas) => {
+		await html2canvas(document.getElementById("product-screen-container")).then(
+			async (canvas) => {
+				// const imgData = canvas.toDataURL("image/jpeg", 0.5);
+				// zip and convert
+				var zip = new JSZip();
+				var savable = new Image();
+				savable.src = canvas.toDataURL("image/jpeg", 0.5);
+				zip.file(
+					"image.png",
+					savable.src.substr(savable.src.indexOf(",") + 1),
+					{
+						base64: true,
+					}
+				);
+				console.log(savable.src);
+
+				await this.setState({
+					screenshot: savable.src,
+					toggleStep3: true,
+					toggleStep2: false,
+					textFormatOptions: false,
+					productToPay: this.state.productToPay.concat(product[0].Mug.price),
+					cart: this.state.cart + 1,
+				});
+			}
+		);
 	};
 
 	goBackToStep2 = async () => {
@@ -868,6 +885,7 @@ export default class index extends Component {
 
 							{this.state.billingDetails ? (
 								<CheckoutStripe
+									screenshot={this.state.screenshot}
 									imgForProduct={this.state.imagePreviewUrl}
 									firstName={this.state.firstName}
 									email={this.state.email}
