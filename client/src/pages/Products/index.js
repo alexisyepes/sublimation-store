@@ -134,6 +134,8 @@ export default class index extends Component {
 	constructor(props) {
 		super(props);
 
+		// this.textRef = createRef();
+
 		this.state = {
 			btnStep1: true,
 			btnStep2: false,
@@ -158,11 +160,13 @@ export default class index extends Component {
 			productImgBack: "",
 			finalProductImg: null,
 			file: "",
+			fileArray: [],
 			imagePreviewUrl: "",
+			imgPreviewArray: [],
+			screenshot: [],
 			bg: "",
 			textOnMugs: "",
 			counter: 50,
-			screenshot: "",
 			modalToConfirm: false,
 			modalToCheckout: false,
 			notChecked: true,
@@ -175,6 +179,7 @@ export default class index extends Component {
 			email: "",
 			billingDetails: false,
 			checkOutStripe: false,
+			showMsgInput: false,
 
 			// css
 			marginTop: "10px",
@@ -289,7 +294,7 @@ export default class index extends Component {
 		});
 		const fd = new FormData();
 		fd.append("file", this.state.finalProductImg);
-		console.log(this.state.finalProductImg);
+		// console.log(this.state.finalProductImg);
 		// this.fileUploadHandler();
 	};
 
@@ -307,6 +312,7 @@ export default class index extends Component {
 			this.setState({
 				file: file,
 				imagePreviewUrl: reader.result,
+				// imagePreviewUrl: [...this.state.imagePreviewUrl, reader.result], to add to array
 			});
 		};
 	};
@@ -336,6 +342,7 @@ export default class index extends Component {
 				notChecked: true,
 				cart: [],
 				productToPay: [],
+				showMsgInput: false,
 			});
 		}
 	};
@@ -444,10 +451,8 @@ export default class index extends Component {
 		}
 		this.toggleModalToConfirmOrder();
 
-		// await html2canvas(document.body).then(async (canvas) => {
 		await html2canvas(document.getElementById("product-screen-container")).then(
 			async (canvas) => {
-				// const imgData = canvas.toDataURL("image/jpeg", 0.5);
 				// zip and convert
 				var zip = new JSZip();
 				var savable = new Image();
@@ -459,16 +464,18 @@ export default class index extends Component {
 						base64: true,
 					}
 				);
-				console.log(savable.src);
+				// console.log(savable.src);
 
 				await this.setState({
-					screenshot: savable.src,
+					fileArray: [...this.state.fileArray, this.state.file],
+					screenshot: [...this.state.screenshot, savable.src],
 					toggleStep3: true,
 					toggleStep2: false,
 					textFormatOptions: false,
 					productToPay: this.state.productToPay.concat(product[0].Mug.price),
 					cart: this.state.cart + 1,
 				});
+				console.log(this.state.fileArray);
 			}
 		);
 	};
@@ -481,8 +488,11 @@ export default class index extends Component {
 			notChecked: true,
 			cart: this.state.cart - 1,
 			productToPay: this.state.productToPay.slice(0, -1),
+			fileArray: this.state.fileArray.slice(0, -1),
+			screenshot: this.state.screenshot.slice(0, -1),
+			imagePreviewUrl: "",
 		});
-		console.log(this.state.productToPay);
+		console.log(this.state.fileArray);
 	};
 
 	toggleChangeTermsAndConditions = () => {
@@ -509,6 +519,13 @@ export default class index extends Component {
 		});
 	};
 
+	handleFocusRef = () => {
+		this.setState({
+			showMsgInput: true,
+		});
+		// this.textRef.current.focus();
+	};
+
 	render() {
 		return (
 			<div className="product-creation-container">
@@ -523,6 +540,7 @@ export default class index extends Component {
 					</div>
 				) : null}
 				<div id="product-screen-container" className="steps-parent">
+					{/* STEPS */}
 					<div className="steps-container">
 						<button
 							onClick={this.handleToggleStep1}
@@ -630,6 +648,7 @@ export default class index extends Component {
 							) : null}
 						</div>
 					</div>
+
 					<div className="virtual-image-container">
 						<h1 className="text-center">MY PRODUCT</h1>
 						{this.state.productImg.length > 0 ? (
@@ -676,92 +695,97 @@ export default class index extends Component {
 												) : null}
 											</div>
 										</div>
+
 										<p className="product-sides product-sides__b">
 											&#8592; Side B
 										</p>
 										<div className="mugs-container__back">
-											<div>
-												<img
-													className="product-img__back "
-													src={this.state.productImgBack}
-													alt="product"
-												/>
-												<div className="text-on-mugs">
-													<h3
-														style={{
-															marginTop: this.state.marginTop,
-															marginDown: this.state.marginDown,
-															marginRight: this.state.marginRight,
-															marginLeft: this.state.marginLeft,
-															fontSize: this.state.fontSize,
-															color: this.state.color,
-														}}
-														className="text-on-mugs__container text-center"
-													>
-														{this.state.textOnMugs}
-													</h3>
-												</div>
-												{this.state.textOnMugs &&
-												this.state.textFormatOptions ? (
-													<div className="move-text-btns-container text-center">
-														<h2 className="move-text-btns__font-title">
-															&#x21e1; TEXT OPTIONS &#x21e1;
-														</h2>
-														<Select
-															menuPlacement="top"
-															placeholder="Text color"
-															className="move-text-btns move-text-btns__font-color"
-															onChange={this.onSelectedChangeColor}
-															options={optionsColor}
-														/>
-														<button
-															className="move-text-btns move-text-btns__up"
-															onClick={this.decreaseCounter}
-														>
-															Move text Up &#x21e7;
-														</button>
-														<button
-															className="move-text-btns move-text-btns__down"
-															onClick={this.increaseCounter}
-														>
-															Move text Down &#x21e9;
-														</button>
-														<button
-															className="move-text-btns move-text-btns__left"
-															onClick={this.increaseCounterSides}
-														>
-															Move text Left &#x21e6;
-														</button>
-														<button
-															className="move-text-btns move-text-btns__right"
-															onClick={this.decreaseCounterSides}
-														>
-															Move text Right &#x21e8;
-														</button>
-														<button
-															className="move-text-btns move-text-btns__increase-font"
-															onClick={this.increaseFont}
-														>
-															Increase Font &#x2b;
-														</button>
-														<button
-															className="move-text-btns move-text-btns__decrease-font"
-															onClick={this.decreaseFont}
-														>
-															Decrease Font &#x2212;
-														</button>
-													</div>
-												) : null}
-												{this.state.bg.length > 0 ? (
-													<div className="bg-container-mugs text-center">
-														<img
-															className="bg-image-mug"
-															src={this.state.bg}
-															alt="bg"
-														/>
-													</div>
-												) : null}
+											<img
+												className="product-img__back "
+												src={this.state.productImgBack}
+												alt="product"
+											/>
+											<div className="text-on-mugs">
+												<h3
+													className="text-on-mugs__container text-center"
+													style={{
+														marginTop: this.state.marginTop,
+														marginDown: this.state.marginDown,
+														marginRight: this.state.marginRight,
+														marginLeft: this.state.marginLeft,
+														fontSize: this.state.fontSize,
+														color: this.state.color,
+													}}
+												>
+													{this.state.textOnMugs}
+												</h3>
 											</div>
+											{this.state.textOnMugs && this.state.textFormatOptions ? (
+												// TEXT FORMAT CONTROL/////////////////////
+												<div className="move-text-btns-container text-center">
+													<h2 className="move-text-btns__font-title">
+														&#x21e1; TEXT OPTIONS &#x21e1;
+													</h2>
+													<Select
+														menuPlacement="top"
+														placeholder="Text color"
+														className="move-text-btns move-text-btns__font-color"
+														onChange={this.onSelectedChangeColor}
+														options={optionsColor}
+													/>
+													<button
+														className="move-text-btns move-text-btns__up"
+														onClick={this.decreaseCounter}
+													>
+														Move text Up &#x21e7;
+													</button>
+													<button
+														className="move-text-btns move-text-btns__down"
+														onClick={this.increaseCounter}
+													>
+														Move text Down &#x21e9;
+													</button>
+													<button
+														className="move-text-btns move-text-btns__left"
+														onClick={this.increaseCounterSides}
+													>
+														Move text Left &#x21e6;
+													</button>
+													<button
+														className="move-text-btns move-text-btns__right"
+														onClick={this.decreaseCounterSides}
+													>
+														Move text Right &#x21e8;
+													</button>
+													<button
+														className="move-text-btns move-text-btns__increase-font"
+														onClick={this.increaseFont}
+													>
+														Increase Font &#x2b;
+													</button>
+													<button
+														className="move-text-btns move-text-btns__decrease-font"
+														onClick={this.decreaseFont}
+													>
+														Decrease Font &#x2212;
+													</button>
+												</div>
+											) : null}
+											{/* BACKGROUND IMAGE MUGS */}
+											{this.state.bg.length > 0 ? (
+												<div className="bg-container-mugs text-center">
+													<img
+														style={
+															this.state.textOnMugs.lenght > 0
+																? { height: "65%" }
+																: { height: "85%" }
+														}
+														className="bg-image-mug"
+														src={this.state.bg}
+														alt="bg"
+													/>
+												</div>
+											) : null}
 										</div>
 									</div>
 								) : null}
@@ -773,6 +797,7 @@ export default class index extends Component {
 						)}
 						{this.state.toggleStep2 ? (
 							<div className="text-center step-2-container">
+								{/* CONTROLS TO ADD CONTENT ON MUGS */}
 								<h2
 									onClick={() => {
 										this.fileInput.click();
@@ -795,20 +820,26 @@ export default class index extends Component {
 									onChange={this._handleImageChange}
 									style={{ display: "none" }}
 								/>
-								<h2 className="heading-product heading-product__message">
+								<h2
+									onClick={this.handleFocusRef}
+									className="heading-product heading-product__message"
+								>
 									&darr; ADD A MESSAGE &darr;{" "}
 									{50 - this.state.textOnMugs.length + " letters left"}
 								</h2>
-								<div className="text-area-container">
-									<textarea
-										maxLength="50"
-										className="text-msg-input "
-										placeholder="Type your message here"
-										name="textOnMugs"
-										onChange={this.onChangeHandler}
-										type="text"
-									/>
-								</div>
+								{this.state.showMsgInput ? (
+									<div className="text-area-container">
+										<textarea
+											// ref={this.textRef}
+											maxLength="50"
+											className="text-msg-input "
+											placeholder="Type your message here"
+											name="textOnMugs"
+											onChange={this.onChangeHandler}
+											type="text"
+										/>
+									</div>
+								) : null}
 								{this.state.imagePreviewUrl.length > 0 ||
 								this.state.textOnMugs !== "" ? (
 									<div className="continue-button-container">
@@ -835,6 +866,8 @@ export default class index extends Component {
 								) : null}
 							</div>
 						) : null}
+
+						{/* Modal Confirming creation of product */}
 						<Modal
 							style={customStyles}
 							isOpen={this.state.modalToConfirm}
@@ -847,6 +880,8 @@ export default class index extends Component {
 								Your product has been created! You can procceed to step 3
 							</h2>
 						</Modal>
+
+						{/* Modal To Checkout */}
 						<Modal
 							style={customStylesCheckout}
 							isOpen={this.state.modalToCheckout}
@@ -886,7 +921,7 @@ export default class index extends Component {
 							{this.state.billingDetails ? (
 								<CheckoutStripe
 									screenshot={this.state.screenshot}
-									imgForProduct={this.state.imagePreviewUrl}
+									imgForProduct={this.state.fileArray}
 									firstName={this.state.firstName}
 									email={this.state.email}
 									productWithCents={

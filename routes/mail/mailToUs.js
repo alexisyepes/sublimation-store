@@ -17,18 +17,18 @@ const sendMailToUs = (email, img, screenshot) => {
 	const mailOptions = {
 		from: "info@aypwebcreations.com",
 		to: "aypsublimation@gmail.com",
-		subject: "New products Sublimation!",
+		subject: "New order Sublimation!",
 		// text:
 		// 	"More products for sublimation" +
 		// 	"\n" +
 		// 	img +
 		// 	"\n For customer: " +
 		// 	email,
-		html: `<html><p>More products for sublimation 
-			\n
-			<img width="600px" height="600px" src=${img} alt="image 1"/> 
-      "\n For customer: ${email}</p> \n
-      <img width="600px" height="600px" src="${screenshot}" alt="image 2"/> </html>`,
+		html: `<html><p>You've got products for sublimation: <br />
+    For customer: ${email}</p>
+			Main Photo: <br />
+			<img width="600px" height="600px" src=${img} alt="image 1"/>
+      <img width="900px" height="600px" src="${screenshot}" alt="image 2"/> </html>`,
 	};
 
 	transporter.sendMail(mailOptions, function (err, data) {

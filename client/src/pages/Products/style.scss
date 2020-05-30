@@ -223,6 +223,7 @@
 		&__message {
 			background-color: rgb(163, 241, 176);
 			width: 40%;
+			cursor: pointer;
 		}
 	}
 
@@ -426,12 +427,11 @@
 				.text-on-mugs {
 					width: 22%;
 					height: 350px;
-					position: absolute;
 					top: 8%;
 					left: 42%;
 					z-index: 2;
 					display: inline-block;
-
+					position: absolute;
 					&__container {
 						white-space: pre-wrap;
 						font-size: 30px;
@@ -526,7 +526,8 @@
 						&__font-color {
 							z-index: 4;
 							width: 100%;
-							background-color: rgb(22, 155, 243);
+							// background-color: rgb(22, 155, 243);
+							cursor: pointer;
 						}
 
 						&__font-title {

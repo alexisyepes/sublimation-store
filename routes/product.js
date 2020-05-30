@@ -47,7 +47,7 @@ router.post("/email_to_ayp_sublimation", (req, res) => {
 });
 
 router.post("/products/payment", async (req, res) => {
-	const { id, amount, email, img } = req.body;
+	const { id, amount, email } = req.body;
 	try {
 		const payment = await stripe.paymentIntents.create({
 			amount,

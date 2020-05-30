@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import {
 	Elements,
@@ -14,11 +14,8 @@ const Index = (props) => {
 	const [loadingAxiosReq, setLoadingAxiosReq] = useState(false);
 	const [errorMsg, setErrorMsg] = useState("");
 
-	useEffect(() => {
-		// console.log(props.screenshot);
-	}, []);
-
 	const CheckoutForm = () => {
+		console.log(props.imgForProduct);
 		const stripe = useStripe();
 		const elements = useElements();
 		const handleSubmitCheckoutForm = async (event) => {
@@ -41,12 +38,11 @@ const Index = (props) => {
 					id,
 					amount: props.product,
 					email: props.email,
-					img: "Test image",
 				});
 
 				if (data.requiresAction === true) {
 					stripe.confirmCardPayment(data.clientSecret).then(async (result) => {
-						console.log(result.paymentIntent);
+						// console.log(result.paymentIntent);
 						if (result.error) {
 							alert(result.error.message);
 							setLoadingAxiosReq(false);
@@ -56,27 +52,41 @@ const Index = (props) => {
 								const fd = new FormData();
 								fd.append("file", props.imgForProduct);
 								fd.append("upload_preset", "sublimation");
-								await axios
+								axios
 									.post(
 										"https://api.cloudinary.com/v1_1/ayp-sublimation/image/upload",
 										fd
 									)
 									.then(async (res) => {
-										let data = {
-											email: props.email,
-											img: res.data.secure_url,
-											screenshot: props.screenshot,
-										};
-										// console.log(data.screenshot);
+										const email = props.email;
+										const img = res.data.secure_url;
+										const fd2 = new FormData();
+										fd2.append("file", props.screenshot);
+										fd2.append("upload_preset", "sublimation");
+
 										await axios
-											.post("/email_to_ayp_sublimation", data)
-											.then(() => {
-												// console.log(res);
-												// setLoadingAxiosReq(false);
-												alert(
-													"Payment successfully made! Check email for details"
-												);
-												// return window.location.reload();
+											.post(
+												"https://api.cloudinary.com/v1_1/ayp-sublimation/image/upload",
+												fd2
+											)
+											.then(async (res) => {
+												let screenshot = res.data.secure_url;
+												let data = {
+													email,
+													img,
+													screenshot,
+												};
+
+												await axios
+													.post("/email_to_ayp_sublimation", data)
+													.then(() => {
+														// setLoadingAxiosReq(false);
+														alert(
+															"Payment successfully made! Check email for details"
+														);
+														// return window.location.reload();
+													})
+													.catch((err) => console.log(err));
 											})
 											.catch((err) => console.log(err));
 									})
@@ -85,54 +95,82 @@ const Index = (props) => {
 						}
 					});
 				} else {
-					const fd = new FormData();
-					fd.append("file", props.imgForProduct);
-					fd.append("upload_preset", "sublimation");
+					let imgUrl = [];
+					let imgScrSht = [];
+
 					axios
-						.post(
-							"https://api.cloudinary.com/v1_1/ayp-sublimation/image/upload",
-							fd
+						.all([
+							props.imgForProduct.map((img) => {
+								const fd = new FormData();
+								fd.append("file", img);
+								fd.append("upload_preset", "sublimation");
+								return axios
+									.post(
+										"https://api.cloudinary.com/v1_1/ayp-sublimation/image/upload",
+										fd
+									)
+									.then(async (res) => {
+										await imgUrl.push(res.data.secure_url);
+										console.log(imgScrSht);
+									})
+									.catch((err) => console.log(err));
+							}),
+
+							props.screenshot.map((img) => {
+								const fd = new FormData();
+								fd.append("file", img);
+								fd.append("upload_preset", "sublimation");
+								return axios
+									.post(
+										"https://api.cloudinary.com/v1_1/ayp-sublimation/image/upload",
+										fd
+									)
+									.then(async (res) => {
+										await imgScrSht.push(res.data.secure_url);
+										console.log(imgScrSht);
+									})
+									.catch((err) => console.log(err));
+							}),
+						])
+						.then(
+							axios.spread(async (...res) => {
+								res.map((data) => console.log(data[0]));
+
+								// function delay(ms) {
+								// 	return new Promise((resolve) => setTimeout(resolve, ms));
+								// }
+
+								// delay(4000).then(() => {
+								// 	console.log(imgUrl);
+								// 	console.log(imgScrSht);
+								// });
+							})
 						)
-						.then(async (res) => {
-							const email = props.email;
-							const img = res.data.secure_url;
-							const fd2 = new FormData();
-							fd2.append("file", props.screenshot);
-							fd2.append("upload_preset", "sublimation");
+						// .then(async (resArr) => {
+						// 	console.log(resArr);
+						// 	let data = {
+						// 		email: props.email,
+						// 		img: imgUrl,
+						// 		screenshot: imgScrSht,
+						// 	};
 
-							await axios
-								.post(
-									"https://api.cloudinary.com/v1_1/ayp-sublimation/image/upload",
-									fd2
-								)
-								.then(async (res) => {
-									let screenshot = res.data.secure_url;
-									let data = {
-										email,
-										img,
-										screenshot,
-									};
-
-									await axios
-										.post("/email_to_ayp_sublimation", data)
-										.then(() => {
-											// setLoadingAxiosReq(false);
-											alert(
-												"Payment successfully made! Check email for details"
-											);
-											return window.location.reload();
-										})
-										.catch((err) => console.log(err));
-								})
-								.catch((err) => console.log(err));
-						})
-						.catch((err) => console.log(err));
+						// 	await axios
+						// 		.post("/email_to_ayp_sublimation", data)
+						// 		.then(() => {
+						// 			// setLoadingAxiosReq(false);
+						// 			alert("Payment successfully made! Check email for details");
+						// 			// return window.location.reload();
+						// 		})
+						// 		.catch((err) => console.log(err));
+						// 	// console.log(resArr);
+						// })
+						.catch((err) => console.error(err));
 				}
 
 				// window.location.href = "/";
 			} catch (error) {
-				console.log(error.response.data.message);
-				setErrorMsg(error.response.data.message);
+				console.log(error);
+				setErrorMsg(error);
 				setLoadingAxiosReq(false);
 			}
 		};
@@ -177,3 +215,62 @@ const Index = (props) => {
 };
 
 export default Index;
+
+// let res_promises = props.imgForProduct.map(
+// 	(file) =>
+// 		new Promise((resolve, reject) => {
+// 			const fd = new FormData();
+// 			fd.append("file", file);
+// 			fd.append("upload_preset", "sublimation");
+// 			axios
+// 				.post(
+// 					"https://api.cloudinary.com/v1_1/ayp-sublimation/image/upload",
+// 					fd
+// 				)
+// 				.then((res) => console.log(res))
+// 				.catch((err) => console.error(err));
+// 		})
+// );
+
+// const fd = new FormData();
+// fd.append("file", props.imgForProduct);
+// fd.append("upload_preset", "sublimation");
+// axios
+// 	.post(
+// 		"https://api.cloudinary.com/v1_1/ayp-sublimation/image/upload",
+// 		fd
+// 	)
+// 	.then(async (res) => {
+// 		const email = props.email;
+// 		const img = res.data.secure_url;
+// 		const fd2 = new FormData();
+// 		fd2.append("file", props.screenshot);
+// 		fd2.append("upload_preset", "sublimation");
+
+// 		await axios
+// 			.post(
+// 				"https://api.cloudinary.com/v1_1/ayp-sublimation/image/upload",
+// 				fd2
+// 			)
+// 			.then(async (res) => {
+// 				let screenshot = res.data.secure_url;
+// 				let data = {
+// 					email,
+// 					img,
+// 					screenshot,
+// 				};
+
+// 				await axios
+// 					.post("/email_to_ayp_sublimation", data)
+// 					.then(() => {
+// 						// setLoadingAxiosReq(false);
+// 						alert(
+// 							"Payment successfully made! Check email for details"
+// 						);
+// 						return window.location.reload();
+// 					})
+// 					.catch((err) => console.log(err));
+// 			})
+// 			.catch((err) => console.log(err));
+// 	})
+// 	.catch((err) => console.log(err));
