@@ -475,7 +475,7 @@ export default class index extends Component {
 					productToPay: this.state.productToPay.concat(product[0].Mug.price),
 					cart: this.state.cart + 1,
 				});
-				console.log(this.state.fileArray);
+				// console.log(this.state.fileArray);
 			}
 		);
 	};
@@ -492,7 +492,7 @@ export default class index extends Component {
 			screenshot: this.state.screenshot.slice(0, -1),
 			imagePreviewUrl: "",
 		});
-		console.log(this.state.fileArray);
+		// console.log(this.state.fileArray);
 	};
 
 	toggleChangeTermsAndConditions = () => {
@@ -824,7 +824,7 @@ export default class index extends Component {
 									onClick={this.handleFocusRef}
 									className="heading-product heading-product__message"
 								>
-									&darr; ADD A MESSAGE &darr;{" "}
+									&darr; CLICK TO ADD A MESSAGE &darr;{" "}
 									{50 - this.state.textOnMugs.length + " letters left"}
 								</h2>
 								{this.state.showMsgInput ? (

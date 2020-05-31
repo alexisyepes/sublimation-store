@@ -244,6 +244,7 @@
 
 	.continue-button-container {
 		text-align: left;
+		margin-top: 50px;
 
 		.agree-with-order {
 			color: white;
@@ -476,7 +477,6 @@
 						padding: 5px 0px;
 						border-radius: 10px;
 						background-color: $color-primary-dark;
-						color: white;
 						cursor: pointer;
 						margin-top: 20px;
 						transition: all 0.1s;
@@ -491,29 +491,34 @@
 							width: 48%;
 							left: 0;
 							top: 60px;
+							color: white;
 						}
 
 						&__down {
 							width: 48%;
 							right: 0;
 							top: 60px;
+							color: white;
 						}
 
 						&__right {
 							width: 48%;
 							right: 0;
 							top: 120px;
+							color: white;
 						}
 
 						&__left {
 							width: 48%;
 							top: 120px;
+							color: white;
 						}
 
 						&__increase-font {
 							width: 48%;
 							top: 180px;
 							background-color: rgb(109, 71, 71);
+							color: white;
 						}
 
 						&__decrease-font {
@@ -521,6 +526,7 @@
 							top: 180px;
 							right: 0;
 							background-color: rgb(109, 71, 71);
+							color: white;
 						}
 
 						&__font-color {

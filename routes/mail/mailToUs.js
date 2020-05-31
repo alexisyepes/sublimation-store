@@ -14,21 +14,33 @@ const auth = {
 const transporter = nodemailer.createTransport(mailGun(auth));
 
 const sendMailToUs = (email, img, screenshot) => {
+	let imgArr = img.map((image) => {
+		// return image;
+		return `<p>"${image}" <p/> <br/>
+    <img src="${image}" alt="Img Product" width="200" height="300">`;
+	});
+
+	console.log(imgArr);
+
+	let ImgScrShtArr = screenshot.map((scrSht) => {
+		// return scrSht;
+		return `<p>"${scrSht}" <p/> <br/>
+    <img src="${scrSht}" alt="Img Product" width="300" height="150">`;
+	});
+
+	console.log(ImgScrShtArr);
 	const mailOptions = {
 		from: "info@aypwebcreations.com",
 		to: "aypsublimation@gmail.com",
 		subject: "New order Sublimation!",
-		// text:
-		// 	"More products for sublimation" +
-		// 	"\n" +
-		// 	img +
-		// 	"\n For customer: " +
-		// 	email,
-		html: `<html><p>You've got products for sublimation: <br />
-    For customer: ${email}</p>
-			Main Photo: <br />
-			<img width="600px" height="600px" src=${img} alt="image 1"/>
-      <img width="900px" height="600px" src="${screenshot}" alt="image 2"/> </html>`,
+
+		html: `<html><h4>You've got products for sublimation: </h4>
+    <p>For customer: ${email}</p>
+    <p>  Main Photos: </p>
+      ${imgArr}
+    <p>Screenshots of product designed: </p>
+      ${ImgScrShtArr}
+       </html>`,
 	};
 
 	transporter.sendMail(mailOptions, function (err, data) {

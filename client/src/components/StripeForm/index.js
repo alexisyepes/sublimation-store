@@ -42,7 +42,6 @@ const Index = (props) => {
 
 				if (data.requiresAction === true) {
 					stripe.confirmCardPayment(data.clientSecret).then(async (result) => {
-						// console.log(result.paymentIntent);
 						if (result.error) {
 							alert(result.error.message);
 							setLoadingAxiosReq(false);
@@ -97,77 +96,73 @@ const Index = (props) => {
 				} else {
 					let imgUrl = [];
 					let imgScrSht = [];
+					const URL =
+						"https://api.cloudinary.com/v1_1/ayp-sublimation/image/upload";
 
-					axios
-						.all([
-							props.imgForProduct.map((img) => {
-								const fd = new FormData();
-								fd.append("file", img);
-								fd.append("upload_preset", "sublimation");
-								return axios
-									.post(
-										"https://api.cloudinary.com/v1_1/ayp-sublimation/image/upload",
-										fd
-									)
-									.then(async (res) => {
-										await imgUrl.push(res.data.secure_url);
-										console.log(imgScrSht);
-									})
-									.catch((err) => console.log(err));
-							}),
+					const imgForProductFormData = props.imgForProduct.map((img) => {
+						const fd = new FormData();
+						fd.append("file", img);
+						fd.append("upload_preset", "sublimation");
+						return fd;
+					});
 
-							props.screenshot.map((img) => {
-								const fd = new FormData();
-								fd.append("file", img);
-								fd.append("upload_preset", "sublimation");
-								return axios
-									.post(
-										"https://api.cloudinary.com/v1_1/ayp-sublimation/image/upload",
-										fd
-									)
-									.then(async (res) => {
-										await imgScrSht.push(res.data.secure_url);
-										console.log(imgScrSht);
-									})
-									.catch((err) => console.log(err));
-							}),
-						])
-						.then(
-							axios.spread(async (...res) => {
-								res.map((data) => console.log(data[0]));
+					const screenShotsFormData = props.screenshot.map((img) => {
+						const fd = new FormData();
+						fd.append("file", img);
+						fd.append("upload_preset", "sublimation");
+						return fd;
+					});
 
-								// function delay(ms) {
-								// 	return new Promise((resolve) => setTimeout(resolve, ms));
-								// }
+					const imgForProductRequests = imgForProductFormData.map(
+						async (fd) => await axios.post(URL, fd).catch((err) => null)
+					);
+					const screenshotsRequests = screenShotsFormData.map(
+						async (fd) => await axios.post(URL, fd).catch((err) => null)
+					);
 
-								// delay(4000).then(() => {
-								// 	console.log(imgUrl);
-								// 	console.log(imgScrSht);
-								// });
-							})
-						)
-						// .then(async (resArr) => {
-						// 	console.log(resArr);
-						// 	let data = {
-						// 		email: props.email,
-						// 		img: imgUrl,
-						// 		screenshot: imgScrSht,
-						// 	};
+					try {
+						const imgForProductResponses = await axios.all(
+							imgForProductRequests
+						);
+						imgForProductResponses.map((res) => {
+							// console.log(res.data.secure_url);
+							return res.data.secure_url
+								? imgUrl.push(res.data.secure_url)
+								: null;
+						});
 
-						// 	await axios
-						// 		.post("/email_to_ayp_sublimation", data)
-						// 		.then(() => {
-						// 			// setLoadingAxiosReq(false);
-						// 			alert("Payment successfully made! Check email for details");
-						// 			// return window.location.reload();
-						// 		})
-						// 		.catch((err) => console.log(err));
-						// 	// console.log(resArr);
-						// })
-						.catch((err) => console.error(err));
+						const screenshotsResponses = await axios.all(screenshotsRequests);
+						screenshotsResponses.map((res) => {
+							// console.log(res.data.secure_url);
+							return res.data.secure_url
+								? imgScrSht.push(res.data.secure_url)
+								: null;
+						});
+
+						let dataObj = {
+							email: props.email,
+							img: imgUrl,
+							screenshot: imgScrSht,
+						};
+						// console.log(dataObj);
+
+						new Promise((resolve, reject) => {
+							axios.post("/email_to_ayp_sublimation", dataObj);
+							resolve((res) => {
+								console.log(res);
+							});
+							reject((err) => {
+								console.log(err);
+							});
+						});
+						alert(
+							"Your order will be ready soon, check your email for updates"
+						);
+						window.location.href = "/";
+					} catch (err) {
+						console.log(err);
+					}
 				}
-
-				// window.location.href = "/";
 			} catch (error) {
 				console.log(error);
 				setErrorMsg(error);
