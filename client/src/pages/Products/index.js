@@ -5,6 +5,8 @@ import JSZip from "jszip";
 import Modal from "react-modal";
 // import axios from "axios";
 import CheckoutStripe from "../../components/StripeForm";
+import Mugs from "../../components/Mugs";
+
 import "./style.scss";
 
 let optionsBackgrounds = [
@@ -39,41 +41,6 @@ let optionsBackgrounds = [
 	{
 		value: "./images/backgrounds/party.png",
 		label: "Party",
-	},
-];
-
-let optionsColor = [
-	{
-		value: "black",
-		label: "Black",
-	},
-	{
-		value: "white",
-		label: "White",
-	},
-	{
-		value: "blue",
-		label: "Blue",
-	},
-	{
-		value: "green",
-		label: "Green",
-	},
-	{
-		value: "yellow",
-		label: "Yellow",
-	},
-	{
-		value: "red",
-		label: "Red",
-	},
-	{
-		value: "purple",
-		label: "Purple",
-	},
-	{
-		value: "orange",
-		label: "Orange",
 	},
 ];
 
@@ -134,8 +101,6 @@ export default class index extends Component {
 	constructor(props) {
 		super(props);
 
-		// this.textRef = createRef();
-
 		this.state = {
 			btnStep1: true,
 			btnStep2: false,
@@ -166,7 +131,6 @@ export default class index extends Component {
 			screenshot: [],
 			bg: "",
 			textOnMugs: "",
-			counter: 50,
 			modalToConfirm: false,
 			modalToCheckout: false,
 			notChecked: true,
@@ -180,16 +144,7 @@ export default class index extends Component {
 			billingDetails: false,
 			checkOutStripe: false,
 			showMsgInput: false,
-
-			// css
-			marginTop: "10px",
-			marginDown: null,
-			marginRight: -10,
-			marginLeft: null,
-			counterCss: null,
-			counterCssSides: null,
-			counterFontSize: 35,
-			fontSize: null,
+			qty: 1,
 		};
 	}
 
@@ -341,6 +296,7 @@ export default class index extends Component {
 				textOnMugs: "",
 				notChecked: true,
 				cart: [],
+				qty: 1,
 				productToPay: [],
 				showMsgInput: false,
 			});
@@ -365,6 +321,7 @@ export default class index extends Component {
 			bg: "",
 			textOnMugs: "",
 			notChecked: true,
+			qty: 1,
 		});
 	};
 
@@ -393,61 +350,29 @@ export default class index extends Component {
 		});
 	};
 
-	increaseCounter = async () => {
-		await this.setState({
-			counterCss: this.state.counterCss + 10,
-		});
-		this.moveDownText();
-	};
-
-	decreaseCounter = async () => {
-		await this.setState({
-			counterCss: this.state.counterCss - 10,
-		});
-		this.moveDownText();
-	};
-
-	increaseCounterSides = async () => {
-		await this.setState({
-			counterCssSides: this.state.counterCssSides + 10,
-			marginRight: this.state.counterCssSides + "px",
+	increaseQty = () => {
+		this.setState({
+			qty: this.state.qty + 1,
 		});
 	};
 
-	decreaseCounterSides = async () => {
-		let counter = this.state.counterCssSides;
-
-		await this.setState({
-			counterCssSides: this.state.counterCssSides - 10,
-			marginRight: counter + "px",
-		});
-	};
-
-	moveDownText = async () => {
-		await this.setState({
-			marginTop: this.state.counterCss + "px",
-		});
-	};
-
-	increaseFont = async () => {
-		await this.setState({
-			counterFontSize: this.state.counterFontSize + 2,
-			fontSize: this.state.counterFontSize + "px",
-		});
-	};
-
-	decreaseFont = async () => {
-		await this.setState({
-			counterFontSize: this.state.counterFontSize - 2,
-			fontSize: this.state.counterFontSize + "px",
+	decreaseQty = () => {
+		if (this.state.qty === 1) {
+			return;
+		}
+		this.setState({
+			qty: this.state.qty - 1,
 		});
 	};
 
 	screenshot = async () => {
 		if (this.state.notChecked === true) {
 			return this.setState({
-				errorMsg: "Check box before continuing",
+				errorMsg: "Confirm before continuing",
 			});
+		}
+		if (this.state.file === "") {
+			return alert("A photo is required to procceed, please upload one.");
 		}
 		this.toggleModalToConfirmOrder();
 
@@ -472,8 +397,10 @@ export default class index extends Component {
 					toggleStep3: true,
 					toggleStep2: false,
 					textFormatOptions: false,
-					productToPay: this.state.productToPay.concat(product[0].Mug.price),
-					cart: this.state.cart + 1,
+					productToPay: this.state.productToPay.concat(
+						product[0].Mug.price * this.state.qty
+					),
+					cart: this.state.cart + this.state.qty,
 				});
 				// console.log(this.state.fileArray);
 			}
@@ -481,18 +408,25 @@ export default class index extends Component {
 	};
 
 	goBackToStep2 = async () => {
-		await this.setState({
-			toggleStep3: false,
-			toggleStep2: true,
-			textFormatOptions: true,
-			notChecked: true,
-			cart: this.state.cart - 1,
-			productToPay: this.state.productToPay.slice(0, -1),
-			fileArray: this.state.fileArray.slice(0, -1),
-			screenshot: this.state.screenshot.slice(0, -1),
-			imagePreviewUrl: "",
-		});
-		// console.log(this.state.fileArray);
+		if (
+			window.confirm(
+				`If you continue, your progress will be lost and you will need to re-create this product and its quantities. \nDo you still want to procceed?`
+			)
+		) {
+			await this.setState({
+				toggleStep3: false,
+				toggleStep2: true,
+				textFormatOptions: true,
+				notChecked: true,
+				cart: this.state.cart - this.state.qty,
+				qty: 1,
+				productToPay: this.state.productToPay.slice(0, -1),
+				fileArray: this.state.fileArray.slice(0, -1),
+				screenshot: this.state.screenshot.slice(0, -1),
+				imagePreviewUrl: "",
+				file: "",
+			});
+		}
 	};
 
 	toggleChangeTermsAndConditions = () => {
@@ -541,7 +475,9 @@ export default class index extends Component {
 				) : null}
 				<div id="product-screen-container" className="steps-parent">
 					{/* STEPS */}
+
 					<div className="steps-container">
+						{/* step 1 Container */}
 						<button
 							onClick={this.handleToggleStep1}
 							className="step-btn step-btn__1"
@@ -570,6 +506,8 @@ export default class index extends Component {
 								</h2>
 							</div>
 						) : null}
+
+						{/* step 2 Container */}
 						<button
 							onClick={this.handleToggleStep2}
 							className="step-btn step-btn__2"
@@ -584,6 +522,7 @@ export default class index extends Component {
 							</h1>
 						) : null}
 
+						{/* step 3 Container */}
 						<div>
 							<button
 								onClick={this.handleToggleStep3}
@@ -598,8 +537,11 @@ export default class index extends Component {
 									<h1 className="text-center arrowToRight arrowDown">
 										&#8659;
 									</h1>
-									<p>Individual Item Price: ${this.state.mugPrice}</p>
-									<p>Tax: ${0.13 * this.state.mugPrice}</p>
+									<p>
+										Individual Item Price: $
+										{this.state.mugPrice * this.state.qty}
+									</p>
+									<p>Tax: ${0.13 * this.state.mugPrice * this.state.qty}</p>
 									<hr />
 									<p>
 										Total in Cart: $
@@ -647,6 +589,7 @@ export default class index extends Component {
 								</div>
 							) : null}
 						</div>
+						{/* step 3 Container ENDS***********************/}
 					</div>
 
 					<div className="virtual-image-container">
@@ -675,119 +618,14 @@ export default class index extends Component {
 									</div>
 								)}
 								{this.state.productImgArray[0].mug1.length > 0 ? (
-									<div className="mugs-container">
-										<p className="product-sides product-sides__a">
-											Side A &#8594;
-										</p>
-										<div className="mugs-container__front">
-											<div>
-												<img
-													className="product-img "
-													src={this.state.productImg}
-													alt="product"
-												/>
-												{this.state.imagePreviewUrl.length > 0 ? (
-													<img
-														className="product-img-preview-mug"
-														src={this.state.imagePreviewUrl}
-														alt="temp"
-													/>
-												) : null}
-											</div>
-										</div>
-
-										<p className="product-sides product-sides__b">
-											&#8592; Side B
-										</p>
-										<div className="mugs-container__back">
-											<img
-												className="product-img__back "
-												src={this.state.productImgBack}
-												alt="product"
-											/>
-											<div className="text-on-mugs">
-												<h3
-													className="text-on-mugs__container text-center"
-													style={{
-														marginTop: this.state.marginTop,
-														marginDown: this.state.marginDown,
-														marginRight: this.state.marginRight,
-														marginLeft: this.state.marginLeft,
-														fontSize: this.state.fontSize,
-														color: this.state.color,
-													}}
-												>
-													{this.state.textOnMugs}
-												</h3>
-											</div>
-											{this.state.textOnMugs && this.state.textFormatOptions ? (
-												// TEXT FORMAT CONTROL/////////////////////
-												<div className="move-text-btns-container text-center">
-													<h2 className="move-text-btns__font-title">
-														&#x21e1; TEXT OPTIONS &#x21e1;
-													</h2>
-													<Select
-														menuPlacement="top"
-														placeholder="Text color"
-														className="move-text-btns move-text-btns__font-color"
-														onChange={this.onSelectedChangeColor}
-														options={optionsColor}
-													/>
-													<button
-														className="move-text-btns move-text-btns__up"
-														onClick={this.decreaseCounter}
-													>
-														Move text Up &#x21e7;
-													</button>
-													<button
-														className="move-text-btns move-text-btns__down"
-														onClick={this.increaseCounter}
-													>
-														Move text Down &#x21e9;
-													</button>
-													<button
-														className="move-text-btns move-text-btns__left"
-														onClick={this.increaseCounterSides}
-													>
-														Move text Left &#x21e6;
-													</button>
-													<button
-														className="move-text-btns move-text-btns__right"
-														onClick={this.decreaseCounterSides}
-													>
-														Move text Right &#x21e8;
-													</button>
-													<button
-														className="move-text-btns move-text-btns__increase-font"
-														onClick={this.increaseFont}
-													>
-														Increase Font &#x2b;
-													</button>
-													<button
-														className="move-text-btns move-text-btns__decrease-font"
-														onClick={this.decreaseFont}
-													>
-														Decrease Font &#x2212;
-													</button>
-												</div>
-											) : null}
-											{/* BACKGROUND IMAGE MUGS */}
-											{this.state.bg.length > 0 ? (
-												<div className="bg-container-mugs text-center">
-													<img
-														style={
-															this.state.textOnMugs.lenght > 0
-																? { height: "65%" }
-																: { height: "85%" }
-														}
-														className="bg-image-mug"
-														src={this.state.bg}
-														alt="bg"
-													/>
-												</div>
-											) : null}
-										</div>
-									</div>
+									<Mugs
+										productImg={this.state.productImg}
+										productImgBack={this.state.productImgBack}
+										imagePreviewUrl={this.state.imagePreviewUrl}
+										bg={this.state.bg}
+										textOnMugs={this.state.textOnMugs}
+										textFormatOptions={this.state.textFormatOptions}
+									/>
 								) : null}
 							</div>
 						) : (
@@ -796,74 +634,101 @@ export default class index extends Component {
 							</div>
 						)}
 						{this.state.toggleStep2 ? (
-							<div className="text-center step-2-container">
-								{/* CONTROLS TO ADD CONTENT ON MUGS */}
-								<h2
-									onClick={() => {
-										this.fileInput.click();
-									}}
-									className="heading-product heading-product__upload text-center"
-								>
-									&#x2912; CLICK TO UPLOAD PHOTO
-								</h2>
-								<Select
-									className="background-select"
-									menuPlacement="top"
-									placeholder="Choose background (optional)"
-									options={optionsBackgrounds}
-									onChange={this.onSelectedChange}
-								/>
-								<input
-									ref={(fileInput) => (this.fileInput = fileInput)}
-									className="input-img"
-									type="file"
-									onChange={this._handleImageChange}
-									style={{ display: "none" }}
-								/>
-								<h2
-									onClick={this.handleFocusRef}
-									className="heading-product heading-product__message"
-								>
-									&darr; CLICK TO ADD A MESSAGE &darr;{" "}
-									{50 - this.state.textOnMugs.length + " letters left"}
-								</h2>
-								{this.state.showMsgInput ? (
-									<div className="text-area-container">
-										<textarea
-											// ref={this.textRef}
-											maxLength="50"
-											className="text-msg-input "
-											placeholder="Type your message here"
-											name="textOnMugs"
-											onChange={this.onChangeHandler}
-											type="text"
-										/>
+							<div className="step-2-container">
+								{/* MUGS */}
+								<div className="  controls-to-add-content-to-mugs">
+									{/* CONTROLS TO ADD CONTENT ON MUGS */}
+									{/* QUANTITY */}
+									<div className="qty-container">
+										<h4 className="h2-qty">
+											QTY:
+											<div className="qty-symbols qty-symbols__number">
+												{this.state.qty}
+											</div>
+											<button
+												onClick={this.increaseQty}
+												className="qty-symbols qty-symbols__plus"
+											>
+												+
+											</button>
+											<button
+												onClick={this.decreaseQty}
+												className="qty-symbols qty-symbols__minus"
+											>
+												-
+											</button>{" "}
+										</h4>
 									</div>
-								) : null}
-								{this.state.imagePreviewUrl.length > 0 ||
-								this.state.textOnMugs !== "" ? (
-									<div className="continue-button-container">
-										<p className="agree-with-order">
-											<input
-												className="checkbox-order"
-												onChange={this.toggleChangeTermsAndConditions}
-												type="checkbox"
-												name="checkbox"
-												value={this.state.notChecked}
+									<h2
+										onClick={() => {
+											this.fileInput.click();
+										}}
+										className="heading-product heading-product__upload text-center"
+									>
+										&#x2912; CLICK TO UPLOAD PHOTO
+									</h2>
+									<Select
+										className="background-select"
+										menuPlacement="top"
+										placeholder="Choose background (optional)"
+										options={optionsBackgrounds}
+										onChange={this.onSelectedChange}
+									/>
+									<input
+										ref={(fileInput) => (this.fileInput = fileInput)}
+										className="input-img"
+										type="file"
+										onChange={this._handleImageChange}
+										style={{ display: "none" }}
+									/>
+									<h2
+										onClick={this.handleFocusRef}
+										className="heading-product heading-product__message"
+									>
+										&darr; CLICK TO ADD A MESSAGE &darr;{" "}
+										{50 - this.state.textOnMugs.length + " letters left"}
+									</h2>
+									{this.state.showMsgInput ? (
+										<div className="text-area-container">
+											<textarea
+												maxLength="50"
+												className="text-msg-input "
+												placeholder="Type your message here"
+												name="textOnMugs"
+												onChange={this.onChangeHandler}
+												type="text"
 											/>
-											<b> I confirm my order is accurate</b>
-										</p>
-										<p className="error-msg-confirm-product color-yellow">
-											{this.state.errorMsg}
-										</p>
-										<button
-											onClick={this.screenshot}
-											className="continue-button"
-										>
-											Click here if you're done &#10003;
-										</button>
-									</div>
-								) : null}
+										</div>
+									) : null}
+
+									{this.state.imagePreviewUrl.length > 0 ||
+									this.state.textOnMugs !== "" ? (
+										<div className="continue-button-container">
+											<p className="agree-with-order">
+												<input
+													className="checkbox-order"
+													onChange={this.toggleChangeTermsAndConditions}
+													type="checkbox"
+													name="checkbox"
+													value={this.state.notChecked}
+												/>
+												<b> I confirm my product is accurate</b>
+											</p>
+											{this.state.errorMsg ? (
+												<p className="error-msg-confirm-product color-yellow">
+													&#8593; {this.state.errorMsg}
+												</p>
+											) : null}
+											<button
+												onClick={this.screenshot}
+												className="continue-button"
+											>
+												Click here if you're done &#10003;
+											</button>
+										</div>
+									) : null}
+								</div>
+								{/* MUGS */}
 							</div>
 						) : null}
 
@@ -885,7 +750,6 @@ export default class index extends Component {
 						<Modal
 							style={customStylesCheckout}
 							isOpen={this.state.modalToCheckout}
-							// onRequestClose={this.closeModalCheckout}
 						>
 							<span className="x-close-modal" onClick={this.closeModalCheckout}>
 								X

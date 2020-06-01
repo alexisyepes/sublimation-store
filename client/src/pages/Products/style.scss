@@ -191,7 +191,7 @@
 	}
 }
 
-.step-2-container {
+.controls-to-add-content-to-mugs {
 	background-color: rgb(39, 37, 37);
 	padding: 20px;
 	margin: 5px;
@@ -242,9 +242,50 @@
 		text-align: left;
 	}
 
+	.qty-container {
+		background-color: #fff;
+		width: 15%;
+		border-radius: 5px;
+
+		.h2-qty {
+			text-align: center;
+			padding: 4px 5px;
+
+			.qty-symbols {
+				margin-left: 1px;
+				border-radius: 5px;
+				// width: 20px;
+				display: inline-block;
+
+				&__number {
+					border: solid 1p black;
+					display: inline;
+					margin-left: 10px;
+				}
+
+				&__plus {
+					margin-left: 15px;
+					background-color: rgb(20, 12, 6);
+					color: white;
+					cursor: pointer;
+					font-size: 20px;
+					padding: 3%;
+				}
+
+				&__minus {
+					background-color: rgb(20, 12, 6);
+					color: white;
+					cursor: pointer;
+					font-size: 20px;
+					padding: 3% 4%;
+				}
+			}
+		}
+	}
+
 	.continue-button-container {
 		text-align: left;
-		margin-top: 50px;
+		margin-top: 10px;
 
 		.agree-with-order {
 			color: white;
