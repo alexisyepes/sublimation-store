@@ -1,3 +1,60 @@
-.img-product__shirt {
-	width: 40%;
+.shirt-container {
+	position: relative;
+
+	.img-product-container {
+		position: relative;
+		width: 90%;
+
+		.hide-x {
+			position: absolute;
+			left: 46%;
+			top: 5%;
+			background-color: #fff;
+			padding: 2px;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+
+		.img-product__shirt {
+			width: 22%;
+			margin-top: 20px;
+		}
+
+		.img-preview__shirt {
+			width: 6%;
+			position: absolute;
+			top: 38%;
+			left: 47%;
+		}
+	}
+
+	.text-container-shirts-parent {
+		width: 40%;
+		position: absolute;
+		top: 60%;
+		left: 40%;
+
+		.text-on-shirts {
+			font-size: 45px;
+			width: 22%;
+			height: 350px;
+			top: 10%;
+			left: 10%;
+			z-index: 2;
+			// display: inline-block;
+			// position: absolute;
+
+			&__container {
+				white-space: pre-wrap;
+				font-size: 30px;
+				font-family: "Arial Black", Gadget, sans-serif;
+			}
+		}
+	}
+
+	.parent-container-text-control {
+		width: 100%;
+		position: absolute;
+		right: 0;
+	}
 }

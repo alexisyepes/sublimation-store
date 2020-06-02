@@ -89,7 +89,7 @@ const product = [
 		},
 		Shirt: {
 			name: "shirt",
-			price: 1400,
+			price: 1800,
 		},
 		Pillow: {
 			name: "pillow",
@@ -141,6 +141,10 @@ export default class index extends Component {
 			mugPrice: 0,
 			productToPay: [],
 			cart: 0,
+			totalMugsInCart: 0,
+			totalShirtsInCart: 0,
+			totalPillowsInCart: 0,
+			totalKeychainsInCart: 0,
 			firstName: "",
 			email: "",
 			billingDetails: false,
@@ -223,7 +227,7 @@ export default class index extends Component {
 			step2ActualProd: "shirt",
 			step2: true,
 		});
-		console.log(this.state.productImgShirt);
+		// console.log(this.state.productImgShirt);
 	};
 
 	handlePillowcaseImg = () => {
@@ -305,6 +309,10 @@ export default class index extends Component {
 				textOnMugs: "",
 				notChecked: true,
 				cart: [],
+				totalMugsInCart: 0,
+				totalShirtsInCart: 0,
+				totalPillowsInCart: 0,
+				totalKeychainsInCart: 0,
 				qty: 1,
 				productToPay: [],
 				showMsgInput: false,
@@ -410,7 +418,48 @@ export default class index extends Component {
 						product[0].Mug.price * this.state.qty
 					),
 					cart: this.state.cart + this.state.qty,
+					totalMugsInCart: this.state.totalMugsInCart + this.state.qty,
 				});
+			}
+		);
+	};
+
+	screenshotShirts = async () => {
+		if (this.state.notChecked === true) {
+			return this.setState({
+				errorMsg: "Confirm before continuing",
+			});
+		}
+
+		this.toggleModalToConfirmOrder();
+
+		await html2canvas(document.getElementById("product-screen-container")).then(
+			async (canvas) => {
+				// zip and convert
+				var zip = new JSZip();
+				var savable = new Image();
+				savable.src = canvas.toDataURL("image/jpeg", 0.5);
+				zip.file(
+					"image.png",
+					savable.src.substr(savable.src.indexOf(",") + 1),
+					{
+						base64: true,
+					}
+				);
+
+				await this.setState({
+					fileArray: [...this.state.fileArray, this.state.file],
+					screenshot: [...this.state.screenshot, savable.src],
+					toggleStep3: true,
+					toggleStep2: false,
+					textFormatOptions: false,
+					productToPay: this.state.productToPay.concat(
+						product[0].Shirt.price * this.state.qty
+					),
+					cart: this.state.cart + this.state.qty,
+					totalShirtsInCart: this.state.totalShirtsInCart + this.state.qty,
+				});
+				await console.log(this.state.fileArray);
 			}
 		);
 	};
@@ -428,6 +477,7 @@ export default class index extends Component {
 				notChecked: true,
 				cart: this.state.cart - this.state.qty,
 				qty: 1,
+				totalMugsInCart: 0,
 				productToPay: this.state.productToPay.slice(0, -1),
 				fileArray: this.state.fileArray.slice(0, -1),
 				screenshot: this.state.screenshot.slice(0, -1),
@@ -544,13 +594,49 @@ export default class index extends Component {
 									<h1 className="text-center arrowToRight arrowDown">
 										&#8659;
 									</h1>
+									{/* {this.state.step2ActualProd === "mug" ? (
+										<p>
+											ea. Mug: ${this.state.mugPrice}.00 {""}
+											<span>Qty: {this.state.totalMugsInCart}</span>{" "}
+										</p>
+									) : null}
+									{this.state.step2ActualProd === "shirt" ? (
+										<p>
+											ea. Mug: ${product[0].Shirt.price * 0.01}.00 {""}
+											<span>Qty: {this.state.totalShirtsInCart}</span>{" "}
+										</p>
+									) : null} */}
+
 									<p>
-										Individual Item Price: $
-										{this.state.mugPrice * this.state.qty}
-									</p>
-									<p>Tax: ${0.13 * this.state.mugPrice * this.state.qty}</p>
-									<hr />
-									<p>
+										{this.state.totalMugsInCart > 0 ? (
+											<div>
+												<p>Total Mugs in Cart: {this.state.totalMugsInCart}</p>
+												<p>
+													{" "}
+													ea. Mug: ${product[0].Mug.price * 0.01}.00 {""}
+												</p>
+											</div>
+										) : null}
+										{this.state.totalShirtsInCart > 0 ? (
+											<div>
+												<p>
+													Total Shirts in Cart: {this.state.totalShirtsInCart}
+												</p>
+												<p>
+													{" "}
+													ea. Shirt: ${product[0].Shirt.price * 0.01}.00 {""}
+												</p>
+											</div>
+										) : null}
+										<hr />
+										<p>
+											Total Tax: $
+											{0.13 * this.state.mugPrice * this.state.totalMugsInCart +
+												product[0].Shirt.price *
+													this.state.totalShirtsInCart *
+													0.01 *
+													0.13}
+										</p>
 										Total in Cart: $
 										{this.state.productToPay.reduce((a, b) => a + b) * 0.01 +
 											this.state.productToPay.reduce((a, b) => a + b) *
@@ -600,46 +686,49 @@ export default class index extends Component {
 					</div>
 
 					<div className="virtual-image-container">
-						<h1 className="text-center">MY PRODUCT</h1>
+						<h1 className="product-main-title">MY PRODUCT</h1>
 						{this.state.step2 ? (
 							<div>
-								<div>
-									<div className="product-image-container text-center">
-										{this.state.toggleSelectProductBtn ? (
+								<div className="product-image-container text-center">
+									{this.state.toggleSelectProductBtn ? (
+										<button
+											onClick={this.productSelectedConfirmed}
+											className="confirm-product-button"
+										>
+											<span aria-label="0" role="img">
+												{" "}
+												&#10003;
+											</span>
+											Confirm product and continue to step 2
+										</button>
+									) : (
+										<div className="startover-btn-container">
 											<button
-												onClick={this.productSelectedConfirmed}
-												className="confirm-product-button"
+												onClick={this.updateComponent}
+												className="startOver-button"
 											>
-												<span aria-label="0" role="img">
-													{" "}
-													&#10003;
-												</span>
-												Confirm product and continue to step 2
+												&#8634; (Empty cart) Reset and start Over
 											</button>
-										) : (
-											<div className="startover-btn-container">
-												<button
-													onClick={this.updateComponent}
-													className="startOver-button"
-												>
-													&#8634; (Empty cart) Reset and start Over
-												</button>
-											</div>
-										)}
-										{this.state.step2ActualProd === "mug" ? (
-											<Mugs
-												productImg={this.state.productImg}
-												productImgBack={this.state.productImgBack}
-												imagePreviewUrl={this.state.imagePreviewUrl}
-												bg={this.state.bg}
-												textOnMugs={this.state.textOnMugs}
-												textFormatOptions={this.state.textFormatOptions}
-											/>
-										) : null}
-										{this.state.step2ActualProd === "shirt" ? (
-											<Shirts img={this.state.productImgShirt} />
-										) : null}
-									</div>
+										</div>
+									)}
+									{this.state.step2ActualProd === "mug" ? (
+										<Mugs
+											productImg={this.state.productImg}
+											productImgBack={this.state.productImgBack}
+											imagePreviewUrl={this.state.imagePreviewUrl}
+											bg={this.state.bg}
+											textOnMugs={this.state.textOnMugs}
+											textFormatOptions={this.state.textFormatOptions}
+										/>
+									) : null}
+									{this.state.step2ActualProd === "shirt" ? (
+										<Shirts
+											img={this.state.productImgShirt}
+											imagePreviewUrl={this.state.imagePreviewUrl}
+											textOnMugs={this.state.textOnMugs}
+											textFormatOptions={this.state.textFormatOptions}
+										/>
+									) : null}
 								</div>
 							</div>
 						) : (
@@ -682,13 +771,15 @@ export default class index extends Component {
 										>
 											&#x2912; CLICK TO UPLOAD PHOTO
 										</h2>
-										<Select
-											className="background-select"
-											menuPlacement="top"
-											placeholder="Choose background (optional)"
-											options={optionsBackgrounds}
-											onChange={this.onSelectedChange}
-										/>
+										{this.state.step2ActualProd === "shirt" ? null : (
+											<Select
+												className="background-select"
+												menuPlacement="top"
+												placeholder="Choose background (optional)"
+												options={optionsBackgrounds}
+												onChange={this.onSelectedChange}
+											/>
+										)}
 										<input
 											ref={(fileInput) => (this.fileInput = fileInput)}
 											className="input-img"
@@ -734,12 +825,22 @@ export default class index extends Component {
 														&#8593; {this.state.errorMsg}
 													</p>
 												) : null}
-												<button
-													onClick={this.screenshotMugs}
-													className="continue-button"
-												>
-													Click here if you're done &#10003;
-												</button>
+												{this.state.step2ActualProd === "mug" ? (
+													<button
+														onClick={this.screenshotMugs}
+														className="continue-button"
+													>
+														Click here if you're done &#10003;
+													</button>
+												) : null}
+												{this.state.step2ActualProd === "shirt" ? (
+													<button
+														onClick={this.screenshotShirts}
+														className="continue-button"
+													>
+														Click here if you're done &#10003;
+													</button>
+												) : null}
 											</div>
 										) : null}
 									</div>

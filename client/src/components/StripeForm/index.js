@@ -165,10 +165,10 @@ const Index = (props) => {
 							imgForProductRequests
 						);
 						imgForProductResponses.map((res) => {
-							// console.log(res.data.secure_url);
-							return res.data.secure_url
-								? imgUrl.push(res.data.secure_url)
-								: null;
+							if (!res) {
+								return imgUrl.push("No photo provided!");
+							}
+							return imgUrl.push(res.data.secure_url);
 						});
 
 						const screenshotsResponses = await axios.all(screenshotsRequests);
