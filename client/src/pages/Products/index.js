@@ -152,6 +152,7 @@ export default class index extends Component {
 			showMsgInput: false,
 			qty: 1,
 			step2ActualProd: "",
+			designSquare: true,
 		};
 	}
 
@@ -253,6 +254,7 @@ export default class index extends Component {
 			toggleStep3: false,
 			toggleStep2: true,
 			toggleSelectProductBtn: false,
+			designSquare: false,
 		});
 	};
 
@@ -292,6 +294,7 @@ export default class index extends Component {
 			)
 		) {
 			this.setState({
+				modalToCheckout: false,
 				btnStep1: true,
 				btnStep2: false,
 				btnStep3: false,
@@ -470,20 +473,40 @@ export default class index extends Component {
 				`If you continue, your progress will be lost and you will need to re-create this product and its quantities. \nDo you still want to procceed?`
 			)
 		) {
-			await this.setState({
-				toggleStep3: false,
-				toggleStep2: true,
-				textFormatOptions: true,
-				notChecked: true,
-				cart: this.state.cart - this.state.qty,
-				qty: 1,
-				totalMugsInCart: 0,
-				productToPay: this.state.productToPay.slice(0, -1),
-				fileArray: this.state.fileArray.slice(0, -1),
-				screenshot: this.state.screenshot.slice(0, -1),
-				imagePreviewUrl: "",
-				file: "",
-			});
+			if (this.state.step2ActualProd === "mug") {
+				await this.setState({
+					toggleStep3: false,
+					toggleStep2: true,
+					textFormatOptions: true,
+					notChecked: true,
+					cart: this.state.cart - this.state.qty,
+					// qty: 1,
+					totalMugsInCart: this.state.totalMugsInCart - this.state.qty,
+					// totalShirtsInCart: this.state.totalShirtsInCart - this.state.qty,
+					productToPay: this.state.productToPay.slice(0, -1),
+					fileArray: this.state.fileArray.slice(0, -1),
+					screenshot: this.state.screenshot.slice(0, -1),
+					imagePreviewUrl: "",
+					file: "",
+				});
+			}
+			if (this.state.step2ActualProd === "shirt") {
+				await this.setState({
+					toggleStep3: false,
+					toggleStep2: true,
+					textFormatOptions: true,
+					notChecked: true,
+					cart: this.state.cart - this.state.qty,
+					// qty: 1,
+					// totalMugsInCart: this.state.totalMugsInCart - this.state.qty,
+					totalShirtsInCart: this.state.totalShirtsInCart - this.state.qty,
+					productToPay: this.state.productToPay.slice(0, -1),
+					fileArray: this.state.fileArray.slice(0, -1),
+					screenshot: this.state.screenshot.slice(0, -1),
+					imagePreviewUrl: "",
+					file: "",
+				});
+			}
 		}
 	};
 
@@ -517,13 +540,19 @@ export default class index extends Component {
 		});
 	};
 
+	toggleDesignSquare = async () => {
+		this.setState((prevState) => ({
+			designSquare: !prevState.designSquare,
+		}));
+	};
+
 	render() {
 		return (
 			<div className="product-creation-container">
 				<h1 className="home__heading text-center">
 					Create your product in 3 easy steps{" "}
 				</h1>
-				{this.state.cart > 0 && !this.state.modalToCheckout ? (
+				{!this.state.modalToCheckout ? (
 					<div onClick={this.modalToCheckoutOpen} className="cart-container">
 						<span aria-label="0" role="img">
 							&#128722; {this.state.cart}
@@ -594,54 +623,52 @@ export default class index extends Component {
 									<h1 className="text-center arrowToRight arrowDown">
 										&#8659;
 									</h1>
-									{/* {this.state.step2ActualProd === "mug" ? (
-										<p>
-											ea. Mug: ${this.state.mugPrice}.00 {""}
-											<span>Qty: {this.state.totalMugsInCart}</span>{" "}
-										</p>
+									{this.state.totalMugsInCart > 0 ? (
+										<div>
+											<p>
+												Total Mugs in Cart: {this.state.totalMugsInCart}{" "}
+												<span>(Mug: ${product[0].Mug.price * 0.01}.00)</span>
+											</p>
+										</div>
 									) : null}
-									{this.state.step2ActualProd === "shirt" ? (
-										<p>
-											ea. Mug: ${product[0].Shirt.price * 0.01}.00 {""}
-											<span>Qty: {this.state.totalShirtsInCart}</span>{" "}
-										</p>
-									) : null} */}
-
+									{this.state.totalShirtsInCart > 0 ? (
+										<div>
+											<p>
+												Total Shirts in Cart: {this.state.totalShirtsInCart}{" "}
+												{""}
+												<span>
+													(Shirt: ${product[0].Shirt.price * 0.01}.00 )
+												</span>
+											</p>
+										</div>
+									) : null}
 									<p>
-										{this.state.totalMugsInCart > 0 ? (
-											<div>
-												<p>Total Mugs in Cart: {this.state.totalMugsInCart}</p>
-												<p>
-													{" "}
-													ea. Mug: ${product[0].Mug.price * 0.01}.00 {""}
-												</p>
-											</div>
-										) : null}
-										{this.state.totalShirtsInCart > 0 ? (
-											<div>
-												<p>
-													Total Shirts in Cart: {this.state.totalShirtsInCart}
-												</p>
-												<p>
-													{" "}
-													ea. Shirt: ${product[0].Shirt.price * 0.01}.00 {""}
-												</p>
-											</div>
-										) : null}
-										<hr />
-										<p>
-											Total Tax: $
-											{0.13 * this.state.mugPrice * this.state.totalMugsInCart +
-												product[0].Shirt.price *
-													this.state.totalShirtsInCart *
-													0.01 *
-													0.13}
-										</p>
-										Total in Cart: $
-										{this.state.productToPay.reduce((a, b) => a + b) * 0.01 +
-											this.state.productToPay.reduce((a, b) => a + b) *
+										Sub-Total: $
+										{product[0].Mug.price * 0.01 * this.state.totalMugsInCart +
+											product[0].Shirt.price *
 												0.01 *
-												0.13}{" "}
+												this.state.totalShirtsInCart}
+										.00
+									</p>
+									<p>
+										Total Tax: $
+										{(
+											0.13 * this.state.mugPrice * this.state.totalMugsInCart +
+											product[0].Shirt.price *
+												this.state.totalShirtsInCart *
+												0.01 *
+												0.13
+										).toFixed(2)}
+									</p>
+									<hr />
+									<p>
+										Total to Pay: $
+										{this.state.productToPay.length > 0
+											? this.state.productToPay.reduce((a, b) => a + b) * 0.01 +
+											  this.state.productToPay.reduce((a, b) => a + b) *
+													0.01 *
+													0.13
+											: 0}{" "}
 										<span aria-label="0" role="img">
 											&#128722;
 										</span>
@@ -657,7 +684,7 @@ export default class index extends Component {
 											onClick={this.goBackToStep2}
 											className="modify-product-btn"
 										>
-											Modify my product {""}
+											Modify the Last product added {""}
 											<span aria-label="0" role="img">
 												<i className="fas fa-cog"></i>
 											</span>
@@ -704,13 +731,14 @@ export default class index extends Component {
 									) : (
 										<div className="startover-btn-container">
 											<button
-												onClick={this.updateComponent}
+												onClick={this.resetForNewProduct}
 												className="startOver-button"
 											>
-												&#8634; (Empty cart) Reset and start Over
+												&#8634; Back to Step 1
 											</button>
 										</div>
 									)}
+
 									{this.state.step2ActualProd === "mug" ? (
 										<Mugs
 											productImg={this.state.productImg}
@@ -723,6 +751,8 @@ export default class index extends Component {
 									) : null}
 									{this.state.step2ActualProd === "shirt" ? (
 										<Shirts
+											showGuide={this.state.designSquare}
+											toggleDesignSquare={this.toggleDesignSquare}
 											img={this.state.productImgShirt}
 											imagePreviewUrl={this.state.imagePreviewUrl}
 											textOnMugs={this.state.textOnMugs}
@@ -872,30 +902,90 @@ export default class index extends Component {
 							</span>
 
 							{!this.state.checkOutStripe ? (
-								<form
-									className="checkout-form"
-									onSubmit={this.submitBillingDetails}
-								>
-									<h3 className="text-center">
-										Fill out your information to checkout
-									</h3>
-									<input
-										className="input-checkout"
-										name="firstName"
-										onChange={this.onChangeHandlerBillingDetails}
-										type="text"
-										placeholder="Full Name"
-									/>
-									<input
-										className="input-checkout"
-										name="email"
-										onChange={this.onChangeHandlerBillingDetails}
-										type="email"
-										placeholder="Email"
-									/>
-									<button className="btn-checkout">Next &#8594;</button>
-									<p className="text-center error-msg">{this.state.errorMsg}</p>
-								</form>
+								<div className="text-center">
+									<button
+										onClick={this.updateComponent}
+										className="empty-cart-button__checkout"
+									>
+										<i className="fas fa-trash"></i> Cancel and empty cart
+									</button>
+									{this.state.totalMugsInCart > 0 ? (
+										<div>
+											<p>
+												Total Mugs in Cart: {this.state.totalMugsInCart}{" "}
+												<span>(Mug: ${product[0].Mug.price * 0.01}.00)</span>
+											</p>
+										</div>
+									) : null}
+									{this.state.totalShirtsInCart > 0 ? (
+										<div>
+											<p>
+												Total Shirts in Cart: {this.state.totalShirtsInCart}{" "}
+												{""}
+												<span>
+													(Shirt: ${product[0].Shirt.price * 0.01}.00 )
+												</span>
+											</p>
+										</div>
+									) : null}
+									<p>
+										Sub-Total: $
+										{product[0].Mug.price * 0.01 * this.state.totalMugsInCart +
+											product[0].Shirt.price *
+												0.01 *
+												this.state.totalShirtsInCart}
+										.00
+									</p>
+									<p>
+										Total Tax: $
+										{(
+											0.13 * this.state.mugPrice * this.state.totalMugsInCart +
+											product[0].Shirt.price *
+												this.state.totalShirtsInCart *
+												0.01 *
+												0.13
+										).toFixed(2)}
+									</p>
+									<hr />
+									<p>
+										Total to Pay: $
+										{this.state.productToPay.length > 0
+											? this.state.productToPay.reduce((a, b) => a + b) * 0.01 +
+											  this.state.productToPay.reduce((a, b) => a + b) *
+													0.01 *
+													0.13
+											: 0}{" "}
+										<span aria-label="0" role="img">
+											&#128722;
+										</span>
+									</p>
+									<form
+										className="checkout-form"
+										onSubmit={this.submitBillingDetails}
+									>
+										<h3 className="text-center">
+											Fill out your information to checkout
+										</h3>
+										<input
+											className="input-checkout"
+											name="firstName"
+											onChange={this.onChangeHandlerBillingDetails}
+											type="text"
+											placeholder="Full Name"
+										/>
+										<input
+											className="input-checkout"
+											name="email"
+											onChange={this.onChangeHandlerBillingDetails}
+											type="email"
+											placeholder="Email"
+										/>
+										<button className="btn-checkout">Next &#8594;</button>
+										<p className="text-center error-msg">
+											{this.state.errorMsg}
+										</p>
+									</form>
+								</div>
 							) : null}
 
 							{this.state.billingDetails ? (

@@ -42,7 +42,6 @@ class index extends Component {
 		super(props);
 
 		this.state = {
-			designSquare: false,
 			// css
 			counter: 50,
 			marginTop: "10px",
@@ -113,20 +112,20 @@ class index extends Component {
 		});
 	};
 
-	toggleDesignSquare = async () => {
-		this.setState((prevState) => ({
-			designSquare: !prevState.designSquare,
-		}));
-	};
+	// toggleDesignSquare = async () => {
+	// 	this.setState((prevState) => ({
+	// 		designSquare: !prevState.designSquare,
+	// 	}));
+	// };
 
 	render() {
 		return (
 			<div className="shirt-container">
 				<div className="img-product-container text-center">
-					<button onClick={this.toggleDesignSquare} className="hide-x">
+					<button onClick={this.props.toggleDesignSquare} className="hide-x">
 						Hide / Show &#8595;
 					</button>
-					{this.state.designSquare ? (
+					{this.props.showGuide ? (
 						<img
 							className="img-product__shirt"
 							src="./images/shirt-empty.png"

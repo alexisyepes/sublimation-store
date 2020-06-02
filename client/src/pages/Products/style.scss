@@ -190,6 +190,20 @@
 			}
 		}
 	}
+
+	.empty-cart-button__checkout {
+		background-color: darkred;
+		color: white;
+		margin-left: 10px;
+		font-size: 16px;
+		padding: 5px;
+		border-radius: 10px;
+		cursor: pointer;
+
+		&:hover {
+			background-color: red;
+		}
+	}
 }
 
 .controls-to-add-content-to-mugs {
