@@ -79,9 +79,11 @@ router.post("/products/payment", async (req, res) => {
 		}
 	} catch (error) {
 		console.log(error.message);
-		return res.status(400).json({
-			message: error.message,
-		});
+		if (error.statusCode === 402) {
+			res.status(402).send(error.message);
+		} else {
+			res.status(400).json({ message: error.message });
+		}
 	}
 });
 

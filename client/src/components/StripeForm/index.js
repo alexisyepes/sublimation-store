@@ -13,7 +13,7 @@ import "./style.scss";
 const Index = (props) => {
 	const [loadingAxiosReq, setLoadingAxiosReq] = useState(false);
 	const [errorMsg, setErrorMsg] = useState("");
-	const [clicks, setClicks] = useState(0);
+	const [clicks, setClicks] = useState(1);
 
 	const CheckoutForm = () => {
 		const stripe = useStripe();
@@ -21,8 +21,10 @@ const Index = (props) => {
 		const handleSubmitCheckoutForm = async (event) => {
 			event.preventDefault();
 			setClicks(clicks + 1);
-			if (clicks >= 1) {
-				return console.log("already clicked! be patient!");
+			console.log(clicks);
+			if (clicks !== 1) {
+				setLoadingAxiosReq(false);
+				return setClicks(1);
 			}
 
 			const { error, paymentMethod } = await stripe.createPaymentMethod({
@@ -53,8 +55,9 @@ const Index = (props) => {
 					stripe.confirmCardPayment(data.clientSecret).then(async (result) => {
 						if (result.error) {
 							alert(result.error.message);
+							props.resetModal();
+							setErrorMsg("");
 							setLoadingAxiosReq(false);
-							// return window.location.reload();
 						} else {
 							if (result.paymentIntent.status === "succeeded") {
 								let imgUrl = [];
@@ -202,9 +205,13 @@ const Index = (props) => {
 					}
 				}
 			} catch (error) {
-				console.log(error);
-				setErrorMsg(error);
-				setLoadingAxiosReq(false);
+				// console.log(error.response.data);
+				alert(
+					error.response.data + "\nTry to check out using a different card"
+				);
+				props.resetModal();
+
+				return setLoadingAxiosReq(false);
 			}
 		};
 
@@ -215,7 +222,11 @@ const Index = (props) => {
 				{loadingAxiosReq ? (
 					<LoadPage />
 				) : (
-					<button type="submit" className="btns-checkout-stripe ">
+					<button
+						disabled={loadingAxiosReq}
+						type="submit"
+						className="btns-checkout-stripe "
+					>
 						Pay now {""}
 					</button>
 				)}

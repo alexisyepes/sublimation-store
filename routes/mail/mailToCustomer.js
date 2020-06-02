@@ -19,7 +19,7 @@ const sendMail = (email) => {
 		to: email,
 		subject: "Your product",
 		text:
-			"Thanks for your purchase! \nYour order will be ready for pick up soon. \nYou will receive an email shortly confirming your pickup date and time. \n\nwww.mymemoriesprinting.ca",
+			"Thanks for your purchase! \nYour order will be ready for pick up soon. \nYou will receive an email shortly confirming your pickup date and time. \n\nwww.aypsublimation.ca",
 	};
 
 	transporter.sendMail(mailOptions, function (err, data) {

@@ -6,6 +6,7 @@ import Modal from "react-modal";
 // import axios from "axios";
 import CheckoutStripe from "../../components/StripeForm";
 import Mugs from "../../components/Mugs";
+import Shirts from "../../components/Shirt";
 
 import "./style.scss";
 
@@ -117,12 +118,13 @@ export default class index extends Component {
 					mug1: "./images/mug.png",
 					mug2: "./images/mug-back.png",
 				},
-				"https://cdn.shopify.com/s/files/1/0698/0337/products/l44473_1000x.jpg?v=1516225584",
+				"./images/shirt.png",
 				"https://images-na.ssl-images-amazon.com/images/I/61zYvzxjdHL._AC_SL1500_.jpg",
 				"https://5.imimg.com/data5/PD/DM/MY-13899650/blank-white-square-keychain-rings-for-sublimation-500x500.jpg",
 			],
 			productImg: "",
 			productImgBack: "",
+			productImgShirt: "",
 			finalProductImg: null,
 			file: "",
 			fileArray: [],
@@ -145,6 +147,7 @@ export default class index extends Component {
 			checkOutStripe: false,
 			showMsgInput: false,
 			qty: 1,
+			step2ActualProd: "",
 		};
 	}
 
@@ -207,14 +210,20 @@ export default class index extends Component {
 			productImg: this.state.productImgArray[0].mug1,
 			productImgBack: this.state.productImgArray[0].mug2,
 			mugPrice: 12.0,
+			productImgShirt: "",
+			step2ActualProd: "mug",
+			step2: true,
 		});
 	};
 
-	handleHatImg = () => {
-		this.setState({
-			productImg: this.state.productImgArray[1],
-			productImgBack: "",
+	handleShirtImg = async () => {
+		await this.setState({
+			productImgShirt: this.state.productImgArray[1],
+			productImg: "",
+			step2ActualProd: "shirt",
+			step2: true,
 		});
+		console.log(this.state.productImgShirt);
 	};
 
 	handlePillowcaseImg = () => {
@@ -365,7 +374,7 @@ export default class index extends Component {
 		});
 	};
 
-	screenshot = async () => {
+	screenshotMugs = async () => {
 		if (this.state.notChecked === true) {
 			return this.setState({
 				errorMsg: "Confirm before continuing",
@@ -402,7 +411,6 @@ export default class index extends Component {
 					),
 					cart: this.state.cart + this.state.qty,
 				});
-				// console.log(this.state.fileArray);
 			}
 		);
 	};
@@ -457,7 +465,6 @@ export default class index extends Component {
 		this.setState({
 			showMsgInput: true,
 		});
-		// this.textRef.current.focus();
 	};
 
 	render() {
@@ -492,8 +499,8 @@ export default class index extends Component {
 								<h2 className="product-select" onClick={this.handleMugImg}>
 									Mug
 								</h2>
-								<h2 className="product-select" onClick={this.handleHatImg}>
-									Hat
+								<h2 className="product-select" onClick={this.handleShirtImg}>
+									Shirt
 								</h2>
 								<h2
 									className="product-select"
@@ -594,141 +601,149 @@ export default class index extends Component {
 
 					<div className="virtual-image-container">
 						<h1 className="text-center">MY PRODUCT</h1>
-						{this.state.productImg.length > 0 ? (
-							<div className="product-image-container text-center">
-								{this.state.toggleSelectProductBtn ? (
-									<button
-										onClick={this.productSelectedConfirmed}
-										className="confirm-product-button"
-									>
-										<span aria-label="0" role="img">
-											{" "}
-											&#10003;
-										</span>
-										Confirm product and continue to step 2
-									</button>
-								) : (
-									<div className="startover-btn-container">
-										<button
-											onClick={this.updateComponent}
-											className="startOver-button"
-										>
-											&#8634; (Empty cart) Reset and start Over
-										</button>
+						{this.state.step2 ? (
+							<div>
+								<div>
+									<div className="product-image-container text-center">
+										{this.state.toggleSelectProductBtn ? (
+											<button
+												onClick={this.productSelectedConfirmed}
+												className="confirm-product-button"
+											>
+												<span aria-label="0" role="img">
+													{" "}
+													&#10003;
+												</span>
+												Confirm product and continue to step 2
+											</button>
+										) : (
+											<div className="startover-btn-container">
+												<button
+													onClick={this.updateComponent}
+													className="startOver-button"
+												>
+													&#8634; (Empty cart) Reset and start Over
+												</button>
+											</div>
+										)}
+										{this.state.step2ActualProd === "mug" ? (
+											<Mugs
+												productImg={this.state.productImg}
+												productImgBack={this.state.productImgBack}
+												imagePreviewUrl={this.state.imagePreviewUrl}
+												bg={this.state.bg}
+												textOnMugs={this.state.textOnMugs}
+												textFormatOptions={this.state.textFormatOptions}
+											/>
+										) : null}
+										{this.state.step2ActualProd === "shirt" ? (
+											<Shirts img={this.state.productImgShirt} />
+										) : null}
 									</div>
-								)}
-								{this.state.productImgArray[0].mug1.length > 0 ? (
-									<Mugs
-										productImg={this.state.productImg}
-										productImgBack={this.state.productImgBack}
-										imagePreviewUrl={this.state.imagePreviewUrl}
-										bg={this.state.bg}
-										textOnMugs={this.state.textOnMugs}
-										textFormatOptions={this.state.textFormatOptions}
-									/>
-								) : null}
+								</div>
 							</div>
 						) : (
 							<div className="arrowToLeft">
 								<h1 className="text-center">&#x21da; Begin with step 1</h1>
 							</div>
 						)}
+
 						{this.state.toggleStep2 ? (
 							<div className="step-2-container">
-								{/* MUGS */}
-								<div className="  controls-to-add-content-to-mugs">
-									{/* CONTROLS TO ADD CONTENT ON MUGS */}
-									{/* QUANTITY */}
-									<div className="qty-container">
-										<h4 className="h2-qty">
-											QTY:
-											<div className="qty-symbols qty-symbols__number">
-												{this.state.qty}
-											</div>
-											<button
-												onClick={this.increaseQty}
-												className="qty-symbols qty-symbols__plus"
-											>
-												+
-											</button>
-											<button
-												onClick={this.decreaseQty}
-												className="qty-symbols qty-symbols__minus"
-											>
-												-
-											</button>{" "}
-										</h4>
-									</div>
-									<h2
-										onClick={() => {
-											this.fileInput.click();
-										}}
-										className="heading-product heading-product__upload text-center"
-									>
-										&#x2912; CLICK TO UPLOAD PHOTO
-									</h2>
-									<Select
-										className="background-select"
-										menuPlacement="top"
-										placeholder="Choose background (optional)"
-										options={optionsBackgrounds}
-										onChange={this.onSelectedChange}
-									/>
-									<input
-										ref={(fileInput) => (this.fileInput = fileInput)}
-										className="input-img"
-										type="file"
-										onChange={this._handleImageChange}
-										style={{ display: "none" }}
-									/>
-									<h2
-										onClick={this.handleFocusRef}
-										className="heading-product heading-product__message"
-									>
-										&darr; CLICK TO ADD A MESSAGE &darr;{" "}
-										{50 - this.state.textOnMugs.length + " letters left"}
-									</h2>
-									{this.state.showMsgInput ? (
-										<div className="text-area-container">
-											<textarea
-												maxLength="50"
-												className="text-msg-input "
-												placeholder="Type your message here"
-												name="textOnMugs"
-												onChange={this.onChangeHandler}
-												type="text"
-											/>
+								{/* CONTROLS TO ADD CONTENT ON MUGS */}
+								{this.state.productImgArray[0].mug1.length > 0 ? (
+									<div className="  controls-to-add-content-to-mugs">
+										{/* QUANTITY */}
+										<div className="qty-container">
+											<h4 className="h2-qty">
+												QTY:
+												<div className="qty-symbols qty-symbols__number">
+													{this.state.qty}
+												</div>
+												<button
+													onClick={this.increaseQty}
+													className="qty-symbols qty-symbols__plus"
+												>
+													+
+												</button>
+												<button
+													onClick={this.decreaseQty}
+													className="qty-symbols qty-symbols__minus"
+												>
+													-
+												</button>{" "}
+											</h4>
 										</div>
-									) : null}
-
-									{this.state.imagePreviewUrl.length > 0 ||
-									this.state.textOnMugs !== "" ? (
-										<div className="continue-button-container">
-											<p className="agree-with-order">
-												<input
-													className="checkbox-order"
-													onChange={this.toggleChangeTermsAndConditions}
-													type="checkbox"
-													name="checkbox"
-													value={this.state.notChecked}
+										<h2
+											onClick={() => {
+												this.fileInput.click();
+											}}
+											className="heading-product heading-product__upload text-center"
+										>
+											&#x2912; CLICK TO UPLOAD PHOTO
+										</h2>
+										<Select
+											className="background-select"
+											menuPlacement="top"
+											placeholder="Choose background (optional)"
+											options={optionsBackgrounds}
+											onChange={this.onSelectedChange}
+										/>
+										<input
+											ref={(fileInput) => (this.fileInput = fileInput)}
+											className="input-img"
+											type="file"
+											onChange={this._handleImageChange}
+											style={{ display: "none" }}
+										/>
+										<h2
+											onClick={this.handleFocusRef}
+											className="heading-product heading-product__message"
+										>
+											&darr; CLICK TO ADD A MESSAGE &darr;{" "}
+											{50 - this.state.textOnMugs.length + " letters left"}
+										</h2>
+										{this.state.showMsgInput ? (
+											<div className="text-area-container">
+												<textarea
+													maxLength="50"
+													className="text-msg-input "
+													placeholder="Type your message here"
+													name="textOnMugs"
+													onChange={this.onChangeHandler}
+													type="text"
 												/>
-												<b> I confirm my product is accurate</b>
-											</p>
-											{this.state.errorMsg ? (
-												<p className="error-msg-confirm-product color-yellow">
-													&#8593; {this.state.errorMsg}
+											</div>
+										) : null}
+
+										{this.state.imagePreviewUrl.length > 0 ||
+										this.state.textOnMugs !== "" ? (
+											<div className="continue-button-container">
+												<p className="agree-with-order">
+													<input
+														className="checkbox-order"
+														onChange={this.toggleChangeTermsAndConditions}
+														type="checkbox"
+														name="checkbox"
+														value={this.state.notChecked}
+													/>
+													<b> I confirm my product is accurate</b>
 												</p>
-											) : null}
-											<button
-												onClick={this.screenshot}
-												className="continue-button"
-											>
-												Click here if you're done &#10003;
-											</button>
-										</div>
-									) : null}
-								</div>
-								{/* MUGS */}
+												{this.state.errorMsg ? (
+													<p className="error-msg-confirm-product color-yellow">
+														&#8593; {this.state.errorMsg}
+													</p>
+												) : null}
+												<button
+													onClick={this.screenshotMugs}
+													className="continue-button"
+												>
+													Click here if you're done &#10003;
+												</button>
+											</div>
+										) : null}
+									</div>
+								) : null}
 							</div>
 						) : null}
 
@@ -784,6 +799,7 @@ export default class index extends Component {
 
 							{this.state.billingDetails ? (
 								<CheckoutStripe
+									resetModal={this.closeModalCheckout}
 									screenshot={this.state.screenshot}
 									imgForProduct={this.state.fileArray}
 									firstName={this.state.firstName}
