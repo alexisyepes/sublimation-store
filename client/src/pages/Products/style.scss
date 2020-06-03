@@ -216,15 +216,40 @@
 		width: 41.5%;
 	}
 
+	.upload-photo-parent {
+		width: 50%;
+		display: grid;
+		grid-template-columns: 50% 50%;
+
+		.clear-photo-btn {
+			width: 50%;
+			height: 30px;
+			margin-top: 8%;
+			margin-left: 25px;
+			font-size: 18px;
+			color: white;
+			cursor: pointer;
+			background-color: rgb(99, 38, 38);
+			border-radius: 10px;
+			outline: none;
+			border: 1px solid rgb(41, 4, 4);
+
+			&:hover {
+				background-color: rgb(204, 10, 10);
+			}
+		}
+	}
+
 	.heading-product {
 		font-size: 20px;
 		padding: 10px;
 		border-radius: 10px;
+		box-shadow: 0px 5px 10px rgb(136, 123, 123);
 
 		&__upload {
 			background-color: rgb(163, 241, 176);
 			cursor: pointer;
-			width: 40%;
+			width: 100%;
 
 			&:hover {
 				background-color: white;
@@ -239,6 +264,10 @@
 			background-color: rgb(163, 241, 176);
 			width: 40%;
 			cursor: pointer;
+
+			&:hover {
+				background-color: white;
+			}
 		}
 	}
 
@@ -259,12 +288,14 @@
 
 	.qty-container {
 		background-color: #fff;
-		width: 15%;
+		width: 25%;
 		border-radius: 5px;
+		display: grid;
+		grid-template-columns: 50% 50%;
 
 		.h2-qty {
 			text-align: center;
-			padding: 4px 5px;
+			// padding: 4px 5px;
 
 			.qty-symbols {
 				margin-left: 1px;
@@ -295,6 +326,11 @@
 					padding: 3% 4%;
 				}
 			}
+		}
+
+		.shirt-size-select {
+			// display: inline;
+			padding: 20px 20px;
 		}
 	}
 
@@ -397,7 +433,7 @@
 	position: absolute;
 	top: -70px;
 	left: 30%;
-	z-index: 10000;
+	// z-index: 10000;
 
 	&:hover {
 		background-color: $color-primary;

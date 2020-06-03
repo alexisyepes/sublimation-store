@@ -123,6 +123,7 @@ const Index = (props) => {
 											console.log(err);
 										});
 									});
+									setLoadingAxiosReq(false);
 									alert(
 										"Your order will be ready soon, check your email for updates"
 									);
@@ -130,6 +131,8 @@ const Index = (props) => {
 								} catch (err) {
 									console.log(err);
 								}
+								props.resetModal();
+								setLoadingAxiosReq(false);
 							}
 						}
 					});
@@ -195,13 +198,18 @@ const Index = (props) => {
 								console.log(err);
 							});
 						});
+						setLoadingAxiosReq(false);
+						props.resetModal();
 						function announceSuccess() {
-							alert("Success...check your email for updates");
+							alert(
+								"Order submitted succesfully... check your email for updates"
+							);
 							window.location.href = "/";
 						}
 						setTimeout(announceSuccess, 1000);
 					} catch (err) {
 						console.log(err);
+						props.resetModal();
 					}
 				}
 			} catch (error) {
@@ -209,9 +217,8 @@ const Index = (props) => {
 				alert(
 					error.response.data + "\nTry to check out using a different card"
 				);
+				setLoadingAxiosReq(false);
 				props.resetModal();
-
-				return setLoadingAxiosReq(false);
 			}
 		};
 

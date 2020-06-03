@@ -43,15 +43,9 @@ class index extends Component {
 
 		this.state = {
 			// css
-			counter: 50,
-			marginTop: "10px",
-			marginDown: null,
+			marginTop: 10,
 			marginRight: -10,
-			marginLeft: null,
-			counterCss: null,
-			counterCssSides: null,
-			counterFontSize: 35,
-			fontSize: null,
+			fontSize: 30,
 			color: "",
 		};
 	}
@@ -62,61 +56,43 @@ class index extends Component {
 		});
 	};
 
-	decreaseCounter = async () => {
-		await this.setState({
-			counterCss: this.state.counterCss - 10,
-		});
-		this.moveDownText();
+	moveTextUp = () => {
+		this.setState((prevState) => ({
+			marginTop: prevState.marginTop + -2,
+		}));
 	};
 
-	increaseCounter = async () => {
-		await this.setState({
-			counterCss: this.state.counterCss + 10,
-		});
-		this.moveDownText();
+	moveTextDown = () => {
+		this.setState((prevState) => ({
+			marginTop: prevState.marginTop + 2,
+		}));
 	};
 
-	increaseCounterSides = async () => {
-		await this.setState({
-			counterCssSides: this.state.counterCssSides + 10,
-			marginRight: this.state.counterCssSides + "px",
-		});
+	moveTextLeft = () => {
+		this.setState((prevState) => ({
+			marginRight: prevState.marginRight + 2,
+		}));
 	};
 
-	decreaseCounterSides = async () => {
-		let counter = this.state.counterCssSides;
-
-		await this.setState({
-			counterCssSides: this.state.counterCssSides - 10,
-			marginRight: counter + "px",
-		});
+	moveTextRight = () => {
+		this.setState((prevState) => ({
+			marginRight: prevState.marginRight - 2,
+		}));
 	};
 
 	increaseFont = async () => {
-		await this.setState({
-			counterFontSize: this.state.counterFontSize + 2,
-			fontSize: this.state.counterFontSize + "px",
-		});
+		await this.setState((prevState) => ({
+			// counterFontSize: this.state.counterFontSize + 2,
+			fontSize: prevState.fontSize + 2,
+		}));
 	};
 
 	decreaseFont = async () => {
-		await this.setState({
-			counterFontSize: this.state.counterFontSize - 2,
-			fontSize: this.state.counterFontSize + "px",
-		});
+		await this.setState((prevState) => ({
+			// counterFontSize: this.state.counterFontSize + 2,
+			fontSize: prevState.fontSize - 2,
+		}));
 	};
-
-	moveDownText = async () => {
-		await this.setState({
-			marginTop: this.state.counterCss + "px",
-		});
-	};
-
-	// toggleDesignSquare = async () => {
-	// 	this.setState((prevState) => ({
-	// 		designSquare: !prevState.designSquare,
-	// 	}));
-	// };
 
 	render() {
 		return (
@@ -152,11 +128,9 @@ class index extends Component {
 						<h3
 							className="text-on-shirts__container text-center"
 							style={{
-								marginTop: this.state.marginTop,
-								marginDown: this.state.marginDown,
-								marginRight: this.state.marginRight,
-								marginLeft: this.state.marginLeft,
-								fontSize: this.state.fontSize,
+								marginTop: this.state.marginTop + "px",
+								marginRight: this.state.marginRight + "px",
+								fontSize: this.state.fontSize + "px",
 								color: this.state.color,
 							}}
 						>
@@ -181,25 +155,25 @@ class index extends Component {
 								/>
 								<button
 									className="move-text-btns move-text-btns__up"
-									onClick={this.decreaseCounter}
+									onClick={this.moveTextUp}
 								>
 									Move text Up &#x21e7;
 								</button>
 								<button
 									className="move-text-btns move-text-btns__down"
-									onClick={this.increaseCounter}
+									onClick={this.moveTextDown}
 								>
 									Move text Down &#x21e9;
 								</button>
 								<button
 									className="move-text-btns move-text-btns__left"
-									onClick={this.increaseCounterSides}
+									onClick={this.moveTextLeft}
 								>
 									Move text Left &#x21e6;
 								</button>
 								<button
 									className="move-text-btns move-text-btns__right"
-									onClick={this.decreaseCounterSides}
+									onClick={this.moveTextRight}
 								>
 									Move text Right &#x21e8;
 								</button>

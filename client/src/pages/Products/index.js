@@ -7,6 +7,7 @@ import Modal from "react-modal";
 import CheckoutStripe from "../../components/StripeForm";
 import Mugs from "../../components/Mugs";
 import Shirts from "../../components/Shirt";
+import Pillow from "../../components/Pillow";
 
 import "./style.scss";
 
@@ -45,6 +46,33 @@ let optionsBackgrounds = [
 	},
 ];
 
+let sizeShirtsOptions = [
+	{
+		value: "xm",
+		label: "XS",
+	},
+	{
+		value: "sm",
+		label: "S",
+	},
+	{
+		value: "m",
+		label: "M",
+	},
+	{
+		value: "l",
+		label: "L",
+	},
+	{
+		value: "xl",
+		label: "XL",
+	},
+	{
+		value: "xx",
+		label: "XX",
+	},
+];
+
 const customStylesCheckout = {
 	content: {
 		top: "50%",
@@ -53,11 +81,13 @@ const customStylesCheckout = {
 		bottom: "auto",
 		marginRight: "-50%",
 		transform: "translate(-50%, -50%)",
-		backgroundColor: "white",
+		backgroundColor: "rgb(192,192,192)",
 		color: "black",
 		borderRadius: "5px",
 		width: "600px",
 		overflow: "visible",
+		border: "1px solid black",
+		boxShadow: "0px 60px 150px black",
 	},
 	overlay: { zIndex: 1000 },
 };
@@ -74,7 +104,7 @@ const customStyles = {
 		color: "white",
 		borderRadius: "5px",
 	},
-	overlay: { zIndex: 1000 },
+	overlay: { zIndex: 10000 },
 };
 
 const product = [
@@ -119,12 +149,14 @@ export default class index extends Component {
 					mug2: "./images/mug-back.png",
 				},
 				"./images/shirt.png",
+				"./images/pillow.png",
 				"https://images-na.ssl-images-amazon.com/images/I/61zYvzxjdHL._AC_SL1500_.jpg",
 				"https://5.imimg.com/data5/PD/DM/MY-13899650/blank-white-square-keychain-rings-for-sublimation-500x500.jpg",
 			],
 			productImg: "",
 			productImgBack: "",
 			productImgShirt: "",
+			productImgPillow: "",
 			finalProductImg: null,
 			file: "",
 			fileArray: [],
@@ -153,6 +185,7 @@ export default class index extends Component {
 			qty: 1,
 			step2ActualProd: "",
 			designSquare: true,
+			shirtSize: "",
 		};
 	}
 
@@ -223,18 +256,20 @@ export default class index extends Component {
 
 	handleShirtImg = async () => {
 		await this.setState({
+			step2ActualProd: "shirt",
 			productImgShirt: this.state.productImgArray[1],
 			productImg: "",
-			step2ActualProd: "shirt",
 			step2: true,
 		});
 		// console.log(this.state.productImgShirt);
 	};
 
-	handlePillowcaseImg = () => {
-		this.setState({
-			productImg: this.state.productImgArray[2],
-			productImgBack: "",
+	handlePillowcaseImg = async () => {
+		await this.setState({
+			step2ActualProd: "pillow",
+			productImgPillow: this.state.productImgArray[2],
+			productImg: "",
+			step2: true,
 		});
 	};
 
@@ -266,6 +301,12 @@ export default class index extends Component {
 		fd.append("file", this.state.finalProductImg);
 		// console.log(this.state.finalProductImg);
 		// this.fileUploadHandler();
+	};
+
+	clearPhoto = () => {
+		this.setState({
+			imagePreviewUrl: "",
+		});
 	};
 
 	_handleImageChange = (e) => {
@@ -351,9 +392,9 @@ export default class index extends Component {
 		});
 	};
 
-	onSelectedChangeColor = async (value) => {
+	onSelectedChangeSize = async (value) => {
 		await this.setState({
-			color: value.value,
+			shirtSize: value.value,
 		});
 	};
 
@@ -432,6 +473,9 @@ export default class index extends Component {
 			return this.setState({
 				errorMsg: "Confirm before continuing",
 			});
+		}
+		if (this.state.shirtSize === "") {
+			return alert("Oops! you forgot to select size");
 		}
 
 		this.toggleModalToConfirmOrder();
@@ -585,7 +629,7 @@ export default class index extends Component {
 									className="product-select"
 									onClick={this.handlePillowcaseImg}
 								>
-									Pillowcase
+									Pillowcase (16"X16")
 								</h2>
 								<h2 className="product-select" onClick={this.handleKeychainImg}>
 									Keychain
@@ -627,7 +671,10 @@ export default class index extends Component {
 										<div>
 											<p>
 												Total Mugs in Cart: {this.state.totalMugsInCart}{" "}
-												<span>(Mug: ${product[0].Mug.price * 0.01}.00)</span>
+												<span>
+													(Mug: ${product[0].Mug.price * 0.01}
+													.00)
+												</span>
 											</p>
 										</div>
 									) : null}
@@ -759,6 +806,16 @@ export default class index extends Component {
 											textFormatOptions={this.state.textFormatOptions}
 										/>
 									) : null}
+									{this.state.step2ActualProd === "pillow" ? (
+										<Pillow
+											showGuide={this.state.designSquare}
+											toggleDesignSquare={this.toggleDesignSquare}
+											img={this.state.productImgPillow}
+											imagePreviewUrl={this.state.imagePreviewUrl}
+											textOnMugs={this.state.textOnMugs}
+											textFormatOptions={this.state.textFormatOptions}
+										/>
+									) : null}
 								</div>
 							</div>
 						) : (
@@ -770,29 +827,39 @@ export default class index extends Component {
 						{this.state.toggleStep2 ? (
 							<div className="step-2-container">
 								{/* CONTROLS TO ADD CONTENT ON MUGS */}
-								{this.state.productImgArray[0].mug1.length > 0 ? (
-									<div className="  controls-to-add-content-to-mugs">
-										{/* QUANTITY */}
-										<div className="qty-container">
-											<h4 className="h2-qty">
-												QTY:
-												<div className="qty-symbols qty-symbols__number">
-													{this.state.qty}
-												</div>
-												<button
-													onClick={this.increaseQty}
-													className="qty-symbols qty-symbols__plus"
-												>
-													+
-												</button>
-												<button
-													onClick={this.decreaseQty}
-													className="qty-symbols qty-symbols__minus"
-												>
-													-
-												</button>{" "}
-											</h4>
-										</div>
+								<div className="  controls-to-add-content-to-mugs">
+									{/* QUANTITY */}
+									<div className="qty-container">
+										<h4 className="h2-qty">
+											QTY:
+											<div className="qty-symbols qty-symbols__number">
+												{this.state.qty}
+											</div>
+											<button
+												onClick={this.increaseQty}
+												className="qty-symbols qty-symbols__plus"
+											>
+												+
+											</button>
+											<button
+												onClick={this.decreaseQty}
+												className="qty-symbols qty-symbols__minus"
+											>
+												-
+											</button>{" "}
+										</h4>
+										{this.state.step2ActualProd === "shirt" ? (
+											<div className="shirt-size-select">
+												<Select
+													menuPlacement="top"
+													placeholder="size"
+													onChange={this.onSelectedChangeSize}
+													options={sizeShirtsOptions}
+												/>
+											</div>
+										) : null}
+									</div>
+									<div className="upload-photo-parent">
 										<h2
 											onClick={() => {
 												this.fileInput.click();
@@ -801,80 +868,86 @@ export default class index extends Component {
 										>
 											&#x2912; CLICK TO UPLOAD PHOTO
 										</h2>
-										{this.state.step2ActualProd === "shirt" ? null : (
-											<Select
-												className="background-select"
-												menuPlacement="top"
-												placeholder="Choose background (optional)"
-												options={optionsBackgrounds}
-												onChange={this.onSelectedChange}
-											/>
-										)}
-										<input
-											ref={(fileInput) => (this.fileInput = fileInput)}
-											className="input-img"
-											type="file"
-											onChange={this._handleImageChange}
-											style={{ display: "none" }}
-										/>
-										<h2
-											onClick={this.handleFocusRef}
-											className="heading-product heading-product__message"
+										<button
+											onClick={this.clearPhoto}
+											className="clear-photo-btn"
 										>
-											&darr; CLICK TO ADD A MESSAGE &darr;{" "}
-											{50 - this.state.textOnMugs.length + " letters left"}
-										</h2>
-										{this.state.showMsgInput ? (
-											<div className="text-area-container">
-												<textarea
-													maxLength="50"
-													className="text-msg-input "
-													placeholder="Type your message here"
-													name="textOnMugs"
-													onChange={this.onChangeHandler}
-													type="text"
-												/>
-											</div>
-										) : null}
-
-										{this.state.imagePreviewUrl.length > 0 ||
-										this.state.textOnMugs !== "" ? (
-											<div className="continue-button-container">
-												<p className="agree-with-order">
-													<input
-														className="checkbox-order"
-														onChange={this.toggleChangeTermsAndConditions}
-														type="checkbox"
-														name="checkbox"
-														value={this.state.notChecked}
-													/>
-													<b> I confirm my product is accurate</b>
-												</p>
-												{this.state.errorMsg ? (
-													<p className="error-msg-confirm-product color-yellow">
-														&#8593; {this.state.errorMsg}
-													</p>
-												) : null}
-												{this.state.step2ActualProd === "mug" ? (
-													<button
-														onClick={this.screenshotMugs}
-														className="continue-button"
-													>
-														Click here if you're done &#10003;
-													</button>
-												) : null}
-												{this.state.step2ActualProd === "shirt" ? (
-													<button
-														onClick={this.screenshotShirts}
-														className="continue-button"
-													>
-														Click here if you're done &#10003;
-													</button>
-												) : null}
-											</div>
-										) : null}
+											&#128465; Clear Photo
+										</button>
 									</div>
-								) : null}
+									{this.state.step2ActualProd === "shirt" ? null : (
+										<Select
+											className="background-select"
+											menuPlacement="top"
+											placeholder="Choose background (optional)"
+											options={optionsBackgrounds}
+											onChange={this.onSelectedChange}
+										/>
+									)}
+									<input
+										ref={(fileInput) => (this.fileInput = fileInput)}
+										className="input-img"
+										type="file"
+										onChange={this._handleImageChange}
+										style={{ display: "none" }}
+									/>
+									<h2
+										onClick={this.handleFocusRef}
+										className="heading-product heading-product__message"
+									>
+										&darr; CLICK TO ADD A MESSAGE &darr;{" "}
+										{50 - this.state.textOnMugs.length + " letters left"}
+									</h2>
+									{this.state.showMsgInput ? (
+										<div className="text-area-container">
+											<textarea
+												maxLength="50"
+												className="text-msg-input "
+												placeholder="Type your message here"
+												name="textOnMugs"
+												onChange={this.onChangeHandler}
+												type="text"
+											/>
+										</div>
+									) : null}
+
+									{this.state.imagePreviewUrl.length > 0 ||
+									this.state.textOnMugs !== "" ? (
+										<div className="continue-button-container">
+											<p className="agree-with-order">
+												<input
+													className="checkbox-order"
+													onChange={this.toggleChangeTermsAndConditions}
+													type="checkbox"
+													name="checkbox"
+													value={this.state.notChecked}
+												/>
+												<b> I confirm my product is accurate</b>
+											</p>
+											{this.state.errorMsg ? (
+												<p className="error-msg-confirm-product color-yellow">
+													&#8593; {this.state.errorMsg}
+												</p>
+											) : null}
+											{this.state.step2ActualProd === "mug" ? (
+												<button
+													onClick={this.screenshotMugs}
+													className="continue-button"
+												>
+													Click here if you're done &#10003;
+												</button>
+											) : null}
+											{this.state.step2ActualProd === "shirt" ? (
+												<button
+													onClick={this.screenshotShirts}
+													className="continue-button"
+												>
+													Click here if you're done &#10003;
+												</button>
+											) : null}
+										</div>
+									) : null}
+								</div>
 							</div>
 						) : null}
 
@@ -913,7 +986,10 @@ export default class index extends Component {
 										<div>
 											<p>
 												Total Mugs in Cart: {this.state.totalMugsInCart}{" "}
-												<span>(Mug: ${product[0].Mug.price * 0.01}.00)</span>
+												<span>
+													(Mug: ${product[0].Mug.price * 0.01}
+													.00)
+												</span>
 											</p>
 										</div>
 									) : null}

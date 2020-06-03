@@ -6,7 +6,8 @@ class index extends Component {
 		return (
 			<div className="loading-status-full-page">
 				<div className="loading-spinner">
-					<i className="fa fa-refresh fa-spin "></i> Please wait...
+					<i className="fa fa-refresh fa-spin "></i> Please wait... <br /> Do
+					Not Close This Window Or Click The Back Button
 				</div>
 			</div>
 		);
