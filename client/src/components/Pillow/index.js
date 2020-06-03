@@ -9,7 +9,6 @@ class index extends Component {
 			marginTop: 10,
 			marginRight: 45,
 			width: 7,
-			widthCounter: 0,
 		};
 	}
 
@@ -29,14 +28,12 @@ class index extends Component {
 		this.setState((prevState) => ({
 			marginRight: prevState.marginRight - 0.5,
 		}));
-		console.log(this.state.marginRight);
 	};
 
 	movePhotoRight = () => {
 		this.setState((prevState) => ({
 			marginRight: prevState.marginRight + 0.5,
 		}));
-		console.log(this.state.marginRight);
 	};
 
 	increasePhotoSize = () => {

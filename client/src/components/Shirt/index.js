@@ -43,12 +43,51 @@ class index extends Component {
 
 		this.state = {
 			// css
+			marginTopPhoto: 10,
+			marginRightPhoto: 46.6,
+			width: 6,
 			marginTop: 10,
 			marginRight: -10,
 			fontSize: 30,
 			color: "",
 		};
 	}
+
+	movePhotoUp = () => {
+		this.setState((prevState) => ({
+			marginTopPhoto: prevState.marginTopPhoto + -2,
+		}));
+	};
+
+	movePhotoDown = () => {
+		this.setState((prevState) => ({
+			marginTopPhoto: prevState.marginTopPhoto + 2,
+		}));
+	};
+
+	movePhotoLeft = () => {
+		this.setState((prevState) => ({
+			marginRightPhoto: prevState.marginRightPhoto - 0.5,
+		}));
+	};
+
+	movePhotoRight = () => {
+		this.setState((prevState) => ({
+			marginRightPhoto: prevState.marginRightPhoto + 0.5,
+		}));
+	};
+
+	increasePhotoSize = () => {
+		this.setState((prevState) => ({
+			width: prevState.width + 0.5,
+		}));
+	};
+
+	decreasePhotoSize = () => {
+		this.setState((prevState) => ({
+			width: prevState.width - 0.5,
+		}));
+	};
 
 	onSelectedChangeColor = async (value) => {
 		await this.setState({
@@ -97,6 +136,52 @@ class index extends Component {
 	render() {
 		return (
 			<div className="shirt-container">
+				{this.props.imagePreviewUrl ? (
+					<div className="photo-controls-container">
+						<h3 className="photo-controls-container__heading">
+							Transform Photo
+						</h3>
+						<div className="photo-controls-container-box">
+							<button
+								onClick={this.movePhotoUp}
+								className="photo-controls-container__btns photo-controls-container__btns__up"
+							>
+								Up
+							</button>
+							<button
+								onClick={this.movePhotoDown}
+								className="photo-controls-container__btns photo-controls-container__btns__down"
+							>
+								Down
+							</button>
+							<button
+								onClick={this.movePhotoLeft}
+								className="photo-controls-container__btns photo-controls-container__btns__left"
+							>
+								Left
+							</button>
+							<button
+								onClick={this.movePhotoRight}
+								className="photo-controls-container__btns photo-controls-container__btns__right"
+							>
+								Right
+							</button>
+							<br />
+							<button
+								onClick={this.increasePhotoSize}
+								className="photo-controls-container__btns photo-controls-container__btns__more"
+							>
+								+
+							</button>
+							<button
+								onClick={this.decreasePhotoSize}
+								className="photo-controls-container__btns photo-controls-container__btns__less"
+							>
+								-
+							</button>
+						</div>
+					</div>
+				) : null}
 				<div className="img-product-container text-center">
 					<button onClick={this.props.toggleDesignSquare} className="hide-x">
 						Hide / Show &#8595;
@@ -117,6 +202,11 @@ class index extends Component {
 
 					{this.props.imagePreviewUrl !== "" ? (
 						<img
+							style={{
+								width: this.state.width + "%",
+								left: this.state.marginRightPhoto + "%",
+								marginTop: this.state.marginTopPhoto + "px",
+							}}
 							className="img-preview__shirt"
 							src={this.props.imagePreviewUrl}
 							alt="shirt"
