@@ -53,6 +53,7 @@ class index extends Component {
 		};
 	}
 
+	// PHOTO TRANSFORM CONTROLS
 	movePhotoUp = () => {
 		this.setState((prevState) => ({
 			marginTopPhoto: prevState.marginTopPhoto + -2,
@@ -89,6 +90,7 @@ class index extends Component {
 		}));
 	};
 
+	// TEXT TRANSFORM CONTROLS
 	onSelectedChangeColor = async (value) => {
 		await this.setState({
 			color: value.value,

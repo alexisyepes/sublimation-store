@@ -8,6 +8,7 @@ import CheckoutStripe from "../../components/StripeForm";
 import Mugs from "../../components/Mugs";
 import Shirts from "../../components/Shirt";
 import Pillow from "../../components/Pillow";
+import PetTagBone from "../../components/PetTagBone";
 
 import "./style.scss";
 
@@ -102,7 +103,7 @@ const customStyles = {
 		transform: "translate(-50%, -50%)",
 		backgroundColor: "black",
 		color: "white",
-		borderRadius: "5px",
+		borderRadius: "10px",
 	},
 	overlay: { zIndex: 10000 },
 };
@@ -113,9 +114,9 @@ const product = [
 			name: "mug",
 			price: 1200,
 		},
-		PetTag: {
-			name: "petTag",
-			price: 2000,
+		PetTagBone: {
+			name: "petTagBone",
+			price: 1600,
 		},
 		Shirt: {
 			name: "shirt",
@@ -150,13 +151,14 @@ export default class index extends Component {
 				},
 				"./images/shirt.png",
 				"./images/pillow.png",
-				"https://images-na.ssl-images-amazon.com/images/I/61zYvzxjdHL._AC_SL1500_.jpg",
+				"./images/pet-tag-bone.png",
 				"https://5.imimg.com/data5/PD/DM/MY-13899650/blank-white-square-keychain-rings-for-sublimation-500x500.jpg",
 			],
 			productImg: "",
 			productImgBack: "",
 			productImgShirt: "",
 			productImgPillow: "",
+			productImgPetTagBone: "",
 			finalProductImg: null,
 			file: "",
 			fileArray: [],
@@ -177,6 +179,7 @@ export default class index extends Component {
 			totalShirtsInCart: 0,
 			totalPillowsInCart: 0,
 			totalKeychainsInCart: 0,
+			totalPetTagBonesInCart: 0,
 			firstName: "",
 			email: "",
 			billingDetails: false,
@@ -273,10 +276,12 @@ export default class index extends Component {
 		});
 	};
 
-	handleKeychainImg = () => {
+	handlePetTagBoneImg = () => {
 		this.setState({
-			productImg: this.state.productImgArray[3],
-			productImgBack: "",
+			step2ActualProd: "petTagBone",
+			productImgPetTagBone: this.state.productImgArray[3],
+			productImg: "",
+			step2: true,
 		});
 	};
 
@@ -378,6 +383,7 @@ export default class index extends Component {
 			step3: false,
 			productImg: "",
 			productImgBack: "",
+			file: "",
 			imagePreviewUrl: "",
 			bg: "",
 			textOnMugs: "",
@@ -432,7 +438,7 @@ export default class index extends Component {
 				errorMsg: "Confirm before continuing",
 			});
 		}
-		if (this.state.file === "") {
+		if (this.state.imagePreviewUrl === "") {
 			return alert("A photo is required to procceed, please upload one.");
 		}
 		this.toggleModalToConfirmOrder();
@@ -554,7 +560,7 @@ export default class index extends Component {
 	goBackToStep2 = async () => {
 		if (
 			window.confirm(
-				`If you continue, your progress will be lost and you will need to re-create this product and its quantities. \nDo you still want to procceed?`
+				`If you continue, some of your progress will be lost and you will need to re-create this product and its quantities. \nDo you still want to procceed?`
 			)
 		) {
 			if (this.state.step2ActualProd === "mug") {
@@ -660,19 +666,25 @@ export default class index extends Component {
 							<div className="text-center">
 								<h1>Choose one product below</h1>
 								<h2 className="product-select" onClick={this.handleMugImg}>
-									Mug
+									Mug ($12.00)
 								</h2>
 								<h2 className="product-select" onClick={this.handleShirtImg}>
-									Shirt
+									Shirt ($18.00)
 								</h2>
 								<h2
 									className="product-select"
 									onClick={this.handlePillowcaseImg}
 								>
-									Pillowcase (16"X16")
+									Pillow (16"X16") ($22.00)
+								</h2>
+								<h2
+									className="product-select"
+									onClick={this.handlePetTagBoneImg}
+								>
+									Pet-tag-bone ($16.00)
 								</h2>
 								<h2 className="product-select" onClick={this.handleKeychainImg}>
-									Keychain
+									Pet-walking-license ($20)
 								</h2>
 							</div>
 						) : null}
@@ -828,8 +840,7 @@ export default class index extends Component {
 											className="confirm-product-button"
 										>
 											<span aria-label="0" role="img">
-												{" "}
-												&#10003;
+												&#10003;{" "}
 											</span>
 											Confirm product and continue to step 2
 										</button>
@@ -874,6 +885,14 @@ export default class index extends Component {
 											textFormatOptions={this.state.textFormatOptions}
 										/>
 									) : null}
+									{this.state.step2ActualProd === "petTagBone" ? (
+										<PetTagBone
+											// showGuide={this.state.designSquare}
+											// toggleDesignSquare={this.toggleDesignSquare}
+											img={this.state.productImgPetTagBone}
+											imagePreviewUrl={this.state.imagePreviewUrl}
+										/>
+									) : null}
 								</div>
 							</div>
 						) : (
@@ -884,7 +903,7 @@ export default class index extends Component {
 
 						{this.state.toggleStep2 ? (
 							<div className="step-2-container">
-								{/* CONTROLS TO ADD CONTENT ON MUGS */}
+								{/* CONTROLS TO ADD CONTENT ON PRODUCTS */}
 								<div className="  controls-to-add-content-to-mugs">
 									{/* QUANTITY */}
 									<div className="qty-container">
@@ -1033,7 +1052,8 @@ export default class index extends Component {
 								X
 							</span>
 							<h2 className="text-center">
-								Your product has been created! You can procceed to step 3
+								Your product has been created! <br />
+								<br /> You can procceed to step 3
 							</h2>
 						</Modal>
 
