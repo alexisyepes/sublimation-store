@@ -12,7 +12,7 @@
 	margin-top: 0;
 	font-size: 35px;
 	font-weight: 900;
-	background-color: rgb(243, 114, 9);
+	background-color: $color-button-orange-1;
 	color: white;
 	padding: 5px;
 	text-shadow: 2px 2px black;
@@ -101,13 +101,13 @@
 	box-shadow: 0px 10px 20px black;
 
 	&__1 {
-		background-color: rgb(240, 140, 69);
+		background-color: $color-button-orange-1;
 	}
 	&__2 {
-		background-color: rgb(93, 206, 187);
+		background-color: $color-button-orange-1;
 	}
 	&__3 {
-		background-color: rgb(149, 165, 149);
+		background-color: $color-button-orange-1;
 	}
 }
 
@@ -244,7 +244,7 @@
 		font-size: 20px;
 		padding: 10px;
 		border-radius: 10px;
-		box-shadow: 0px 5px 10px rgb(136, 123, 123);
+		box-shadow: 0px 5px 10px rgb(228, 219, 219);
 
 		&__upload {
 			background-color: rgb(163, 241, 176);
@@ -452,7 +452,7 @@
 
 .virtual-image-container {
 	margin: 0px 20px;
-	background-color: rgb(195, 207, 207);
+	background-color: rgb(173, 210, 216);
 	width: 100%;
 	height: auto;
 	border-radius: 10px;

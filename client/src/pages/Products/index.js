@@ -123,7 +123,7 @@ const product = [
 		},
 		Pillow: {
 			name: "pillow",
-			price: 1600,
+			price: 2200,
 		},
 	},
 ];
@@ -511,6 +511,46 @@ export default class index extends Component {
 		);
 	};
 
+	screenshotPillow = async () => {
+		if (this.state.notChecked === true) {
+			return this.setState({
+				errorMsg: "Confirm before continuing",
+			});
+		}
+
+		this.toggleModalToConfirmOrder();
+
+		await html2canvas(document.getElementById("product-screen-container")).then(
+			async (canvas) => {
+				// zip and convert
+				var zip = new JSZip();
+				var savable = new Image();
+				savable.src = canvas.toDataURL("image/jpeg", 0.5);
+				zip.file(
+					"image.png",
+					savable.src.substr(savable.src.indexOf(",") + 1),
+					{
+						base64: true,
+					}
+				);
+
+				await this.setState({
+					fileArray: [...this.state.fileArray, this.state.file],
+					screenshot: [...this.state.screenshot, savable.src],
+					toggleStep3: true,
+					toggleStep2: false,
+					textFormatOptions: false,
+					productToPay: this.state.productToPay.concat(
+						product[0].Pillow.price * this.state.qty
+					),
+					cart: this.state.cart + this.state.qty,
+					totalPillowsInCart: this.state.totalPillowsInCart + this.state.qty,
+				});
+				await console.log(this.state.fileArray);
+			}
+		);
+	};
+
 	goBackToStep2 = async () => {
 		if (
 			window.confirm(
@@ -689,12 +729,26 @@ export default class index extends Component {
 											</p>
 										</div>
 									) : null}
+									{this.state.totalPillowsInCart > 0 ? (
+										<div>
+											<p>
+												Total Pillows in Cart: {this.state.totalPillowsInCart}{" "}
+												{""}
+												<span>
+													(Pillow: ${product[0].Pillow.price * 0.01}.00 )
+												</span>
+											</p>
+										</div>
+									) : null}
 									<p>
 										Sub-Total: $
 										{product[0].Mug.price * 0.01 * this.state.totalMugsInCart +
 											product[0].Shirt.price *
 												0.01 *
-												this.state.totalShirtsInCart}
+												this.state.totalShirtsInCart +
+											product[0].Pillow.price *
+												0.01 *
+												this.state.totalPillowsInCart}
 										.00
 									</p>
 									<p>
@@ -703,6 +757,10 @@ export default class index extends Component {
 											0.13 * this.state.mugPrice * this.state.totalMugsInCart +
 											product[0].Shirt.price *
 												this.state.totalShirtsInCart *
+												0.01 *
+												0.13 +
+											product[0].Pillow.price *
+												this.state.totalPillowsInCart *
 												0.01 *
 												0.13
 										).toFixed(2)}
@@ -875,7 +933,7 @@ export default class index extends Component {
 											&#128465; Clear Photo
 										</button>
 									</div>
-									{this.state.step2ActualProd === "shirt" ? null : (
+									{this.state.step2ActualProd === "mug" ? (
 										<Select
 											className="background-select"
 											menuPlacement="top"
@@ -883,7 +941,7 @@ export default class index extends Component {
 											options={optionsBackgrounds}
 											onChange={this.onSelectedChange}
 										/>
-									)}
+									) : null}
 									<input
 										ref={(fileInput) => (this.fileInput = fileInput)}
 										className="input-img"
@@ -929,6 +987,8 @@ export default class index extends Component {
 													&#8593; {this.state.errorMsg}
 												</p>
 											) : null}
+
+											{/* CONFIRM ORDER FOR MUGS */}
 											{this.state.step2ActualProd === "mug" ? (
 												<button
 													onClick={this.screenshotMugs}
@@ -937,9 +997,21 @@ export default class index extends Component {
 													Click here if you're done &#10003;
 												</button>
 											) : null}
+
+											{/* CONFIRM ORDER FOR SHIRTS */}
 											{this.state.step2ActualProd === "shirt" ? (
 												<button
 													onClick={this.screenshotShirts}
+													className="continue-button"
+												>
+													Click here if you're done &#10003;
+												</button>
+											) : null}
+
+											{/* CONFIRM ORDER FOR PILLOWS */}
+											{this.state.step2ActualProd === "pillow" ? (
+												<button
+													onClick={this.screenshotPillow}
 													className="continue-button"
 												>
 													Click here if you're done &#10003;
@@ -1004,12 +1076,26 @@ export default class index extends Component {
 											</p>
 										</div>
 									) : null}
+									{this.state.totalPillowsInCart > 0 ? (
+										<div>
+											<p>
+												Total Shirts in Cart: {this.state.totalPillowsInCart}{" "}
+												{""}
+												<span>
+													(Shirt: ${product[0].Pillow.price * 0.01}.00 )
+												</span>
+											</p>
+										</div>
+									) : null}
 									<p>
 										Sub-Total: $
 										{product[0].Mug.price * 0.01 * this.state.totalMugsInCart +
 											product[0].Shirt.price *
 												0.01 *
-												this.state.totalShirtsInCart}
+												this.state.totalShirtsInCart +
+											product[0].Pillow.price *
+												0.01 *
+												this.state.totalPillowsInCart}
 										.00
 									</p>
 									<p>
@@ -1018,6 +1104,10 @@ export default class index extends Component {
 											0.13 * this.state.mugPrice * this.state.totalMugsInCart +
 											product[0].Shirt.price *
 												this.state.totalShirtsInCart *
+												0.01 *
+												0.13 +
+											product[0].Pillow.price *
+												this.state.totalPillowsInCart *
 												0.01 *
 												0.13
 										).toFixed(2)}

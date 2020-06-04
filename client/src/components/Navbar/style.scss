@@ -5,14 +5,14 @@
 
 .menu {
 	margin: 0px;
-	background-color: $color-primary-dark;
+	background-color: $color-secondary-dark;
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
 	padding: 25px 15px;
 	list-style: none;
 	text-decoration: none;
-	color: white !important;
+	color: rgb(0, 0, 0) !important;
 
 	&li {
 		padding: 35px 15px;
@@ -31,7 +31,7 @@
 }
 
 .nav-link {
-	color: white;
+	color: rgb(0, 0, 0);
 	font-size: 26px;
 	text-decoration: none;
 
@@ -51,5 +51,6 @@
 
 .links-home {
 	text-decoration: none;
-	color: white;
+	color: rgb(0, 0, 0);
+	font-weight: 700;
 }
