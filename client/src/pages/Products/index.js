@@ -47,11 +47,7 @@ let optionsBackgrounds = [
 	},
 ];
 
-let sizeShirtsOptions = [
-	{
-		value: "xm",
-		label: "XS",
-	},
+let sizeShirtsOptionsMen = [
 	{
 		value: "sm",
 		label: "S",
@@ -69,8 +65,38 @@ let sizeShirtsOptions = [
 		label: "XL",
 	},
 	{
-		value: "xx",
-		label: "XX",
+		value: "xxl",
+		label: "XXL",
+	},
+	{
+		value: "xxxl",
+		label: "XXXL",
+	},
+];
+
+let sizeShirtsOptionsWoman = [
+	{
+		value: "sm",
+		label: "S",
+	},
+	{
+		value: "m",
+		label: "M (Out of stock)",
+	},
+	{
+		value: "l",
+		label: "L (Out of stock)",
+	},
+	{
+		value: "xl",
+		label: "XL",
+	},
+];
+
+let sizeShirtsOptionsKid = [
+	{
+		value: "one",
+		label: "One size",
 	},
 ];
 
@@ -128,6 +154,21 @@ const selectColorOptions = [
 	{
 		value: "brown",
 		label: "Brown",
+	},
+];
+
+const genderShirtsOptions = [
+	{
+		value: "male",
+		label: "Man",
+	},
+	{
+		value: "female",
+		label: "Woman",
+	},
+	{
+		value: "kid",
+		label: "Kid",
 	},
 ];
 
@@ -213,6 +254,8 @@ export default class index extends Component {
 			step2ActualProd: "",
 			designSquare: true,
 			shirtSize: "",
+			shirtGender: "",
+			photoControlShirts: false,
 			petTagBonePhone: "123456789",
 			petTagBonePetName: "Elsa",
 			boneColor: "blue",
@@ -290,6 +333,7 @@ export default class index extends Component {
 			productImgShirt: this.state.productImgArray[1],
 			productImg: "",
 			step2: true,
+			photoControlShirts: true,
 		});
 		// console.log(this.state.productImgShirt);
 	};
@@ -443,6 +487,12 @@ export default class index extends Component {
 		});
 	};
 
+	onSelectedChangeGender = async (value) => {
+		await this.setState({
+			shirtGender: value.value,
+		});
+	};
+
 	onChangeHandler = (e) => {
 		this.setState({
 			[e.target.name]: e.target.value,
@@ -522,6 +572,9 @@ export default class index extends Component {
 		if (this.state.shirtSize === "") {
 			return alert("Oops! you forgot to select size");
 		}
+		if (this.state.shirtGender === "") {
+			return alert("Oops! you forgot to select the Type");
+		}
 
 		this.toggleModalToConfirmOrder();
 
@@ -545,6 +598,7 @@ export default class index extends Component {
 					toggleStep3: true,
 					toggleStep2: false,
 					textFormatOptions: false,
+					photoControlShirts: false,
 					productToPay: this.state.productToPay.concat(
 						product[0].Shirt.price * this.state.qty
 					),
@@ -678,6 +732,7 @@ export default class index extends Component {
 					screenshot: this.state.screenshot.slice(0, -1),
 					imagePreviewUrl: "",
 					file: "",
+					shirtGender: "",
 				});
 			}
 			if (this.state.step2ActualProd === "petTagBone") {
@@ -992,6 +1047,7 @@ export default class index extends Component {
 											imagePreviewUrl={this.state.imagePreviewUrl}
 											textOnMugs={this.state.textOnMugs}
 											textFormatOptions={this.state.textFormatOptions}
+											photoControlShirts={this.state.photoControlShirts}
 										/>
 									) : null}
 									{this.state.step2ActualProd === "pillow" ? (
@@ -1047,13 +1103,39 @@ export default class index extends Component {
 											</button>{" "}
 										</h4>
 										{this.state.step2ActualProd === "shirt" ? (
-											<div className="shirt-size-select">
-												<Select
-													menuPlacement="top"
-													placeholder="size"
-													onChange={this.onSelectedChangeSize}
-													options={sizeShirtsOptions}
-												/>
+											<div>
+												<div className="shirt-size-select">
+													<Select
+														menuPlacement="top"
+														placeholder="Gender"
+														onChange={this.onSelectedChangeGender}
+														options={genderShirtsOptions}
+													/>
+													{this.state.shirtGender === "male" ? (
+														<Select
+															menuPlacement="top"
+															placeholder="size"
+															onChange={this.onSelectedChangeSize}
+															options={sizeShirtsOptionsMen}
+														/>
+													) : null}
+													{this.state.shirtGender === "female" ? (
+														<Select
+															menuPlacement="top"
+															placeholder="size"
+															onChange={this.onSelectedChangeSize}
+															options={sizeShirtsOptionsWoman}
+														/>
+													) : null}
+													{this.state.shirtGender === "kid" ? (
+														<Select
+															menuPlacement="top"
+															placeholder="size"
+															onChange={this.onSelectedChangeSize}
+															options={sizeShirtsOptionsKid}
+														/>
+													) : null}
+												</div>
 											</div>
 										) : null}
 										{this.state.step2ActualProd === "petTagBone" ? (

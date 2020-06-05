@@ -148,51 +148,57 @@ class index extends Component {
 	render() {
 		return (
 			<div className="shirt-container">
-				{this.props.imagePreviewUrl ? (
+				{this.props.imagePreviewUrl && this.props.photoControlShirts ? (
 					<div className="photo-controls-container">
-						<h3 className="photo-controls-container__heading">
-							Transform Photo
-						</h3>
-						<div className="photo-controls-container-box">
-							<p className="size-title__move text-center">Move</p>
-							<p className="size-title__size text-center">Size</p>
+						<div>
+							<h3 className="photo-controls-container__heading">
+								<span role="img" aria-label="paw">
+									&#128247;
+								</span>{" "}
+								Transform Photo
+							</h3>
 
-							<img
-								onClick={this.movePhotoUp}
-								className="move-photo-btns move-photo-btns__up"
-								src="./images/up-btn.png"
-								alt="up"
-							/>
-							<img
-								onClick={this.movePhotoRight}
-								className="move-photo-btns move-photo-btns__right"
-								src="./images/right-btn.png"
-								alt="right"
-							/>
-							<img
-								onClick={this.movePhotoDown}
-								className="move-photo-btns move-photo-btns__down"
-								src="./images/down-btn.png"
-								alt="down"
-							/>
-							<img
-								onClick={this.movePhotoLeft}
-								className="move-photo-btns move-photo-btns__left"
-								src="./images/left-btn.png"
-								alt="left"
-							/>
-							<img
-								onClick={this.increasePhotoSize}
-								className="move-photo-btns move-photo-btns__more"
-								src="./images/plus-btn.png"
-								alt="plus"
-							/>
-							<img
-								onClick={this.decreasePhotoSize}
-								className="move-photo-btns move-photo-btns__less"
-								src="./images/minus-btn.png"
-								alt="minus"
-							/>
+							<div className="photo-controls-container-box">
+								<p className="size-title__move text-center">Move</p>
+								<p className="size-title__size text-center">Size</p>
+
+								<img
+									onClick={this.movePhotoUp}
+									className="move-photo-btns move-photo-btns__up"
+									src="./images/up-btn.png"
+									alt="up"
+								/>
+								<img
+									onClick={this.movePhotoRight}
+									className="move-photo-btns move-photo-btns__right"
+									src="./images/right-btn.png"
+									alt="right"
+								/>
+								<img
+									onClick={this.movePhotoDown}
+									className="move-photo-btns move-photo-btns__down"
+									src="./images/down-btn.png"
+									alt="down"
+								/>
+								<img
+									onClick={this.movePhotoLeft}
+									className="move-photo-btns move-photo-btns__left"
+									src="./images/left-btn.png"
+									alt="left"
+								/>
+								<img
+									onClick={this.increasePhotoSize}
+									className="move-photo-btns move-photo-btns__more"
+									src="./images/plus-btn.png"
+									alt="plus"
+								/>
+								<img
+									onClick={this.decreasePhotoSize}
+									className="move-photo-btns move-photo-btns__less"
+									src="./images/minus-btn.png"
+									alt="minus"
+								/>
+							</div>
 						</div>
 					</div>
 				) : null}
@@ -244,12 +250,12 @@ class index extends Component {
 				</div>
 				{this.props.textOnMugs && this.props.textFormatOptions ? (
 					// TEXT FORMAT CONTROL/////////////////////
-					<div>
+					<div className="shirt-container-back">
 						<div className="move-text-btns-container-shirt text-center">
 							<Select
-								menuPlacement="top"
+								menuPlacement="bottom"
 								placeholder="Text color"
-								className="move-text-btns move-text-btns__font-color"
+								className="move-text-btns-shirt move-text-btns-shirt__font-color"
 								onChange={this.onSelectedChangeColor}
 								options={optionsColor}
 							/>
@@ -258,43 +264,43 @@ class index extends Component {
 							<h3 className="text-controls-container-shirt__heading">
 								Text Control
 							</h3>
-							<div className="text-controls-container-mugs-box">
+							<div className="text-controls-container-shirt-box">
 								<p className="size-title__move text-center">Move</p>
 								<p className="size-title__size text-center">Size</p>
 
 								<img
 									onClick={this.moveTextUp}
-									className="move-text-btns move-text-btns__up"
+									className="move-text-btns-shirt move-text-btns-shirt__up"
 									src="./images/up-btn.png"
 									alt="up"
 								/>
 								<img
 									onClick={this.moveTextRight}
-									className="move-text-btns move-text-btns__right"
+									className="move-text-btns-shirt move-text-btns-shirt__right"
 									src="./images/right-btn.png"
 									alt="right"
 								/>
 								<img
 									onClick={this.moveTextDown}
-									className="move-text-btns move-text-btns__down"
+									className="move-text-btns-shirt move-text-btns-shirt__down"
 									src="./images/down-btn.png"
 									alt="down"
 								/>
 								<img
 									onClick={this.moveTextLeft}
-									className="move-text-btns move-text-btns__left"
+									className="move-text-btns-shirt move-text-btns-shirt__left"
 									src="./images/left-btn.png"
 									alt="left"
 								/>
 								<img
 									onClick={this.increaseFont}
-									className="move-text-btns move-text-btns__more"
+									className="move-text-btns-shirt move-text-btns-shirt__more"
 									src="./images/plus-btn.png"
 									alt="plus"
 								/>
 								<img
 									onClick={this.decreaseFont}
-									className="move-text-btns move-text-btns__less"
+									className="move-text-btns-shirt move-text-btns-shirt__less"
 									src="./images/minus-btn.png"
 									alt="minus"
 								/>
