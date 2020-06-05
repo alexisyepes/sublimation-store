@@ -17,15 +17,15 @@
 			text-align: center;
 
 			&__petName {
-				left: 63%;
-				top: 20%;
+				left: 60%;
+				top: 40%;
 				font-size: 25px;
 			}
 
 			&__phone {
-				left: 62%;
-				font-size: 22px;
-				top: 80%;
+				left: 61.5%;
+				font-size: 20px;
+				top: 85%;
 			}
 		}
 	}
@@ -80,7 +80,78 @@
 
 		align-items: center;
 
+		//THIS UPDATES BUTTONS IN PILLOW AND SHIRT SCSS FILE
 		.move-photo-btns {
+			width: 90%;
+			cursor: pointer;
+			box-shadow: 0px 10px 30px black;
+			background-color: transparent;
+			border-radius: 10px;
+			margin: 2px 1px;
+			padding: 1px;
+
+			&:hover {
+				filter: brightness(1.75);
+			}
+			&:active {
+				transform: scale(0.9);
+				filter: brightness(1.1);
+			}
+
+			&__up {
+				grid-column: 2;
+				grid-row: 2;
+			}
+			&__right {
+				grid-column: 3;
+				grid-row: 3;
+			}
+			&__down {
+				grid-column: 2;
+				grid-row: 4;
+			}
+			&__left {
+				grid-column: 1;
+				grid-row: 3;
+			}
+			&__more {
+				grid-column: 4;
+				grid-row: 2;
+				// padding-left: 10px;
+				margin-bottom: 5px;
+			}
+			&__less {
+				grid-column: 4;
+				grid-row: 3;
+				// padding-left: 10px;
+			}
+		}
+	}
+}
+
+.text-controls-container {
+	position: absolute;
+	width: 12%;
+	right: 30%;
+	top: 220px;
+	background-color: rgb(201, 235, 178);
+	padding: 10px;
+	margin: 20px;
+	border-radius: 5px;
+	border: solid white 2px;
+	box-shadow: 0px 10px 40px black;
+
+	&__heading {
+		margin: 0;
+	}
+
+	&-box {
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+
+		align-items: center;
+
+		.move-text-btns {
 			width: 90%;
 
 			&__up {

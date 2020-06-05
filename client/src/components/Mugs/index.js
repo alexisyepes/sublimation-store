@@ -141,53 +141,62 @@ class index extends Component {
 						</div>
 						{this.props.textOnMugs && this.props.textFormatOptions ? (
 							// TEXT FORMAT CONTROL/////////////////////
-							<div className="move-text-btns-container text-center">
-								<h2 className="move-text-btns__font-title">
-									&#x21e1; TEXT OPTIONS &#x21e1;
-								</h2>
-								<Select
-									menuPlacement="top"
-									placeholder="Text color"
-									className="move-text-btns move-text-btns__font-color"
-									onChange={this.onSelectedChangeColor}
-									options={optionsColor}
-								/>
-								<button
-									className="move-text-btns move-text-btns__up"
-									onClick={this.moveTextUp}
-								>
-									Move text Up &#x21e7;
-								</button>
-								<button
-									className="move-text-btns move-text-btns__down"
-									onClick={this.moveTextDown}
-								>
-									Move text Down &#x21e9;
-								</button>
-								<button
-									className="move-text-btns move-text-btns__left"
-									onClick={this.moveTextLeft}
-								>
-									Move text Left &#x21e6;
-								</button>
-								<button
-									className="move-text-btns move-text-btns__right"
-									onClick={this.moveTextRight}
-								>
-									Move text Right &#x21e8;
-								</button>
-								<button
-									className="move-text-btns move-text-btns__increase-font"
-									onClick={this.increaseFont}
-								>
-									Increase Font &#x2b;
-								</button>
-								<button
-									className="move-text-btns move-text-btns__decrease-font"
-									onClick={this.decreaseFont}
-								>
-									Decrease Font &#x2212;
-								</button>
+							<div>
+								<div className="move-text-btns-container text-center">
+									<Select
+										menuPlacement="top"
+										placeholder="Text color"
+										className="move-text-btns move-text-btns__font-color"
+										onChange={this.onSelectedChangeColor}
+										options={optionsColor}
+									/>
+								</div>
+								<div className="text-controls-container-mugs">
+									<h3 className="text-controls-container-mugs__heading">
+										Text Control
+									</h3>
+									<div className="text-controls-container-mugs-box">
+										<p className="size-title__move text-center">Move</p>
+										<p className="size-title__size text-center">Size</p>
+
+										<img
+											onClick={this.moveTextUp}
+											className="move-text-btns move-text-btns__up"
+											src="./images/up-btn.png"
+											alt="up"
+										/>
+										<img
+											onClick={this.moveTextRight}
+											className="move-text-btns move-text-btns__right"
+											src="./images/right-btn.png"
+											alt="right"
+										/>
+										<img
+											onClick={this.moveTextDown}
+											className="move-text-btns move-text-btns__down"
+											src="./images/down-btn.png"
+											alt="down"
+										/>
+										<img
+											onClick={this.moveTextLeft}
+											className="move-text-btns move-text-btns__left"
+											src="./images/left-btn.png"
+											alt="left"
+										/>
+										<img
+											onClick={this.increaseFont}
+											className="move-text-btns move-text-btns__more"
+											src="./images/plus-btn.png"
+											alt="plus"
+										/>
+										<img
+											onClick={this.decreaseFont}
+											className="move-text-btns move-text-btns__less"
+											src="./images/minus-btn.png"
+											alt="minus"
+										/>
+									</div>
+								</div>
 							</div>
 						) : null}
 						{/* BACKGROUND IMAGE MUGS */}

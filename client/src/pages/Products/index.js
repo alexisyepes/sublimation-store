@@ -1011,6 +1011,7 @@ export default class index extends Component {
 											phone={this.state.petTagBonePhone}
 											img={this.state.productImgPetTagBone}
 											imagePreviewUrl={this.state.imagePreviewUrl}
+											btnConfirmed={this.state.btnStep2}
 										/>
 									) : null}
 								</div>

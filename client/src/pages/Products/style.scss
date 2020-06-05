@@ -480,6 +480,17 @@
 		border-radius: 10px;
 	}
 
+	// .text-controls-container {
+	// 	margin-top: 10px;
+	// 	margin-left: 100px;
+	// 	// position: relative;
+	// 	// top: 350px !important;
+	// 	// width: 200px !important;
+
+	// 	.text-controls-container-box {
+	// 	}
+	// }
+
 	.product-image-container {
 		position: relative;
 		width: 100%;
@@ -584,10 +595,10 @@
 
 				.move-text-btns-container {
 					top: 40px;
-					display: flex;
+					// display: flex;
 					position: relative;
-					width: 95%;
-					right: 0;
+					width: 30%;
+					margin-left: 35%;
 
 					.move-text-btns {
 						position: absolute;
@@ -648,7 +659,7 @@
 						}
 
 						&__font-color {
-							z-index: 4;
+							z-index: 10;
 							width: 100%;
 							// background-color: rgb(22, 155, 243);
 							cursor: pointer;

@@ -10,6 +10,7 @@
 		border-radius: 5px;
 		border: solid white 2px;
 		box-shadow: 0px 10px 40px black;
+		z-index: 100;
 	}
 
 	.hide-x {
@@ -57,4 +58,42 @@
 			}
 		}
 	}
+}
+
+.text-controls-container-pillow {
+	top: 80px;
+	width: 200px;
+	position: absolute;
+	right: 30%;
+	background-color: rgb(201, 235, 178);
+	padding: 10px;
+	margin: 20px;
+	border-radius: 5px;
+	border: solid white 2px;
+	box-shadow: 0px 10px 40px black;
+
+	&__heading {
+		margin: 0;
+	}
+
+	&-box {
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+
+		align-items: center;
+	}
+}
+
+.parent-container-text-control {
+	width: 100%;
+	position: absolute;
+	right: 0;
+}
+
+.move-text-btns-container-shirt {
+	top: 40px;
+	// display: flex;
+	position: relative;
+	width: 35%;
+	margin-left: 35%;
 }

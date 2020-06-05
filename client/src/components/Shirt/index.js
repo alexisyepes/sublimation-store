@@ -48,7 +48,7 @@ class index extends Component {
 			width: 6,
 			marginTop: 10,
 			marginRight: -10,
-			fontSize: 30,
+			fontSize: 20,
 			color: "",
 		};
 	}
@@ -242,61 +242,66 @@ class index extends Component {
 						</h3>
 					</div>
 				</div>
-				<div className="mugs-container__back">
-					{this.props.textOnMugs && this.props.textFormatOptions ? (
-						// TEXT FORMAT CONTROL/////////////////////
-						<div className="parent-container-text-control">
-							<div className="move-text-btns-container">
-								<h2 className="move-text-btns__font-title">
-									&#x21e1; TEXT OPTIONS &#x21e1;
-								</h2>
-								<Select
-									menuPlacement="top"
-									placeholder="Text color"
-									className="move-text-btns move-text-btns__font-color"
-									onChange={this.onSelectedChangeColor}
-									options={optionsColor}
-								/>
-								<button
-									className="move-text-btns move-text-btns__up"
+				{this.props.textOnMugs && this.props.textFormatOptions ? (
+					// TEXT FORMAT CONTROL/////////////////////
+					<div>
+						<div className="move-text-btns-container-shirt text-center">
+							<Select
+								menuPlacement="top"
+								placeholder="Text color"
+								className="move-text-btns move-text-btns__font-color"
+								onChange={this.onSelectedChangeColor}
+								options={optionsColor}
+							/>
+						</div>
+						<div className="text-controls-container-shirt">
+							<h3 className="text-controls-container-shirt__heading">
+								Text Control
+							</h3>
+							<div className="text-controls-container-mugs-box">
+								<p className="size-title__move text-center">Move</p>
+								<p className="size-title__size text-center">Size</p>
+
+								<img
 									onClick={this.moveTextUp}
-								>
-									Move text Up &#x21e7;
-								</button>
-								<button
-									className="move-text-btns move-text-btns__down"
-									onClick={this.moveTextDown}
-								>
-									Move text Down &#x21e9;
-								</button>
-								<button
-									className="move-text-btns move-text-btns__left"
-									onClick={this.moveTextLeft}
-								>
-									Move text Left &#x21e6;
-								</button>
-								<button
-									className="move-text-btns move-text-btns__right"
+									className="move-text-btns move-text-btns__up"
+									src="./images/up-btn.png"
+									alt="up"
+								/>
+								<img
 									onClick={this.moveTextRight}
-								>
-									Move text Right &#x21e8;
-								</button>
-								<button
-									className="move-text-btns move-text-btns__increase-font"
+									className="move-text-btns move-text-btns__right"
+									src="./images/right-btn.png"
+									alt="right"
+								/>
+								<img
+									onClick={this.moveTextDown}
+									className="move-text-btns move-text-btns__down"
+									src="./images/down-btn.png"
+									alt="down"
+								/>
+								<img
+									onClick={this.moveTextLeft}
+									className="move-text-btns move-text-btns__left"
+									src="./images/left-btn.png"
+									alt="left"
+								/>
+								<img
 									onClick={this.increaseFont}
-								>
-									Increase Font &#x2b;
-								</button>
-								<button
-									className="move-text-btns move-text-btns__decrease-font"
+									className="move-text-btns move-text-btns__more"
+									src="./images/plus-btn.png"
+									alt="plus"
+								/>
+								<img
 									onClick={this.decreaseFont}
-								>
-									Decrease Font &#x2212;
-								</button>
+									className="move-text-btns move-text-btns__less"
+									src="./images/minus-btn.png"
+									alt="minus"
+								/>
 							</div>
 						</div>
-					) : null}
-				</div>
+					</div>
+				) : null}
 			</div>
 		);
 	}
