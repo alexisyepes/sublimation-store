@@ -6,14 +6,29 @@ class index extends Component {
 		super(props);
 
 		this.state = {
+			colorBone: "",
+
+			//css
 			marginTopPhoto: 1,
 			marginRightPhoto: 4,
 			fontSize: 30,
-
 			marginTop: 10,
 			marginRight: 45,
 			width: 90,
 		};
+	}
+
+	componentDidUpdate(prevProps) {
+		if (this.props.imagePreviewUrl !== prevProps.imagePreviewUrl) {
+			this.setState({
+				marginTopPhoto: 1,
+				marginRightPhoto: 4,
+				fontSize: 30,
+				marginTop: 10,
+				marginRight: 45,
+				width: 90,
+			});
+		}
 	}
 
 	// PHOTO TRANSFORM CONTROLS
@@ -102,57 +117,102 @@ class index extends Component {
 	render() {
 		return (
 			<div className="petTagBone-main-container">
+				{/* PHOTO TRANSFORM CONTROLS */}
 				{this.props.imagePreviewUrl ? (
 					<div className="photo-controls-container">
-						<h3 className="photo-controls-container__heading">
-							Transform Photo
-						</h3>
+						<h3 className="photo-controls-container__heading">Photo Control</h3>
 						<div className="photo-controls-container-box">
-							<button
+							<p className="size-title__move text-center">Move</p>
+							<p className="size-title__size text-center">Size</p>
+
+							<img
 								onClick={this.movePhotoUp}
-								className="photo-controls-container__btns photo-controls-container__btns__up"
-							>
-								Up
-							</button>
-							<button
-								onClick={this.movePhotoDown}
-								className="photo-controls-container__btns photo-controls-container__btns__down"
-							>
-								Down
-							</button>
-							<button
-								onClick={this.movePhotoLeft}
-								className="photo-controls-container__btns photo-controls-container__btns__left"
-							>
-								Left
-							</button>
-							<button
+								className="move-photo-btns move-photo-btns__up"
+								src="./images/up-btn.png"
+								alt="up"
+							/>
+							<img
 								onClick={this.movePhotoRight}
-								className="photo-controls-container__btns photo-controls-container__btns__right"
-							>
-								Right
-							</button>
-							<br />
-							<button
+								className="move-photo-btns move-photo-btns__right"
+								src="./images/right-btn.png"
+								alt="right"
+							/>
+							<img
+								onClick={this.movePhotoDown}
+								className="move-photo-btns move-photo-btns__down"
+								src="./images/down-btn.png"
+								alt="down"
+							/>
+							<img
+								onClick={this.movePhotoLeft}
+								className="move-photo-btns move-photo-btns__left"
+								src="./images/left-btn.png"
+								alt="left"
+							/>
+							<img
 								onClick={this.increasePhotoSize}
-								className="photo-controls-container__btns photo-controls-container__btns__more"
-							>
-								+
-							</button>
-							<button
+								className="move-photo-btns move-photo-btns__more"
+								src="./images/plus-btn.png"
+								alt="plus"
+							/>
+							<img
 								onClick={this.decreasePhotoSize}
-								className="photo-controls-container__btns photo-controls-container__btns__less"
-							>
-								-
-							</button>
+								className="move-photo-btns move-photo-btns__less"
+								src="./images/minus-btn.png"
+								alt="minus"
+							/>
 						</div>
 					</div>
 				) : null}
-				<img
-					className="img-product__petTagBone"
-					src={this.props.img}
-					alt="pillow"
-				/>
+				<div className="img-product__petTagBone-wrapper">
+					<img
+						className="img-product__petTagBone"
+						src={this.props.img}
+						alt="petTagBone"
+					/>
+					{this.props.boneColor === "blue" ? (
+						<img
+							className="img-product__petTagBone"
+							src={this.props.img}
+							alt="petTagBone"
+						/>
+					) : null}
+					{this.props.boneColor === "pink" ? (
+						<img
+							className="img-product__petTagBone"
+							src="./images/pet-tag-bone-pink.png"
+							alt="petTagBone"
+						/>
+					) : null}
+					{this.props.boneColor === "yellow" ? (
+						<img
+							className="img-product__petTagBone"
+							src="./images/pet-tag-bone-yellow.png"
+							alt="petTagBone"
+						/>
+					) : null}
+					{this.props.boneColor === "green" ? (
+						<img
+							className="img-product__petTagBone"
+							src="./images/pet-tag-bone-green.png"
+							alt="petTagBone"
+						/>
+					) : null}
+					{this.props.boneColor === "brown" ? (
+						<img
+							className="img-product__petTagBone"
+							src="./images/pet-tag-bone-brown.png"
+							alt="petTagBone"
+						/>
+					) : null}
+
+					<h4 className="petTagBone-info petTagBone-info__petName">
+						{this.props.petName}
+					</h4>
+					<h4 className="petTagBone-info petTagBone-info__phone">
+						{this.props.phone}
+					</h4>
+				</div>
 				{this.props.imagePreviewUrl !== "" ? (
 					<div className="img-preview-petTagBone-wrapper">
 						<img

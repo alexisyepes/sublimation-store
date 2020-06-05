@@ -53,6 +53,16 @@ class index extends Component {
 		};
 	}
 
+	componentDidUpdate(prevProps) {
+		if (this.props.imagePreviewUrl !== prevProps.imagePreviewUrl) {
+			this.setState({
+				marginTopPhoto: 10,
+				marginRightPhoto: 46.6,
+				width: 6,
+			});
+		}
+	}
+
 	// PHOTO TRANSFORM CONTROLS
 	movePhotoUp = () => {
 		this.setState((prevState) => ({
@@ -144,43 +154,45 @@ class index extends Component {
 							Transform Photo
 						</h3>
 						<div className="photo-controls-container-box">
-							<button
+							<p className="size-title__move text-center">Move</p>
+							<p className="size-title__size text-center">Size</p>
+
+							<img
 								onClick={this.movePhotoUp}
-								className="photo-controls-container__btns photo-controls-container__btns__up"
-							>
-								Up
-							</button>
-							<button
-								onClick={this.movePhotoDown}
-								className="photo-controls-container__btns photo-controls-container__btns__down"
-							>
-								Down
-							</button>
-							<button
-								onClick={this.movePhotoLeft}
-								className="photo-controls-container__btns photo-controls-container__btns__left"
-							>
-								Left
-							</button>
-							<button
+								className="move-photo-btns move-photo-btns__up"
+								src="./images/up-btn.png"
+								alt="up"
+							/>
+							<img
 								onClick={this.movePhotoRight}
-								className="photo-controls-container__btns photo-controls-container__btns__right"
-							>
-								Right
-							</button>
-							<br />
-							<button
+								className="move-photo-btns move-photo-btns__right"
+								src="./images/right-btn.png"
+								alt="right"
+							/>
+							<img
+								onClick={this.movePhotoDown}
+								className="move-photo-btns move-photo-btns__down"
+								src="./images/down-btn.png"
+								alt="down"
+							/>
+							<img
+								onClick={this.movePhotoLeft}
+								className="move-photo-btns move-photo-btns__left"
+								src="./images/left-btn.png"
+								alt="left"
+							/>
+							<img
 								onClick={this.increasePhotoSize}
-								className="photo-controls-container__btns photo-controls-container__btns__more"
-							>
-								+
-							</button>
-							<button
+								className="move-photo-btns move-photo-btns__more"
+								src="./images/plus-btn.png"
+								alt="plus"
+							/>
+							<img
 								onClick={this.decreasePhotoSize}
-								className="photo-controls-container__btns photo-controls-container__btns__less"
-							>
-								-
-							</button>
+								className="move-photo-btns move-photo-btns__less"
+								src="./images/minus-btn.png"
+								alt="minus"
+							/>
 						</div>
 					</div>
 				) : null}

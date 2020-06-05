@@ -108,6 +108,29 @@ const customStyles = {
 	overlay: { zIndex: 10000 },
 };
 
+const selectColorOptions = [
+	{
+		value: "blue",
+		label: "Blue",
+	},
+	{
+		value: "pink",
+		label: "Pink",
+	},
+	{
+		value: "green",
+		label: "Green",
+	},
+	{
+		value: "yellow",
+		label: "Yellow",
+	},
+	{
+		value: "brown",
+		label: "Brown",
+	},
+];
+
 const product = [
 	{
 		Mug: {
@@ -185,10 +208,14 @@ export default class index extends Component {
 			billingDetails: false,
 			checkOutStripe: false,
 			showMsgInput: false,
+			showPetTagsInput: false,
 			qty: 1,
 			step2ActualProd: "",
 			designSquare: true,
 			shirtSize: "",
+			petTagBonePhone: "123456789",
+			petTagBonePetName: "Elsa",
+			boneColor: "blue",
 		};
 	}
 
@@ -362,9 +389,11 @@ export default class index extends Component {
 				totalShirtsInCart: 0,
 				totalPillowsInCart: 0,
 				totalKeychainsInCart: 0,
+				totalPetTagBonesInCart: 0,
 				qty: 1,
 				productToPay: [],
 				showMsgInput: false,
+				boneColor: "blue",
 			});
 		}
 	};
@@ -389,12 +418,22 @@ export default class index extends Component {
 			textOnMugs: "",
 			notChecked: true,
 			qty: 1,
+			showMsgInput: false,
+			boneColor: "blue",
+			petTagBonePhone: "123456789",
+			petTagBonePetName: "Elsa",
 		});
 	};
 
 	onSelectedChange = async (value) => {
 		await this.setState({
 			bg: value.value,
+		});
+	};
+
+	onSelectedChangeBone = async (value) => {
+		await this.setState({
+			colorBone: value.value,
 		});
 	};
 
@@ -557,6 +596,49 @@ export default class index extends Component {
 		);
 	};
 
+	screenshotPetTagBone = async () => {
+		if (this.state.notChecked === true) {
+			return this.setState({
+				errorMsg: "Confirm before continuing",
+			});
+		}
+		if (this.state.imagePreviewUrl === "") {
+			return alert("A photo is required to procceed, please upload one.");
+		}
+
+		this.toggleModalToConfirmOrder();
+
+		await html2canvas(document.getElementById("product-screen-container")).then(
+			async (canvas) => {
+				// zip and convert
+				var zip = new JSZip();
+				var savable = new Image();
+				savable.src = canvas.toDataURL("image/jpeg", 0.5);
+				zip.file(
+					"image.png",
+					savable.src.substr(savable.src.indexOf(",") + 1),
+					{
+						base64: true,
+					}
+				);
+
+				await this.setState({
+					fileArray: [...this.state.fileArray, this.state.file],
+					screenshot: [...this.state.screenshot, savable.src],
+					toggleStep3: true,
+					toggleStep2: false,
+					productToPay: this.state.productToPay.concat(
+						product[0].PetTagBone.price * this.state.qty
+					),
+					cart: this.state.cart + this.state.qty,
+					totalPetTagBonesInCart:
+						this.state.totalPetTagBonesInCart + this.state.qty,
+				});
+				await console.log(this.state.fileArray);
+			}
+		);
+	};
+
 	goBackToStep2 = async () => {
 		if (
 			window.confirm(
@@ -572,6 +654,7 @@ export default class index extends Component {
 					cart: this.state.cart - this.state.qty,
 					// qty: 1,
 					totalMugsInCart: this.state.totalMugsInCart - this.state.qty,
+
 					// totalShirtsInCart: this.state.totalShirtsInCart - this.state.qty,
 					productToPay: this.state.productToPay.slice(0, -1),
 					fileArray: this.state.fileArray.slice(0, -1),
@@ -590,6 +673,23 @@ export default class index extends Component {
 					// qty: 1,
 					// totalMugsInCart: this.state.totalMugsInCart - this.state.qty,
 					totalShirtsInCart: this.state.totalShirtsInCart - this.state.qty,
+					productToPay: this.state.productToPay.slice(0, -1),
+					fileArray: this.state.fileArray.slice(0, -1),
+					screenshot: this.state.screenshot.slice(0, -1),
+					imagePreviewUrl: "",
+					file: "",
+				});
+			}
+			if (this.state.step2ActualProd === "petTagBone") {
+				await this.setState({
+					toggleStep3: false,
+					toggleStep2: true,
+					notChecked: true,
+					cart: this.state.cart - this.state.qty,
+					// qty: 1,
+					// totalMugsInCart: this.state.totalMugsInCart - this.state.qty,
+					totalPetTagBonesInCart:
+						this.state.totalPetTagBonesInCart - this.state.qty,
 					productToPay: this.state.productToPay.slice(0, -1),
 					fileArray: this.state.fileArray.slice(0, -1),
 					screenshot: this.state.screenshot.slice(0, -1),
@@ -624,9 +724,10 @@ export default class index extends Component {
 		});
 	};
 
-	handleFocusRef = () => {
+	showInputFields = () => {
 		this.setState({
 			showMsgInput: true,
+			showPetTagsInput: true,
 		});
 	};
 
@@ -752,6 +853,17 @@ export default class index extends Component {
 											</p>
 										</div>
 									) : null}
+									{this.state.totalPetTagBonesInCart > 0 ? (
+										<div>
+											<p>
+												Total Pet-tag-bones in Cart:{" "}
+												{this.state.totalPetTagBonesInCart} {""}
+												<span>
+													(Pet-tag: ${product[0].PetTagBone.price * 0.01}.00 )
+												</span>
+											</p>
+										</div>
+									) : null}
 									<p>
 										Sub-Total: $
 										{product[0].Mug.price * 0.01 * this.state.totalMugsInCart +
@@ -760,7 +872,10 @@ export default class index extends Component {
 												this.state.totalShirtsInCart +
 											product[0].Pillow.price *
 												0.01 *
-												this.state.totalPillowsInCart}
+												this.state.totalPillowsInCart +
+											product[0].PetTagBone.price *
+												0.01 *
+												this.state.totalPetTagBonesInCart}
 										.00
 									</p>
 									<p>
@@ -773,6 +888,10 @@ export default class index extends Component {
 												0.13 +
 											product[0].Pillow.price *
 												this.state.totalPillowsInCart *
+												0.01 *
+												0.13 +
+											product[0].PetTagBone.price *
+												this.state.totalPetTagBonesInCart *
 												0.01 *
 												0.13
 										).toFixed(2)}
@@ -887,8 +1006,9 @@ export default class index extends Component {
 									) : null}
 									{this.state.step2ActualProd === "petTagBone" ? (
 										<PetTagBone
-											// showGuide={this.state.designSquare}
-											// toggleDesignSquare={this.toggleDesignSquare}
+											boneColor={this.state.colorBone}
+											petName={this.state.petTagBonePetName}
+											phone={this.state.petTagBonePhone}
 											img={this.state.productImgPetTagBone}
 											imagePreviewUrl={this.state.imagePreviewUrl}
 										/>
@@ -935,6 +1055,16 @@ export default class index extends Component {
 												/>
 											</div>
 										) : null}
+										{this.state.step2ActualProd === "petTagBone" ? (
+											<div className="shirt-size-select">
+												<Select
+													menuPlacement="top"
+													placeholder="Color"
+													onChange={this.onSelectedChangeBone}
+													options={selectColorOptions}
+												/>
+											</div>
+										) : null}
 									</div>
 									<div className="upload-photo-parent">
 										<h2
@@ -968,23 +1098,60 @@ export default class index extends Component {
 										onChange={this._handleImageChange}
 										style={{ display: "none" }}
 									/>
-									<h2
-										onClick={this.handleFocusRef}
-										className="heading-product heading-product__message"
-									>
-										&darr; CLICK TO ADD A MESSAGE &darr;{" "}
-										{50 - this.state.textOnMugs.length + " letters left"}
-									</h2>
-									{this.state.showMsgInput ? (
-										<div className="text-area-container">
-											<textarea
-												maxLength="50"
-												className="text-msg-input "
-												placeholder="Type your message here"
-												name="textOnMugs"
-												onChange={this.onChangeHandler}
-												type="text"
-											/>
+
+									{this.state.step2ActualProd === "petTagBone" ? (
+										<div>
+											<h2
+												onClick={this.showInputFields}
+												className="heading-product heading-product__message text-center"
+											>
+												&darr; ADD NAME AND PHONE &darr;{" "}
+											</h2>
+											<div className="petTagBone-input-container">
+												<input
+													// maxLength="50"
+													className="text-petTagBone-input "
+													placeholder="Pet Name"
+													name="petTagBonePetName"
+													onChange={this.onChangeHandler}
+													type="text"
+												/>
+												<input
+													// maxLength="50"
+													className="text-petTagBone-input "
+													placeholder="Phone number"
+													name="petTagBonePhone"
+													onChange={this.onChangeHandler}
+													type="text"
+												/>
+											</div>
+										</div>
+									) : null}
+
+									{/* CLICK TO ADD MESSAGE CONTROLS */}
+									{this.state.step2ActualProd === "mug" ||
+									this.state.step2ActualProd === "shirt" ||
+									this.state.step2ActualProd === "pillow" ? (
+										<div>
+											<h2
+												onClick={this.showInputFields}
+												className="heading-product heading-product__message"
+											>
+												&darr; CLICK TO ADD A MESSAGE &darr;{" "}
+												{50 - this.state.textOnMugs.length + " letters left"}
+											</h2>
+											{this.state.showMsgInput ? (
+												<div className="text-area-container">
+													<textarea
+														maxLength="50"
+														className="text-msg-input "
+														placeholder="Type your message here"
+														name="textOnMugs"
+														onChange={this.onChangeHandler}
+														type="text"
+													/>
+												</div>
+											) : null}
 										</div>
 									) : null}
 
@@ -1031,6 +1198,16 @@ export default class index extends Component {
 											{this.state.step2ActualProd === "pillow" ? (
 												<button
 													onClick={this.screenshotPillow}
+													className="continue-button"
+												>
+													Click here if you're done &#10003;
+												</button>
+											) : null}
+
+											{/* CONFIRM ORDER FOR PET TAG BONES */}
+											{this.state.step2ActualProd === "petTagBone" ? (
+												<button
+													onClick={this.screenshotPetTagBone}
 													className="continue-button"
 												>
 													Click here if you're done &#10003;
@@ -1107,6 +1284,17 @@ export default class index extends Component {
 											</p>
 										</div>
 									) : null}
+									{this.state.totalPetTagBonesInCart > 0 ? (
+										<div>
+											<p>
+												Total Pet-tags in Cart:{" "}
+												{this.state.totalPetTagBonesInCart} {""}
+												<span>
+													(Pet-tag: ${product[0].PetTagBone.price * 0.01}.00 )
+												</span>
+											</p>
+										</div>
+									) : null}
 									<p>
 										Sub-Total: $
 										{product[0].Mug.price * 0.01 * this.state.totalMugsInCart +
@@ -1115,7 +1303,10 @@ export default class index extends Component {
 												this.state.totalShirtsInCart +
 											product[0].Pillow.price *
 												0.01 *
-												this.state.totalPillowsInCart}
+												this.state.totalPillowsInCart +
+											product[0].PetTagBone.price *
+												0.01 *
+												this.state.totalPetTagBonesInCart}
 										.00
 									</p>
 									<p>
@@ -1128,6 +1319,10 @@ export default class index extends Component {
 												0.13 +
 											product[0].Pillow.price *
 												this.state.totalPillowsInCart *
+												0.01 *
+												0.13 +
+											product[0].PetTagBone.price *
+												this.state.totalPetTagBonesInCart *
 												0.01 *
 												0.13
 										).toFixed(2)}

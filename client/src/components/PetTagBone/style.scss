@@ -2,18 +2,49 @@
 	width: 100%;
 	position: relative;
 
-	.img-product__petTagBone {
-		width: 22%;
-		z-index: 2;
-		position: absolute;
-		// top: 60px;
+	.img-product__petTagBone-wrapper {
+		.img-product__petTagBone {
+			width: 22%;
+			z-index: 2;
+			position: absolute;
+			// top: 60px;
+		}
+
+		.petTagBone-info {
+			position: absolute;
+			z-index: 3;
+			text-transform: uppercase;
+			text-align: center;
+
+			&__petName {
+				left: 63%;
+				top: 20%;
+				font-size: 25px;
+			}
+
+			&__phone {
+				left: 62%;
+				font-size: 22px;
+				top: 80%;
+			}
+		}
 	}
+}
+.size-title__move {
+	grid-column-start: 2;
+	grid-column-end: 3;
+	grid-row: 1;
+}
+.size-title__size {
+	grid-column-start: 4;
+	grid-column-end: 5;
+	grid-row: 1;
+	padding-left: 10px;
 }
 .img-preview-petTagBone-wrapper {
 	position: relative;
 	width: 140px;
 	height: 130px;
-	// background-color: #fff;
 	margin-left: 40%;
 	overflow: hidden;
 	top: 40px;
@@ -21,9 +52,6 @@
 
 	.product-img-preview-petTagBone {
 		width: 100%;
-		// position: absolute;
-		// margin-top: 50px;
-		// margin-left: 1%;
 		padding: 1px;
 		z-index: 1;
 		overflow: hidden;
@@ -32,32 +60,56 @@
 
 .photo-controls-container {
 	position: absolute;
-	right: 0;
-	background-color: rgb(240, 230, 140);
+	width: 12%;
+	right: 10%;
+	background-color: rgb(201, 235, 178);
 	padding: 10px;
 	margin: 20px;
 	border-radius: 5px;
 	border: solid white 2px;
 	box-shadow: 0px 10px 40px black;
 
-	&-box {
+	&__heading {
+		margin: 0;
+		border-bottom: 1px solid black;
 	}
-	&__btns {
-		border-radius: 5px;
-		background-color: rgb(28, 34, 31);
-		color: rgb(255, 250, 250);
 
-		&__up {
-		}
-		&__right {
-		}
-		&__down {
-		}
-		&__left {
-		}
-		&__more {
-		}
-		&__less {
+	&-box {
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+
+		align-items: center;
+
+		.move-photo-btns {
+			width: 90%;
+
+			&__up {
+				grid-column: 2;
+				grid-row: 2;
+			}
+			&__right {
+				grid-column: 3;
+				grid-row: 3;
+			}
+			&__down {
+				grid-column: 2;
+				grid-row: 4;
+			}
+			&__left {
+				grid-column: 1;
+				grid-row: 3;
+			}
+			&__more {
+				grid-column: 4;
+				grid-row: 2;
+				padding-left: 10px;
+				margin-bottom: 5px;
+			}
+			&__less {
+				grid-column: 4;
+				grid-row: 3;
+				padding-left: 10px;
+			}
 		}
 	}
 }
