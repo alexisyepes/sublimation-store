@@ -160,11 +160,11 @@ const selectColorOptions = [
 const genderShirtsOptions = [
 	{
 		value: "male",
-		label: "Man",
+		label: "Men",
 	},
 	{
 		value: "female",
-		label: "Woman",
+		label: "Women",
 	},
 	{
 		value: "kid",
@@ -236,6 +236,7 @@ export default class index extends Component {
 			notChecked: true,
 			errorMsg: "",
 			textFormatOptions: false,
+			textFormatOptionsForPetTagBone: false,
 			mugPrice: 0,
 			productToPay: [],
 			cart: 0,
@@ -256,6 +257,8 @@ export default class index extends Component {
 			shirtSize: "",
 			shirtGender: "",
 			photoControlShirts: false,
+			photoControlPillow: false,
+			photoControlPetTagBone: false,
 			petTagBonePhone: "123456789",
 			petTagBonePetName: "Elsa",
 			boneColor: "blue",
@@ -344,11 +347,12 @@ export default class index extends Component {
 			productImgPillow: this.state.productImgArray[2],
 			productImg: "",
 			step2: true,
+			photoControlPillow: true,
 		});
 	};
 
-	handlePetTagBoneImg = () => {
-		this.setState({
+	handlePetTagBoneImg = async () => {
+		await this.setState({
 			step2ActualProd: "petTagBone",
 			productImgPetTagBone: this.state.productImgArray[3],
 			productImg: "",
@@ -366,6 +370,8 @@ export default class index extends Component {
 			toggleStep2: true,
 			toggleSelectProductBtn: false,
 			designSquare: false,
+			textFormatOptionsForPetTagBone: true,
+			photoControlPetTagBone: true,
 		});
 	};
 
@@ -428,7 +434,7 @@ export default class index extends Component {
 				bg: "",
 				textOnMugs: "",
 				notChecked: true,
-				cart: [],
+				cart: 0,
 				totalMugsInCart: 0,
 				totalShirtsInCart: 0,
 				totalPillowsInCart: 0,
@@ -466,6 +472,7 @@ export default class index extends Component {
 			boneColor: "blue",
 			petTagBonePhone: "123456789",
 			petTagBonePetName: "Elsa",
+			textFormatOptionsForPetTagBone: false,
 		});
 	};
 
@@ -639,6 +646,7 @@ export default class index extends Component {
 					toggleStep3: true,
 					toggleStep2: false,
 					textFormatOptions: false,
+					photoControlPillow: false,
 					productToPay: this.state.productToPay.concat(
 						product[0].Pillow.price * this.state.qty
 					),
@@ -681,6 +689,8 @@ export default class index extends Component {
 					screenshot: [...this.state.screenshot, savable.src],
 					toggleStep3: true,
 					toggleStep2: false,
+					textFormatOptionsForPetTagBone: false,
+					photoControlPetTagBone: false,
 					productToPay: this.state.productToPay.concat(
 						product[0].PetTagBone.price * this.state.qty
 					),
@@ -703,6 +713,7 @@ export default class index extends Component {
 				await this.setState({
 					toggleStep3: false,
 					toggleStep2: true,
+					btnstep2: true,
 					textFormatOptions: true,
 					notChecked: true,
 					cart: this.state.cart - this.state.qty,
@@ -735,6 +746,23 @@ export default class index extends Component {
 					shirtGender: "",
 				});
 			}
+			if (this.state.step2ActualProd === "pillow") {
+				await this.setState({
+					toggleStep3: false,
+					toggleStep2: true,
+					textFormatOptions: true,
+					notChecked: true,
+					cart: this.state.cart - this.state.qty,
+					// qty: 1,
+					// totalMugsInCart: this.state.totalMugsInCart - this.state.qty,
+					totalPillowsInCart: this.state.totalPillowsInCart - this.state.qty,
+					productToPay: this.state.productToPay.slice(0, -1),
+					fileArray: this.state.fileArray.slice(0, -1),
+					screenshot: this.state.screenshot.slice(0, -1),
+					imagePreviewUrl: "",
+					file: "",
+				});
+			}
 			if (this.state.step2ActualProd === "petTagBone") {
 				await this.setState({
 					toggleStep3: false,
@@ -750,6 +778,7 @@ export default class index extends Component {
 					screenshot: this.state.screenshot.slice(0, -1),
 					imagePreviewUrl: "",
 					file: "",
+					textFormatOptionsForPetTagBone: true,
 				});
 			}
 		}
@@ -820,7 +849,9 @@ export default class index extends Component {
 						</button>
 						{this.state.toggleStep1 ? (
 							<div className="text-center">
-								<h1>Choose one product below</h1>
+								<h1 className="product-select-title">
+									Choose one product below
+								</h1>
 								<h2 className="product-select" onClick={this.handleMugImg}>
 									Mug ($12.00)
 								</h2>
@@ -1058,6 +1089,7 @@ export default class index extends Component {
 											imagePreviewUrl={this.state.imagePreviewUrl}
 											textOnMugs={this.state.textOnMugs}
 											textFormatOptions={this.state.textFormatOptions}
+											photoControlPillow={this.state.photoControlPillow}
 										/>
 									) : null}
 									{this.state.step2ActualProd === "petTagBone" ? (
@@ -1067,7 +1099,8 @@ export default class index extends Component {
 											phone={this.state.petTagBonePhone}
 											img={this.state.productImgPetTagBone}
 											imagePreviewUrl={this.state.imagePreviewUrl}
-											btnConfirmed={this.state.btnStep2}
+											btnConfirmed={this.state.textFormatOptionsForPetTagBone}
+											photoControlPetTagBone={this.state.photoControlPetTagBone}
 										/>
 									) : null}
 								</div>

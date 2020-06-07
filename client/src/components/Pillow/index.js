@@ -147,7 +147,7 @@ class index extends Component {
 	render() {
 		return (
 			<div className="image-product-container-pillow text-center">
-				{this.props.imagePreviewUrl ? (
+				{this.props.imagePreviewUrl && this.props.photoControlPillow ? (
 					<div className="photo-controls-container">
 						<h3 className="photo-controls-container__heading">
 							<span role="img" aria-label="paw">

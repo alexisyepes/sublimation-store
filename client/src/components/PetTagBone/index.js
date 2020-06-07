@@ -115,7 +115,7 @@ class index extends Component {
 		return (
 			<div className="petTagBone-main-container">
 				{/* PHOTO TRANSFORM CONTROLS */}
-				{this.props.imagePreviewUrl ? (
+				{this.props.imagePreviewUrl && this.props.photoControlPetTagBone ? (
 					<div>
 						<div className="photo-controls-container">
 							<h3 className="photo-controls-container__heading">
