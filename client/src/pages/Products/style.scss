@@ -910,13 +910,23 @@
   }
 
   .upload-photo-parent {
-    width: 70% !important;
+    width: 100% !important;
+  }
+
+  .clear-photo-btn {
+    width: 90% !important;
+  }
+
+  .text-petTagBone-input {
+    width: 90% !important;
+    margin: 2px auto !important;
   }
 
   .heading-product__upload,
   .heading-product__message {
     font-size: 16px !important;
     font-weight: 800;
+    width: 95% !important;
   }
 
   .step-btn {
