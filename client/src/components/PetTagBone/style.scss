@@ -1,609 +1,1203 @@
 .petTagBone-main-container {
-	width: 100%;
-	position: relative;
+  width: 100%;
+  position: relative;
+  margin-bottom: 40px;
 
-	.img-product__petTagBone-wrapper {
-		.img-product__petTagBone {
-			width: 22%;
-			z-index: 2;
-			position: absolute;
-			// top: 60px;
-		}
+  .img-product__petTagBone-wrapper {
+    .img-product__petTagBone {
+      width: 22%;
+      z-index: 2;
+      position: absolute;
+      // top: 60px;
+    }
 
-		.petTagBone-info {
-			position: absolute;
-			z-index: 3;
-			text-transform: uppercase;
-			text-align: center;
+    .petTagBone-info {
+      position: absolute;
+      z-index: 3;
+      text-transform: uppercase;
+      text-align: center;
 
-			&__petName {
-				left: 60%;
-				top: 40%;
-				font-size: 25px;
-			}
+      &__petName {
+        left: 60%;
+        top: 40%;
+        font-size: 25px;
+      }
 
-			&__phone {
-				left: 61.5%;
-				font-size: 20px;
-				top: 85%;
-			}
-		}
-	}
+      &__phone {
+        left: 61.5%;
+        font-size: 20px;
+        top: 85%;
+      }
+    }
+  }
 }
 .size-title__move {
-	grid-column-start: 2;
-	grid-column-end: 3;
-	grid-row: 1;
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row: 1;
 }
 .size-title__size {
-	grid-column-start: 4;
-	grid-column-end: 5;
-	grid-row: 1;
-	padding-left: 10px;
+  grid-column-start: 4;
+  grid-column-end: 5;
+  grid-row: 1;
+  padding-left: 10px;
 }
 .img-preview-petTagBone-wrapper {
-	position: relative;
-	width: 10%;
-	// width: 140px;
-	height: 130px;
-	margin-left: 40%;
-	overflow: hidden;
-	top: 40px;
-	left: 12%;
+  position: relative;
+  width: 10%;
+  // width: 140px;
+  height: 130px;
+  margin-left: 40%;
+  overflow: hidden;
+  top: 40px;
+  left: 12%;
 
-	.product-img-preview-petTagBone {
-		width: 100%;
-		padding: 1px;
-		z-index: 1;
-		overflow: hidden;
-	}
+  .product-img-preview-petTagBone {
+    width: 100%;
+    padding: 1px;
+    z-index: 1;
+    overflow: hidden;
+  }
 }
 
 .photo-controls-container {
-	position: absolute;
-	width: 12%;
-	right: 10%;
-	background-color: rgb(201, 235, 178);
-	padding: 10px;
-	margin: 20px;
-	border-radius: 5px;
-	border: solid white 2px;
-	box-shadow: 0px 10px 40px black;
+  position: absolute;
+  width: 12%;
+  right: 10%;
+  background-color: rgb(201, 235, 178);
+  padding: 10px;
+  margin: 20px;
+  border-radius: 5px;
+  border: solid white 2px;
+  box-shadow: 0px 10px 40px black;
 
-	&__heading {
-		margin: 0;
-		border-bottom: 1px solid black;
-	}
+  &__heading {
+    margin: 0;
+    border-bottom: 1px solid black;
+  }
 
-	&-box {
-		display: grid;
-		grid-template-columns: 1fr 1fr 1fr 1fr;
+  &-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
 
-		align-items: center;
+    align-items: center;
 
-		//THIS UPDATES BUTTONS IN PILLOW AND SHIRT SCSS FILE
-		.move-photo-btns {
-			width: 90%;
-			cursor: pointer;
-			box-shadow: 0px 10px 30px black;
-			background-color: transparent;
-			border-radius: 10px;
-			margin: 2px 1px;
-			padding: 1px;
+    //THIS UPDATES BUTTONS IN PILLOW AND SHIRT SCSS FILE
+    .move-photo-btns {
+      width: 90%;
+      cursor: pointer;
+      box-shadow: 0px 10px 30px black;
+      background-color: transparent;
+      border-radius: 10px;
+      margin: 2px 1px;
+      padding: 1px;
 
-			&:hover {
-				filter: brightness(1.75);
-			}
-			&:active {
-				transform: scale(0.9);
-				filter: brightness(1.1);
-			}
+      &:hover {
+        filter: brightness(1.75);
+      }
+      &:active {
+        transform: scale(0.9);
+        filter: brightness(1.1);
+      }
 
-			&__up {
-				grid-column: 2;
-				grid-row: 2;
-			}
-			&__right {
-				grid-column: 3;
-				grid-row: 3;
-			}
-			&__down {
-				grid-column: 2;
-				grid-row: 4;
-			}
-			&__left {
-				grid-column: 1;
-				grid-row: 3;
-			}
-			&__more {
-				grid-column: 4;
-				grid-row: 2;
-				// padding-left: 10px;
-				margin-bottom: 5px;
-			}
-			&__less {
-				grid-column: 4;
-				grid-row: 3;
-				// padding-left: 10px;
-			}
-		}
-	}
+      &__up {
+        grid-column: 2;
+        grid-row: 2;
+      }
+      &__right {
+        grid-column: 3;
+        grid-row: 3;
+      }
+      &__down {
+        grid-column: 2;
+        grid-row: 4;
+      }
+      &__left {
+        grid-column: 1;
+        grid-row: 3;
+      }
+      &__more {
+        grid-column: 4;
+        grid-row: 2;
+        // padding-left: 10px;
+        margin-bottom: 5px;
+      }
+      &__less {
+        grid-column: 4;
+        grid-row: 3;
+        // padding-left: 10px;
+      }
+    }
+  }
 }
 
 .text-controls-container {
-	position: absolute;
-	width: 12%;
-	right: 30%;
-	top: 220px;
-	background-color: rgb(201, 235, 178);
-	padding: 10px;
-	margin: 20px;
-	border-radius: 5px;
-	border: solid white 2px;
-	box-shadow: 0px 10px 40px black;
+  position: absolute;
+  width: 12%;
+  right: 30%;
+  top: 220px;
+  background-color: rgb(201, 235, 178);
+  padding: 10px;
+  margin: 20px;
+  border-radius: 5px;
+  border: solid white 2px;
+  box-shadow: 0px 10px 40px black;
 
-	&__heading {
-		margin: 0;
-	}
+  &__heading {
+    margin: 0;
+  }
 
-	&-box {
-		display: grid;
-		grid-template-columns: 1fr 1fr 1fr 1fr;
+  &-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
 
-		align-items: center;
+    align-items: center;
 
-		.move-text-btns {
-			width: 90%;
+    .move-text-btns {
+      width: 90%;
 
-			&__up {
-				grid-column: 2;
-				grid-row: 2;
-			}
-			&__right {
-				grid-column: 3;
-				grid-row: 3;
-			}
-			&__down {
-				grid-column: 2;
-				grid-row: 4;
-			}
-			&__left {
-				grid-column: 1;
-				grid-row: 3;
-			}
-			&__more {
-				grid-column: 4;
-				grid-row: 2;
-				// padding-left: 10px;
-				margin-bottom: 5px;
-			}
-			&__less {
-				grid-column: 4;
-				grid-row: 3;
-				// padding-left: 10px;
-			}
-		}
-	}
+      &__up {
+        grid-column: 2;
+        grid-row: 2;
+      }
+      &__right {
+        grid-column: 3;
+        grid-row: 3;
+      }
+      &__down {
+        grid-column: 2;
+        grid-row: 4;
+      }
+      &__left {
+        grid-column: 1;
+        grid-row: 3;
+      }
+      &__more {
+        grid-column: 4;
+        grid-row: 2;
+        // padding-left: 10px;
+        margin-bottom: 5px;
+      }
+      &__less {
+        grid-column: 4;
+        grid-row: 3;
+        // padding-left: 10px;
+      }
+    }
+  }
 }
 
 @media only screen and (min-device-width: 3101px) and (max-device-width: 3285px) {
-	.img-product__petTagBone {
-		width: 13% !important;
-	}
+  .img-product__petTagBone {
+    width: 13% !important;
+  }
 
-	.petTagBone-info {
-		&__petName {
-			left: 56% !important;
-			top: 40%;
-			font-size: 25px;
-		}
+  .petTagBone-info {
+    &__petName {
+      left: 56% !important;
+      top: 40%;
+      font-size: 25px;
+    }
 
-		&__phone {
-			left: 57% !important;
-			font-size: 20px;
-			top: 85%;
-		}
-	}
+    &__phone {
+      left: 57% !important;
+      font-size: 20px;
+      top: 85%;
+    }
+  }
 
-	.img-preview-petTagBone-wrapper {
-		width: 170px;
-		height: 160px;
-		left: 11%;
-	}
+  .img-preview-petTagBone-wrapper {
+    width: 170px;
+    height: 160px;
+    left: 11%;
+  }
 }
 
 @media only screen and (min-device-width: 3000px) and (max-device-width: 3100px) {
-	.img-product__petTagBone {
-		width: 13% !important;
-	}
+  .img-product__petTagBone {
+    width: 13% !important;
+  }
 
-	.petTagBone-info {
-		&__petName {
-			left: 56% !important;
-			top: 40%;
-			font-size: 25px;
-		}
+  .petTagBone-info {
+    &__petName {
+      left: 56% !important;
+      top: 40%;
+      font-size: 25px;
+    }
 
-		&__phone {
-			left: 57% !important;
-			font-size: 20px;
-			top: 85%;
-		}
-	}
+    &__phone {
+      left: 57% !important;
+      font-size: 20px;
+      top: 85%;
+    }
+  }
 
-	.img-preview-petTagBone-wrapper {
-		width: 160px;
-		height: 150px;
-		left: 11%;
-	}
+  .img-preview-petTagBone-wrapper {
+    width: 160px;
+    height: 150px;
+    left: 11%;
+  }
 }
 
 @media only screen and (min-device-width: 2700px) and (max-device-width: 3000px) {
-	.img-product__petTagBone {
-		width: 14% !important;
-	}
+  .img-product__petTagBone {
+    width: 14% !important;
+  }
 
-	.petTagBone-info {
-		&__petName {
-			left: 56% !important;
-			top: 40%;
-			font-size: 25px;
-		}
+  .petTagBone-info {
+    &__petName {
+      left: 56% !important;
+      top: 40%;
+      font-size: 25px;
+    }
 
-		&__phone {
-			left: 57% !important;
-			font-size: 20px;
-			top: 85%;
-		}
-	}
+    &__phone {
+      left: 57% !important;
+      font-size: 20px;
+      top: 85%;
+    }
+  }
 
-	.img-preview-petTagBone-wrapper {
-		width: 150px;
-		height: 140px;
-		left: 11%;
-	}
+  .img-preview-petTagBone-wrapper {
+    width: 150px;
+    height: 140px;
+    left: 11%;
+  }
 }
 
 @media only screen and (min-device-width: 2500px) and (max-device-width: 2700px) {
-	.img-product__petTagBone {
-		width: 16% !important;
-	}
+  .img-product__petTagBone {
+    width: 16% !important;
+  }
 
-	.petTagBone-info {
-		&__petName {
-			left: 57% !important;
-			top: 39% !important;
-			font-size: 25px;
-		}
+  .petTagBone-info {
+    &__petName {
+      left: 57% !important;
+      top: 39% !important;
+      font-size: 25px;
+    }
 
-		&__phone {
-			left: 59% !important;
-			top: 85%;
-		}
-	}
+    &__phone {
+      left: 59% !important;
+      top: 85%;
+    }
+  }
 
-	.img-preview-petTagBone-wrapper {
-		width: 160px;
-		height: 150px;
-		left: 11.5%;
-	}
+  .img-preview-petTagBone-wrapper {
+    width: 160px;
+    height: 150px;
+    left: 11.5%;
+  }
 }
 
 @media only screen and (min-device-width: 2300px) and (max-device-width: 2499px) {
-	.img-product__petTagBone {
-		width: 19% !important;
-	}
+  .img-product__petTagBone {
+    width: 19% !important;
+  }
 
-	.petTagBone-info {
-		&__petName {
-			left: 59% !important;
-			top: 39% !important;
-		}
+  .petTagBone-info {
+    &__petName {
+      left: 59% !important;
+      top: 39% !important;
+    }
 
-		&__phone {
-			left: 61% !important;
-			top: 85%;
-		}
-	}
+    &__phone {
+      left: 61% !important;
+      top: 85%;
+    }
+  }
 
-	.img-preview-petTagBone-wrapper {
-		width: 170px;
-		height: 160px;
-		left: 11.5%;
-	}
+  .img-preview-petTagBone-wrapper {
+    width: 170px;
+    height: 160px;
+    left: 11.5%;
+  }
 }
 
 @media only screen and (min-device-width: 2200px) and (max-device-width: 2299px) {
-	.img-product__petTagBone {
-		width: 21% !important;
-	}
+  .img-product__petTagBone {
+    width: 21% !important;
+  }
 
-	.petTagBone-info {
-		&__petName {
-			left: 59% !important;
-			top: 39% !important;
-		}
+  .petTagBone-info {
+    &__petName {
+      left: 59% !important;
+      top: 39% !important;
+    }
 
-		&__phone {
-			left: 61% !important;
-			top: 85%;
-		}
-	}
+    &__phone {
+      left: 61% !important;
+      top: 85%;
+    }
+  }
 
-	.img-preview-petTagBone-wrapper {
-		width: 170px;
-		height: 160px;
-		left: 11.5%;
-	}
+  .img-preview-petTagBone-wrapper {
+    width: 170px;
+    height: 160px;
+    left: 11.5%;
+  }
 }
 
 @media only screen and (min-device-width: 2000px) and (max-device-width: 2199px) {
-	.img-product__petTagBone {
-		width: 21% !important;
-	}
+  .img-product__petTagBone {
+    width: 21% !important;
+  }
 
-	.petTagBone-info {
-		&__petName {
-			left: 59% !important;
-			top: 39% !important;
-		}
+  .petTagBone-info {
+    &__petName {
+      left: 59% !important;
+      top: 39% !important;
+    }
 
-		&__phone {
-			left: 61% !important;
-			top: 85%;
-		}
-	}
+    &__phone {
+      left: 61% !important;
+      top: 85%;
+    }
+  }
 
-	.img-preview-petTagBone-wrapper {
-		width: 160px;
-		height: 150px;
-		left: 12%;
-	}
+  .img-preview-petTagBone-wrapper {
+    width: 160px;
+    height: 150px;
+    left: 12%;
+  }
 }
 
 @media only screen and (min-device-width: 1860px) and (max-device-width: 1999px) {
-	.img-product__petTagBone {
-		width: 21% !important;
-	}
+  .img-product__petTagBone {
+    width: 21% !important;
+  }
 
-	.petTagBone-info {
-		&__petName {
-			left: 59% !important;
-			top: 39% !important;
-		}
+  .petTagBone-info {
+    &__petName {
+      left: 59% !important;
+      top: 39% !important;
+    }
 
-		&__phone {
-			left: 61% !important;
-			top: 85%;
-		}
-	}
+    &__phone {
+      left: 61% !important;
+      top: 85%;
+    }
+  }
 
-	.img-preview-petTagBone-wrapper {
-		width: 150px;
-		height: 140px;
-		left: 12%;
-	}
+  .img-preview-petTagBone-wrapper {
+    width: 150px;
+    height: 140px;
+    left: 12%;
+  }
 }
 
 @media only screen and (min-device-width: 1760px) and (max-device-width: 1949px) {
-	.img-product__petTagBone {
-		width: 25% !important;
-	}
+  .img-product__petTagBone {
+    width: 25% !important;
+  }
 
-	.petTagBone-info {
-		&__petName {
-			left: 62% !important;
-			top: 39% !important;
-		}
+  .petTagBone-info {
+    &__petName {
+      left: 62% !important;
+      top: 39% !important;
+    }
 
-		&__phone {
-			left: 64% !important;
-			top: 85%;
-		}
-	}
+    &__phone {
+      left: 64% !important;
+      top: 85%;
+    }
+  }
 
-	.img-preview-petTagBone-wrapper {
-		width: 13%;
-		height: 140px;
-		left: 12%;
-	}
+  .img-preview-petTagBone-wrapper {
+    width: 13%;
+    height: 140px;
+    left: 12%;
+  }
 
-	.photo-controls-container {
-		width: 15%;
-		top: 220px;
-	}
+  .photo-controls-container {
+    width: 15%;
+    top: 220px;
+  }
 
-	.text-controls-container {
-		width: 15%;
-		top: 220px;
-	}
+  .text-controls-container {
+    width: 15%;
+    top: 220px;
+  }
 }
 
 @media only screen and (min-device-width: 1718px) and (max-device-width: 1759px) {
-	.petTagBone-info {
-		&__petName {
-			left: 60% !important;
-			top: 30% !important;
-		}
+  .petTagBone-info {
+    &__petName {
+      left: 60% !important;
+      top: 30% !important;
+    }
 
-		&__phone {
-			left: 62% !important;
-			top: 70% !important;
-		}
-	}
-	.photo-controls-container {
-		width: 15%;
-		top: 220px;
-	}
+    &__phone {
+      left: 62% !important;
+      top: 70% !important;
+    }
+  }
+  .photo-controls-container {
+    width: 15%;
+    top: 220px;
+  }
 
-	.text-controls-container {
-		width: 15%;
-		top: 220px;
-	}
+  .text-controls-container {
+    width: 15%;
+    top: 220px;
+  }
 }
 
 @media only screen and (min-device-width: 1621px) and (max-device-width: 1717px) {
-	.petTagBone-info {
-		&__petName {
-			left: 61% !important;
-			top: 40% !important;
-		}
+  .petTagBone-info {
+    &__petName {
+      left: 61% !important;
+      top: 40% !important;
+    }
 
-		&__phone {
-			left: 63.5% !important;
-			top: 90% !important;
-		}
-	}
-	.photo-controls-container {
-		width: 15%;
-		top: 220px;
-	}
+    &__phone {
+      left: 63.5% !important;
+      top: 90% !important;
+    }
+  }
+  .photo-controls-container {
+    width: 15%;
+    top: 220px;
+  }
 
-	.text-controls-container {
-		width: 15%;
-		top: 220px;
-	}
+  .text-controls-container {
+    width: 15%;
+    top: 220px;
+  }
 }
 
 @media only screen and (min-device-width: 1540px) and (max-device-width: 1620px) {
-	.petTagBone-info {
-		&__petName {
-			left: 61% !important;
-			top: 36% !important;
-		}
+  .petTagBone-info {
+    &__petName {
+      left: 61% !important;
+      top: 36% !important;
+    }
 
-		&__phone {
-			left: 63.5% !important;
-			top: 80% !important;
-		}
-	}
-	.photo-controls-container {
-		width: 15%;
-		top: 220px;
-	}
+    &__phone {
+      left: 63.5% !important;
+      top: 80% !important;
+    }
+  }
+  .photo-controls-container {
+    width: 15%;
+    top: 220px;
+  }
 
-	.text-controls-container {
-		width: 15%;
-		top: 220px;
-	}
+  .text-controls-container {
+    width: 15%;
+    top: 220px;
+  }
 }
 
 @media only screen and (min-device-width: 1440px) and (max-device-width: 1539px) {
-	.petTagBone-info {
-		&__petName {
-			left: 60% !important;
-			top: 30% !important;
-		}
+  .petTagBone-info {
+    &__petName {
+      left: 60% !important;
+      top: 30% !important;
+    }
 
-		&__phone {
-			left: 61.5% !important;
-			top: 74% !important;
-		}
-	}
+    &__phone {
+      left: 61.5% !important;
+      top: 74% !important;
+    }
+  }
 
-	.photo-controls-container {
-		width: 15%;
-		top: 220px;
-	}
+  .photo-controls-container {
+    width: 15%;
+    top: 220px;
+  }
 
-	.text-controls-container {
-		width: 15%;
-		top: 220px;
-	}
+  .text-controls-container {
+    width: 15%;
+    top: 220px;
+  }
 }
 
 @media only screen and (min-device-width: 1340px) and (max-device-width: 1439px) {
-	.petTagBone-info {
-		&__petName {
-			left: 60% !important;
-			top: 30% !important;
-			font-size: 23px !important;
-		}
+  .petTagBone-info {
+    &__petName {
+      left: 60% !important;
+      top: 30% !important;
+      font-size: 23px !important;
+    }
 
-		&__phone {
-			left: 62% !important;
-			top: 74% !important;
-			font-size: 18px !important;
-		}
-	}
+    &__phone {
+      left: 62% !important;
+      top: 74% !important;
+      font-size: 18px !important;
+    }
+  }
 
-	.photo-controls-container {
-		width: 15%;
-		top: 220px;
-	}
+  .photo-controls-container {
+    width: 20%;
+    top: 220px;
+    right: 1%;
+  }
 
-	.text-controls-container {
-		width: 15%;
-		top: 220px;
-	}
+  .text-controls-container {
+    width: 20%;
+    top: 220px;
+    right: 25%;
+  }
 }
 
 @media only screen and (min-device-width: 1300px) and (max-device-width: 1399px) {
-	.petTagBone-info {
-		&__petName {
-			left: 60% !important;
-			top: 40% !important;
-			font-size: 22px !important;
-		}
+  .qty-container {
+    width: 40% !important;
+  }
 
-		&__phone {
-			left: 61.5% !important;
-			top: 85% !important;
-			font-size: 18px !important;
-		}
-	}
+  .petTagBone-info {
+    &__petName {
+      left: 60% !important;
+      top: 40% !important;
+      font-size: 22px !important;
+    }
 
-	.img-preview-petTagBone-wrapper {
-		width: 10%;
-		height: 100px;
-		left: 12%;
-		top: 35px;
-	}
+    &__phone {
+      left: 61.5% !important;
+      top: 85% !important;
+      font-size: 18px !important;
+    }
+  }
 
-	.photo-controls-container {
-		width: 15%;
-		top: 220px;
-	}
+  .img-preview-petTagBone-wrapper {
+    width: 10%;
+    height: 100px;
+    left: 12%;
+    top: 35px;
+  }
 
-	.text-controls-container {
-		width: 15%;
-		top: 220px;
-	}
+  .photo-controls-container {
+    width: 20%;
+    top: 220px;
+    right: 1%;
+  }
+
+  .text-controls-container {
+    width: 20%;
+    top: 220px;
+    right: 25%;
+  }
 }
 
 @media only screen and (min-device-width: 1200px) and (max-device-width: 1299px) {
-	.img-product__petTagBone {
-		width: 25% !important;
-	}
+  .qty-container {
+    width: 40% !important;
+  }
 
-	.petTagBone-info {
-		&__petName {
-			left: 61% !important;
-			top: 36% !important;
-			font-size: 25px !important;
-		}
+  .img-product__petTagBone {
+    width: 25% !important;
+  }
 
-		&__phone {
-			left: 64% !important;
-			top: 80% !important;
-			font-size: 16px !important;
-		}
-	}
+  .petTagBone-info {
+    &__petName {
+      left: 61% !important;
+      top: 36% !important;
+      font-size: 25px !important;
+    }
 
-	.img-preview-petTagBone-wrapper {
-		width: 11%;
-		height: 110px;
-		left: 12.5%;
-		top: 30px;
-	}
+    &__phone {
+      left: 64% !important;
+      top: 80% !important;
+      font-size: 16px !important;
+    }
+  }
 
-	.photo-controls-container {
-		width: 15%;
-		top: 220px;
-	}
+  .img-preview-petTagBone-wrapper {
+    width: 11%;
+    height: 110px;
+    left: 12.5%;
+    top: 30px;
+  }
 
-	.text-controls-container {
-		width: 15%;
-		top: 220px;
-	}
+  .photo-controls-container {
+    width: 20%;
+    top: 220px;
+    right: 1%;
+  }
+
+  .text-controls-container {
+    width: 20%;
+    top: 220px;
+    right: 25%;
+  }
+}
+
+@media only screen and (min-device-width: 1082px) and (max-device-width: 1199px) {
+  .qty-container {
+    width: 40% !important;
+  }
+
+  .img-product__petTagBone {
+    width: 25% !important;
+  }
+
+  .petTagBone-info {
+    &__petName {
+      left: 61% !important;
+      top: 36% !important;
+      font-size: 25px !important;
+    }
+
+    &__phone {
+      left: 64% !important;
+      top: 80% !important;
+      font-size: 16px !important;
+    }
+  }
+
+  .img-preview-petTagBone-wrapper {
+    width: 13%;
+    height: 130px;
+    left: 12%;
+    top: 35px;
+  }
+
+  .photo-controls-container {
+    width: 20%;
+    top: 220px;
+    right: 1%;
+  }
+
+  .text-controls-container {
+    width: 20%;
+    top: 220px;
+    right: 25%;
+  }
+}
+
+@media only screen and (min-device-width: 1010px) and (max-device-width: 1081px) {
+  .qty-container {
+    width: 40% !important;
+  }
+
+  .img-product__petTagBone {
+    width: 26% !important;
+  }
+
+  .petTagBone-info {
+    &__petName {
+      left: 61% !important;
+      top: 36% !important;
+      font-size: 25px !important;
+    }
+
+    &__phone {
+      left: 64% !important;
+      top: 80% !important;
+      font-size: 16px !important;
+    }
+  }
+
+  .img-preview-petTagBone-wrapper {
+    width: 13%;
+    height: 125px;
+    left: 12%;
+    top: 35px;
+  }
+
+  .photo-controls-container {
+    width: 20%;
+    top: 220px;
+    right: 1%;
+  }
+
+  .text-controls-container {
+    width: 20%;
+    top: 220px;
+    right: 25%;
+  }
+}
+
+@media only screen and (min-device-width: 960px) and (max-device-width: 1009px) {
+  .qty-container {
+    width: 40% !important;
+  }
+
+  .img-product__petTagBone {
+    width: 26% !important;
+  }
+
+  .petTagBone-info {
+    &__petName {
+      left: 61% !important;
+      top: 35% !important;
+      font-size: 25px !important;
+    }
+
+    &__phone {
+      left: 64% !important;
+      top: 80% !important;
+      font-size: 16px !important;
+    }
+  }
+
+  .img-preview-petTagBone-wrapper {
+    width: 13%;
+    height: 115px;
+    left: 12%;
+    top: 35px;
+  }
+
+  .photo-controls-container {
+    width: 20%;
+    top: 220px;
+    right: 1%;
+  }
+
+  .text-controls-container {
+    width: 20%;
+    top: 220px;
+    right: 25%;
+  }
+}
+
+@media only screen and (min-device-width: 865px) and (max-device-width: 959px) {
+  .qty-container {
+    width: 40% !important;
+  }
+
+  .img-product__petTagBone {
+    width: 28% !important;
+  }
+
+  .petTagBone-info {
+    &__petName {
+      left: 63% !important;
+      top: 35% !important;
+      font-size: 25px !important;
+    }
+
+    &__phone {
+      left: 65% !important;
+      top: 85% !important;
+      font-size: 16px !important;
+    }
+  }
+
+  .img-preview-petTagBone-wrapper {
+    width: 14%;
+    height: 115px;
+    left: 12%;
+    top: 35px;
+  }
+
+  .photo-controls-container {
+    width: 20%;
+    top: 220px;
+    right: 1%;
+  }
+
+  .text-controls-container {
+    width: 20%;
+    top: 220px;
+    right: 25%;
+  }
+}
+
+@media only screen and (min-device-width: 760px) and (max-device-width: 864px) {
+  .qty-container {
+    width: 40% !important;
+  }
+
+  .img-product__petTagBone {
+    width: 28% !important;
+  }
+
+  .petTagBone-info {
+    &__petName {
+      left: 61% !important;
+      top: 25% !important;
+      font-size: 25px !important;
+    }
+
+    &__phone {
+      left: 66% !important;
+      top: 70% !important;
+      font-size: 16px !important;
+    }
+  }
+
+  .img-preview-petTagBone-wrapper {
+    width: 12%;
+    height: 115px;
+    left: 13%;
+    top: 28px;
+  }
+
+  .photo-controls-container {
+    width: 20%;
+    top: 220px;
+    right: 1%;
+  }
+
+  .text-controls-container {
+    width: 20%;
+    top: 220px;
+    right: 25%;
+  }
+}
+
+@media only screen and (min-device-width: 690px) and (max-device-width: 759px) {
+  .qty-container {
+    width: 60% !important;
+  }
+
+  .img-product__petTagBone {
+    width: 35% !important;
+    left: 2%;
+  }
+
+  .petTagBone-info {
+    &__petName {
+      left: 17% !important;
+      top: 35% !important;
+      font-size: 22px !important;
+    }
+
+    &__phone {
+      left: 20% !important;
+      top: 80% !important;
+      font-size: 16px !important;
+    }
+  }
+
+  .img-preview-petTagBone-wrapper {
+    width: 16%;
+    height: 120px;
+    left: -35%;
+    top: 35px;
+  }
+
+  .photo-controls-container {
+    position: absolute;
+    width: 20%;
+    right: 1%;
+    background-color: rgb(201, 235, 178);
+    padding: 10px;
+    top: -30px;
+
+    &__heading {
+      margin: 0;
+      border-bottom: 1px solid black;
+      font-size: 14px;
+    }
+
+    &-box {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+
+      align-items: center;
+
+      //THIS UPDATES BUTTONS IN PILLOW AND SHIRT SCSS FILE
+      .move-photo-btns {
+        width: 25px;
+
+        cursor: pointer;
+        box-shadow: 0px 10px 30px black;
+        background-color: transparent;
+        border-radius: 10px;
+        margin: 2px 1px;
+        padding: 1px;
+
+        &:hover {
+          filter: brightness(1.75);
+        }
+        &:active {
+          transform: scale(0.9);
+          filter: brightness(1.1);
+        }
+      }
+    }
+  }
+
+  .text-controls-container {
+    position: absolute;
+    width: 20%;
+    right: 20%;
+    top: -30px;
+    left: 45%;
+
+    &__heading {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    &-box {
+      .move-text-btns {
+        width: 25px;
+        margin: 0;
+      }
+    }
+  }
+}
+
+@media only screen and (min-device-width: 621px) and (max-device-width: 689px) {
+  .qty-container {
+    width: 60% !important;
+  }
+
+  .img-product__petTagBone {
+    width: 35% !important;
+    left: 2%;
+  }
+
+  .petTagBone-info {
+    &__petName {
+      left: 17% !important;
+      top: 30% !important;
+      font-size: 22px !important;
+    }
+
+    &__phone {
+      left: 21% !important;
+      top: 70% !important;
+      font-size: 16px !important;
+    }
+  }
+
+  .img-preview-petTagBone-wrapper {
+    width: 16%;
+    height: 120px;
+    left: -35%;
+    top: 35px;
+  }
+
+  .photo-controls-container {
+    position: absolute;
+    width: 20%;
+    right: 5%;
+    background-color: rgb(201, 235, 178);
+    padding: 10px;
+    top: -30px;
+
+    &__heading {
+      margin: 0;
+      border-bottom: 1px solid black;
+      font-size: 14px;
+    }
+
+    &-box {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+
+      align-items: center;
+
+      //THIS UPDATES BUTTONS IN PILLOW AND SHIRT SCSS FILE
+      .move-photo-btns {
+        width: 25px;
+
+        cursor: pointer;
+        box-shadow: 0px 10px 30px black;
+        background-color: transparent;
+        border-radius: 10px;
+        margin: 2px 1px;
+        padding: 1px;
+
+        &:hover {
+          filter: brightness(1.75);
+        }
+        &:active {
+          transform: scale(0.9);
+          filter: brightness(1.1);
+        }
+      }
+    }
+  }
+
+  .text-controls-container {
+    position: absolute;
+    width: 20%;
+    right: 20%;
+    top: -30px;
+    left: 38%;
+
+    &__heading {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    &-box {
+      .move-text-btns {
+        width: 25px;
+        margin: 0;
+      }
+    }
+  }
+}
+
+@media only screen and (min-device-width: 521px) and (max-device-width: 620px) {
+  .qty-container {
+    width: 60% !important;
+  }
+
+  .img-product__petTagBone {
+    width: 35% !important;
+    left: 2%;
+  }
+
+  .petTagBone-info {
+    &__petName {
+      left: 17% !important;
+      top: 28% !important;
+      font-size: 20px !important;
+    }
+
+    &__phone {
+      left: 23% !important;
+      top: 70% !important;
+      font-size: 14px !important;
+    }
+  }
+
+  .img-preview-petTagBone-wrapper {
+    width: 15.5%;
+    height: 100px;
+    left: -34.5%;
+    top: 30px;
+  }
+
+  .photo-controls-container {
+    position: absolute;
+    width: 25%;
+    right: 1%;
+    background-color: rgb(201, 235, 178);
+    padding: 10px;
+    top: -30px;
+
+    &__heading {
+      margin: 0;
+      border-bottom: 1px solid black;
+      font-size: 14px;
+    }
+
+    &-box {
+      //THIS UPDATES BUTTONS IN PILLOW AND SHIRT SCSS FILE
+      .move-photo-btns {
+        width: 25px;
+
+        cursor: pointer;
+        box-shadow: 0px 10px 30px black;
+        background-color: transparent;
+        border-radius: 10px;
+        margin: 2px 1px;
+        padding: 1px;
+
+        &:hover {
+          filter: brightness(1.75);
+        }
+        &:active {
+          transform: scale(0.9);
+          filter: brightness(1.1);
+        }
+      }
+    }
+  }
+
+  .text-controls-container {
+    position: absolute;
+    width: 25%;
+    right: 1%;
+    top: 200px;
+
+    &__heading {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    &-box {
+      .move-text-btns {
+        width: 25px;
+        margin: 0;
+      }
+    }
+  }
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 520px) {
+  .qty-container {
+    width: 100% !important;
+  }
+
+  .img-product__petTagBone {
+    width: 35% !important;
+    left: 35%;
+  }
+
+  .petTagBone-info {
+    &__petName {
+      left: 17% !important;
+      top: 28% !important;
+      font-size: 20px !important;
+    }
+
+    &__phone {
+      left: 23% !important;
+      top: 70% !important;
+      font-size: 14px !important;
+    }
+  }
+
+  .img-preview-petTagBone-wrapper {
+    width: 15.5%;
+    height: 100px;
+    left: -34.5%;
+    top: 30px;
+  }
+
+  .photo-controls-container {
+    position: absolute;
+    width: 25%;
+    left: 1%;
+    background-color: rgb(201, 235, 178);
+    padding: 10px;
+    top: 130px;
+
+    &__heading {
+      margin: 0;
+      border-bottom: 1px solid black;
+      font-size: 14px;
+    }
+
+    &-box {
+      //THIS UPDATES BUTTONS IN PILLOW AND SHIRT SCSS FILE
+      .move-photo-btns {
+        width: 25px;
+
+        cursor: pointer;
+        box-shadow: 0px 10px 30px black;
+        background-color: transparent;
+        border-radius: 10px;
+        margin: 2px 1px;
+        padding: 1px;
+
+        &:hover {
+          filter: brightness(1.75);
+        }
+        &:active {
+          transform: scale(0.9);
+          filter: brightness(1.1);
+        }
+      }
+    }
+  }
+
+  .text-controls-container {
+    position: absolute;
+    width: 25%;
+    right: 1%;
+    top: 130px;
+
+    &__heading {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    &-box {
+      .move-text-btns {
+        width: 25px;
+        margin: 0;
+      }
+    }
+  }
 }

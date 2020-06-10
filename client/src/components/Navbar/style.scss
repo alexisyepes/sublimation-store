@@ -4,53 +4,80 @@
 @import "../../SCSS/typography.scss";
 
 .menu {
-	margin: 0px;
-	background-color: $color-secondary-dark;
-	display: flex;
-	justify-content: space-around;
-	align-items: center;
-	padding: 25px 15px;
-	list-style: none;
-	text-decoration: none;
-	color: rgb(0, 0, 0) !important;
+  margin: 0px;
+  background-color: $color-secondary-dark;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 25px 15px;
+  list-style: none;
+  text-decoration: none;
+  color: rgb(0, 0, 0) !important;
 
-	&li {
-		padding: 35px 15px;
-	}
+  &li {
+    padding: 35px 15px;
+  }
 }
 
 .logo {
-	border-radius: 100px;
-	position: relative;
-	&__navbar {
-		position: absolute;
-		top: 25px;
-		left: 2%;
-		width: 4%;
-	}
+  border-radius: 100px;
+  position: relative;
+  &__navbar {
+    position: absolute;
+    top: 25px;
+    left: 2%;
+    width: 4%;
+  }
 }
 
 .nav-link {
-	color: rgb(0, 0, 0);
-	font-size: 26px;
-	text-decoration: none;
+  color: rgb(0, 0, 0);
+  font-size: 26px;
+  text-decoration: none;
 
-	&__home {
-		order: 0;
-	}
-	&__contact {
-		order: 1;
-	}
-	&__about {
-		order: 2;
-	}
-	&__products {
-		order: 3;
-	}
+  &__home {
+    order: 0;
+  }
+  &__contact {
+    order: 1;
+  }
+  &__about {
+    order: 2;
+  }
+  &__products {
+    order: 3;
+  }
 }
 
 .links-home {
-	text-decoration: none;
-	color: rgb(0, 0, 0);
-	font-weight: 700;
+  text-decoration: none;
+  color: rgb(0, 0, 0);
+  font-weight: 700;
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 768px) {
+  .nav-link {
+    color: rgb(0, 0, 0);
+    font-size: 18px;
+    text-decoration: none;
+
+    &__home {
+      order: 0;
+    }
+    &__contact {
+      order: 1;
+    }
+    &__about {
+      order: 2;
+    }
+    &__products {
+      order: 3;
+    }
+  }
+
+  .links-home {
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    font-weight: 700;
+  }
 }

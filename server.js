@@ -22,7 +22,7 @@ app.use(express.json({ limit: "50mb" }));
 
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
-	app.use(express.static("client/build"));
+  app.use(express.static("client/build"));
 }
 
 //ROUTES//
@@ -33,18 +33,18 @@ app.use("/", productRouter);
 // Send every request to the React app
 // Define any API routes before this runs
 app.get("*", function (req, res) {
-	res.sendFile(path.join(__dirname, "./client/build/index.html"));
+  res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
 
 mongoose.connect(
-	`mongodb+srv://dbSublimation:${process.env.MONGO_ATLAS}@cluster0-jgrcp.mongodb.net/test?retryWrites=true&w=majority`,
+  `mongodb+srv://dbSublimation:${process.env.MONGO_ATLAS}@cluster0-jgrcp.mongodb.net/test?retryWrites=true&w=majority`,
 
-	{
-		useNewUrlParser: true,
-		useUnifiedTopology: true,
-	}
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }
 );
 
 app.listen(PORT, function () {
-	console.log(`🌎 ==> API server now on port ${PORT}!`);
+  console.log(`🌎 ==> API server now on port ${PORT}!`);
 });
