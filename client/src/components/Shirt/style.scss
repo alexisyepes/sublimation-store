@@ -4,151 +4,146 @@
 @import "../../SCSS/typography.scss";
 
 .shirt-container {
-	// position: relative;
+  // position: relative;
 
-	.photo-controls-container {
-		z-index: 300;
-		position: absolute;
-		background-color: rgb(201, 235, 178);
-		padding: 10px;
-		margin: 20px;
-		border-radius: 5px;
-		border: solid white 2px;
-		box-shadow: 0px 10px 40px black;
-	}
+  .photo-controls-container {
+    z-index: 300;
+    position: absolute;
+    background-color: rgb(201, 235, 178);
+    padding: 10px;
+    margin: 20px;
+    border-radius: 5px;
+    border: solid white 2px;
+    box-shadow: 0px 10px 40px black;
+  }
 
-	.img-product-container {
-		position: relative;
-		width: 90%;
+  .img-product-container {
+    position: relative;
+    width: 90%;
 
-		.hide-x {
-			position: absolute;
-			left: 46%;
-			top: 5%;
-			background-color: #fff;
-			padding: 2px;
-			border-radius: 5px;
-			cursor: pointer;
-		}
+    .hide-x {
+      position: absolute;
+      left: 46%;
+      top: 5%;
+      background-color: #fff;
+      padding: 2px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
 
-		.img-product__shirt {
-			width: 22%;
-			margin-top: 20px;
-		}
+    .img-product__shirt {
+      width: 22%;
+      margin-top: 20px;
+    }
 
-		.img-preview__shirt {
-			width: 5%;
-			position: absolute;
-			top: 40%;
-			left: 55%;
-		}
-	}
+    .img-preview__shirt {
+      width: 5%;
+      position: absolute;
+      top: 40%;
+      left: 55%;
+    }
+  }
 
-	.text-on-shirts {
-		width: 22%;
-		height: 350px;
-		top: 60%;
-		left: 34%;
-		z-index: 2;
-		// display: inline-block;
-		position: absolute;
+  .text-on-shirts {
+    width: 22%;
+    height: 350px;
+    top: 60%;
+    left: 34%;
+    z-index: 2;
+    // display: inline-block;
+    position: absolute;
 
-		&__container {
-			white-space: pre-wrap;
-			font-size: 20px;
-			font-family: "Arial Black", Gadget, sans-serif;
-		}
-	}
+    &__container {
+      white-space: pre-wrap;
+      font-size: 20px;
+      font-family: "Arial Black", Gadget, sans-serif;
+    }
+  }
 
-	.text-controls-container-shirt {
-		width: 25%;
-		position: absolute;
-		right: 0;
-		top: 80px;
-		// width: 200px;
-		position: absolute;
-		right: 30%;
-		background-color: rgb(201, 235, 178);
-		padding: 10px;
-		margin: 20px;
-		border-radius: 5px;
-		border: solid white 2px;
-		box-shadow: 0px 10px 40px black;
+  .text-controls-container-shirt {
+    position: absolute;
+    width: 13%;
+    left: 52%;
+    top: 100%;
+    background-color: rgb(201, 235, 178);
+    padding: 10px;
+    margin: 20px;
+    border: solid white 2px;
+    border-radius: 5px;
 
-		&__heading {
-			margin: 0;
-		}
+    &__heading {
+      margin: 0;
+      border-bottom: 1px solid black;
+    }
 
-		&-box {
-			display: grid;
-			grid-template-columns: 1fr 1fr 1fr 1fr;
-			align-items: center;
+    &-box {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      align-items: center;
 
-			.move-text-btns-shirt {
-				width: 85%;
-				cursor: pointer;
-				box-shadow: 0px 10px 30px black;
-				background-color: transparent;
-				border-radius: 10px;
-				margin: 2px 1px;
-				padding: 1px;
+      .move-text-btns-shirt {
+        width: 90%;
+        box-shadow: 0px 10px 40px black;
+        border-radius: 5px;
 
-				&:hover {
-					filter: brightness(1.75);
-				}
-				&:active {
-					transform: scale(0.9);
-					filter: brightness(1.1);
-				}
+        &__up {
+          grid-column: 2;
+          grid-row: 2;
+        }
+        &__right {
+          grid-column: 3;
+          grid-row: 3;
+        }
+        &__down {
+          grid-column: 2;
+          grid-row: 4;
+        }
+        &__left {
+          grid-column: 1;
+          grid-row: 3;
+        }
+        &__more {
+          grid-column: 4;
+          grid-row: 2;
+          // padding-left: 10px;
+          margin-bottom: 5px;
+        }
+        &__less {
+          grid-column: 4;
+          grid-row: 3;
+          // padding-left: 10px;
+        }
+      }
+    }
+  }
 
-				&__up {
-					grid-column: 2;
-					grid-row: 2;
-				}
-				&__right {
-					grid-column: 3;
-					grid-row: 3;
-				}
-				&__down {
-					grid-column: 2;
-					grid-row: 4;
-				}
-				&__left {
-					grid-column: 1;
-					grid-row: 3;
-				}
-				&__more {
-					grid-column: 4;
-					grid-row: 2;
-					// padding-left: 10px;
-					margin-bottom: 5px;
-				}
-				&__less {
-					grid-column: 4;
-					grid-row: 3;
-					// padding-left: 10px;
-				}
-			}
-		}
-	}
-
-	.parent-container-text-control {
-		width: 100%;
-		position: absolute;
-		right: 0;
-	}
+  .parent-container-text-control {
+    width: 100%;
+    position: absolute;
+    right: 0;
+  }
 }
 
-.shirt-container-back {
-	width: 50%;
-	position: absolute;
-	right: 0;
+.move-text-btns-container-shirts {
+  top: 10px;
+  // display: flex;
+  position: relative;
+  width: 14%;
+  left: 53%;
 }
 
-.move-text-btns-container-shirt {
-	top: 80px;
-	// display: flex;
-	position: relative;
-	width: 20%;
-	margin-left: 51%;
+@media only screen and (min-device-width: 760px) and (max-device-width: 960px) {
+  .move-text-btns-container-shirts {
+    top: 10px;
+    // display: flex;
+    position: relative;
+    width: 15%;
+    margin-left: 1%;
+  }
+
+  .text-controls-container-shirt {
+    width: 20%;
+    top: 180px;
+    right: 25%;
+  }
 }
