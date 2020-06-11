@@ -108,13 +108,14 @@ const customStylesCheckout = {
     bottom: "auto",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
-    backgroundColor: "rgb(192,192,192)",
+    backgroundColor: "rgb(199, 218, 166)",
     color: "black",
     borderRadius: "5px",
-    width: "600px",
+    width: "60%",
     overflow: "visible",
     border: "1px solid black",
     boxShadow: "0px 60px 150px black",
+    display: "flex-box",
   },
   overlay: { zIndex: 1000 },
 };
@@ -673,37 +674,34 @@ export default class index extends Component {
 
     this.toggleModalToConfirmOrder();
 
-    await html2canvas(document.getElementById("product-screen-container")).then(
-      async (canvas) => {
-        // zip and convert
-        var zip = new JSZip();
-        var savable = new Image();
-        savable.src = canvas.toDataURL("image/jpeg", 0.5);
-        zip.file(
-          "image.png",
-          savable.src.substr(savable.src.indexOf(",") + 1),
-          {
-            base64: true,
-          }
-        );
+    await html2canvas(document.getElementById("product-screen-container"), {
+      width: 1200,
+      height: 1400,
+    }).then(async (canvas) => {
+      // zip and convert
+      var zip = new JSZip();
+      var savable = new Image();
+      savable.src = canvas.toDataURL("image/jpeg", 0.5);
+      zip.file("image.png", savable.src.substr(savable.src.indexOf(",") + 1), {
+        base64: true,
+      });
 
-        await this.setState({
-          fileArray: [...this.state.fileArray, this.state.file],
-          screenshot: [...this.state.screenshot, savable.src],
-          toggleStep3: true,
-          toggleStep2: false,
-          textFormatOptionsForPetTagBone: false,
-          photoControlPetTagBone: false,
-          productToPay: this.state.productToPay.concat(
-            product[0].PetTagBone.price * this.state.qty
-          ),
-          cart: this.state.cart + this.state.qty,
-          totalPetTagBonesInCart:
-            this.state.totalPetTagBonesInCart + this.state.qty,
-        });
-        await console.log(this.state.fileArray);
-      }
-    );
+      await this.setState({
+        fileArray: [...this.state.fileArray, this.state.file],
+        screenshot: [...this.state.screenshot, savable.src],
+        toggleStep3: true,
+        toggleStep2: false,
+        textFormatOptionsForPetTagBone: false,
+        photoControlPetTagBone: false,
+        productToPay: this.state.productToPay.concat(
+          product[0].PetTagBone.price * this.state.qty
+        ),
+        cart: this.state.cart + this.state.qty,
+        totalPetTagBonesInCart:
+          this.state.totalPetTagBonesInCart + this.state.qty,
+      });
+      await console.log(this.state.fileArray);
+    });
   };
 
   goBackToStep2 = async () => {
@@ -838,7 +836,7 @@ export default class index extends Component {
             </span>
           </div>
         ) : null}
-        <div id="product-screen-container" className="steps-parent">
+        <div className="steps-parent">
           {/* STEPS */}
 
           <div className="steps-container">
@@ -1043,7 +1041,10 @@ export default class index extends Component {
             {/* step 3 Container ENDS***********************/}
           </div>
 
-          <div className="virtual-image-container">
+          <div
+            id="product-screen-container"
+            className="virtual-image-container"
+          >
             <h1 className="product-main-title">MY PRODUCT</h1>
             {this.state.step2 ? (
               <div>

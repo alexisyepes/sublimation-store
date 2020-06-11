@@ -20,7 +20,19 @@
       &__petName {
         left: 60%;
         top: 40%;
-        font-size: 25px;
+        font-size: 50%;
+      }
+
+      &__petName--small-screens {
+        display: none;
+        left: 60%;
+        top: 40%;
+      }
+
+      &__petName--Xsmall-screens {
+        display: none;
+        left: 60%;
+        top: 40%;
       }
 
       &__phone {
@@ -44,12 +56,12 @@
 }
 .img-preview-petTagBone-wrapper {
   position: relative;
-  width: 10%;
+  width: 11%;
   // width: 140px;
   height: 130px;
   margin-left: 40%;
   overflow: hidden;
-  top: 40px;
+  top: 45px;
   left: 12%;
 
   .product-img-preview-petTagBone {
@@ -423,15 +435,23 @@
 @media only screen and (min-device-width: 1718px) and (max-device-width: 1759px) {
   .petTagBone-info {
     &__petName {
-      left: 60% !important;
-      top: 30% !important;
+      left: 61% !important;
+      top: 20% !important;
     }
 
     &__phone {
-      left: 62% !important;
-      top: 70% !important;
+      left: 62.5% !important;
+      top: 50% !important;
     }
   }
+
+  .img-preview-petTagBone-wrapper {
+    width: 10%;
+    height: 170px;
+    left: 12%;
+    top: 40px;
+  }
+
   .photo-controls-container {
     width: 15%;
     top: 220px;
@@ -455,6 +475,14 @@
       top: 90% !important;
     }
   }
+
+  .img-preview-petTagBone-wrapper {
+    width: 10%;
+    height: 170px;
+    left: 12%;
+    top: 40px;
+  }
+
   .photo-controls-container {
     width: 15%;
     top: 220px;
@@ -478,6 +506,14 @@
       top: 80% !important;
     }
   }
+
+  .img-preview-petTagBone-wrapper {
+    width: 10%;
+    height: 150px;
+    left: 12%;
+    top: 40px;
+  }
+
   .photo-controls-container {
     width: 15%;
     top: 220px;
@@ -498,8 +534,15 @@
 
     &__phone {
       left: 61.5% !important;
-      top: 74% !important;
+      top: 78% !important;
     }
+  }
+
+  .img-preview-petTagBone-wrapper {
+    width: 10%;
+    height: 150px;
+    left: 12%;
+    top: 40px;
   }
 
   .photo-controls-container {
@@ -518,7 +561,7 @@
     &__petName {
       left: 60% !important;
       top: 30% !important;
-      font-size: 23px !important;
+      // font-size: 23px !important;
     }
 
     &__phone {
@@ -526,6 +569,13 @@
       top: 74% !important;
       font-size: 18px !important;
     }
+  }
+
+  .img-preview-petTagBone-wrapper {
+    width: 10%;
+    height: 150px;
+    left: 12%;
+    top: 40px;
   }
 
   .photo-controls-container {
@@ -541,7 +591,7 @@
   }
 }
 
-@media only screen and (min-device-width: 1300px) and (max-device-width: 1399px) {
+@media only screen and (min-device-width: 1300px) and (max-device-width: 1339px) {
   .qty-container {
     width: 40% !important;
   }
@@ -549,22 +599,22 @@
   .petTagBone-info {
     &__petName {
       left: 60% !important;
-      top: 40% !important;
-      font-size: 22px !important;
+      top: 30% !important;
+      // font-size: 23px !important;
     }
 
     &__phone {
-      left: 61.5% !important;
-      top: 85% !important;
+      left: 62% !important;
+      top: 74% !important;
       font-size: 18px !important;
     }
   }
 
   .img-preview-petTagBone-wrapper {
     width: 10%;
-    height: 100px;
+    height: 140px;
     left: 12%;
-    top: 35px;
+    top: 40px;
   }
 
   .photo-controls-container {
@@ -591,23 +641,23 @@
 
   .petTagBone-info {
     &__petName {
-      left: 61% !important;
-      top: 36% !important;
-      font-size: 25px !important;
+      left: 62% !important;
+      top: 30% !important;
+      // font-size: 23px !important;
     }
 
     &__phone {
-      left: 64% !important;
-      top: 80% !important;
-      font-size: 16px !important;
+      left: 63% !important;
+      top: 74% !important;
+      font-size: 18px !important;
     }
   }
 
   .img-preview-petTagBone-wrapper {
-    width: 11%;
-    height: 110px;
-    left: 12.5%;
-    top: 30px;
+    width: 12%;
+    height: 150px;
+    left: 12%;
+    top: 40px;
   }
 
   .photo-controls-container {
@@ -636,7 +686,7 @@
     &__petName {
       left: 61% !important;
       top: 36% !important;
-      font-size: 25px !important;
+      // font-size: 25px !important;
     }
 
     &__phone {
@@ -679,7 +729,7 @@
     &__petName {
       left: 61% !important;
       top: 36% !important;
-      font-size: 25px !important;
+      // font-size: 25px !important;
     }
 
     &__phone {
@@ -722,7 +772,7 @@
     &__petName {
       left: 61% !important;
       top: 35% !important;
-      font-size: 25px !important;
+      // font-size: 25px !important;
     }
 
     &__phone {
@@ -765,7 +815,7 @@
     &__petName {
       left: 63% !important;
       top: 35% !important;
-      font-size: 25px !important;
+      // font-size: 25px !important;
     }
 
     &__phone {
@@ -784,13 +834,13 @@
 
   .photo-controls-container {
     width: 20%;
-    top: 220px;
+    top: 180px;
     right: 1%;
   }
 
   .text-controls-container {
     width: 20%;
-    top: 220px;
+    top: 180px;
     right: 25%;
   }
 }
@@ -808,32 +858,32 @@
     &__petName {
       left: 61% !important;
       top: 25% !important;
-      font-size: 25px !important;
+      // font-size: 25px !important;
     }
 
     &__phone {
       left: 66% !important;
-      top: 70% !important;
+      top: 78% !important;
       font-size: 16px !important;
     }
   }
 
   .img-preview-petTagBone-wrapper {
     width: 12%;
-    height: 115px;
+    height: 105px;
     left: 13%;
     top: 28px;
   }
 
   .photo-controls-container {
     width: 20%;
-    top: 220px;
+    top: 180px;
     right: 1%;
   }
 
   .text-controls-container {
     width: 20%;
-    top: 220px;
+    top: 180px;
     right: 25%;
   }
 }
@@ -852,7 +902,7 @@
     &__petName {
       left: 17% !important;
       top: 35% !important;
-      font-size: 22px !important;
+      // font-size: 22px !important;
     }
 
     &__phone {
@@ -946,19 +996,19 @@
     &__petName {
       left: 17% !important;
       top: 30% !important;
-      font-size: 22px !important;
+      // font-size: 22px !important;
     }
 
     &__phone {
       left: 21% !important;
-      top: 70% !important;
+      top: 78% !important;
       font-size: 16px !important;
     }
   }
 
   .img-preview-petTagBone-wrapper {
     width: 16%;
-    height: 120px;
+    height: 100px;
     left: -35%;
     top: 35px;
   }
@@ -1040,12 +1090,19 @@
     &__petName {
       left: 17% !important;
       top: 28% !important;
-      font-size: 20px !important;
+      display: none;
+      // font-size: 20px !important;
+    }
+
+    &__petName--small-screens {
+      left: 17% !important;
+      top: 28% !important;
+      display: inline-flex !important;
     }
 
     &__phone {
       left: 23% !important;
-      top: 70% !important;
+      top: 72% !important;
       font-size: 14px !important;
     }
   }
@@ -1126,9 +1183,16 @@
 
   .petTagBone-info {
     &__petName {
+      display: none;
       left: 49% !important;
       top: 26% !important;
-      font-size: 16px !important;
+      // font-size: 16px !important;
+    }
+
+    &__petName--small-screens {
+      left: 49% !important;
+      top: 26% !important;
+      display: inline-flex !important;
     }
 
     &__phone {
@@ -1205,6 +1269,8 @@
 @media only screen and (min-device-width: 401px) and (max-device-width: 449px) {
   .qty-container {
     width: 100% !important;
+    grid-template-rows: 40px;
+    align-items: center;
   }
 
   .img-product__petTagBone {
@@ -1221,7 +1287,14 @@
     &__petName {
       left: 46% !important;
       top: 18% !important;
-      font-size: 15px !important;
+      display: none;
+      // font-size: 15px !important;
+    }
+
+    &__petName--small-screens {
+      left: 46% !important;
+      top: 18% !important;
+      display: inline-flex !important;
     }
 
     &__phone {
@@ -1298,6 +1371,10 @@
 @media only screen and (min-device-width: 360px) and (max-device-width: 400px) {
   .qty-container {
     width: 100% !important;
+    grid-template-rows: 40px;
+    align-items: center;
+    font-size: 14px;
+    margin-top: 20px;
   }
 
   .img-product__petTagBone {
@@ -1307,14 +1384,27 @@
 
   .petTagBone-info {
     &__petName {
-      left: 45% !important;
-      top: 15% !important;
-      font-size: 14px !important;
+      left: 44% !important;
+      top: 20% !important;
+      display: none;
+      // font-size: 14px;
+    }
+
+    &__petName--small-screens {
+      left: 44% !important;
+      top: 20% !important;
+      display: none !important;
+    }
+
+    &__petName--Xsmall-screens {
+      left: 44% !important;
+      top: 20% !important;
+      display: inline-flex !important;
     }
 
     &__phone {
-      left: 55% !important;
-      top: 50% !important;
+      left: 54% !important;
+      top: 78% !important;
       font-size: 10px !important;
     }
   }
@@ -1326,7 +1416,7 @@
 
   .img-preview-petTagBone-wrapper {
     width: 16%;
-    height: 90px;
+    height: 60px;
     left: -5px;
     top: 15px;
   }
@@ -1391,6 +1481,10 @@
 @media only screen and (min-device-width: 320px) and (max-device-width: 359px) {
   .qty-container {
     width: 100% !important;
+    grid-template-rows: 40px;
+    align-items: center;
+    font-size: 14px;
+    margin-top: 40px;
   }
 
   .img-product__petTagBone {
@@ -1400,21 +1494,33 @@
 
   .petTagBone-info {
     &__petName {
-      left: 45% !important;
-      top: 15% !important;
-      font-size: 14px !important;
+      display: none;
+      left: 44% !important;
+      top: 20% !important;
+    }
+
+    &__petName--small-screens {
+      left: 44% !important;
+      top: 20% !important;
+      display: none !important;
+    }
+
+    &__petName--Xsmall-screens {
+      left: 44% !important;
+      top: 20% !important;
+      display: inline-flex !important;
     }
 
     &__phone {
       left: 55% !important;
-      top: 50% !important;
+      top: 72% !important;
       font-size: 10px !important;
     }
   }
 
   .img-preview-petTagBone-wrapper {
     width: 17%;
-    height: 90px;
+    height: 60px;
     left: -5px;
     top: 15px;
   }
