@@ -445,7 +445,7 @@
   top: -60px;
   left: 30%;
   border-radius: 10px;
-  // z-index: 10000;
+  z-index: 10000;
 
   &:hover {
     background-color: $color-primary;
@@ -661,6 +661,12 @@
     display: block;
   }
 
+  .confirm-product-button {
+    top: 100%;
+    left: 0;
+    width: 100% !important;
+  }
+
   .step-btn {
     width: 96% !important;
     display: block;
@@ -734,7 +740,9 @@
 
   .confirm-product-button {
     font-size: 18px;
-    width: 70%;
+    top: 100%;
+    left: 0;
+    width: 100% !important;
   }
 
   .virtual-image-container {
@@ -810,7 +818,9 @@
 
   .confirm-product-button {
     font-size: 17px;
-    width: 70%;
+    top: 100%;
+    left: 0;
+    width: 100% !important;
   }
 
   .step-btn {
@@ -916,7 +926,9 @@
 
   .confirm-product-button {
     font-size: 16px;
-    width: 70%;
+    top: 100%;
+    left: 0;
+    width: 100% !important;
   }
 
   .continue-button {
@@ -966,7 +978,7 @@
 
 @media only screen and (min-device-width: 220px) and (max-device-width: 520px) {
   .controls-to-add-content-to-mugs {
-    margin-top: 40%;
+    margin-top: 45%;
   }
 
   .agree-with-order {
