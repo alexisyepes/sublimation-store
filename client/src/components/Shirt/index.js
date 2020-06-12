@@ -48,6 +48,7 @@ class index extends Component {
       width: 6,
       marginTop: 10,
       marginRight: -10,
+      marginRightSmall: 10,
       fontSize: 20,
       color: "",
     };
@@ -122,13 +123,17 @@ class index extends Component {
   moveTextLeft = () => {
     this.setState((prevState) => ({
       marginRight: prevState.marginRight + 2,
+      marginRightSmall: prevState.marginRightSmall - 2,
     }));
+    console.log(this.state.marginRightSmall);
   };
 
   moveTextRight = () => {
     this.setState((prevState) => ({
       marginRight: prevState.marginRight - 2,
+      marginRightSmall: prevState.marginRightSmall + 2,
     }));
+    console.log(this.state.marginRightSmall);
   };
 
   increaseFont = async () => {
@@ -262,7 +267,7 @@ class index extends Component {
               className="text-on-shirts__container--small-screens text-center"
               style={{
                 marginTop: this.state.marginTop + "px",
-                marginRight: this.state.marginRight + "px",
+                marginLeft: this.state.marginRightSmall + "px",
                 fontSize: this.state.fontSize + "px",
                 color: this.state.color,
               }}

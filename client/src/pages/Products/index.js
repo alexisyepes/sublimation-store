@@ -131,6 +131,7 @@ const customStyles = {
     backgroundColor: "black",
     color: "white",
     borderRadius: "10px",
+    width: "60%",
   },
   overlay: { zIndex: 10000 },
 };
@@ -578,7 +579,7 @@ export default class index extends Component {
       });
     }
     if (this.state.shirtSize === "") {
-      return alert("Oops! you forgot to select size");
+      return alert("Oops! you forgot to select gender and size");
     }
     if (this.state.shirtGender === "") {
       return alert("Oops! you forgot to select the Type");
@@ -1352,6 +1353,11 @@ export default class index extends Component {
               </span>
               <h2 className="text-center">
                 Your product has been created! <br />
+                <img
+                  className="thumbs-up"
+                  src="./images/thumbs-up.png"
+                  alt="thumbs up"
+                />
                 <br /> You can procceed to step 3
               </h2>
             </Modal>

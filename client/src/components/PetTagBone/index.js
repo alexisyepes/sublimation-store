@@ -27,12 +27,7 @@ class index extends Component {
       this.setState({
         marginTopPhoto: 1,
         marginRightPhoto: 4,
-        // fontSize: 150,
-        // marginTop: 10,
-        // marginRight: 40,
         width: 90,
-        // fontSizeSmallScreens: 120,
-        // fontSizeXSmallScreens: 100,
       });
     }
   }

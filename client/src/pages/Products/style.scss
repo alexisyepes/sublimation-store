@@ -118,6 +118,11 @@
   }
 }
 
+.thumbs-up {
+  width: 80px;
+  margin: 10px auto;
+}
+
 .order-summary {
   font-weight: 700;
   background-color: rgb(199, 218, 166);
@@ -497,129 +502,6 @@
     position: relative;
     width: 100%;
     padding-bottom: 20px;
-
-    .mugs-container {
-      display: flex;
-
-      .product-sides {
-        font-size: 20px;
-        margin-top: 8%;
-        &__a {
-          margin-left: 30px;
-        }
-
-        &__b {
-          margin-left: 48%;
-        }
-      }
-
-      &__front {
-        width: 30%;
-        position: relative;
-
-        .product-img {
-          height: auto;
-          width: 50%;
-        }
-
-        .product-img-preview-mug {
-          opacity: 80%;
-          width: 35%;
-          height: 85%;
-          position: absolute;
-          top: 5%;
-          left: 26%;
-          clip-path: polygon(
-            0 94%,
-            0 9%,
-            21% 4%,
-            41% 2%,
-            61% 2%,
-            81% 4%,
-            99% 8%,
-            100% 94%,
-            79% 98%,
-            60% 100%,
-            43% 100%,
-            19% 98%
-          );
-        }
-      }
-
-      &__back {
-        width: 50%;
-        position: absolute;
-        right: 0;
-
-        .product-img__back {
-          height: auto;
-          width: 30%;
-        }
-
-        .text-on-mugs {
-          width: 22%;
-          height: 350px;
-          top: 8%;
-          left: 42%;
-          z-index: 2;
-          display: inline-block;
-          position: absolute;
-          &__container {
-            white-space: pre-wrap;
-            font-size: 30px;
-            font-family: "Arial Black", Gadget, sans-serif;
-          }
-        }
-
-        .bg-container-mugs {
-          .bg-image-mug {
-            position: absolute;
-            top: 5%;
-            left: 44%;
-            width: 20%;
-            height: 85%;
-            clip-path: polygon(
-              0 94%,
-              0 9%,
-              21% 4%,
-              41% 2%,
-              61% 2%,
-              81% 4%,
-              99% 8%,
-              100% 94%,
-              79% 98%,
-              60% 100%,
-              43% 100%,
-              19% 98%
-            );
-          }
-        }
-
-        .move-text-btns-container {
-          top: 40px;
-          // display: flex;
-          position: relative;
-          width: 30%;
-          margin-left: 35%;
-
-          .move-text-btns {
-            position: absolute;
-            font-size: 22px;
-            padding: 5px 0px;
-            border-radius: 10px;
-            background-color: $color-primary-dark;
-            margin-top: 20px;
-
-            &__font-color {
-              z-index: 10;
-              width: 100%;
-              // background-color: rgb(22, 155, 243);
-              cursor: pointer;
-            }
-          }
-        }
-      }
-    }
   }
 }
 
@@ -791,6 +673,16 @@
   .cart-container {
     font-size: 22px;
     left: 2%;
+  }
+
+  .agree-with-order {
+    font-size: 14.5px !important;
+  }
+
+  .checkbox-order {
+    transform: scale(1.5) !important;
+    margin-right: 8px !important;
+    margin-left: 5px !important;
   }
 
   .input-checkout {
