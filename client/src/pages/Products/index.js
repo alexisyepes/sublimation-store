@@ -543,35 +543,32 @@ export default class index extends Component {
     }
     this.toggleModalToConfirmOrder();
 
-    await html2canvas(document.getElementById("product-screen-container")).then(
-      async (canvas) => {
-        // zip and convert
-        var zip = new JSZip();
-        var savable = new Image();
-        savable.src = canvas.toDataURL("image/jpeg", 0.5);
-        zip.file(
-          "image.png",
-          savable.src.substr(savable.src.indexOf(",") + 1),
-          {
-            base64: true,
-          }
-        );
-        // console.log(savable.src);
+    await html2canvas(document.getElementById("product-screen-container"), {
+      width: 1200,
+      height: 1400,
+    }).then(async (canvas) => {
+      // zip and convert
+      var zip = new JSZip();
+      var savable = new Image();
+      savable.src = canvas.toDataURL("image/jpeg", 0.5);
+      zip.file("image.png", savable.src.substr(savable.src.indexOf(",") + 1), {
+        base64: true,
+      });
+      // console.log(savable.src);
 
-        await this.setState({
-          fileArray: [...this.state.fileArray, this.state.file],
-          screenshot: [...this.state.screenshot, savable.src],
-          toggleStep3: true,
-          toggleStep2: false,
-          textFormatOptions: false,
-          productToPay: this.state.productToPay.concat(
-            product[0].Mug.price * this.state.qty
-          ),
-          cart: this.state.cart + this.state.qty,
-          totalMugsInCart: this.state.totalMugsInCart + this.state.qty,
-        });
-      }
-    );
+      await this.setState({
+        fileArray: [...this.state.fileArray, this.state.file],
+        screenshot: [...this.state.screenshot, savable.src],
+        toggleStep3: true,
+        toggleStep2: false,
+        textFormatOptions: false,
+        productToPay: this.state.productToPay.concat(
+          product[0].Mug.price * this.state.qty
+        ),
+        cart: this.state.cart + this.state.qty,
+        totalMugsInCart: this.state.totalMugsInCart + this.state.qty,
+      });
+    });
   };
 
   screenshotShirts = async () => {
@@ -589,36 +586,33 @@ export default class index extends Component {
 
     this.toggleModalToConfirmOrder();
 
-    await html2canvas(document.getElementById("product-screen-container")).then(
-      async (canvas) => {
-        // zip and convert
-        var zip = new JSZip();
-        var savable = new Image();
-        savable.src = canvas.toDataURL("image/jpeg", 0.5);
-        zip.file(
-          "image.png",
-          savable.src.substr(savable.src.indexOf(",") + 1),
-          {
-            base64: true,
-          }
-        );
+    await html2canvas(document.getElementById("product-screen-container"), {
+      width: 1200,
+      height: 1400,
+    }).then(async (canvas) => {
+      // zip and convert
+      var zip = new JSZip();
+      var savable = new Image();
+      savable.src = canvas.toDataURL("image/jpeg", 0.5);
+      zip.file("image.png", savable.src.substr(savable.src.indexOf(",") + 1), {
+        base64: true,
+      });
 
-        await this.setState({
-          fileArray: [...this.state.fileArray, this.state.file],
-          screenshot: [...this.state.screenshot, savable.src],
-          toggleStep3: true,
-          toggleStep2: false,
-          textFormatOptions: false,
-          photoControlShirts: false,
-          productToPay: this.state.productToPay.concat(
-            product[0].Shirt.price * this.state.qty
-          ),
-          cart: this.state.cart + this.state.qty,
-          totalShirtsInCart: this.state.totalShirtsInCart + this.state.qty,
-        });
-        await console.log(this.state.fileArray);
-      }
-    );
+      await this.setState({
+        fileArray: [...this.state.fileArray, this.state.file],
+        screenshot: [...this.state.screenshot, savable.src],
+        toggleStep3: true,
+        toggleStep2: false,
+        textFormatOptions: false,
+        photoControlShirts: false,
+        productToPay: this.state.productToPay.concat(
+          product[0].Shirt.price * this.state.qty
+        ),
+        cart: this.state.cart + this.state.qty,
+        totalShirtsInCart: this.state.totalShirtsInCart + this.state.qty,
+      });
+      await console.log(this.state.fileArray);
+    });
   };
 
   screenshotPillow = async () => {
@@ -630,36 +624,33 @@ export default class index extends Component {
 
     this.toggleModalToConfirmOrder();
 
-    await html2canvas(document.getElementById("product-screen-container")).then(
-      async (canvas) => {
-        // zip and convert
-        var zip = new JSZip();
-        var savable = new Image();
-        savable.src = canvas.toDataURL("image/jpeg", 0.5);
-        zip.file(
-          "image.png",
-          savable.src.substr(savable.src.indexOf(",") + 1),
-          {
-            base64: true,
-          }
-        );
+    await html2canvas(document.getElementById("product-screen-container"), {
+      width: 1200,
+      height: 1400,
+    }).then(async (canvas) => {
+      // zip and convert
+      var zip = new JSZip();
+      var savable = new Image();
+      savable.src = canvas.toDataURL("image/jpeg", 0.5);
+      zip.file("image.png", savable.src.substr(savable.src.indexOf(",") + 1), {
+        base64: true,
+      });
 
-        await this.setState({
-          fileArray: [...this.state.fileArray, this.state.file],
-          screenshot: [...this.state.screenshot, savable.src],
-          toggleStep3: true,
-          toggleStep2: false,
-          textFormatOptions: false,
-          photoControlPillow: false,
-          productToPay: this.state.productToPay.concat(
-            product[0].Pillow.price * this.state.qty
-          ),
-          cart: this.state.cart + this.state.qty,
-          totalPillowsInCart: this.state.totalPillowsInCart + this.state.qty,
-        });
-        await console.log(this.state.fileArray);
-      }
-    );
+      await this.setState({
+        fileArray: [...this.state.fileArray, this.state.file],
+        screenshot: [...this.state.screenshot, savable.src],
+        toggleStep3: true,
+        toggleStep2: false,
+        textFormatOptions: false,
+        photoControlPillow: false,
+        productToPay: this.state.productToPay.concat(
+          product[0].Pillow.price * this.state.qty
+        ),
+        cart: this.state.cart + this.state.qty,
+        totalPillowsInCart: this.state.totalPillowsInCart + this.state.qty,
+      });
+      await console.log(this.state.fileArray);
+    });
   };
 
   screenshotPetTagBone = async () => {
