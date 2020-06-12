@@ -854,7 +854,7 @@
   }
 }
 
-@media only screen and (min-device-width: 520px) and (max-device-width: 759px) {
+@media only screen and (min-device-width: 521px) and (max-device-width: 759px) {
   .steps-parent {
     display: block;
   }
@@ -964,7 +964,7 @@
   }
 }
 
-@media only screen and (min-device-width: 220px) and (max-device-width: 519px) {
+@media only screen and (min-device-width: 220px) and (max-device-width: 520px) {
   .controls-to-add-content-to-mugs {
     margin-top: 40%;
   }
@@ -1019,7 +1019,8 @@
     width: 100% !important;
   }
 
-  .text-petTagBone-input {
+  .text-petTagBone-input,
+  .text-msg-input {
     width: 90% !important;
     margin: 2px auto !important;
   }
@@ -1046,9 +1047,11 @@
   }
 
   .confirm-product-button {
+    top: 100%;
+    left: 0;
     font-size: 15px;
-    width: 65%;
-    margin-left: 10px;
+    width: 100%;
+    margin: 0 auto;
   }
 
   .continue-button {

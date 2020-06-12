@@ -221,16 +221,28 @@ class index extends Component {
           )}
 
           {this.props.imagePreviewUrl !== "" ? (
-            <img
-              style={{
-                width: this.state.width + "%",
-                left: this.state.marginRightPhoto + "%",
-                marginTop: this.state.marginTopPhoto + "px",
-              }}
-              className="img-preview__shirt"
-              src={this.props.imagePreviewUrl}
-              alt="shirt"
-            />
+            <div>
+              <img
+                style={{
+                  width: this.state.width + "%",
+                  left: this.state.marginRightPhoto + "%",
+                  marginTop: this.state.marginTopPhoto + "px",
+                }}
+                className="img-preview__shirt--small-screens"
+                src={this.props.imagePreviewUrl}
+                alt="shirt"
+              />
+              <img
+                style={{
+                  width: this.state.width + "%",
+                  left: this.state.marginRightPhoto + "%",
+                  marginTop: this.state.marginTopPhoto + "px",
+                }}
+                className="img-preview__shirt"
+                src={this.props.imagePreviewUrl}
+                alt="shirt"
+              />
+            </div>
           ) : null}
         </div>
         <div className="text-container-shirts-parent">
@@ -246,27 +258,38 @@ class index extends Component {
             >
               {this.props.textOnMugs}
             </h3>
+            <h3
+              className="text-on-shirts__container--small-screens text-center"
+              style={{
+                marginTop: this.state.marginTop + "px",
+                marginRight: this.state.marginRight + "px",
+                fontSize: this.state.fontSize + "px",
+                color: this.state.color,
+              }}
+            >
+              {this.props.textOnMugs}
+            </h3>
           </div>
         </div>
         {this.props.textOnMugs && this.props.textFormatOptions ? (
           // TEXT FORMAT CONTROL/////////////////////
           <div className="shirt-container-backs">
-            <div className="move-text-btns-container-shirts text-center">
-              <Select
-                menuPlacement="bottom"
-                placeholder="Text color"
-                className="move-text-btns-shirt move-text-btns-shirt__font-color"
-                onChange={this.onSelectedChangeColor}
-                options={optionsColor}
-              />
-            </div>
             <div className="text-controls-container-shirt">
               <h3 className="text-controls-container-shirt__heading">
                 Text Control
               </h3>
+              <div className="move-text-btns-container-shirts text-center">
+                <Select
+                  menuPlacement="bottom"
+                  placeholder="Text color"
+                  className=""
+                  onChange={this.onSelectedChangeColor}
+                  options={optionsColor}
+                />
+              </div>
               <div className="text-controls-container-shirt-box">
-                <p className="size-title__move text-center">Move</p>
-                <p className="size-title__size text-center">Size</p>
+                <p className="size-title-shirt__move text-center">Move</p>
+                <p className="size-title-shirt__size text-center">Size</p>
 
                 <img
                   onClick={this.moveTextUp}
