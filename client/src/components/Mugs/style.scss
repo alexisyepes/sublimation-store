@@ -4,9 +4,12 @@
 @import "../../SCSS/typography.scss";
 
 //css for this is in the products scss file inside .product-image-container
-
+.text-controls-container-mugs__heading {
+  text-align: center;
+}
 .mugs-container {
   display: flex;
+  margin-bottom: 20%;
 
   .product-sides {
     font-size: 20px;
@@ -16,13 +19,13 @@
     }
 
     &__b {
-      margin-left: 48%;
+      margin-left: 85%;
     }
   }
 
   &__front {
-    width: 30%;
-    position: relative;
+    width: 50%;
+    position: absolute;
 
     .product-img {
       height: auto;
@@ -56,18 +59,18 @@
   &__back {
     width: 50%;
     position: absolute;
-    right: 0;
+    left: 50%;
 
     .product-img__back {
       height: auto;
-      width: 30%;
+      width: 50%;
     }
 
     .text-on-mugs {
-      width: 22%;
+      width: 35%;
       height: 350px;
       top: 8%;
-      left: 42%;
+      left: 40%;
       z-index: 2;
       display: inline-block;
       position: absolute;
@@ -82,8 +85,8 @@
       .bg-image-mug {
         position: absolute;
         top: 5%;
-        left: 44%;
-        width: 20%;
+        left: 39%;
+        width: 34%;
         height: 85%;
         clip-path: polygon(
           0 94%,
@@ -123,9 +126,9 @@
 
 .text-controls-container-mugs {
   position: absolute;
-  width: 53%;
-  left: 5%;
-  top: 110%;
+  width: 30%;
+  left: 25%;
+  top: 120%;
   background-color: rgb(201, 235, 178);
   padding: 10px;
   margin: 20px;
@@ -192,9 +195,55 @@
   }
 }
 
+@media only screen and (min-device-width: 1200px) and (max-device-width: 1930px) {
+  .product-sides__b {
+    margin-left: 82% !important;
+  }
+}
+
+@media only screen and (min-device-width: 961px) and (max-device-width: 1199px) {
+  .product-sides__b {
+    margin-left: 78% !important;
+  }
+}
+
+@media only screen and (min-device-width: 961px) and (max-device-width: 1314px) {
+  .text-controls-container-mugs {
+    left: 20%;
+    width: 35%;
+    top: 130%;
+  }
+}
+
+@media only screen and (min-device-width: 760px) and (max-device-width: 960px) {
+  .text-controls-container-mugs {
+    left: 20%;
+    width: 50%;
+    top: 160%;
+  }
+
+  .product-sides__a {
+    margin-left: 1% !important;
+  }
+
+  .product-sides__b {
+    margin-left: 78% !important;
+  }
+}
+
 @media only screen and (min-device-width: 520px) and (max-device-width: 759px) {
   .text-controls-container-mugs {
-    left: 25% !important;
+    left: 20%;
+    width: 50%;
+    top: 160%;
+  }
+
+  .product-sides__a {
+    margin-left: 1% !important;
+  }
+
+  .product-sides__b {
+    margin-left: 78% !important;
   }
 }
 
@@ -202,19 +251,61 @@
   .text-controls-container-mugs {
     left: -40% !important;
     width: 60% !important;
-    top: 150px;
+    top: 90%;
   }
 
-  //   .product-img {
-  //     width: 100% !important;
-  //   }
+  .text-controls-container-mugs-box {
+    grid-template-rows: 5px;
+  }
 
-  //   .product-img-preview-mug {
-  //     width: 70% !important;
-  //   }
+  .text-on-mugs {
+    width: 50% !important;
+  }
+
+  .size-title__move,
+  .size-title__size {
+    display: none;
+  }
+
+  .product-sides__a {
+    margin-left: 1% !important;
+    display: none;
+  }
+
+  .product-sides__b {
+    margin-left: 78% !important;
+    display: none;
+  }
+
+  .product-img {
+    width: 90% !important;
+  }
+
+  .product-img-preview-mug {
+    width: 62% !important;
+    left: 8% !important;
+  }
+
+  .product-img__back {
+    width: 90% !important;
+  }
+
+  .bg-image-mug {
+    width: 62% !important;
+    left: 25% !important;
+  }
+
+  .mugs-container {
+    margin-bottom: 40%;
+  }
+
+  .mugs-container__back {
+    text-align: left;
+  }
 
   .color-text-mugs {
     font-size: 14px;
+    z-index: 3;
   }
 
   .text-controls-container-mugs__heading {
@@ -222,10 +313,6 @@
   }
 
   .move-text-btns {
-    width: 50% !important;
-  }
-
-  .text-controls-container-mugs-box {
-    grid-template-rows: 15px;
+    width: 70% !important;
   }
 }

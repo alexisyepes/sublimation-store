@@ -13,6 +13,10 @@ let optionsColor = [
     label: "White",
   },
   {
+    value: "rgb(255, 204, 255)",
+    label: "Pink",
+  },
+  {
     value: "blue",
     label: "Blue",
   },
@@ -73,13 +77,13 @@ class index extends Component {
 
   moveTextLeft = () => {
     this.setState((prevState) => ({
-      marginRight: prevState.marginRight + 2,
+      marginRight: prevState.marginRight - 2,
     }));
   };
 
   moveTextRight = () => {
     this.setState((prevState) => ({
-      marginRight: prevState.marginRight - 2,
+      marginRight: prevState.marginRight + 2,
     }));
   };
 
@@ -131,7 +135,7 @@ class index extends Component {
                 className="text-on-mugs__container text-center"
                 style={{
                   marginTop: this.state.marginTop + "px",
-                  marginRight: this.state.marginRight + "px",
+                  marginLeft: this.state.marginRight + "px",
                   fontSize: this.state.fontSize + "px",
                   color: this.state.color,
                 }}
