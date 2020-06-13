@@ -19,6 +19,10 @@
   }
 }
 
+.hamburger {
+  display: none;
+}
+
 .logo {
   border-radius: 100px;
   position: relative;
@@ -53,9 +57,23 @@
   text-decoration: none;
   color: rgb(0, 0, 0);
   font-weight: 700;
+  padding: 5px 20px;
+  transition: all 0.2s;
+  cursor: pointer;
+  backface-visibility: hidden;
+  text-shadow: 1px 1px rgb(255, 255, 255);
+
+  &:hover {
+    color: rgb(85, 210, 248);
+    background-color: #fff;
+    border: 1px solid rgb(94, 122, 165);
+    box-shadow: 0px 10px 30px black;
+    text-shadow: 1px 1px black;
+    border-radius: 10px;
+  }
 }
 
-@media only screen and (min-device-width: 320px) and (max-device-width: 768px) {
+@media only screen and (min-device-width: 519px) and (max-device-width: 768px) {
   .nav-link {
     color: rgb(0, 0, 0);
     font-size: 16px;
@@ -79,5 +97,33 @@
     text-decoration: none;
     color: rgb(0, 0, 0);
     font-weight: 700;
+  }
+}
+
+@media only screen and (min-device-width: 300px) and (max-device-width: 518px) {
+  .nav-link {
+    display: none;
+  }
+
+  .logo {
+    &__navbar {
+      position: absolute;
+      top: 5px;
+      left: 85%;
+      width: 8%;
+    }
+  }
+
+  .hamburger {
+    display: block;
+    margin-left: 20px;
+    font-size: 25px;
+    text-shadow: 1px 1px white;
+  }
+
+  .menu {
+    justify-content: left;
+    padding: 10px;
+    margin-bottom: 10px;
   }
 }
