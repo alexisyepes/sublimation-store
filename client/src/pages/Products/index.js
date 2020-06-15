@@ -3,7 +3,6 @@ import Select from "react-select";
 import html2canvas from "html2canvas";
 import JSZip from "jszip";
 import Modal from "react-modal";
-// import axios from "axios";
 import CheckoutStripe from "../../components/StripeForm";
 import Mugs from "../../components/Mugs";
 import Shirts from "../../components/Shirt";
@@ -241,7 +240,7 @@ export default class index extends Component {
       textFormatOptionsForPetTagBone: false,
       mugPrice: 0,
       productToPay: [],
-      cart: 0,
+      // cart: this.props.cart,
       totalMugsInCart: 0,
       totalShirtsInCart: 0,
       totalPillowsInCart: 0,
@@ -253,7 +252,7 @@ export default class index extends Component {
       checkOutStripe: false,
       showMsgInput: false,
       showPetTagsInput: false,
-      qty: 1,
+      // qty: 1,
       step2ActualProd: "",
       designSquare: true,
       shirtSize: "",
@@ -267,8 +266,8 @@ export default class index extends Component {
     };
   }
 
-  componentWillMount() {
-    Modal.setAppElement("body");
+  componentDidMount() {
+    localStorage.setItem("CART", 0);
   }
 
   toggleModalToConfirmOrder = () => {
@@ -419,6 +418,7 @@ export default class index extends Component {
         `Are you sure you wish to empty your cart? This operation cannot be reversed!`
       )
     ) {
+      this.props.resetCart();
       this.setState({
         modalToCheckout: false,
         btnStep1: true,
@@ -437,19 +437,20 @@ export default class index extends Component {
         bg: "",
         textOnMugs: "",
         notChecked: true,
-        cart: 0,
+        // cart: 0,
         totalMugsInCart: 0,
         totalShirtsInCart: 0,
         totalPillowsInCart: 0,
         totalKeychainsInCart: 0,
         totalPetTagBonesInCart: 0,
-        qty: 1,
+        // qty: 1,
         productToPay: [],
         showMsgInput: false,
         boneColor: "blue",
         photoControlPetTagBone: false,
         btnConfirmed: false,
       });
+      this.props.resetQty();
     }
   };
 
@@ -472,13 +473,14 @@ export default class index extends Component {
       bg: "",
       textOnMugs: "",
       notChecked: true,
-      qty: 1,
+      // qty: 1,
       showMsgInput: false,
       boneColor: "blue",
       petTagBonePhone: "123456789",
       petTagBonePetName: "Elsa",
       textFormatOptionsForPetTagBone: false,
     });
+    this.props.resetQty();
   };
 
   onSelectedChange = async (value) => {
@@ -518,21 +520,6 @@ export default class index extends Component {
     });
   };
 
-  increaseQty = () => {
-    this.setState({
-      qty: this.state.qty + 1,
-    });
-  };
-
-  decreaseQty = () => {
-    if (this.state.qty === 1) {
-      return;
-    }
-    this.setState({
-      qty: this.state.qty - 1,
-    });
-  };
-
   screenshotMugs = async () => {
     if (this.state.notChecked === true) {
       return this.setState({
@@ -540,7 +527,7 @@ export default class index extends Component {
       });
     }
     if (this.state.imagePreviewUrl === "") {
-      return alert("A photo is required to procceed, please upload one.");
+      return alert("A photo is required to proceed, please upload one.");
     }
     this.toggleModalToConfirmOrder();
 
@@ -564,11 +551,13 @@ export default class index extends Component {
         toggleStep2: false,
         textFormatOptions: false,
         productToPay: this.state.productToPay.concat(
-          product[0].Mug.price * this.state.qty
+          product[0].Mug.price * this.props.qty
         ),
-        cart: this.state.cart + this.state.qty,
-        totalMugsInCart: this.state.totalMugsInCart + this.state.qty,
+        // cart: this.state.cart + this.props.qty,
+        totalMugsInCart: this.state.totalMugsInCart + this.props.qty,
       });
+
+      this.props.updateCart();
     });
   };
 
@@ -607,12 +596,12 @@ export default class index extends Component {
         textFormatOptions: false,
         photoControlShirts: false,
         productToPay: this.state.productToPay.concat(
-          product[0].Shirt.price * this.state.qty
+          product[0].Shirt.price * this.props.qty
         ),
-        cart: this.state.cart + this.state.qty,
-        totalShirtsInCart: this.state.totalShirtsInCart + this.state.qty,
+        // cart: this.state.cart + this.state.qty,
+        totalShirtsInCart: this.state.totalShirtsInCart + this.props.qty,
       });
-      await console.log(this.state.fileArray);
+      this.props.updateCart();
     });
   };
 
@@ -645,12 +634,12 @@ export default class index extends Component {
         textFormatOptions: false,
         photoControlPillow: false,
         productToPay: this.state.productToPay.concat(
-          product[0].Pillow.price * this.state.qty
+          product[0].Pillow.price * this.props.qty
         ),
-        cart: this.state.cart + this.state.qty,
-        totalPillowsInCart: this.state.totalPillowsInCart + this.state.qty,
+        // cart: this.state.cart + this.state.qty,
+        totalPillowsInCart: this.state.totalPillowsInCart + this.props.qty,
       });
-      await console.log(this.state.fileArray);
+      this.props.updateCart();
     });
   };
 
@@ -661,7 +650,7 @@ export default class index extends Component {
       });
     }
     if (this.state.imagePreviewUrl === "") {
-      return alert("A photo is required to procceed, please upload one.");
+      return alert("A photo is required to proceed, please upload one.");
     }
 
     this.toggleModalToConfirmOrder();
@@ -686,32 +675,31 @@ export default class index extends Component {
         textFormatOptionsForPetTagBone: false,
         photoControlPetTagBone: false,
         productToPay: this.state.productToPay.concat(
-          product[0].PetTagBone.price * this.state.qty
+          product[0].PetTagBone.price * this.props.qty
         ),
-        cart: this.state.cart + this.state.qty,
+        // cart: this.state.cart + this.state.qty,
         totalPetTagBonesInCart:
-          this.state.totalPetTagBonesInCart + this.state.qty,
+          this.state.totalPetTagBonesInCart + this.props.qty,
       });
-      await console.log(this.state.fileArray);
     });
   };
 
   goBackToStep2 = async () => {
     if (
       window.confirm(
-        `If you continue, some of your progress will be lost and you will need to re-create this product and its quantities. \nDo you still want to procceed?`
+        `If you continue, some of your progress will be lost and you will need to re-create this product and its quantities. \nDo you still want to proceed?`
       )
     ) {
       if (this.state.step2ActualProd === "mug") {
         await this.setState({
           toggleStep3: false,
           toggleStep2: true,
-          btnstep2: true,
+          btnStep2: true,
           textFormatOptions: true,
           notChecked: true,
-          cart: this.state.cart - this.state.qty,
+          // cart: this.state.cart - this.state.qty,
           // qty: 1,
-          totalMugsInCart: this.state.totalMugsInCart - this.state.qty,
+          totalMugsInCart: this.state.totalMugsInCart - this.props.qty,
 
           // totalShirtsInCart: this.state.totalShirtsInCart - this.state.qty,
           productToPay: this.state.productToPay.slice(0, -1),
@@ -720,6 +708,8 @@ export default class index extends Component {
           imagePreviewUrl: "",
           file: "",
         });
+        this.props.updateCartToPrevQty();
+        this.props.resetQty();
       }
       if (this.state.step2ActualProd === "shirt") {
         await this.setState({
@@ -727,7 +717,7 @@ export default class index extends Component {
           toggleStep2: true,
           textFormatOptions: true,
           notChecked: true,
-          cart: this.state.cart - this.state.qty,
+          // cart: this.state.cart - this.state.qty,
           // qty: 1,
           // totalMugsInCart: this.state.totalMugsInCart - this.state.qty,
           totalShirtsInCart: this.state.totalShirtsInCart - this.state.qty,
@@ -738,6 +728,8 @@ export default class index extends Component {
           file: "",
           shirtGender: "",
         });
+        this.props.updateCartToPrevQty();
+        this.props.resetQty();
       }
       if (this.state.step2ActualProd === "pillow") {
         await this.setState({
@@ -745,27 +737,29 @@ export default class index extends Component {
           toggleStep2: true,
           textFormatOptions: true,
           notChecked: true,
-          cart: this.state.cart - this.state.qty,
+          // cart: this.state.cart - this.state.qty,
           // qty: 1,
           // totalMugsInCart: this.state.totalMugsInCart - this.state.qty,
-          totalPillowsInCart: this.state.totalPillowsInCart - this.state.qty,
+          totalPillowsInCart: this.state.totalPillowsInCart - this.props.qty,
           productToPay: this.state.productToPay.slice(0, -1),
           fileArray: this.state.fileArray.slice(0, -1),
           screenshot: this.state.screenshot.slice(0, -1),
           imagePreviewUrl: "",
           file: "",
         });
+        this.props.updateCartToPrevQty();
+        this.props.resetQty();
       }
       if (this.state.step2ActualProd === "petTagBone") {
         await this.setState({
           toggleStep3: false,
           toggleStep2: true,
           notChecked: true,
-          cart: this.state.cart - this.state.qty,
+          // cart: this.state.cart - this.state.qty,
           // qty: 1,
           // totalMugsInCart: this.state.totalMugsInCart - this.state.qty,
           totalPetTagBonesInCart:
-            this.state.totalPetTagBonesInCart - this.state.qty,
+            this.state.totalPetTagBonesInCart - this.props.qty,
           productToPay: this.state.productToPay.slice(0, -1),
           fileArray: this.state.fileArray.slice(0, -1),
           screenshot: this.state.screenshot.slice(0, -1),
@@ -774,6 +768,8 @@ export default class index extends Component {
           textFormatOptionsForPetTagBone: true,
           photoControlPetTagBone: true,
         });
+        this.props.updateCartToPrevQty();
+        this.props.resetQty();
       }
     }
   };
@@ -824,7 +820,7 @@ export default class index extends Component {
         {!this.state.modalToCheckout ? (
           <div onClick={this.modalToCheckoutOpen} className="cart-container">
             <span aria-label="0" role="img">
-              &#128722; {this.state.cart}
+              &#128722; {this.props.cart}
             </span>
           </div>
         ) : null}
@@ -1127,16 +1123,16 @@ export default class index extends Component {
                     <h4 className="h2-qty">
                       QTY:
                       <div className="qty-symbols qty-symbols__number">
-                        {this.state.qty}
+                        {this.props.qty}
                       </div>
                       <button
-                        onClick={this.increaseQty}
+                        onClick={this.props.increaseQty}
                         className="qty-symbols qty-symbols__plus"
                       >
                         +
                       </button>
                       <button
-                        onClick={this.decreaseQty}
+                        onClick={this.props.decreaseQty}
                         className="qty-symbols qty-symbols__minus"
                       >
                         -
@@ -1344,6 +1340,7 @@ export default class index extends Component {
 
             {/* Modal Confirming creation of product */}
             <Modal
+              appElement={document.getElementById("root")}
               style={customStyles}
               isOpen={this.state.modalToConfirm}
               onRequestClose={this.closeModal}
@@ -1358,12 +1355,13 @@ export default class index extends Component {
                   src="./images/thumbs-up.png"
                   alt="thumbs up"
                 />
-                <br /> You can procceed to step 3
+                <br /> You can proceed to step 3
               </h2>
             </Modal>
 
             {/* Modal To Checkout */}
             <Modal
+              appElement={document.getElementById("root")}
               style={customStylesCheckout}
               isOpen={this.state.modalToCheckout}
             >

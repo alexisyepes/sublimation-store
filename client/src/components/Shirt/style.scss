@@ -67,6 +67,8 @@
     }
 
     &__container--small-screens {
+      position: absolute;
+
       display: none;
       white-space: pre-wrap;
       font-size: 15px;
@@ -215,13 +217,13 @@
     margin-left: 55% !important;
   }
 
-  .text-on-shirts__container {
-    display: none !important;
-  }
+  // .text-on-shirts__container {
+  //   display: none !important;
+  // }
 
-  .text-on-shirts__container--small-screens {
-    display: inline-block !important;
-  }
+  // .text-on-shirts__container--small-screens {
+  //   display: inline-block !important;
+  // }
 
   .hide-x {
     left: 70% !important;

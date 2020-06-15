@@ -108,6 +108,7 @@ class index extends Component {
   decreaseFont = async () => {
     await this.setState((prevState) => ({
       // counterFontSize: this.state.counterFontSize + 2,
+      fontSize: prevState.fontSize - 10,
       fontSizeSmallScreens: prevState.fontSizeSmallScreens - 10,
       fontSizeXSmallScreens: prevState.fontSizeXSmallScreens - 10,
     }));

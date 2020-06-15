@@ -152,7 +152,7 @@ class index extends Component {
                 </h3>
                 <div className="move-text-btns-container-mug text-center">
                   <Select
-                    menuPlacement="top"
+                    menuPlacement="bottom"
                     placeholder="Text color"
                     className="color-text-mugs"
                     onChange={this.onSelectedChangeColor}

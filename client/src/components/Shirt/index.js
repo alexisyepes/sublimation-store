@@ -44,11 +44,13 @@ class index extends Component {
     this.state = {
       // css
       marginTopPhoto: 10,
+      marginTopPhotoSmall: -60,
       marginRightPhoto: 46.6,
       width: 6,
       marginTop: 10,
+      marginTopSmall: -30,
       marginRight: -10,
-      marginRightSmall: 10,
+      marginRightSmall: -40,
       fontSize: 20,
       color: "",
     };
@@ -68,12 +70,14 @@ class index extends Component {
   movePhotoUp = () => {
     this.setState((prevState) => ({
       marginTopPhoto: prevState.marginTopPhoto + -2,
+      marginTopPhotoSmall: prevState.marginTopPhotoSmall + -2,
     }));
   };
 
   movePhotoDown = () => {
     this.setState((prevState) => ({
       marginTopPhoto: prevState.marginTopPhoto + 2,
+      marginTopPhotoSmall: prevState.marginTopPhotoSmall + 2,
     }));
   };
 
@@ -108,16 +112,20 @@ class index extends Component {
     });
   };
 
-  moveTextUp = () => {
-    this.setState((prevState) => ({
+  moveTextUp = async () => {
+    await this.setState((prevState) => ({
       marginTop: prevState.marginTop + -2,
+      marginTopSmall: prevState.marginTopSmall + -2,
     }));
+    console.log(this.state.marginTopSmall);
   };
 
-  moveTextDown = () => {
-    this.setState((prevState) => ({
+  moveTextDown = async () => {
+    await this.setState((prevState) => ({
       marginTop: prevState.marginTop + 2,
+      marginTopSmall: prevState.marginTopSmall + 2,
     }));
+    console.log(this.state.marginTopSmall);
   };
 
   moveTextLeft = () => {
@@ -125,7 +133,6 @@ class index extends Component {
       marginRight: prevState.marginRight + 2,
       marginRightSmall: prevState.marginRightSmall - 2,
     }));
-    console.log(this.state.marginRightSmall);
   };
 
   moveTextRight = () => {
@@ -133,7 +140,6 @@ class index extends Component {
       marginRight: prevState.marginRight - 2,
       marginRightSmall: prevState.marginRightSmall + 2,
     }));
-    console.log(this.state.marginRightSmall);
   };
 
   increaseFont = async () => {
@@ -266,7 +272,7 @@ class index extends Component {
             <h3
               className="text-on-shirts__container--small-screens text-center"
               style={{
-                marginTop: this.state.marginTop + "px",
+                marginTop: this.state.marginTopSmall + "px",
                 marginLeft: this.state.marginRightSmall + "px",
                 fontSize: this.state.fontSize + "px",
                 color: this.state.color,

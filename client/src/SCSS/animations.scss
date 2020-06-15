@@ -1,39 +1,49 @@
 @keyframes color-bg {
-	0% {
-		background-color: rgb(35, 59, 110);
-	}
+  0% {
+    background-color: rgb(35, 59, 110);
+  }
 
-	100% {
-		background-color: rgb(128, 240, 206);
-	}
+  100% {
+    background-color: rgb(128, 240, 206);
+  }
 }
 
 @keyframes arrowRight {
-	0% {
-		transform: translateX(-40px);
-	}
+  0% {
+    transform: translateX(-40px);
+  }
 
-	100% {
-		transform: translateX(20px);
-	}
+  100% {
+    transform: translateX(20px);
+  }
 }
 
 @keyframes arrowLeft {
-	0% {
-		transform: translateX(200px);
-	}
+  0% {
+    transform: translateX(200px);
+  }
 
-	100% {
-		transform: translateX(0px);
-	}
+  100% {
+    transform: translateX(0px);
+  }
 }
 
 @keyframes arrowDown {
-	0% {
-		transform: translateY(200px);
-	}
+  0% {
+    transform: translateY(200px);
+  }
 
-	100% {
-		transform: translateY(0px);
-	}
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes sidebarOpenClose {
+  0% {
+    transform: translateX(-400px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
 }
