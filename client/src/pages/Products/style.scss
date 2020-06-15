@@ -9,7 +9,7 @@
 }
 
 .home__heading {
-  margin-top: 0;
+  margin-top: 25px;
   font-size: 35px;
   font-weight: 900;
   background-color: $color-button-orange-1;
@@ -106,16 +106,17 @@
   border-radius: 10px;
   box-shadow: 0px 10px 20px black;
   font-weight: 800;
-  color: black;
+  color: rgb(0, 0, 0);
+  // text-shadow: 1px 1px rgb(0, 0, 0);
 
   &__1 {
-    background-color: $color-button-orange-1;
+    background-color: $color-button-orange-2;
   }
   &__2 {
-    background-color: $color-button-orange-1;
+    background-color: $color-button-orange-2;
   }
   &__3 {
-    background-color: $color-button-orange-1;
+    background-color: $color-button-orange-2;
   }
 }
 
