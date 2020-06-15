@@ -681,6 +681,7 @@ export default class index extends Component {
         totalPetTagBonesInCart:
           this.state.totalPetTagBonesInCart + this.props.qty,
       });
+      this.props.updateCart();
     });
   };
 

@@ -106,8 +106,8 @@
   border-radius: 10px;
   box-shadow: 0px 10px 20px black;
   font-weight: 800;
-  color: rgb(0, 0, 0);
-  // text-shadow: 1px 1px rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
+  text-shadow: 4px 4px 2px rgb(0, 0, 0);
 
   &__1 {
     background-color: $color-button-orange-2;
@@ -221,7 +221,7 @@
 }
 
 .controls-to-add-content-to-mugs {
-  background-color: rgb(39, 37, 37);
+  background-color: #113743;
   padding: 20px;
   margin: 5px;
   border-radius: 10px;

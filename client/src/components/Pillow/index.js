@@ -121,13 +121,13 @@ class index extends Component {
 
   moveTextLeft = () => {
     this.setState((prevState) => ({
-      marginRight: prevState.marginRight + 2,
+      marginRight: prevState.marginRight - 2,
     }));
   };
 
   moveTextRight = () => {
     this.setState((prevState) => ({
-      marginRight: prevState.marginRight - 2,
+      marginRight: prevState.marginRight + 2,
     }));
   };
 
@@ -142,6 +142,7 @@ class index extends Component {
   decreaseFont = async () => {
     await this.setState((prevState) => ({
       // counterFontSize: this.state.counterFontSize + 2,
+      fontSize: prevState.fontSize - 2,
       fontSizeSmallScreens: prevState.fontSizeSmallScreens - 2,
     }));
   };
@@ -251,7 +252,7 @@ class index extends Component {
               className="text-on-pillows__container text-center"
               style={{
                 marginTop: this.state.marginTop + "px",
-                marginRight: this.state.marginRight + "px",
+                marginLeft: this.state.marginRight + "px",
                 fontSize: this.state.fontSize + "px",
                 color: this.state.color,
               }}
