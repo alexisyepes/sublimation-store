@@ -235,6 +235,7 @@ export default class index extends Component {
       modalToConfirm: false,
       modalToCheckout: false,
       notChecked: true,
+      checkboxShipping: undefined,
       errorMsg: "",
       textFormatOptions: false,
       textFormatOptionsForPetTagBone: false,
@@ -248,6 +249,10 @@ export default class index extends Component {
       totalPetTagBonesInCart: 0,
       firstName: "",
       email: "",
+      address: "",
+      city: "",
+      province: "",
+      postalCode: "",
       billingDetails: false,
       checkOutStripe: false,
       showMsgInput: false,
@@ -786,13 +791,35 @@ export default class index extends Component {
     });
   };
 
+  toggleChangeShipping = async () => {
+    await this.setState({
+      checkboxShipping: !this.state.checkboxShipping,
+    });
+    console.log(this.state.checkboxShipping);
+  };
+
   submitBillingDetails = (e) => {
     e.preventDefault();
-    if (!this.state.firstName || !this.state.email) {
+    console.log(
+      this.state.address +
+        this.state.city +
+        this.state.province +
+        this.state.postalCode +
+        this.state.checkboxShipping
+    );
+    if (
+      !this.state.firstName ||
+      !this.state.email ||
+      !this.state.address ||
+      !this.state.city ||
+      !this.state.province ||
+      !this.state.postalCode
+    ) {
       return this.setState({
         errorMsg: "All the fields are required!",
       });
     }
+
     this.setState({
       billingDetails: true,
       checkOutStripe: true,
@@ -1454,19 +1481,49 @@ export default class index extends Component {
                         0.13
                     ).toFixed(2)}
                   </p>
+                  {this.state.checkboxShipping ? (
+                    <p>+ Shipping to address below: $15.00</p>
+                  ) : null}
                   <hr />
-                  <p>
-                    Total to Pay: $
-                    {this.state.productToPay.length > 0
-                      ? this.state.productToPay.reduce((a, b) => a + b) * 0.01 +
-                        this.state.productToPay.reduce((a, b) => a + b) *
-                          0.01 *
-                          0.13
-                      : 0}{" "}
-                    <span aria-label="0" role="img">
-                      &#128722;
-                    </span>
-                  </p>
+                  {this.state.checkboxShipping ? (
+                    <p>
+                      <b>
+                        {" "}
+                        TOTAL: $
+                        {this.state.productToPay.length > 0
+                          ? (
+                              this.state.productToPay.reduce((a, b) => a + b) *
+                                0.01 +
+                              this.state.productToPay.reduce((a, b) => a + b) *
+                                0.01 *
+                                0.13 +
+                              15.0
+                            ).toFixed(2)
+                          : 0}{" "}
+                        <span aria-label="0" role="img">
+                          &#128722;
+                        </span>
+                      </b>
+                    </p>
+                  ) : (
+                    <p>
+                      <b>
+                        {" "}
+                        (NO-SHIPPING SELECTED) TOTAL: $
+                        {this.state.productToPay.length > 0
+                          ? this.state.productToPay.reduce((a, b) => a + b) *
+                              0.01 +
+                            this.state.productToPay.reduce((a, b) => a + b) *
+                              0.01 *
+                              0.13
+                          : 0}{" "}
+                        <span aria-label="0" role="img">
+                          &#128722;
+                        </span>
+                      </b>
+                    </p>
+                  )}
+
                   <form
                     className="checkout-form"
                     onSubmit={this.submitBillingDetails}
@@ -1483,11 +1540,53 @@ export default class index extends Component {
                     />
                     <input
                       className="input-checkout"
+                      name="address"
+                      onChange={this.onChangeHandlerBillingDetails}
+                      type="text"
+                      placeholder="Address"
+                    />
+                    <input
+                      className="input-checkout"
+                      name="city"
+                      onChange={this.onChangeHandlerBillingDetails}
+                      type="text"
+                      placeholder="City"
+                    />
+                    <input
+                      className="input-checkout"
+                      name="province"
+                      onChange={this.onChangeHandlerBillingDetails}
+                      type="text"
+                      placeholder="Province"
+                    />
+                    <input
+                      className="input-checkout"
+                      name="postalCode"
+                      onChange={this.onChangeHandlerBillingDetails}
+                      type="text"
+                      placeholder="Postal Code"
+                    />
+                    <input
+                      className="input-checkout"
                       name="email"
                       onChange={this.onChangeHandlerBillingDetails}
                       type="email"
                       placeholder="Email"
                     />
+                    <p className="agree-with-order">
+                      <input
+                        className="checkbox-order"
+                        onChange={this.toggleChangeShipping}
+                        type="checkbox"
+                        name="checkboxShipping"
+                        value={this.state.checkboxShipping}
+                      />
+
+                      <b>
+                        {""} Add Shipping $15.00 (3-4 business days. Ontario
+                        only)
+                      </b>
+                    </p>
                     <button className="btn-checkout">Next &#8594;</button>
                     <p className="text-center error-msg">
                       {this.state.errorMsg}
@@ -1501,8 +1600,44 @@ export default class index extends Component {
                   resetModal={this.closeModalCheckout}
                   screenshot={this.state.screenshot}
                   imgForProduct={this.state.fileArray}
+                  totalMugsInCart={this.state.totalMugsInCart}
+                  totalShirtsInCart={this.state.totalShirtsInCart}
+                  totalPillowsInCart={this.state.totalPillowsInCart}
+                  totalPetTagBonesInCart={this.state.totalPetTagBonesInCart}
                   firstName={this.state.firstName}
                   email={this.state.email}
+                  address={this.state.address}
+                  city={this.state.city}
+                  province={this.state.province}
+                  postalCode={this.state.postalCode}
+                  checkboxShipping={this.state.checkboxShipping}
+                  subTotal={
+                    product[0].Mug.price * 0.01 * this.state.totalMugsInCart +
+                    product[0].Shirt.price *
+                      0.01 *
+                      this.state.totalShirtsInCart +
+                    product[0].Pillow.price *
+                      0.01 *
+                      this.state.totalPillowsInCart +
+                    product[0].PetTagBone.price *
+                      0.01 *
+                      this.state.totalPetTagBonesInCart
+                  }
+                  tax={(
+                    0.13 * this.state.mugPrice * this.state.totalMugsInCart +
+                    product[0].Shirt.price *
+                      this.state.totalShirtsInCart *
+                      0.01 *
+                      0.13 +
+                    product[0].Pillow.price *
+                      this.state.totalPillowsInCart *
+                      0.01 *
+                      0.13 +
+                    product[0].PetTagBone.price *
+                      this.state.totalPetTagBonesInCart *
+                      0.01 *
+                      0.13
+                  ).toFixed(2)}
                   productWithCents={
                     this.state.productToPay.length > 0
                       ? this.state.productToPay.reduce((a, b) => a + b) * 0.01 +
@@ -1511,10 +1646,29 @@ export default class index extends Component {
                           0.13
                       : null
                   }
+                  productWithCentsPlusShipping={
+                    this.state.productToPay.length > 0
+                      ? (
+                          this.state.productToPay.reduce((a, b) => a + b) *
+                            0.01 +
+                          this.state.productToPay.reduce((a, b) => a + b) *
+                            0.01 *
+                            0.13 +
+                          15
+                        ).toFixed(2)
+                      : null
+                  }
                   product={
                     this.state.productToPay.length > 0
                       ? this.state.productToPay.reduce((a, b) => a + b) * 0.13 +
                         this.state.productToPay.reduce((a, b) => a + b)
+                      : 0
+                  }
+                  productPluShipping={
+                    this.state.productToPay.length > 0
+                      ? this.state.productToPay.reduce((a, b) => a + b) * 0.13 +
+                        this.state.productToPay.reduce((a, b) => a + b) +
+                        1500
                       : 0
                   }
                 />
