@@ -21,7 +21,7 @@ const sendMailToUs = (
   city,
   province,
   postalCode,
-  shipped
+  shippingMethod
 ) => {
   let imgArr = img.map((image) => {
     // return image;
@@ -29,7 +29,7 @@ const sendMailToUs = (
     <img src="${image}" alt="Img Product" width="200" height="300">`;
   });
 
-  console.log(imgArr);
+  // console.log(imgArr);
 
   let ImgScrShtArr = screenshot.map((scrSht) => {
     // return scrSht;
@@ -37,9 +37,14 @@ const sendMailToUs = (
     <img src="${scrSht}" alt="Img Product" width="300" height="150">`;
   });
 
-  let isShipping = !shipped ? `<p>Deliver to address:</p>` : `<p>Pickup`;
+  let isShipping =
+    shippingMethod === "delivery"
+      ? `<p>Delivery to address:</p>`
+      : shippingMethod === "pickUpMilton"
+      ? `<p>Pickup from Amazing Pet Grooming</p>`
+      : `<p>Pickup from Cambridge`;
 
-  console.log(ImgScrShtArr);
+  // console.log(ImgScrShtArr);
   const mailOptions = {
     from: "info@aypwebcreations.com",
     to: "aypsublimation@gmail.com",
@@ -48,7 +53,7 @@ const sendMailToUs = (
     html: `<html><h4>You've got products for sublimation: </h4>
     <p>For customer: ${email}</p>
     ${isShipping}
-    <p>Address: ${address}</p>
+    <p>Client's Address: ${address}</p>
     <p>City: ${city}</p>
     <p>Province: ${province}</p>
     <p>Postal Code: ${postalCode}</p>

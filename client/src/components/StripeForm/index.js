@@ -14,7 +14,7 @@ const Index = (props) => {
   const [loadingAxiosReq, setLoadingAxiosReq] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [clicks, setClicks] = useState(1);
-  const shipped = props.checkboxShipping;
+  const shippingMethod = props.shippingMethod;
 
   const CheckoutForm = () => {
     const stripe = useStripe();
@@ -48,15 +48,16 @@ const Index = (props) => {
 
         const { data } = await axios.post("/products/payment", {
           id,
-          amount: !props.checkboxShipping
-            ? props.product
-            : props.productPluShipping,
+          amount:
+            props.shippingMethod !== "delivery"
+              ? props.product
+              : props.productPluShipping,
           email: props.email,
           totalMugsInCart: props.totalMugsInCart,
           totalShirtsInCart: props.totalShirtsInCart,
           totalPillowsInCart: props.totalPillowsInCart,
           totalPetTagBonesInCart: props.totalPetTagBonesInCart,
-          shipped,
+          shippingMethod,
           subTotal: props.subTotal,
           tax: props.tax,
         });
@@ -125,7 +126,7 @@ const Index = (props) => {
                     city: props.city,
                     province: props.province,
                     postalCode: props.postalCode,
-                    shipped,
+                    shippingMethod,
                   };
                   // console.log(dataObj);
 
@@ -205,7 +206,7 @@ const Index = (props) => {
               city: props.city,
               province: props.province,
               postalCode: props.postalCode,
-              shipped,
+              shippingMethod,
             };
             // console.log(dataObj);
 
@@ -246,9 +247,14 @@ const Index = (props) => {
       <form onSubmit={handleSubmitCheckoutForm}>
         <h3 className="text-center">
           Total to Pay: $
-          {!props.checkboxShipping
+          {props.shippingMethod !== "delivery"
             ? props.productWithCents
             : props.productWithCentsPlusShipping}
+          <img
+            className="credit-cards"
+            src="./images/credit-cards.png"
+            alt="cards"
+          />{" "}
         </h3>
 
         {loadingAxiosReq ? (

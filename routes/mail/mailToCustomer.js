@@ -19,33 +19,36 @@ const sendMail = (
   totalShirtsInCart,
   totalPillowsInCart,
   totalPetTagBonesInCart,
-  shipped,
+  shippingMethod,
   subTotal,
   tax,
   amount
 ) => {
   let mugs =
     totalMugsInCart > 0
-      ? `<p>Total number of Mugs: ${totalMugsInCart} </p>`
+      ? `<p>Total number of Mugs: ${totalMugsInCart} ($12.00 ea)</p>`
       : `<span></span>`;
   let shirts =
     totalShirtsInCart > 0
-      ? `<p>Total number of Shirts: ${totalShirtsInCart} </p>`
+      ? `<p>Total number of Shirts: ${totalShirtsInCart} ($18.00 ea)</p>`
       : `<span></span>`;
   let pillows =
     totalPillowsInCart > 0
-      ? `<p>Total number of Pillows: ${totalPillowsInCart} </p>`
+      ? `<p>Total number of Pillows: ${totalPillowsInCart} ($22.00 ea)</p>`
       : `<span></span>`;
   let petTags =
     totalPetTagBonesInCart > 0
-      ? `<p>Total number of Pet Tags: ${totalPetTagBonesInCart} </p>`
+      ? `<p>Total number of Pet Tags: ${totalPetTagBonesInCart} ($16.00 ea)</p>`
       : `<span></span>`;
 
-  let isShipping = shipped
-    ? `
+  let isShipping =
+    shippingMethod === "delivery"
+      ? `
 		<p>Delivery costs: $15.00
-		<br /> Your order will be delivered to the address provided soon. </p>`
-    : `<p>Thanks for your purchase! \nYour order will be ready to pickup soon.</p>`;
+		<br /> <br /> Your order will be delivered to the address provided soon.</p>`
+      : shippingMethod === "pickUpMilton"
+      ? `<p>Thanks for your purchase! \nYour order will be ready to be picked up from our Milton partner location soon; you will receive another email to notify you when the order is ready. </p>`
+      : `<p>Thanks for your purchase! \nYour order will be ready to be picked up from our Cambridge partner location soon; you will receive another email to notify you when the order is ready.</p>`;
   const mailOptions = {
     from: "info@aypwebcreations.com",
     to: email,

@@ -99,6 +99,21 @@ let sizeShirtsOptionsKid = [
   },
 ];
 
+let shippingOptions = [
+  {
+    value: "delivery",
+    label: "Delivered to you $15.00 (3-4 business days. Ontario only)",
+  },
+  {
+    value: "pickUpCambridge",
+    label: "Pickup from Cambridge, ON (FREE)",
+  },
+  {
+    value: "pickUpMilton",
+    label: "Pickup from Milton, ON (FREE)",
+  },
+];
+
 const customStylesCheckout = {
   content: {
     top: "50%",
@@ -110,12 +125,13 @@ const customStylesCheckout = {
     backgroundColor: "rgb(199, 218, 166)",
     color: "black",
     borderRadius: "5px",
-    width: "60%",
+    width: "65%",
     overflow: "visible",
     border: "1px solid black",
     boxShadow: "0px 60px 150px black",
     display: "flex-box",
   },
+
   overlay: { zIndex: 1000 },
 };
 
@@ -262,6 +278,7 @@ export default class index extends Component {
       designSquare: true,
       shirtSize: "",
       shirtGender: "",
+      shippingMethod: "",
       photoControlShirts: false,
       photoControlPillow: false,
       photoControlPetTagBone: false,
@@ -288,6 +305,8 @@ export default class index extends Component {
         email: "",
         billingDetails: false,
         checkOutStripe: false,
+        errorMsg: "",
+        shippingMethod: "",
       });
     }
     this.setState({
@@ -509,6 +528,13 @@ export default class index extends Component {
   onSelectedChangeGender = async (value) => {
     await this.setState({
       shirtGender: value.value,
+    });
+  };
+
+  onSelectedShipping = async (value) => {
+    await this.setState({
+      shippingMethod: value.value,
+      errorMsg: "",
     });
   };
 
@@ -800,13 +826,7 @@ export default class index extends Component {
 
   submitBillingDetails = (e) => {
     e.preventDefault();
-    console.log(
-      this.state.address +
-        this.state.city +
-        this.state.province +
-        this.state.postalCode +
-        this.state.checkboxShipping
-    );
+
     if (
       !this.state.firstName ||
       !this.state.email ||
@@ -817,6 +837,11 @@ export default class index extends Component {
     ) {
       return this.setState({
         errorMsg: "All the fields are required!",
+      });
+    }
+    if (!this.state.shippingMethod) {
+      return this.setState({
+        errorMsg: "Please choose one of the delivery or pickup options above",
       });
     }
 
@@ -935,7 +960,7 @@ export default class index extends Component {
                         Total Mugs in Cart: {this.state.totalMugsInCart}{" "}
                         <span>
                           (Mug: ${product[0].Mug.price * 0.01}
-                          .00)
+                          .00 ea)
                         </span>
                       </p>
                     </div>
@@ -946,7 +971,7 @@ export default class index extends Component {
                         Total Shirts in Cart: {this.state.totalShirtsInCart}{" "}
                         {""}
                         <span>
-                          (Shirt: ${product[0].Shirt.price * 0.01}.00 )
+                          (Shirt: ${product[0].Shirt.price * 0.01}.00 ea)
                         </span>
                       </p>
                     </div>
@@ -957,7 +982,7 @@ export default class index extends Component {
                         Total Pillows in Cart: {this.state.totalPillowsInCart}{" "}
                         {""}
                         <span>
-                          (Pillow: ${product[0].Pillow.price * 0.01}.00 )
+                          (Pillow: ${product[0].Pillow.price * 0.01}.00 ea)
                         </span>
                       </p>
                     </div>
@@ -968,7 +993,7 @@ export default class index extends Component {
                         Total Pet-tag-bones in Cart:{" "}
                         {this.state.totalPetTagBonesInCart} {""}
                         <span>
-                          (Pet-tag: ${product[0].PetTagBone.price * 0.01}.00 )
+                          (Pet-tag: ${product[0].PetTagBone.price * 0.01}.00 ea)
                         </span>
                       </p>
                     </div>
@@ -1007,7 +1032,7 @@ export default class index extends Component {
                   </p>
                   <hr />
                   <p>
-                    Total to Pay: $
+                    Grand Subtotal: $
                     {this.state.productToPay.length > 0
                       ? this.state.productToPay.reduce((a, b) => a + b) * 0.01 +
                         this.state.productToPay.reduce((a, b) => a + b) *
@@ -1411,7 +1436,7 @@ export default class index extends Component {
                         Total Mugs in Cart: {this.state.totalMugsInCart}{" "}
                         <span>
                           (Mug: ${product[0].Mug.price * 0.01}
-                          .00)
+                          .00 ea)
                         </span>
                       </p>
                     </div>
@@ -1422,7 +1447,7 @@ export default class index extends Component {
                         Total Shirts in Cart: {this.state.totalShirtsInCart}{" "}
                         {""}
                         <span>
-                          (Shirt: ${product[0].Shirt.price * 0.01}.00 )
+                          (Shirt: ${product[0].Shirt.price * 0.01}.00 ea)
                         </span>
                       </p>
                     </div>
@@ -1433,7 +1458,7 @@ export default class index extends Component {
                         Total Shirts in Cart: {this.state.totalPillowsInCart}{" "}
                         {""}
                         <span>
-                          (Shirt: ${product[0].Pillow.price * 0.01}.00 )
+                          (Shirt: ${product[0].Pillow.price * 0.01}.00 ea)
                         </span>
                       </p>
                     </div>
@@ -1444,7 +1469,7 @@ export default class index extends Component {
                         Total Pet-tags in Cart:{" "}
                         {this.state.totalPetTagBonesInCart} {""}
                         <span>
-                          (Pet-tag: ${product[0].PetTagBone.price * 0.01}.00 )
+                          (Pet-tag: ${product[0].PetTagBone.price * 0.01}.00 ea)
                         </span>
                       </p>
                     </div>
@@ -1481,11 +1506,31 @@ export default class index extends Component {
                         0.13
                     ).toFixed(2)}
                   </p>
-                  {this.state.checkboxShipping ? (
-                    <p>+ Shipping to address below: $15.00</p>
+
+                  {this.state.shippingMethod === "delivery" ? (
+                    <p>
+                      <b>
+                        {" "}
+                        + Shipping to address below{" "}
+                        <i className="fas fa-truck"></i>: $15.00
+                      </b>
+                    </p>
+                  ) : this.state.shippingMethod === "pickUpMilton" ? (
+                    <p>
+                      <b>
+                        Pickup from 724 Main St. Milton, ON L9T 3P6 Unit 2
+                        (Free)
+                      </b>
+                    </p>
+                  ) : this.state.shippingMethod === "pickUpCambridge" ? (
+                    <p>
+                      <b>
+                        Pickup from 205 Cowan Blvd, Cambridge, ON N1T 1J8 (Free)
+                      </b>
+                    </p>
                   ) : null}
                   <hr />
-                  {this.state.checkboxShipping ? (
+                  {this.state.shippingMethod === "delivery" ? (
                     <p>
                       <b>
                         {" "}
@@ -1509,7 +1554,7 @@ export default class index extends Component {
                     <p>
                       <b>
                         {" "}
-                        (NO-SHIPPING SELECTED) TOTAL: $
+                        GRAND SUBTOTAL: $
                         {this.state.productToPay.length > 0
                           ? this.state.productToPay.reduce((a, b) => a + b) *
                               0.01 +
@@ -1573,20 +1618,14 @@ export default class index extends Component {
                       type="email"
                       placeholder="Email"
                     />
-                    <p className="agree-with-order">
-                      <input
-                        className="checkbox-order"
-                        onChange={this.toggleChangeShipping}
-                        type="checkbox"
-                        name="checkboxShipping"
-                        value={this.state.checkboxShipping}
-                      />
+                    <Select
+                      className="shippingOptionsSelect"
+                      menuPlacement="bottom"
+                      placeholder="Choose one"
+                      options={shippingOptions}
+                      onChange={this.onSelectedShipping}
+                    />
 
-                      <b>
-                        {""} Add Shipping $15.00 (3-4 business days. Ontario
-                        only)
-                      </b>
-                    </p>
                     <button className="btn-checkout">Next &#8594;</button>
                     <p className="text-center error-msg">
                       {this.state.errorMsg}
@@ -1610,7 +1649,7 @@ export default class index extends Component {
                   city={this.state.city}
                   province={this.state.province}
                   postalCode={this.state.postalCode}
-                  checkboxShipping={this.state.checkboxShipping}
+                  shippingMethod={this.state.shippingMethod}
                   subTotal={
                     product[0].Mug.price * 0.01 * this.state.totalMugsInCart +
                     product[0].Shirt.price *
