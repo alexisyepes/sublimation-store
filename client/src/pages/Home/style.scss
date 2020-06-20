@@ -4,36 +4,125 @@
 @import "../../SCSS/typography.scss";
 
 .home-container {
-	@include margin-top-huge;
+  @include margin-top-huge;
+  min-height: calc(100vh - 50px);
+}
+
+.hr-home {
+  background-color: rgb(69, 202, 255);
+  border: 0;
+  width: 80%;
+  height: 2px;
 }
 
 .image-home-parent {
-	display: flex;
-	justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
 
-	margin-top: 40px;
+  .carousel-parent {
+    width: 100%;
+    margin: 0 auto;
+    order: 0;
+  }
+
+  .information-parent {
+    order: 1;
+    width: 100%;
+    margin: 0 auto;
+
+    .link-to-products {
+      text-decoration: none;
+
+      &:visited {
+        color: rgb(0, 0, 0);
+      }
+    }
+
+    .items-list-home-parent {
+    }
+
+    .home-secondary-heading {
+      color: rgb(218, 98, 98);
+      text-shadow: 1px 1px rgb(91, 96, 99);
+    }
+
+    .items-list-home {
+      list-style: square;
+      // display: block;
+      width: 90%;
+      // list-style: none;
+      text-align: left;
+      font-size: 22px;
+      margin-top: 10px;
+      border-bottom: 1px solid rgb(69, 202, 255);
+      padding-bottom: 10px;
+      padding-left: 20px;
+      font-weight: 500;
+      transition: all 0.2s;
+      color: rgb(218, 98, 98);
+      text-shadow: 1px 1px rgb(91, 96, 99);
+
+      &:hover {
+        transform: scale(1.01);
+        background-color: rgb(218, 98, 98);
+        padding-top: 10px;
+        padding-left: 50px;
+        border-radius: 5px;
+        border: none;
+        color: white;
+        box-shadow: 0px 10px 30px BLACK;
+        text-shadow: 2px 2px rgb(0, 0, 0);
+      }
+    }
+
+    .home-shipped-to-door-wrapper {
+      display: flex;
+      margin-top: 50px;
+      border-bottom: 1px dotted rgb(150, 110, 1);
+      color: rgb(108, 172, 231);
+      text-shadow: 1px 1px rgb(0, 0, 0);
+
+      width: 90%;
+
+      .home-shipped-title {
+        display: block;
+        margin: 20px auto;
+        width: 100%;
+      }
+    }
+
+    .home-truck {
+      transition: all 0.1s;
+      animation: truckMoving linear 6s infinite;
+      font-size: 30px;
+      width: 100%;
+      margin: 15px;
+      display: inline-block;
+    }
+  }
 }
 
 .home-images {
-	width: 380px;
-	padding: 20px;
+  width: 380px;
+  padding: 20px;
 }
 
 .home-button {
-	@include button;
-	margin-top: 30px;
-	background-color: $color-button-orange-1;
-	color: white;
-	width: 40%;
-	box-shadow: 0px 20px 30px black;
-	cursor: pointer;
-	transition: all 0.1s;
-	font-weight: 900;
-	text-shadow: 2px 2px black;
+  @include button;
+  margin-top: 30px;
+  background-color: $color-button-orange-1;
+  color: white;
+  width: 40%;
+  box-shadow: 0px 20px 30px black;
+  cursor: pointer;
+  transition: all 0.1s;
+  font-weight: 900;
+  text-shadow: 2px 2px black;
 
-	&:hover {
-		background-color: $color-secondary-light;
-		transform: scale(1.3);
-		box-shadow: 0px 20px 60px black;
-	}
+  &:hover {
+    background-color: $color-secondary-light;
+    transform: scale(1.3);
+    box-shadow: 0px 20px 60px black;
+  }
 }

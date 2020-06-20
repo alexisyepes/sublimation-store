@@ -2,3 +2,7 @@
 @import "../../SCSS/animations.scss";
 @import "../../SCSS/mixins.scss";
 @import "../../SCSS/typography.scss";
+
+.contact-container {
+  min-height: calc(100vh - 50px);
+}

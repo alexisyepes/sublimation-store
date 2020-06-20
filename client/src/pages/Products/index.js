@@ -913,6 +913,7 @@ export default class index extends Component {
                 >
                   Pet-tag-bone ($16.00)
                 </h2>
+                <h2 className="product-select">More products coming soon...</h2>
                 {/* <h2 className="product-select" onClick={this.handleKeychainImg}>
                   Pet-walking-license ($20)
                 </h2> */}

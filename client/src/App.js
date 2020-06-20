@@ -5,6 +5,7 @@ import About from "./pages/About";
 import Products from "./pages/Products";
 import Contact from "./pages/Contact";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import "./SCSS/Main.scss";
 
 class App extends Component {
@@ -81,12 +82,7 @@ class App extends Component {
             />
             <Route exact path="/contact" component={Contact} />
           </Switch>
-          {/* <CardFooter className="footer">
-						Alexis Yepes Sanabria 2020 ©{" "}
-						<a target="blank" href="https://github.com/alexisyepes/diary-app">
-							Click for code reference
-						</a>
-					</CardFooter> */}
+          <Footer />
         </div>
       </Router>
     );

@@ -78,13 +78,22 @@ export default class index extends Component {
     return (
       <nav className="nav-bar-container">
         <div className="logo">
-          <a href="/">
+          {this.state.articlesInCart ? (
             <img
+              onClick={this.checkCartHome}
               className="logo logo__navbar"
               src="./images/logo.png"
               alt="logo sub"
             />
-          </a>
+          ) : (
+            <a href="/">
+              <img
+                className="logo logo__navbar"
+                src="./images/logo.png"
+                alt="logo sub"
+              />
+            </a>
+          )}
         </div>
         <ul className="menu">
           <div className="hamburger">

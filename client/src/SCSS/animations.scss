@@ -18,6 +18,16 @@
   }
 }
 
+@keyframes truckMoving {
+  0% {
+    transform: translateX(100px);
+  }
+
+  100% {
+    transform: translateX(-200px);
+  }
+}
+
 @keyframes arrowLeft {
   0% {
     transform: translateX(200px);

@@ -45,8 +45,8 @@
 }
 
 .logo {
-  // border-radius: 100px;
   position: relative;
+  cursor: pointer;
   &__navbar {
     position: absolute;
     top: 15px;
@@ -64,13 +64,13 @@
     order: 0;
   }
   &__contact {
-    order: 1;
+    order: 3;
   }
   &__about {
-    order: 2;
+    order: 1;
   }
   &__products {
-    order: 3;
+    order: 2;
   }
 }
 
