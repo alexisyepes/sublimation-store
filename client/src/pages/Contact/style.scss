@@ -49,13 +49,25 @@
         display: block;
         width: 90%;
         margin: 10px auto;
-        border-radius: 10px;
+        -webkit-border-radius: 0px 40px 0px 40px;
+        -moz-border-radius: 0px 40px 0px 40px;
+        border-radius: 0px 40px 0px 40px;
+        border: none;
         padding: 5px;
         font-size: 20px;
         background-color: rgb(68, 194, 183);
         color: white;
         font-weight: 700;
         text-shadow: 2px 2px black;
+        transition: all 0.1s;
+        cursor: pointer;
+
+        &:hover {
+          transform: scale(1.1);
+          filter: brightness(1.8\3);
+          color: rgb(7, 0, 0);
+          text-shadow: 2px 2px rgb(255, 255, 255);
+        }
       }
     }
 

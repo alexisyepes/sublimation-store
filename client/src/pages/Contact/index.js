@@ -21,7 +21,7 @@ export default class index extends Component {
 
   handleFormSubmit = async (e) => {
     e.preventDefault();
-    // e.target.reset();
+    e.target.reset();
 
     let textToSend = {
       email: this.state.email,
@@ -36,9 +36,10 @@ export default class index extends Component {
         this.setState({
           loadingAxiosReq: false,
         });
-        // alert(
-        //   "Thanks for contacting us! We'll get back to you as soon as we can."
-        // );
+        alert(
+          "Thanks for contacting us! We'll get back to you as soon as we can."
+        );
+        window.location.href = "/";
       })
       .catch((err) => {
         console.log(err);
