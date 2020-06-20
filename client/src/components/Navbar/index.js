@@ -8,13 +8,16 @@ export default class index extends Component {
     this.state = {
       hamburger: false,
       articlesInCart: false,
+      cart: this.props.cart,
     };
   }
 
   componentDidUpdate(prevProps) {
+    // console.log(prevProps);
     if (prevProps.cart !== this.props.cart) {
       this.setState({
         articlesInCart: true,
+        cart: this.props.cart,
       });
     }
   }
@@ -27,6 +30,7 @@ export default class index extends Component {
 
   checkCartHome = () => {
     if (
+      this.state.cart > 0 &&
       window.confirm(
         "There are products in the shopping cart; if you leave, all your progress will be lost and the cart will be empty. \nAre you sure you wish to leave?"
       )
@@ -39,7 +43,7 @@ export default class index extends Component {
 
   checkCartContact = () => {
     if (
-      this.state.articlesInCart &&
+      this.state.cart > 0 &&
       window.confirm(
         "There are products in the shopping cart; if you leave, all your progress will be lost and the cart will be empty. \nAre you sure you wish to leave?"
       )
@@ -52,7 +56,7 @@ export default class index extends Component {
 
   checkCartAbout = () => {
     if (
-      this.state.articlesInCart &&
+      this.state.cart > 0 &&
       window.confirm(
         "There are products in the shopping cart; if you leave, all your progress will be lost and the cart will be empty. \nAre you sure you wish to leave?"
       )
@@ -65,7 +69,7 @@ export default class index extends Component {
 
   checkCartProducts = async () => {
     if (
-      this.state.articlesInCart &&
+      this.state.cart > 0 &&
       window.confirm(
         "There are products in the shopping cart; if you leave or refresh this page, or continue, all your progress will be lost and the cart will be empty. \nAre you sure you wish to continue?"
       )
@@ -78,7 +82,7 @@ export default class index extends Component {
     return (
       <nav className="nav-bar-container">
         <div className="logo">
-          {this.state.articlesInCart ? (
+          {this.state.cart > 0 ? (
             <img
               onClick={this.checkCartHome}
               className="logo logo__navbar"
@@ -103,7 +107,7 @@ export default class index extends Component {
           {/* Navbar */}
 
           <li className="nav-link nav-link__home">
-            {this.state.articlesInCart ? (
+            {this.state.cart > 0 ? (
               <div onClick={this.checkCartHome} className="links-home" href="/">
                 Home
               </div>
@@ -115,7 +119,7 @@ export default class index extends Component {
           </li>
 
           <li className="nav-link nav-link__about">
-            {this.state.articlesInCart ? (
+            {this.state.cart > 0 ? (
               <div
                 onClick={this.checkCartAbout}
                 className="links-home"
@@ -131,7 +135,7 @@ export default class index extends Component {
           </li>
 
           <li className="nav-link nav-link__products">
-            {this.state.articlesInCart ? (
+            {this.state.cart > 0 ? (
               <div
                 onClick={this.checkCartProducts}
                 className="links-home"
@@ -151,7 +155,7 @@ export default class index extends Component {
           </li>
 
           <li className="nav-link nav-link__contact">
-            {this.state.articlesInCart ? (
+            {this.state.cart > 0 ? (
               <div
                 onClick={this.checkCartContact}
                 className="links-home"
@@ -174,7 +178,7 @@ export default class index extends Component {
         {this.state.hamburger ? (
           <nav className="sidebar">
             <li className="nav-link-sidebar nav-link__home">
-              {this.state.articlesInCart ? (
+              {this.state.cart > 0 ? (
                 <div
                   onClick={this.checkCartHome}
                   className="links-home"
@@ -189,7 +193,7 @@ export default class index extends Component {
               )}
             </li>
             <li className="nav-link-sidebar nav-link__about">
-              {this.state.articlesInCart ? (
+              {this.state.cart > 0 ? (
                 <div
                   onClick={this.checkCartAbout}
                   className="links-home"
@@ -204,7 +208,7 @@ export default class index extends Component {
               )}
             </li>
             <li className="nav-link-sidebar nav-link__products">
-              {this.state.articlesInCart ? (
+              {this.state.cart > 0 ? (
                 <div
                   onClick={this.checkCartProducts}
                   className="links-home"
@@ -219,7 +223,7 @@ export default class index extends Component {
               )}
             </li>
             <li className="nav-link-sidebar nav-link__contact">
-              {this.state.articlesInCart ? (
+              {this.state.cart > 0 ? (
                 <div
                   onClick={this.checkCartContact}
                   className="links-home"

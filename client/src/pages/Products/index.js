@@ -475,6 +475,7 @@ export default class index extends Component {
         btnConfirmed: false,
       });
       this.props.resetQty();
+      this.props.resetCart();
     }
   };
 

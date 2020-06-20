@@ -32,8 +32,8 @@ export default class index extends Component {
           </a>{" "}
         </p>
         <Card className="images-about images-about__5" img={this.state.img1} />
-        <Card className="images-about images-about__2" img={this.state.img3} />
         <Card className="images-about images-about__7" img={this.state.img7} />
+        <Card className="images-about images-about__2" img={this.state.img3} />
         <Card className="images-about images-about__4" img={this.state.img5} />
         <Card className="images-about images-about__6" img={this.state.img6} />
       </div>

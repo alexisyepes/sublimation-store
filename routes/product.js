@@ -6,6 +6,7 @@ const stripe = require("stripe")(keys.stripeSecretKey);
 const { v4: uuidv4 } = require("uuid");
 const EmailToAYP = require("./mail/mailToUs");
 const EmailToCustomer = require("./mail/mailToCustomer");
+const sendMailToAYP = require("./mail/mailMessage");
 
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
@@ -26,6 +27,23 @@ router.post("/product", (req, res) => {
       console.log(err);
       res.json(err);
     });
+});
+
+router.post("/contact", (req, res) => {
+  const { email, message } = req.body;
+  sendMailToAYP(email, message, "Inquiry Product Sublimation", function (
+    err,
+    data
+  ) {
+    if (err) {
+      res.status(500).json({ message: "Internal Error!" });
+    } else {
+      res.json({ message: "Email Sent!" });
+    }
+  });
+  res.json({
+    message: "Done",
+  });
 });
 
 router.post("/email_to_ayp_sublimation", (req, res) => {
