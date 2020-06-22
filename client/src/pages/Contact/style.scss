@@ -89,3 +89,35 @@
     border-radius: 0px 40px 0px 40px;
   }
 }
+
+@media only screen and (min-device-width: 760px) and (max-device-width: 1200px) {
+  .office-contact {
+    display: none !important;
+  }
+
+  .contact-form-container {
+    grid-column: 1 / 3;
+  }
+
+  .phone-img {
+    grid-column: 1 / 3;
+    width: 90% !important;
+    margin-top: 20px !important;
+  }
+}
+
+@media only screen and (min-device-width: 300px) and (max-device-width: 759px) {
+  .office-contact {
+    display: none !important;
+  }
+
+  .contact-form-container {
+    grid-column: 1 / 3;
+  }
+
+  .phone-img {
+    grid-column: 1 / 3;
+    width: 90% !important;
+    margin-top: -150px !important;
+  }
+}
