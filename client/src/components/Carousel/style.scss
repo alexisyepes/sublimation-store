@@ -2,3 +2,24 @@
   width: 600px;
   height: 500px;
 }
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1199px) {
+  .d-block {
+    width: 450px;
+    height: 340px;
+  }
+}
+
+@media only screen and (min-device-width: 560px) and (max-device-width: 767px) {
+  .d-block {
+    width: 450px;
+    height: 340px;
+  }
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 559px) {
+  .d-block {
+    width: 300px;
+    height: 220px;
+  }
+}

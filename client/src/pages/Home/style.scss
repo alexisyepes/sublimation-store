@@ -126,3 +126,73 @@
     box-shadow: 0px 20px 60px black;
   }
 }
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1199px) {
+  .image-home-parent {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .items-list-home-parent {
+    margin-left: 70px;
+  }
+
+  .home-shipped-to-door-wrapper {
+    margin-top: 0 !important;
+  }
+}
+
+@media only screen and (min-device-width: 560px) and (max-device-width: 767px) {
+  .image-home-parent {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .items-list-home-parent {
+    margin-left: 40px;
+  }
+
+  .home-shipped-to-door-wrapper {
+    margin-top: 0 !important;
+  }
+
+  .home-button {
+    width: 80%;
+    margin-bottom: 20px;
+  }
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 559px) {
+  .image-home-parent {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .items-list-home-parent {
+    margin-left: 10px;
+  }
+
+  .items-list-home {
+    font-size: 18px !important;
+    width: 80% !important;
+  }
+
+  .home-shipped-to-door-wrapper {
+    margin-top: 0 !important;
+  }
+
+  .home-button {
+    width: 95%;
+    font-size: 20px;
+    padding: 5px 0;
+  }
+
+  .home-secondary-heading {
+    font-size: 22px;
+    padding: 0 5px;
+  }
+
+  .home-shipped-to-door-wrapper {
+    display: none !important;
+  }
+}

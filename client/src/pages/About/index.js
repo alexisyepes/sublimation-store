@@ -19,7 +19,9 @@ export default class index extends Component {
     return (
       <div className="about-container">
         <h1 className="primary-heading-about text-center">About us </h1>
-        <Card className="images-about images-about__1" img={this.state.img2} />
+        <div className="images-about__1">
+          <Card img={this.state.img2} />
+        </div>
         <p className="paragraph-about">
           We are 100% committed to deliver a quality-product to fulfill your
           expectations <br />
@@ -28,14 +30,26 @@ export default class index extends Component {
           and you'll have the option to get it delivered to your door, or to
           pick it up from 2 locations (Milton or Cambridge). <br />
           <a href="/products">
-            <button className="home-button">Create a Product</button>
+            <button className="home-button home-button_about">
+              Create a Product
+            </button>
           </a>{" "}
         </p>
-        <Card className="images-about images-about__5" img={this.state.img1} />
-        <Card className="images-about images-about__7" img={this.state.img7} />
-        <Card className="images-about images-about__2" img={this.state.img3} />
-        <Card className="images-about images-about__4" img={this.state.img5} />
-        <Card className="images-about images-about__6" img={this.state.img6} />
+        <div className="images-about__5">
+          <Card img={this.state.img1} />
+        </div>
+        <div className="images-about__7">
+          <Card img={this.state.img7} />
+        </div>
+        <div className="images-about__2">
+          <Card img={this.state.img3} />
+        </div>
+        <div className=" images-about__4">
+          <Card img={this.state.img5} />
+        </div>
+        <div className="images-about__6">
+          <Card img={this.state.img6} />
+        </div>
       </div>
     );
   }
