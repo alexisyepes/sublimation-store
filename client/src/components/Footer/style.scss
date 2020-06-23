@@ -9,10 +9,18 @@ footer {
   height: 50px;
   background-color: #30b8ba;
   color: rgb(0, 0, 0);
-  font-size: 22px;
+  font-size: 20px;
   text-shadow: 1px 1px rgb(255, 255, 255);
   display: block;
   text-align: center;
   padding-top: 20px;
   font-weight: 800;
+}
+
+.footer-link {
+  text-decoration: none;
+
+  &:visited {
+    color: rgb(0, 0, 0);
+  }
 }

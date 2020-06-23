@@ -62,8 +62,8 @@
   font-size: 30px;
   width: 100%;
   margin: 15px;
-  color: rgb(58, 45, 21);
-  text-shadow: 2px 2px white;
+  color: rgb(10, 7, 0);
+  text-shadow: 4px 4px 6px white;
 }
 
 .hideInBigScreens {
@@ -249,6 +249,7 @@
       border-radius: 10px;
       outline: none;
       border: 1px solid rgb(41, 4, 4);
+      z-index: 300;
 
       &:hover {
         background-color: rgb(204, 10, 10);
@@ -483,13 +484,14 @@
   cursor: pointer;
 
   &:hover {
-    background-color: rgb(194, 204, 223);
+    background-color: rgb(44, 87, 167);
+    color: white;
   }
 }
 
 .virtual-image-container {
   margin: 0px 20px;
-  background-color: rgb(173, 210, 216);
+  background-color: rgb(192, 185, 127);
   width: 100%;
   height: auto;
   border-radius: 10px;

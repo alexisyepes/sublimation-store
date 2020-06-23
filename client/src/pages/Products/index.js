@@ -8,6 +8,7 @@ import Mugs from "../../components/Mugs";
 import Shirts from "../../components/Shirt";
 import Pillow from "../../components/Pillow";
 import PetTagBone from "../../components/PetTagBone";
+import CosmeticBag from "../../components/CosmeticBag";
 
 import "./style.scss";
 
@@ -207,6 +208,10 @@ const product = [
       name: "pillow",
       price: 2200,
     },
+    CosmeticBag: {
+      name: "cosmeticBag",
+      price: 1800,
+    },
   },
 ];
 
@@ -233,13 +238,14 @@ export default class index extends Component {
         "./images/shirt.png",
         "./images/pillow.png",
         "./images/pet-tag-bone.png",
-        "https://5.imimg.com/data5/PD/DM/MY-13899650/blank-white-square-keychain-rings-for-sublimation-500x500.jpg",
+        "./images/cartera-front.png",
       ],
       productImg: "",
       productImgBack: "",
       productImgShirt: "",
       productImgPillow: "",
       productImgPetTagBone: "",
+      productImgCosmeticBag: "",
       finalProductImg: null,
       file: "",
       fileArray: [],
@@ -255,6 +261,7 @@ export default class index extends Component {
       errorMsg: "",
       textFormatOptions: false,
       textFormatOptionsForPetTagBone: false,
+      textFormatOptionsForCosmeticBag: false,
       mugPrice: 0,
       productToPay: [],
       // cart: this.props.cart,
@@ -263,6 +270,7 @@ export default class index extends Component {
       totalPillowsInCart: 0,
       totalKeychainsInCart: 0,
       totalPetTagBonesInCart: 0,
+      totalCosmeticBagsInCart: 0,
       firstName: "",
       email: "",
       address: "",
@@ -286,10 +294,6 @@ export default class index extends Component {
       petTagBonePetName: "Elsa",
       boneColor: "blue",
     };
-  }
-
-  componentDidMount() {
-    localStorage.setItem("CART", 0);
   }
 
   toggleModalToConfirmOrder = () => {
@@ -385,6 +389,15 @@ export default class index extends Component {
     });
   };
 
+  handleCosmeticBagImg = async () => {
+    await this.setState({
+      step2ActualProd: "cosmeticBag",
+      productImgCosmeticBag: this.state.productImgArray[4],
+      productImg: "",
+      step2: true,
+    });
+  };
+
   productSelectedConfirmed = () => {
     this.setState({
       btnStep1: false,
@@ -396,6 +409,7 @@ export default class index extends Component {
       toggleSelectProductBtn: false,
       designSquare: false,
       textFormatOptionsForPetTagBone: true,
+      textFormatOptionsForCosmeticBag: true,
       photoControlPetTagBone: true,
     });
   };
@@ -467,6 +481,7 @@ export default class index extends Component {
         totalPillowsInCart: 0,
         totalKeychainsInCart: 0,
         totalPetTagBonesInCart: 0,
+        totalCosmeticBagsInCart: 0,
         // qty: 1,
         productToPay: [],
         showMsgInput: false,
@@ -504,6 +519,7 @@ export default class index extends Component {
       petTagBonePhone: "123456789",
       petTagBonePetName: "Elsa",
       textFormatOptionsForPetTagBone: false,
+      textFormatOptionsForCosmeticBag: false,
     });
     this.props.resetQty();
   };
@@ -717,6 +733,46 @@ export default class index extends Component {
     });
   };
 
+  screenshotCosmeticBag = async () => {
+    if (this.state.notChecked === true) {
+      return this.setState({
+        errorMsg: "Confirm before continuing",
+      });
+    }
+    // if (this.state.imagePreviewUrl === "") {
+    //   return alert("A photo is required to proceed, please upload one.");
+    // }
+
+    this.toggleModalToConfirmOrder();
+
+    await html2canvas(document.getElementById("product-screen-container"), {
+      width: 1200,
+      height: 1400,
+    }).then(async (canvas) => {
+      // zip and convert
+      var zip = new JSZip();
+      var savable = new Image();
+      savable.src = canvas.toDataURL("image/jpeg", 0.5);
+      zip.file("image.png", savable.src.substr(savable.src.indexOf(",") + 1), {
+        base64: true,
+      });
+
+      await this.setState({
+        fileArray: [...this.state.fileArray, this.state.file],
+        screenshot: [...this.state.screenshot, savable.src],
+        toggleStep3: true,
+        toggleStep2: false,
+        textFormatOptionsForCosmeticBag: false,
+        productToPay: this.state.productToPay.concat(
+          product[0].CosmeticBag.price * this.props.qty
+        ),
+        totalCosmeticBagsInCart:
+          this.state.totalCosmeticBagsInCart + this.props.qty,
+      });
+      this.props.updateCart();
+    });
+  };
+
   goBackToStep2 = async () => {
     if (
       window.confirm(
@@ -800,6 +856,26 @@ export default class index extends Component {
           file: "",
           textFormatOptionsForPetTagBone: true,
           photoControlPetTagBone: true,
+        });
+        this.props.updateCartToPrevQty();
+        this.props.resetQty();
+      }
+      if (this.state.step2ActualProd === "cosmeticBag") {
+        await this.setState({
+          toggleStep3: false,
+          toggleStep2: true,
+          notChecked: true,
+          // cart: this.state.cart - this.state.qty,
+          // qty: 1,
+          // totalMugsInCart: this.state.totalMugsInCart - this.state.qty,
+          totalCosmeticBagsInCart:
+            this.state.totalCosmeticBagsInCart - this.props.qty,
+          productToPay: this.state.productToPay.slice(0, -1),
+          fileArray: this.state.fileArray.slice(0, -1),
+          screenshot: this.state.screenshot.slice(0, -1),
+          imagePreviewUrl: "",
+          file: "",
+          textFormatOptionsForCosmeticBag: true,
         });
         this.props.updateCartToPrevQty();
         this.props.resetQty();
@@ -897,7 +973,7 @@ export default class index extends Component {
                   Choose one product below
                 </h1>
                 <h2 className="product-select" onClick={this.handleMugImg}>
-                  Mug ($12.00)
+                  Mug 11-Oz($12.00)
                 </h2>
                 <h2 className="product-select" onClick={this.handleShirtImg}>
                   Shirt ($18.00)
@@ -906,13 +982,19 @@ export default class index extends Component {
                   className="product-select"
                   onClick={this.handlePillowcaseImg}
                 >
-                  Pillow (16"X16") ($22.00)
+                  Pillow (16"w X16"h) ($22.00)
                 </h2>
                 <h2
                   className="product-select"
                   onClick={this.handlePetTagBoneImg}
                 >
-                  Pet-tag-bone ($16.00)
+                  Pet-tag 1.25"w X 1"h ($16.00)
+                </h2>
+                <h2
+                  className="product-select"
+                  onClick={this.handleCosmeticBagImg}
+                >
+                  Cosmetic bag / Pencil case 8.5"w X 5"h ($18.00)
                 </h2>
                 <h2 className="product-select">More products coming soon...</h2>
                 {/* <h2 className="product-select" onClick={this.handleKeychainImg}>
@@ -1000,6 +1082,18 @@ export default class index extends Component {
                       </p>
                     </div>
                   ) : null}
+                  {this.state.totalCosmeticBagsInCart > 0 ? (
+                    <div>
+                      <p>
+                        Total Cosmetic bags in Cart:{" "}
+                        {this.state.totalCosmeticBagsInCart} {""}
+                        <span>
+                          (Cosmetic bag: ${product[0].CosmeticBag.price * 0.01}
+                          .00 ea)
+                        </span>
+                      </p>
+                    </div>
+                  ) : null}
                   <p>
                     Sub-Total: $
                     {product[0].Mug.price * 0.01 * this.state.totalMugsInCart +
@@ -1011,7 +1105,10 @@ export default class index extends Component {
                         this.state.totalPillowsInCart +
                       product[0].PetTagBone.price *
                         0.01 *
-                        this.state.totalPetTagBonesInCart}
+                        this.state.totalPetTagBonesInCart +
+                      product[0].CosmeticBag.price *
+                        0.01 *
+                        this.state.totalCosmeticBagsInCart}
                     .00
                   </p>
                   <p>
@@ -1028,6 +1125,10 @@ export default class index extends Component {
                         0.13 +
                       product[0].PetTagBone.price *
                         this.state.totalPetTagBonesInCart *
+                        0.01 *
+                        0.13 +
+                      product[0].CosmeticBag.price *
+                        this.state.totalCosmeticBagsInCart *
                         0.01 *
                         0.13
                     ).toFixed(2)}
@@ -1100,7 +1201,7 @@ export default class index extends Component {
                       <span aria-label="0" role="img">
                         &#10003;{" "}
                       </span>
-                      Confirm product and continue to step 2
+                      Click here to confirm product
                     </button>
                   ) : (
                     <div className="startover-btn-container">
@@ -1156,15 +1257,28 @@ export default class index extends Component {
                       photoControlPetTagBone={this.state.photoControlPetTagBone}
                     />
                   ) : null}
+                  {this.state.step2ActualProd === "cosmeticBag" ? (
+                    <CosmeticBag
+                      // petName={this.state.petTagBonePetName}
+                      textOnMugs={this.state.textOnMugs}
+                      img={this.state.productImgCosmeticBag}
+                      imagePreviewUrl={this.state.imagePreviewUrl}
+                      btnConfirmed={this.state.textFormatOptionsForCosmeticBag}
+                    />
+                  ) : null}
                 </div>
               </div>
             ) : (
               <div>
                 <div className="arrowToLeft hideInSmallScreens">
-                  <h1 className="text-center">&#x21da; Begin with step 1</h1>
+                  <h1 className="text-center">
+                    &#x21da; Click on Step 1 to begin
+                  </h1>
                 </div>
                 <div className="arrowToLeft hideInBigScreens">
-                  <h1 className="text-center">&uArr; Begin with step 1</h1>
+                  <h1 className="text-center">
+                    &uArr; Click on Step 1 to begin
+                  </h1>
                 </div>
               </div>
             )}
@@ -1305,7 +1419,8 @@ export default class index extends Component {
                   {/* CLICK TO ADD MESSAGE CONTROLS */}
                   {this.state.step2ActualProd === "mug" ||
                   this.state.step2ActualProd === "shirt" ||
-                  this.state.step2ActualProd === "pillow" ? (
+                  this.state.step2ActualProd === "pillow" ||
+                  this.state.step2ActualProd === "cosmeticBag" ? (
                     <div>
                       <h2
                         onClick={this.showInputFields}
@@ -1382,6 +1497,16 @@ export default class index extends Component {
                       {this.state.step2ActualProd === "petTagBone" ? (
                         <button
                           onClick={this.screenshotPetTagBone}
+                          className="continue-button"
+                        >
+                          Click here if you're done &#10003;
+                        </button>
+                      ) : null}
+
+                      {/* CONFIRM ORDER FOR COSMETIC BAGS */}
+                      {this.state.step2ActualProd === "cosmeticBag" ? (
+                        <button
+                          onClick={this.screenshotCosmeticBag}
                           className="continue-button"
                         >
                           Click here if you're done &#10003;
@@ -1476,6 +1601,18 @@ export default class index extends Component {
                       </p>
                     </div>
                   ) : null}
+                  {this.state.totalCosmeticBagsInCart > 0 ? (
+                    <div>
+                      <p>
+                        Total Cosmetic bags in Cart:{" "}
+                        {this.state.totalCosmeticBagsInCart} {""}
+                        <span>
+                          (Cosmetic bag: ${product[0].CosmeticBag.price * 0.01}
+                          .00 ea)
+                        </span>
+                      </p>
+                    </div>
+                  ) : null}
                   <p>
                     Sub-Total: $
                     {product[0].Mug.price * 0.01 * this.state.totalMugsInCart +
@@ -1487,7 +1624,10 @@ export default class index extends Component {
                         this.state.totalPillowsInCart +
                       product[0].PetTagBone.price *
                         0.01 *
-                        this.state.totalPetTagBonesInCart}
+                        this.state.totalPetTagBonesInCart +
+                      product[0].CosmeticBag.price *
+                        0.01 *
+                        this.state.totalCosmeticBagsInCart}
                     .00
                   </p>
                   <p>
@@ -1504,6 +1644,10 @@ export default class index extends Component {
                         0.13 +
                       product[0].PetTagBone.price *
                         this.state.totalPetTagBonesInCart *
+                        0.01 *
+                        0.13 +
+                      product[0].CosmeticBag.price *
+                        this.state.totalCosmeticBagsInCart *
                         0.01 *
                         0.13
                     ).toFixed(2)}
@@ -1645,6 +1789,7 @@ export default class index extends Component {
                   totalShirtsInCart={this.state.totalShirtsInCart}
                   totalPillowsInCart={this.state.totalPillowsInCart}
                   totalPetTagBonesInCart={this.state.totalPetTagBonesInCart}
+                  totalCosmeticBagsInCart={this.state.totalCosmeticBagsInCart}
                   firstName={this.state.firstName}
                   email={this.state.email}
                   address={this.state.address}
@@ -1662,7 +1807,10 @@ export default class index extends Component {
                       this.state.totalPillowsInCart +
                     product[0].PetTagBone.price *
                       0.01 *
-                      this.state.totalPetTagBonesInCart
+                      this.state.totalPetTagBonesInCart +
+                    product[0].CosmeticBag.price *
+                      0.01 *
+                      this.state.totalCosmeticBagsInCart
                   }
                   tax={(
                     0.13 * this.state.mugPrice * this.state.totalMugsInCart +
@@ -1676,6 +1824,10 @@ export default class index extends Component {
                       0.13 +
                     product[0].PetTagBone.price *
                       this.state.totalPetTagBonesInCart *
+                      0.01 *
+                      0.13 +
+                    product[0].CosmeticBag.price *
+                      this.state.totalCosmeticBagsInCart *
                       0.01 *
                       0.13
                   ).toFixed(2)}
