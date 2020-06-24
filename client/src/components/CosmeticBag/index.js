@@ -126,13 +126,13 @@ class index extends Component {
 
   moveTextLeft = () => {
     this.setState((prevState) => ({
-      marginRight: prevState.marginRight + 2,
+      marginRight: prevState.marginRight - 2,
     }));
   };
 
   moveTextRight = () => {
     this.setState((prevState) => ({
-      marginRight: prevState.marginRight - 2,
+      marginRight: prevState.marginRight + 2,
     }));
   };
 
@@ -243,7 +243,7 @@ class index extends Component {
               className="text-on-cosmeticBag__container text-center"
               style={{
                 marginTop: this.state.marginTop + "px",
-                marginRight: this.state.marginRight + "px",
+                marginLeft: this.state.marginRight + "px",
                 fontSize: this.state.fontSize + "px",
                 color: this.state.color,
               }}
@@ -254,7 +254,7 @@ class index extends Component {
               className="text-on-cosmeticBag__container--small-screens text-center"
               style={{
                 marginTop: this.state.marginTop + "px",
-                marginRight: this.state.marginRight + "px",
+                marginLeft: this.state.marginRight + "px",
                 fontSize: this.state.fontSize + "px",
                 color: this.state.color,
               }}

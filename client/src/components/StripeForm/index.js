@@ -57,6 +57,7 @@ const Index = (props) => {
           totalShirtsInCart: props.totalShirtsInCart,
           totalPillowsInCart: props.totalPillowsInCart,
           totalPetTagBonesInCart: props.totalPetTagBonesInCart,
+          totalCosmeticBagsInCart: props.totalCosmeticBagsInCart,
           shippingMethod,
           subTotal: props.subTotal,
           tax: props.tax,

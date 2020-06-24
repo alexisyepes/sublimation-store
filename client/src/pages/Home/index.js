@@ -32,7 +32,10 @@ export default class index extends Component {
                 </li>
                 <li className="items-list-home items-list-home__hat">Hats</li>
                 <li className="items-list-home items-list-home__plate">
-                  Plates
+                  Pencil case
+                </li>
+                <li className="items-list-home items-list-home__plate">
+                  And much more!
                 </li>
               </a>
             </ul>

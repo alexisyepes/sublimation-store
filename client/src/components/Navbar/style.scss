@@ -72,6 +72,9 @@
   &__products {
     order: 2;
   }
+  &__ {
+    order: 2;
+  }
 }
 
 .links-home {
@@ -97,7 +100,7 @@
 @media only screen and (min-device-width: 519px) and (max-device-width: 768px) {
   .nav-link {
     color: rgb(0, 0, 0);
-    font-size: 16px;
+    font-size: 20px;
     text-decoration: none;
 
     &__home {
@@ -111,6 +114,7 @@
     }
     &__products {
       order: 3;
+      text-align: justify;
     }
   }
 

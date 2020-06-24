@@ -194,23 +194,23 @@ const product = [
   {
     Mug: {
       name: "mug",
-      price: 1200,
+      price: 1599,
     },
     PetTagBone: {
       name: "petTagBone",
-      price: 1600,
+      price: 1999,
     },
     Shirt: {
       name: "shirt",
-      price: 1800,
+      price: 1999,
     },
     Pillow: {
       name: "pillow",
-      price: 2200,
+      price: 2499,
     },
     CosmeticBag: {
       name: "cosmeticBag",
-      price: 1800,
+      price: 1899,
     },
   },
 ];
@@ -973,28 +973,28 @@ export default class index extends Component {
                   Choose one product below
                 </h1>
                 <h2 className="product-select" onClick={this.handleMugImg}>
-                  Mug 11-Oz($12.00)
+                  Mug 11-Oz($15.99)
                 </h2>
                 <h2 className="product-select" onClick={this.handleShirtImg}>
-                  Shirt ($18.00)
+                  Shirt ($19.99)
                 </h2>
                 <h2
                   className="product-select"
                   onClick={this.handlePillowcaseImg}
                 >
-                  Pillow (16"w X16"h) ($22.00)
+                  Pillow (16"w X16"h) ($24.99)
                 </h2>
                 <h2
                   className="product-select"
                   onClick={this.handlePetTagBoneImg}
                 >
-                  Pet-tag 1.25"w X 1"h ($16.00)
+                  Pet-tag 1.25"w X 1"h ($19.99)
                 </h2>
                 <h2
                   className="product-select"
                   onClick={this.handleCosmeticBagImg}
                 >
-                  Cosmetic bag / Pencil case 8.5"w X 5"h ($18.00)
+                  Cosmetic bag / Pencil case 8.5"w X 5"h ($18.99)
                 </h2>
                 <h2 className="product-select">More products coming soon...</h2>
                 {/* <h2 className="product-select" onClick={this.handleKeychainImg}>
@@ -1043,8 +1043,7 @@ export default class index extends Component {
                       <p>
                         Total Mugs in Cart: {this.state.totalMugsInCart}{" "}
                         <span>
-                          (Mug: ${product[0].Mug.price * 0.01}
-                          .00 ea)
+                          (Mug: ${(product[0].Mug.price * 0.01).toFixed(2)} ea)
                         </span>
                       </p>
                     </div>
@@ -1055,7 +1054,8 @@ export default class index extends Component {
                         Total Shirts in Cart: {this.state.totalShirtsInCart}{" "}
                         {""}
                         <span>
-                          (Shirt: ${product[0].Shirt.price * 0.01}.00 ea)
+                          (Shirt: ${(product[0].Shirt.price * 0.01).toFixed(2)}{" "}
+                          ea)
                         </span>
                       </p>
                     </div>
@@ -1066,7 +1066,8 @@ export default class index extends Component {
                         Total Pillows in Cart: {this.state.totalPillowsInCart}{" "}
                         {""}
                         <span>
-                          (Pillow: ${product[0].Pillow.price * 0.01}.00 ea)
+                          (Pillow: $
+                          {(product[0].Pillow.price * 0.01).toFixed(2)} ea)
                         </span>
                       </p>
                     </div>
@@ -1077,7 +1078,8 @@ export default class index extends Component {
                         Total Pet-tag-bones in Cart:{" "}
                         {this.state.totalPetTagBonesInCart} {""}
                         <span>
-                          (Pet-tag: ${product[0].PetTagBone.price * 0.01}.00 ea)
+                          (Pet-tag: $
+                          {(product[0].PetTagBone.price * 0.01).toFixed(2)} ea)
                         </span>
                       </p>
                     </div>
@@ -1088,15 +1090,18 @@ export default class index extends Component {
                         Total Cosmetic bags in Cart:{" "}
                         {this.state.totalCosmeticBagsInCart} {""}
                         <span>
-                          (Cosmetic bag: ${product[0].CosmeticBag.price * 0.01}
-                          .00 ea)
+                          (Cosmetic bag: $
+                          {(product[0].CosmeticBag.price * 0.01).toFixed(2)}
+                          {""}
+                          ea)
                         </span>
                       </p>
                     </div>
                   ) : null}
                   <p>
                     Sub-Total: $
-                    {product[0].Mug.price * 0.01 * this.state.totalMugsInCart +
+                    {(
+                      product[0].Mug.price * 0.01 * this.state.totalMugsInCart +
                       product[0].Shirt.price *
                         0.01 *
                         this.state.totalShirtsInCart +
@@ -1108,39 +1113,48 @@ export default class index extends Component {
                         this.state.totalPetTagBonesInCart +
                       product[0].CosmeticBag.price *
                         0.01 *
-                        this.state.totalCosmeticBagsInCart}
-                    .00
+                        this.state.totalCosmeticBagsInCart
+                    ).toFixed(2)}
                   </p>
                   <p>
                     Total Tax: $
-                    {(
-                      0.13 * this.state.mugPrice * this.state.totalMugsInCart +
-                      product[0].Shirt.price *
-                        this.state.totalShirtsInCart *
-                        0.01 *
-                        0.13 +
-                      product[0].Pillow.price *
-                        this.state.totalPillowsInCart *
-                        0.01 *
-                        0.13 +
-                      product[0].PetTagBone.price *
-                        this.state.totalPetTagBonesInCart *
-                        0.01 *
-                        0.13 +
-                      product[0].CosmeticBag.price *
-                        this.state.totalCosmeticBagsInCart *
-                        0.01 *
-                        0.13
-                    ).toFixed(2)}
+                    {
+                      // 0.13 * this.state.mugPrice * this.state.totalMugsInCart +
+                      (
+                        product[0].Mug.price *
+                          this.state.totalMugsInCart *
+                          0.01 *
+                          0.13 +
+                        product[0].Shirt.price *
+                          this.state.totalShirtsInCart *
+                          0.01 *
+                          0.13 +
+                        product[0].Pillow.price *
+                          this.state.totalPillowsInCart *
+                          0.01 *
+                          0.13 +
+                        product[0].PetTagBone.price *
+                          this.state.totalPetTagBonesInCart *
+                          0.01 *
+                          0.13 +
+                        product[0].CosmeticBag.price *
+                          this.state.totalCosmeticBagsInCart *
+                          0.01 *
+                          0.13
+                      ).toFixed(2)
+                    }
                   </p>
                   <hr />
                   <p>
                     Grand Subtotal: $
                     {this.state.productToPay.length > 0
-                      ? this.state.productToPay.reduce((a, b) => a + b) * 0.01 +
-                        this.state.productToPay.reduce((a, b) => a + b) *
-                          0.01 *
-                          0.13
+                      ? (
+                          this.state.productToPay.reduce((a, b) => a + b) *
+                            0.01 +
+                          this.state.productToPay.reduce((a, b) => a + b) *
+                            0.01 *
+                            0.13
+                        ).toFixed(2)
                       : 0}{" "}
                     <span aria-label="0" role="img">
                       &#128722;
@@ -1562,8 +1576,8 @@ export default class index extends Component {
                       <p>
                         Total Mugs in Cart: {this.state.totalMugsInCart}{" "}
                         <span>
-                          (Mug: ${product[0].Mug.price * 0.01}
-                          .00 ea)
+                          (Mug: ${(product[0].Mug.price * 0.01).toFixed(2)}
+                          ea)
                         </span>
                       </p>
                     </div>
@@ -1574,7 +1588,8 @@ export default class index extends Component {
                         Total Shirts in Cart: {this.state.totalShirtsInCart}{" "}
                         {""}
                         <span>
-                          (Shirt: ${product[0].Shirt.price * 0.01}.00 ea)
+                          (Shirt: ${(product[0].Shirt.price * 0.01).toFixed(2)}{" "}
+                          ea)
                         </span>
                       </p>
                     </div>
@@ -1585,7 +1600,8 @@ export default class index extends Component {
                         Total Shirts in Cart: {this.state.totalPillowsInCart}{" "}
                         {""}
                         <span>
-                          (Shirt: ${product[0].Pillow.price * 0.01}.00 ea)
+                          (Pillow: $
+                          {(product[0].Pillow.price * 0.01).toFixed(2)} ea)
                         </span>
                       </p>
                     </div>
@@ -1596,7 +1612,8 @@ export default class index extends Component {
                         Total Pet-tags in Cart:{" "}
                         {this.state.totalPetTagBonesInCart} {""}
                         <span>
-                          (Pet-tag: ${product[0].PetTagBone.price * 0.01}.00 ea)
+                          (Pet-tag: $
+                          {(product[0].PetTagBone.price * 0.01).toFixed(2)} ea)
                         </span>
                       </p>
                     </div>
@@ -1607,15 +1624,18 @@ export default class index extends Component {
                         Total Cosmetic bags in Cart:{" "}
                         {this.state.totalCosmeticBagsInCart} {""}
                         <span>
-                          (Cosmetic bag: ${product[0].CosmeticBag.price * 0.01}
-                          .00 ea)
+                          (Cosmetic bag: $
+                          {(product[0].CosmeticBag.price * 0.01).toFixed(2)}
+                          {""}
+                          ea)
                         </span>
                       </p>
                     </div>
                   ) : null}
                   <p>
                     Sub-Total: $
-                    {product[0].Mug.price * 0.01 * this.state.totalMugsInCart +
+                    {(
+                      product[0].Mug.price * 0.01 * this.state.totalMugsInCart +
                       product[0].Shirt.price *
                         0.01 *
                         this.state.totalShirtsInCart +
@@ -1627,30 +1647,36 @@ export default class index extends Component {
                         this.state.totalPetTagBonesInCart +
                       product[0].CosmeticBag.price *
                         0.01 *
-                        this.state.totalCosmeticBagsInCart}
-                    .00
+                        this.state.totalCosmeticBagsInCart
+                    ).toFixed(2)}
                   </p>
                   <p>
                     Total Tax: $
-                    {(
-                      0.13 * this.state.mugPrice * this.state.totalMugsInCart +
-                      product[0].Shirt.price *
-                        this.state.totalShirtsInCart *
-                        0.01 *
-                        0.13 +
-                      product[0].Pillow.price *
-                        this.state.totalPillowsInCart *
-                        0.01 *
-                        0.13 +
-                      product[0].PetTagBone.price *
-                        this.state.totalPetTagBonesInCart *
-                        0.01 *
-                        0.13 +
-                      product[0].CosmeticBag.price *
-                        this.state.totalCosmeticBagsInCart *
-                        0.01 *
-                        0.13
-                    ).toFixed(2)}
+                    {
+                      // 0.13 * this.state.mugPrice * this.state.totalMugsInCart +
+                      (
+                        product[0].Mug.price *
+                          this.state.totalMugsInCart *
+                          0.01 *
+                          0.13 +
+                        product[0].Shirt.price *
+                          this.state.totalShirtsInCart *
+                          0.01 *
+                          0.13 +
+                        product[0].Pillow.price *
+                          this.state.totalPillowsInCart *
+                          0.01 *
+                          0.13 +
+                        product[0].PetTagBone.price *
+                          this.state.totalPetTagBonesInCart *
+                          0.01 *
+                          0.13 +
+                        product[0].CosmeticBag.price *
+                          this.state.totalCosmeticBagsInCart *
+                          0.01 *
+                          0.13
+                      ).toFixed(2)
+                    }
                   </p>
 
                   {this.state.shippingMethod === "delivery" ? (
@@ -1702,11 +1728,13 @@ export default class index extends Component {
                         {" "}
                         GRAND SUBTOTAL: $
                         {this.state.productToPay.length > 0
-                          ? this.state.productToPay.reduce((a, b) => a + b) *
-                              0.01 +
-                            this.state.productToPay.reduce((a, b) => a + b) *
-                              0.01 *
-                              0.13
+                          ? (
+                              this.state.productToPay.reduce((a, b) => a + b) *
+                                0.01 +
+                              this.state.productToPay.reduce((a, b) => a + b) *
+                                0.01 *
+                                0.13
+                            ).toFixed(2)
                           : 0}{" "}
                         <span aria-label="0" role="img">
                           &#128722;
@@ -1833,10 +1861,13 @@ export default class index extends Component {
                   ).toFixed(2)}
                   productWithCents={
                     this.state.productToPay.length > 0
-                      ? this.state.productToPay.reduce((a, b) => a + b) * 0.01 +
-                        this.state.productToPay.reduce((a, b) => a + b) *
-                          0.01 *
-                          0.13
+                      ? (
+                          this.state.productToPay.reduce((a, b) => a + b) *
+                            0.01 +
+                          this.state.productToPay.reduce((a, b) => a + b) *
+                            0.01 *
+                            0.13
+                        ).toFixed(2)
                       : null
                   }
                   productWithCentsPlusShipping={
@@ -1853,15 +1884,21 @@ export default class index extends Component {
                   }
                   product={
                     this.state.productToPay.length > 0
-                      ? this.state.productToPay.reduce((a, b) => a + b) * 0.13 +
-                        this.state.productToPay.reduce((a, b) => a + b)
+                      ? Math.round(
+                          this.state.productToPay.reduce((a, b) => a + b) *
+                            0.13 +
+                            this.state.productToPay.reduce((a, b) => a + b)
+                        )
                       : 0
                   }
                   productPluShipping={
                     this.state.productToPay.length > 0
-                      ? this.state.productToPay.reduce((a, b) => a + b) * 0.13 +
-                        this.state.productToPay.reduce((a, b) => a + b) +
-                        1500
+                      ? Math.round(
+                          this.state.productToPay.reduce((a, b) => a + b) *
+                            0.13 +
+                            this.state.productToPay.reduce((a, b) => a + b) +
+                            1500
+                        )
                       : 0
                   }
                 />

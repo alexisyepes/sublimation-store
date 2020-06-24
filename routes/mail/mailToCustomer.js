@@ -19,6 +19,7 @@ const sendMail = (
   totalShirtsInCart,
   totalPillowsInCart,
   totalPetTagBonesInCart,
+  totalCosmeticBagsInCart,
   shippingMethod,
   subTotal,
   tax,
@@ -26,19 +27,23 @@ const sendMail = (
 ) => {
   let mugs =
     totalMugsInCart > 0
-      ? `<p>Total number of Mugs: ${totalMugsInCart} ($12.00 ea)</p>`
+      ? `<p>Total number of Mugs: ${totalMugsInCart} ($15.99 ea)</p>`
       : `<span></span>`;
   let shirts =
     totalShirtsInCart > 0
-      ? `<p>Total number of Shirts: ${totalShirtsInCart} ($18.00 ea)</p>`
+      ? `<p>Total number of Shirts: ${totalShirtsInCart} ($19.99 ea)</p>`
       : `<span></span>`;
   let pillows =
     totalPillowsInCart > 0
-      ? `<p>Total number of Pillows: ${totalPillowsInCart} ($22.00 ea)</p>`
+      ? `<p>Total number of Pillows: ${totalPillowsInCart} ($24.99 ea)</p>`
       : `<span></span>`;
   let petTags =
     totalPetTagBonesInCart > 0
-      ? `<p>Total number of Pet Tags: ${totalPetTagBonesInCart} ($16.00 ea)</p>`
+      ? `<p>Total number of Pet Tags: ${totalPetTagBonesInCart} ($19.99 ea)</p>`
+      : `<span></span>`;
+  let cosmeticBags =
+    totalCosmeticBagsInCart > 0
+      ? `<p>Total number of Cosmetic Bags: ${totalCosmeticBagsInCart} ($18.99 ea)</p>`
       : `<span></span>`;
 
   let isShipping =
@@ -60,7 +65,8 @@ const sendMail = (
 		${mugs} 
 		${shirts} 
 		${pillows} 
-		${petTags} 
+    ${petTags} 
+    ${cosmeticBags}
 		<p>Subtotal: $${subTotal}</p>
 		<p>hst: $${tax}</p>
 		${isShipping}

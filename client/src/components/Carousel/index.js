@@ -16,11 +16,11 @@ const CarouselPage = () => {
       <MDBContainer>
         <MDBCarousel
           activeItem={1}
-          length={4}
+          length={6}
           showControls={true}
           showIndicators={false}
           className="z-depth-1"
-          interval={3000}
+          interval={4000}
         >
           <a className="" href="/products">
             <MDBCarouselInner>
@@ -28,17 +28,12 @@ const CarouselPage = () => {
                 <MDBView>
                   <img
                     className="d-block "
-                    src="./images/varios.jpg"
+                    src="./images/sublimation-group.png"
                     alt="First slide"
                   />
                   <MDBMask overlay="black-light" />
                 </MDBView>
-                <MDBCarouselCaption>
-                  {/* <div style={{ background:"rgba(0,0,0,0.5)", padding: "15px" }}>
-            <h3 className="h3-responsive" >Open Concept</h3>
-            <h4>Clean and safe environment</h4>
-            </div> */}
-                </MDBCarouselCaption>
+                <MDBCarouselCaption></MDBCarouselCaption>
               </MDBCarouselItem>
               <MDBCarouselItem itemId="2">
                 <MDBView>
@@ -49,44 +44,51 @@ const CarouselPage = () => {
                   />
                   <MDBMask overlay="black-strong" />
                 </MDBView>
-                <MDBCarouselCaption>
-                  {/* <div style={{ background:"rgba(0,0,0,0.5)", padding: "15px" }}>
-            <h3 className="h3-responsive" >Open Concept</h3>
-            <h4>Clean and safe environment</h4>
-            </div> */}
-                </MDBCarouselCaption>
+                <MDBCarouselCaption></MDBCarouselCaption>
               </MDBCarouselItem>
               <MDBCarouselItem itemId="3">
                 <MDBView>
                   <img
                     className="d-block "
-                    src="./images/mug.jpg"
+                    src="./images/mug5.png"
                     alt="Third slide"
                   />
                   <MDBMask overlay="black-slight" />
                 </MDBView>
-                <MDBCarouselCaption>
-                  {/* <div style={{ background:"rgba(0,0,0,0.5)", padding: "15px" }}>
-            <h3 className="h3-responsive" >Open Concept</h3>
-            <h4>Clean and safe environment</h4>
-            </div> */}
-                </MDBCarouselCaption>
+                <MDBCarouselCaption></MDBCarouselCaption>
               </MDBCarouselItem>
               <MDBCarouselItem itemId="4">
                 <MDBView>
                   <img
                     className="d-block w-300"
-                    src="./images/pillow.jpg"
+                    src="./images/pillow1.png"
                     alt="First slide"
                   />
                   <MDBMask overlay="black-light" />
                 </MDBView>
-                <MDBCarouselCaption>
-                  {/* <div style={{ background:"rgba(0,0,0,0.5)", padding: "15px" }}>
-            <h3 className="h3-responsive" >Open Concept</h3>
-            <h4>Clean and safe environment</h4>
-            </div> */}
-                </MDBCarouselCaption>
+                <MDBCarouselCaption></MDBCarouselCaption>
+              </MDBCarouselItem>
+              <MDBCarouselItem itemId="5">
+                <MDBView>
+                  <img
+                    className="d-block w-300"
+                    src="./images/keychain.png"
+                    alt="First slide"
+                  />
+                  <MDBMask overlay="black-light" />
+                </MDBView>
+                <MDBCarouselCaption></MDBCarouselCaption>
+              </MDBCarouselItem>
+              <MDBCarouselItem itemId="6">
+                <MDBView>
+                  <img
+                    className="d-block w-300"
+                    src="./images/mug3.png"
+                    alt="First slide"
+                  />
+                  <MDBMask overlay="black-light" />
+                </MDBView>
+                <MDBCarouselCaption></MDBCarouselCaption>
               </MDBCarouselItem>
             </MDBCarouselInner>
           </a>

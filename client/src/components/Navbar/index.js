@@ -134,6 +134,22 @@ export default class index extends Component {
             )}
           </li>
 
+          <li className="nav-link nav-link__about">
+            {this.state.cart > 0 ? (
+              <div
+                onClick={this.checkCartAbout}
+                className="links-home"
+                href="/gallery"
+              >
+                Gallery
+              </div>
+            ) : (
+              <a className="links-home" href="/gallery">
+                Gallery
+              </a>
+            )}
+          </li>
+
           <li className="nav-link nav-link__products">
             {this.state.cart > 0 ? (
               <div
@@ -141,7 +157,7 @@ export default class index extends Component {
                 className="links-home"
                 href="/products"
               >
-                Create my product
+                Create product
               </div>
             ) : (
               <a
@@ -149,7 +165,7 @@ export default class index extends Component {
                 className="links-home"
                 href="/products"
               >
-                Create my product
+                Create product
               </a>
             )}
           </li>
@@ -204,6 +220,21 @@ export default class index extends Component {
               ) : (
                 <a className="links-home" href="/about">
                   About
+                </a>
+              )}
+            </li>
+            <li className="nav-link-sidebar nav-link__about">
+              {this.state.cart > 0 ? (
+                <div
+                  onClick={this.checkCartAbout}
+                  className="links-home"
+                  href="/gallery"
+                >
+                  Gallery
+                </div>
+              ) : (
+                <a className="links-home" href="/gallery">
+                  Gallery
                 </a>
               )}
             </li>
