@@ -33,15 +33,14 @@ export default class index extends Component {
     });
     await axios
       .post("/contact", textToSend)
-      .then((res) => {
-        console.log(res);
+      .then(() => {
         this.setState({
           loadingAxiosReq: false,
         });
-        // alert(
-        //   "Thanks for contacting us! We'll get back to you as soon as we can."
-        // );
-        // window.location.href = "/";
+        alert(
+          "Thanks for contacting us! We'll get back to you as soon as we can."
+        );
+        window.location.href = "/";
       })
       .catch((err) => {
         console.log(err);
