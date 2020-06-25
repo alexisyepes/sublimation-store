@@ -9,12 +9,15 @@ footer {
   height: 50px;
   background-color: #30b8ba;
   color: rgb(0, 0, 0);
-  font-size: 20px;
+  font-size: 18px;
   text-shadow: 1px 1px rgb(255, 255, 255);
   display: block;
   text-align: center;
   padding-top: 20px;
   font-weight: 800;
+  position: fixed;
+  bottom: 0;
+  z-index: 1000;
 }
 
 .footer-link {
@@ -22,5 +25,11 @@ footer {
 
   &:visited {
     color: rgb(0, 0, 0);
+  }
+}
+
+@media only screen and (min-device-width: 200px) and (max-device-width: 500px) {
+  footer {
+    display: none;
   }
 }

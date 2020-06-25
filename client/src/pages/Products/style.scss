@@ -4,9 +4,7 @@
 @import "../../SCSS/typography.scss";
 
 .product-creation-container {
-  min-height: calc(100vh - 50px);
-
-  // height: 100%;
+  height: 100vh;
   margin-bottom: 40px;
 }
 
@@ -44,6 +42,7 @@
 .steps-parent {
   display: flex;
   margin-top: -50px;
+  margin-bottom: 120px;
 }
 
 .steps-container {
@@ -461,7 +460,7 @@
   top: -60px;
   left: 30%;
   border-radius: 10px;
-  z-index: 10000;
+  z-index: 1000;
 
   &:hover {
     background-color: $color-primary;
@@ -883,6 +882,10 @@
 @media only screen and (min-device-width: 220px) and (max-device-width: 520px) {
   .controls-to-add-content-to-mugs {
     margin-top: 45%;
+  }
+
+  .checkout-modal-wrapper {
+    // overflow: scroll;
   }
 
   .agree-with-order {

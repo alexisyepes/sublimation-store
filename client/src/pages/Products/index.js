@@ -124,6 +124,10 @@ const customStylesCheckout = {
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
     backgroundColor: "rgb(199, 218, 166)",
+    marginTop: window.innerWidth < 450 ? "20px" : "0",
+    overflow: window.innerWidth < 450 ? "scroll" : "auto",
+    // paddingBottom: window.innerWidth < 450 ? "50px" : "0",
+    height: window.innerHeight < 520 ? "100%" : "auto",
     color: "black",
     borderRadius: "5px",
     width: "65%",
@@ -1567,79 +1571,283 @@ export default class index extends Component {
               <span className="x-close-modal" onClick={this.closeModalCheckout}>
                 X
               </span>
-
-              {!this.state.checkOutStripe ? (
-                <div className="text-center">
-                  <button
-                    onClick={this.updateComponent}
-                    className="empty-cart-button__checkout"
-                  >
-                    <i className="fas fa-trash"></i> Cancel and empty cart
-                  </button>
-                  {this.state.totalMugsInCart > 0 ? (
-                    <div>
-                      <p>
-                        Total Mugs in Cart: {this.state.totalMugsInCart}{" "}
-                        <span>
-                          (Mug: ${(product[0].Mug.price * 0.01).toFixed(2)}
-                          ea)
-                        </span>
-                      </p>
-                    </div>
-                  ) : null}
-                  {this.state.totalShirtsInCart > 0 ? (
-                    <div>
-                      <p>
-                        Total Shirts in Cart: {this.state.totalShirtsInCart}{" "}
-                        {""}
-                        <span>
-                          (Shirt: ${(product[0].Shirt.price * 0.01).toFixed(2)}{" "}
-                          ea)
-                        </span>
-                      </p>
-                    </div>
-                  ) : null}
-                  {this.state.totalPillowsInCart > 0 ? (
-                    <div>
-                      <p>
-                        Total Shirts in Cart: {this.state.totalPillowsInCart}{" "}
-                        {""}
-                        <span>
-                          (Pillow: $
-                          {(product[0].Pillow.price * 0.01).toFixed(2)} ea)
-                        </span>
-                      </p>
-                    </div>
-                  ) : null}
-                  {this.state.totalPetTagBonesInCart > 0 ? (
-                    <div>
-                      <p>
-                        Total Pet-tags in Cart:{" "}
-                        {this.state.totalPetTagBonesInCart} {""}
-                        <span>
-                          (Pet-tag: $
-                          {(product[0].PetTagBone.price * 0.01).toFixed(2)} ea)
-                        </span>
-                      </p>
-                    </div>
-                  ) : null}
-                  {this.state.totalCosmeticBagsInCart > 0 ? (
-                    <div>
-                      <p>
-                        Total Cosmetic bags in Cart:{" "}
-                        {this.state.totalCosmeticBagsInCart} {""}
-                        <span>
-                          (Cosmetic bag: $
-                          {(product[0].CosmeticBag.price * 0.01).toFixed(2)}
+              <div className="checkout-modal-wrapper">
+                {!this.state.checkOutStripe ? (
+                  <div className="text-center">
+                    <button
+                      onClick={this.updateComponent}
+                      className="empty-cart-button__checkout"
+                    >
+                      <i className="fas fa-trash"></i> Cancel and empty cart
+                    </button>
+                    {this.state.totalMugsInCart > 0 ? (
+                      <div>
+                        <p>
+                          Total Mugs in Cart: {this.state.totalMugsInCart}{" "}
+                          <span>
+                            (Mug: ${(product[0].Mug.price * 0.01).toFixed(2)}
+                            ea)
+                          </span>
+                        </p>
+                      </div>
+                    ) : null}
+                    {this.state.totalShirtsInCart > 0 ? (
+                      <div>
+                        <p>
+                          Total Shirts in Cart: {this.state.totalShirtsInCart}{" "}
                           {""}
-                          ea)
-                        </span>
+                          <span>
+                            (Shirt: $
+                            {(product[0].Shirt.price * 0.01).toFixed(2)} ea)
+                          </span>
+                        </p>
+                      </div>
+                    ) : null}
+                    {this.state.totalPillowsInCart > 0 ? (
+                      <div>
+                        <p>
+                          Total Shirts in Cart: {this.state.totalPillowsInCart}{" "}
+                          {""}
+                          <span>
+                            (Pillow: $
+                            {(product[0].Pillow.price * 0.01).toFixed(2)} ea)
+                          </span>
+                        </p>
+                      </div>
+                    ) : null}
+                    {this.state.totalPetTagBonesInCart > 0 ? (
+                      <div>
+                        <p>
+                          Total Pet-tags in Cart:{" "}
+                          {this.state.totalPetTagBonesInCart} {""}
+                          <span>
+                            (Pet-tag: $
+                            {(product[0].PetTagBone.price * 0.01).toFixed(2)}{" "}
+                            ea)
+                          </span>
+                        </p>
+                      </div>
+                    ) : null}
+                    {this.state.totalCosmeticBagsInCart > 0 ? (
+                      <div>
+                        <p>
+                          Total Cosmetic bags in Cart:{" "}
+                          {this.state.totalCosmeticBagsInCart} {""}
+                          <span>
+                            (Cosmetic bag: $
+                            {(product[0].CosmeticBag.price * 0.01).toFixed(2)}
+                            {""}
+                            ea)
+                          </span>
+                        </p>
+                      </div>
+                    ) : null}
+                    <p>
+                      Sub-Total: $
+                      {(
+                        product[0].Mug.price *
+                          0.01 *
+                          this.state.totalMugsInCart +
+                        product[0].Shirt.price *
+                          0.01 *
+                          this.state.totalShirtsInCart +
+                        product[0].Pillow.price *
+                          0.01 *
+                          this.state.totalPillowsInCart +
+                        product[0].PetTagBone.price *
+                          0.01 *
+                          this.state.totalPetTagBonesInCart +
+                        product[0].CosmeticBag.price *
+                          0.01 *
+                          this.state.totalCosmeticBagsInCart
+                      ).toFixed(2)}
+                    </p>
+                    <p>
+                      Total Tax: $
+                      {
+                        // 0.13 * this.state.mugPrice * this.state.totalMugsInCart +
+                        (
+                          product[0].Mug.price *
+                            this.state.totalMugsInCart *
+                            0.01 *
+                            0.13 +
+                          product[0].Shirt.price *
+                            this.state.totalShirtsInCart *
+                            0.01 *
+                            0.13 +
+                          product[0].Pillow.price *
+                            this.state.totalPillowsInCart *
+                            0.01 *
+                            0.13 +
+                          product[0].PetTagBone.price *
+                            this.state.totalPetTagBonesInCart *
+                            0.01 *
+                            0.13 +
+                          product[0].CosmeticBag.price *
+                            this.state.totalCosmeticBagsInCart *
+                            0.01 *
+                            0.13
+                        ).toFixed(2)
+                      }
+                    </p>
+
+                    {this.state.shippingMethod === "delivery" ? (
+                      <p>
+                        <b>
+                          {" "}
+                          + Shipping to address below{" "}
+                          <i className="fas fa-truck"></i>: $15.00
+                        </b>
                       </p>
-                    </div>
-                  ) : null}
-                  <p>
-                    Sub-Total: $
-                    {(
+                    ) : this.state.shippingMethod === "pickUpMilton" ? (
+                      <p>
+                        <b>
+                          Pickup from 724 Main St. Milton, ON L9T 3P6 Unit 2
+                          (Free)
+                        </b>
+                      </p>
+                    ) : this.state.shippingMethod === "pickUpCambridge" ? (
+                      <p>
+                        <b>
+                          Pickup from 205 Cowan Blvd, Cambridge, ON N1T 1J8
+                          (Free)
+                        </b>
+                      </p>
+                    ) : null}
+                    <hr />
+                    {this.state.shippingMethod === "delivery" ? (
+                      <p>
+                        <b>
+                          {" "}
+                          TOTAL: $
+                          {this.state.productToPay.length > 0
+                            ? (
+                                this.state.productToPay.reduce(
+                                  (a, b) => a + b
+                                ) *
+                                  0.01 +
+                                this.state.productToPay.reduce(
+                                  (a, b) => a + b
+                                ) *
+                                  0.01 *
+                                  0.13 +
+                                15.0
+                              ).toFixed(2)
+                            : 0}{" "}
+                          <span aria-label="0" role="img">
+                            &#128722;
+                          </span>
+                        </b>
+                      </p>
+                    ) : (
+                      <p>
+                        <b>
+                          {" "}
+                          GRAND SUBTOTAL: $
+                          {this.state.productToPay.length > 0
+                            ? (
+                                this.state.productToPay.reduce(
+                                  (a, b) => a + b
+                                ) *
+                                  0.01 +
+                                this.state.productToPay.reduce(
+                                  (a, b) => a + b
+                                ) *
+                                  0.01 *
+                                  0.13
+                              ).toFixed(2)
+                            : 0}{" "}
+                          <span aria-label="0" role="img">
+                            &#128722;
+                          </span>
+                        </b>
+                      </p>
+                    )}
+
+                    <form
+                      className="checkout-form"
+                      onSubmit={this.submitBillingDetails}
+                    >
+                      <h3 className="text-center">
+                        Fill out your information to checkout
+                      </h3>
+                      <input
+                        className="input-checkout"
+                        name="firstName"
+                        onChange={this.onChangeHandlerBillingDetails}
+                        type="text"
+                        placeholder="Full Name"
+                      />
+                      <input
+                        className="input-checkout"
+                        name="address"
+                        onChange={this.onChangeHandlerBillingDetails}
+                        type="text"
+                        placeholder="Address"
+                      />
+                      <input
+                        className="input-checkout"
+                        name="city"
+                        onChange={this.onChangeHandlerBillingDetails}
+                        type="text"
+                        placeholder="City"
+                      />
+                      <input
+                        className="input-checkout"
+                        name="province"
+                        onChange={this.onChangeHandlerBillingDetails}
+                        type="text"
+                        placeholder="Province"
+                      />
+                      <input
+                        className="input-checkout"
+                        name="postalCode"
+                        onChange={this.onChangeHandlerBillingDetails}
+                        type="text"
+                        placeholder="Postal Code"
+                      />
+                      <input
+                        className="input-checkout"
+                        name="email"
+                        onChange={this.onChangeHandlerBillingDetails}
+                        type="email"
+                        placeholder="Email"
+                      />
+                      <Select
+                        className="shippingOptionsSelect"
+                        isSearchable={false}
+                        menuPlacement="top"
+                        placeholder="Choose one"
+                        options={shippingOptions}
+                        onChange={this.onSelectedShipping}
+                      />
+
+                      <button className="btn-checkout">Next &#8594;</button>
+                      <p className="text-center error-msg">
+                        {this.state.errorMsg}
+                      </p>
+                    </form>
+                  </div>
+                ) : null}
+
+                {this.state.billingDetails ? (
+                  <CheckoutStripe
+                    resetModal={this.closeModalCheckout}
+                    screenshot={this.state.screenshot}
+                    imgForProduct={this.state.fileArray}
+                    totalMugsInCart={this.state.totalMugsInCart}
+                    totalShirtsInCart={this.state.totalShirtsInCart}
+                    totalPillowsInCart={this.state.totalPillowsInCart}
+                    totalPetTagBonesInCart={this.state.totalPetTagBonesInCart}
+                    totalCosmeticBagsInCart={this.state.totalCosmeticBagsInCart}
+                    firstName={this.state.firstName}
+                    email={this.state.email}
+                    address={this.state.address}
+                    city={this.state.city}
+                    province={this.state.province}
+                    postalCode={this.state.postalCode}
+                    shippingMethod={this.state.shippingMethod}
+                    subTotal={
                       product[0].Mug.price * 0.01 * this.state.totalMugsInCart +
                       product[0].Shirt.price *
                         0.01 *
@@ -1653,262 +1861,71 @@ export default class index extends Component {
                       product[0].CosmeticBag.price *
                         0.01 *
                         this.state.totalCosmeticBagsInCart
-                    ).toFixed(2)}
-                  </p>
-                  <p>
-                    Total Tax: $
-                    {
-                      // 0.13 * this.state.mugPrice * this.state.totalMugsInCart +
-                      (
-                        product[0].Mug.price *
-                          this.state.totalMugsInCart *
-                          0.01 *
-                          0.13 +
-                        product[0].Shirt.price *
-                          this.state.totalShirtsInCart *
-                          0.01 *
-                          0.13 +
-                        product[0].Pillow.price *
-                          this.state.totalPillowsInCart *
-                          0.01 *
-                          0.13 +
-                        product[0].PetTagBone.price *
-                          this.state.totalPetTagBonesInCart *
-                          0.01 *
-                          0.13 +
-                        product[0].CosmeticBag.price *
-                          this.state.totalCosmeticBagsInCart *
-                          0.01 *
-                          0.13
-                      ).toFixed(2)
                     }
-                  </p>
-
-                  {this.state.shippingMethod === "delivery" ? (
-                    <p>
-                      <b>
-                        {" "}
-                        + Shipping to address below{" "}
-                        <i className="fas fa-truck"></i>: $15.00
-                      </b>
-                    </p>
-                  ) : this.state.shippingMethod === "pickUpMilton" ? (
-                    <p>
-                      <b>
-                        Pickup from 724 Main St. Milton, ON L9T 3P6 Unit 2
-                        (Free)
-                      </b>
-                    </p>
-                  ) : this.state.shippingMethod === "pickUpCambridge" ? (
-                    <p>
-                      <b>
-                        Pickup from 205 Cowan Blvd, Cambridge, ON N1T 1J8 (Free)
-                      </b>
-                    </p>
-                  ) : null}
-                  <hr />
-                  {this.state.shippingMethod === "delivery" ? (
-                    <p>
-                      <b>
-                        {" "}
-                        TOTAL: $
-                        {this.state.productToPay.length > 0
-                          ? (
-                              this.state.productToPay.reduce((a, b) => a + b) *
-                                0.01 +
-                              this.state.productToPay.reduce((a, b) => a + b) *
-                                0.01 *
-                                0.13 +
-                              15.0
-                            ).toFixed(2)
-                          : 0}{" "}
-                        <span aria-label="0" role="img">
-                          &#128722;
-                        </span>
-                      </b>
-                    </p>
-                  ) : (
-                    <p>
-                      <b>
-                        {" "}
-                        GRAND SUBTOTAL: $
-                        {this.state.productToPay.length > 0
-                          ? (
-                              this.state.productToPay.reduce((a, b) => a + b) *
-                                0.01 +
-                              this.state.productToPay.reduce((a, b) => a + b) *
-                                0.01 *
-                                0.13
-                            ).toFixed(2)
-                          : 0}{" "}
-                        <span aria-label="0" role="img">
-                          &#128722;
-                        </span>
-                      </b>
-                    </p>
-                  )}
-
-                  <form
-                    className="checkout-form"
-                    onSubmit={this.submitBillingDetails}
-                  >
-                    <h3 className="text-center">
-                      Fill out your information to checkout
-                    </h3>
-                    <input
-                      className="input-checkout"
-                      name="firstName"
-                      onChange={this.onChangeHandlerBillingDetails}
-                      type="text"
-                      placeholder="Full Name"
-                    />
-                    <input
-                      className="input-checkout"
-                      name="address"
-                      onChange={this.onChangeHandlerBillingDetails}
-                      type="text"
-                      placeholder="Address"
-                    />
-                    <input
-                      className="input-checkout"
-                      name="city"
-                      onChange={this.onChangeHandlerBillingDetails}
-                      type="text"
-                      placeholder="City"
-                    />
-                    <input
-                      className="input-checkout"
-                      name="province"
-                      onChange={this.onChangeHandlerBillingDetails}
-                      type="text"
-                      placeholder="Province"
-                    />
-                    <input
-                      className="input-checkout"
-                      name="postalCode"
-                      onChange={this.onChangeHandlerBillingDetails}
-                      type="text"
-                      placeholder="Postal Code"
-                    />
-                    <input
-                      className="input-checkout"
-                      name="email"
-                      onChange={this.onChangeHandlerBillingDetails}
-                      type="email"
-                      placeholder="Email"
-                    />
-                    <Select
-                      className="shippingOptionsSelect"
-                      isSearchable={false}
-                      menuPlacement="top"
-                      placeholder="Choose one"
-                      options={shippingOptions}
-                      onChange={this.onSelectedShipping}
-                    />
-
-                    <button className="btn-checkout">Next &#8594;</button>
-                    <p className="text-center error-msg">
-                      {this.state.errorMsg}
-                    </p>
-                  </form>
-                </div>
-              ) : null}
-
-              {this.state.billingDetails ? (
-                <CheckoutStripe
-                  resetModal={this.closeModalCheckout}
-                  screenshot={this.state.screenshot}
-                  imgForProduct={this.state.fileArray}
-                  totalMugsInCart={this.state.totalMugsInCart}
-                  totalShirtsInCart={this.state.totalShirtsInCart}
-                  totalPillowsInCart={this.state.totalPillowsInCart}
-                  totalPetTagBonesInCart={this.state.totalPetTagBonesInCart}
-                  totalCosmeticBagsInCart={this.state.totalCosmeticBagsInCart}
-                  firstName={this.state.firstName}
-                  email={this.state.email}
-                  address={this.state.address}
-                  city={this.state.city}
-                  province={this.state.province}
-                  postalCode={this.state.postalCode}
-                  shippingMethod={this.state.shippingMethod}
-                  subTotal={
-                    product[0].Mug.price * 0.01 * this.state.totalMugsInCart +
-                    product[0].Shirt.price *
-                      0.01 *
-                      this.state.totalShirtsInCart +
-                    product[0].Pillow.price *
-                      0.01 *
-                      this.state.totalPillowsInCart +
-                    product[0].PetTagBone.price *
-                      0.01 *
-                      this.state.totalPetTagBonesInCart +
-                    product[0].CosmeticBag.price *
-                      0.01 *
-                      this.state.totalCosmeticBagsInCart
-                  }
-                  tax={(
-                    0.13 * this.state.mugPrice * this.state.totalMugsInCart +
-                    product[0].Shirt.price *
-                      this.state.totalShirtsInCart *
-                      0.01 *
-                      0.13 +
-                    product[0].Pillow.price *
-                      this.state.totalPillowsInCart *
-                      0.01 *
-                      0.13 +
-                    product[0].PetTagBone.price *
-                      this.state.totalPetTagBonesInCart *
-                      0.01 *
-                      0.13 +
-                    product[0].CosmeticBag.price *
-                      this.state.totalCosmeticBagsInCart *
-                      0.01 *
-                      0.13
-                  ).toFixed(2)}
-                  productWithCents={
-                    this.state.productToPay.length > 0
-                      ? (
-                          this.state.productToPay.reduce((a, b) => a + b) *
-                            0.01 +
-                          this.state.productToPay.reduce((a, b) => a + b) *
-                            0.01 *
-                            0.13
-                        ).toFixed(2)
-                      : null
-                  }
-                  productWithCentsPlusShipping={
-                    this.state.productToPay.length > 0
-                      ? (
-                          this.state.productToPay.reduce((a, b) => a + b) *
-                            0.01 +
-                          this.state.productToPay.reduce((a, b) => a + b) *
-                            0.01 *
-                            0.13 +
-                          15
-                        ).toFixed(2)
-                      : null
-                  }
-                  product={
-                    this.state.productToPay.length > 0
-                      ? Math.round(
-                          this.state.productToPay.reduce((a, b) => a + b) *
-                            0.13 +
-                            this.state.productToPay.reduce((a, b) => a + b)
-                        )
-                      : 0
-                  }
-                  productPluShipping={
-                    this.state.productToPay.length > 0
-                      ? Math.round(
-                          this.state.productToPay.reduce((a, b) => a + b) *
-                            0.13 +
-                            this.state.productToPay.reduce((a, b) => a + b) +
-                            1500
-                        )
-                      : 0
-                  }
-                />
-              ) : null}
+                    tax={(
+                      0.13 * this.state.mugPrice * this.state.totalMugsInCart +
+                      product[0].Shirt.price *
+                        this.state.totalShirtsInCart *
+                        0.01 *
+                        0.13 +
+                      product[0].Pillow.price *
+                        this.state.totalPillowsInCart *
+                        0.01 *
+                        0.13 +
+                      product[0].PetTagBone.price *
+                        this.state.totalPetTagBonesInCart *
+                        0.01 *
+                        0.13 +
+                      product[0].CosmeticBag.price *
+                        this.state.totalCosmeticBagsInCart *
+                        0.01 *
+                        0.13
+                    ).toFixed(2)}
+                    productWithCents={
+                      this.state.productToPay.length > 0
+                        ? (
+                            this.state.productToPay.reduce((a, b) => a + b) *
+                              0.01 +
+                            this.state.productToPay.reduce((a, b) => a + b) *
+                              0.01 *
+                              0.13
+                          ).toFixed(2)
+                        : null
+                    }
+                    productWithCentsPlusShipping={
+                      this.state.productToPay.length > 0
+                        ? (
+                            this.state.productToPay.reduce((a, b) => a + b) *
+                              0.01 +
+                            this.state.productToPay.reduce((a, b) => a + b) *
+                              0.01 *
+                              0.13 +
+                            15
+                          ).toFixed(2)
+                        : null
+                    }
+                    product={
+                      this.state.productToPay.length > 0
+                        ? Math.round(
+                            this.state.productToPay.reduce((a, b) => a + b) *
+                              0.13 +
+                              this.state.productToPay.reduce((a, b) => a + b)
+                          )
+                        : 0
+                    }
+                    productPluShipping={
+                      this.state.productToPay.length > 0
+                        ? Math.round(
+                            this.state.productToPay.reduce((a, b) => a + b) *
+                              0.13 +
+                              this.state.productToPay.reduce((a, b) => a + b) +
+                              1500
+                          )
+                        : 0
+                    }
+                  />
+                ) : null}
+              </div>
             </Modal>
           </div>
         </div>
