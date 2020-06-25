@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from "react";
 import Select from "react-select";
-import ExifOrientationImg from "react-exif-orientation-img";
 
 import "./style.scss";
 
@@ -115,7 +114,7 @@ class index extends Component {
                 alt="product"
               />
               {this.props.imagePreviewUrl.length > 0 ? (
-                <ExifOrientationImg
+                <img
                   className="product-img-preview-mug"
                   src={this.props.imagePreviewUrl}
                   alt="temp"
