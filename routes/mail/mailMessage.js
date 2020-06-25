@@ -17,7 +17,7 @@ const sendMailToAYP = (email, message) => {
   const mailOptions = {
     // from: email,
     from: email, //change to email in production
-    to: "aypsublimation@gmail.com",
+    to: "info@aypwebcreations.com",
     subject: "Inquiry Printing memories",
     html: `<p>${message}</p>`,
   };
