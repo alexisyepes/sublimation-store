@@ -1403,6 +1403,7 @@ export default class index extends Component {
                     />
                   ) : null}
                   <input
+                    capture="environment"
                     ref={(fileInput) => (this.fileInput = fileInput)}
                     className="input-img"
                     type="file"
