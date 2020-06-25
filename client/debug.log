@@ -1,3 +1,7 @@
 [0620/142317.169:ERROR:process_reader_win.cc(108)] process 8068 not found
 [0620/142317.169:ERROR:exception_snapshot_win.cc(98)] thread ID 29024 not found in process
 [0620/142317.170:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: An attempt was made to access an exiting process. (0xc000010a)
+[0624/204708.641:ERROR:process_info.cc(329)] VirtualQueryEx: Access is denied. (0x5)
+[0624/204708.641:ERROR:process_info.cc(556)] ReadMemoryInfo failed
+[0624/204708.641:ERROR:process_memory_win.cc(39)] Failed to initialize ProcessInfo.
+[0624/204708.642:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: An attempt was made to access an exiting process. (0xc000010a)
