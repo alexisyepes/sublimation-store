@@ -55,7 +55,7 @@ const sendMail = (
       ? `<p>Thanks for your purchase! \nYour order will be ready to be picked up from our Milton partner location soon; you will receive another email to notify you when the order is ready. </p>`
       : `<p>Thanks for your purchase! \nYour order will be ready to be picked up from our Cambridge partner location soon; you will receive another email to notify you when the order is ready.</p>`;
   const mailOptions = {
-    from: "info@aypwebcreations.com",
+    from: "aypsublimation@gmail.com",
     to: email,
     subject: "Your product",
     html: `

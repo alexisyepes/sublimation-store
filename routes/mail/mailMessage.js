@@ -16,7 +16,7 @@ const transporter = nodemailer.createTransport(mailGun(auth));
 const sendMailToAYP = (email, message) => {
   const mailOptions = {
     // from: email,
-    from: "alexisyep@gmail.com", //change to email in production
+    from: email, //change to email in production
     to: "aypsublimation@gmail.com",
     subject: "Inquiry Printing memories",
     html: `<p>${message}</p>`,
