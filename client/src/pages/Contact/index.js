@@ -27,19 +27,21 @@ export default class index extends Component {
       email: this.state.email,
       message: this.state.message,
     };
+    // console.log(textToSend);
     this.setState({
       loadingAxiosReq: true,
     });
     await axios
       .post("/contact", textToSend)
-      .then(() => {
+      .then((res) => {
+        console.log(res);
         this.setState({
           loadingAxiosReq: false,
         });
-        alert(
-          "Thanks for contacting us! We'll get back to you as soon as we can."
-        );
-        window.location.href = "/";
+        // alert(
+        //   "Thanks for contacting us! We'll get back to you as soon as we can."
+        // );
+        // window.location.href = "/";
       })
       .catch((err) => {
         console.log(err);
