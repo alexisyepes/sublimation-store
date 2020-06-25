@@ -291,6 +291,7 @@ class index extends Component {
               </h3>
               <div className="move-text-btns-container-shirts text-center">
                 <Select
+                  isSearchable={false}
                   menuPlacement="bottom"
                   placeholder="Text color"
                   className=""

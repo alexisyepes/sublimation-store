@@ -127,7 +127,6 @@ const customStylesCheckout = {
     color: "black",
     borderRadius: "5px",
     width: "65%",
-    overflow: "visible",
     border: "1px solid black",
     boxShadow: "0px 60px 150px black",
     display: "flex-box",
@@ -1325,6 +1324,7 @@ export default class index extends Component {
                       <div>
                         <div className="shirt-size-select">
                           <Select
+                            isSearchable={false}
                             menuPlacement="top"
                             placeholder="Gender"
                             onChange={this.onSelectedChangeGender}
@@ -1332,6 +1332,7 @@ export default class index extends Component {
                           />
                           {this.state.shirtGender === "male" ? (
                             <Select
+                              isSearchable={false}
                               menuPlacement="top"
                               placeholder="size"
                               onChange={this.onSelectedChangeSize}
@@ -1340,6 +1341,7 @@ export default class index extends Component {
                           ) : null}
                           {this.state.shirtGender === "female" ? (
                             <Select
+                              isSearchable={false}
                               menuPlacement="top"
                               placeholder="size"
                               onChange={this.onSelectedChangeSize}
@@ -1348,6 +1350,7 @@ export default class index extends Component {
                           ) : null}
                           {this.state.shirtGender === "kid" ? (
                             <Select
+                              isSearchable={false}
                               menuPlacement="top"
                               placeholder="size"
                               onChange={this.onSelectedChangeSize}
@@ -1360,6 +1363,7 @@ export default class index extends Component {
                     {this.state.step2ActualProd === "petTagBone" ? (
                       <div className="shirt-size-select">
                         <Select
+                          isSearchable={false}
                           menuPlacement="top"
                           placeholder="Color"
                           onChange={this.onSelectedChangeBone}
@@ -1386,6 +1390,7 @@ export default class index extends Component {
                   </div>
                   {this.state.step2ActualProd === "mug" ? (
                     <Select
+                      isSearchable={false}
                       className="background-select"
                       menuPlacement="top"
                       placeholder="Choose background (optional)"
@@ -1794,7 +1799,8 @@ export default class index extends Component {
                     />
                     <Select
                       className="shippingOptionsSelect"
-                      menuPlacement="bottom"
+                      isSearchable={false}
+                      menuPlacement="top"
                       placeholder="Choose one"
                       options={shippingOptions}
                       onChange={this.onSelectedShipping}
