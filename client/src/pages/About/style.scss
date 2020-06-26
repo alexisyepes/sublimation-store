@@ -143,7 +143,7 @@
 @media only screen and (min-device-width: 960px) and (max-device-width: 1059px) {
   .paragraph-about {
     // font-size: 22px !important;
-    height: 60%;
+    height: 80%;
     margin: 0 auto;
     grid-row: 2;
   }
@@ -195,7 +195,7 @@
 @media only screen and (min-device-width: 760px) and (max-device-width: 959px) {
   .paragraph-about {
     font-size: 22px !important;
-    height: 35%;
+    height: 65%;
     margin: 0 auto;
     grid-row: 2;
   }
@@ -314,7 +314,7 @@
   .paragraph-about {
     font-size: 22px !important;
     height: 100%;
-    margin: 0 auto;
+    margin: 60px auto !important;
     grid-row: 3;
     grid-column: 1 / 5 !important;
   }
