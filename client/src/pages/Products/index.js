@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import Select from "react-select";
 import html2canvas from "html2canvas";
 import JSZip from "jszip";
@@ -114,30 +114,6 @@ let shippingOptions = [
     label: "Pickup from Milton, ON (FREE)",
   },
 ];
-
-const customStylesCheckout = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    backgroundColor: "rgb(199, 218, 166)",
-    marginTop: window.innerWidth < 450 ? "20px" : "0",
-    overflow: window.innerWidth < 450 ? "scroll" : "auto",
-    // paddingBottom: window.innerWidth < 450 ? "50px" : "0",
-    height: window.innerHeight < 520 ? "100%" : "auto",
-    color: "black",
-    borderRadius: "5px",
-    width: "65%",
-    border: "1px solid black",
-    boxShadow: "0px 60px 150px black",
-    display: "flex-box",
-  },
-
-  overlay: { zIndex: 1000 },
-};
 
 const customStyles = {
   content: {
@@ -411,6 +387,7 @@ export default class index extends Component {
       toggleStep2: true,
       toggleSelectProductBtn: false,
       designSquare: false,
+      textFormatOptions: true,
       textFormatOptionsForPetTagBone: true,
       textFormatOptionsForCosmeticBag: true,
       photoControlPetTagBone: true,
@@ -477,6 +454,8 @@ export default class index extends Component {
         imagePreviewUrl: "",
         bg: "",
         textOnMugs: "",
+        textFormatOptionsForPetTagBone: false,
+        textFormatOptions: false,
         notChecked: true,
         // cart: 0,
         totalMugsInCart: 0,
@@ -515,6 +494,7 @@ export default class index extends Component {
       imagePreviewUrl: "",
       bg: "",
       textOnMugs: "",
+      textFormatOptions: false,
       notChecked: true,
       // qty: 1,
       showMsgInput: false,
@@ -593,7 +573,6 @@ export default class index extends Component {
       zip.file("image.png", savable.src.substr(savable.src.indexOf(",") + 1), {
         base64: true,
       });
-      // console.log(savable.src);
 
       await this.setState({
         fileArray: [...this.state.fileArray, this.state.file],
@@ -604,7 +583,6 @@ export default class index extends Component {
         productToPay: this.state.productToPay.concat(
           product[0].Mug.price * this.props.qty
         ),
-        // cart: this.state.cart + this.props.qty,
         totalMugsInCart: this.state.totalMugsInCart + this.props.qty,
       });
 
@@ -789,11 +767,7 @@ export default class index extends Component {
           btnStep2: true,
           textFormatOptions: true,
           notChecked: true,
-          // cart: this.state.cart - this.state.qty,
-          // qty: 1,
           totalMugsInCart: this.state.totalMugsInCart - this.props.qty,
-
-          // totalShirtsInCart: this.state.totalShirtsInCart - this.state.qty,
           productToPay: this.state.productToPay.slice(0, -1),
           fileArray: this.state.fileArray.slice(0, -1),
           screenshot: this.state.screenshot.slice(0, -1),
@@ -809,9 +783,6 @@ export default class index extends Component {
           toggleStep2: true,
           textFormatOptions: true,
           notChecked: true,
-          // cart: this.state.cart - this.state.qty,
-          // qty: 1,
-          // totalMugsInCart: this.state.totalMugsInCart - this.state.qty,
           totalShirtsInCart: this.state.totalShirtsInCart - this.state.qty,
           productToPay: this.state.productToPay.slice(0, -1),
           fileArray: this.state.fileArray.slice(0, -1),
@@ -829,9 +800,6 @@ export default class index extends Component {
           toggleStep2: true,
           textFormatOptions: true,
           notChecked: true,
-          // cart: this.state.cart - this.state.qty,
-          // qty: 1,
-          // totalMugsInCart: this.state.totalMugsInCart - this.state.qty,
           totalPillowsInCart: this.state.totalPillowsInCart - this.props.qty,
           productToPay: this.state.productToPay.slice(0, -1),
           fileArray: this.state.fileArray.slice(0, -1),
@@ -847,9 +815,6 @@ export default class index extends Component {
           toggleStep3: false,
           toggleStep2: true,
           notChecked: true,
-          // cart: this.state.cart - this.state.qty,
-          // qty: 1,
-          // totalMugsInCart: this.state.totalMugsInCart - this.state.qty,
           totalPetTagBonesInCart:
             this.state.totalPetTagBonesInCart - this.props.qty,
           productToPay: this.state.productToPay.slice(0, -1),
@@ -868,9 +833,6 @@ export default class index extends Component {
           toggleStep3: false,
           toggleStep2: true,
           notChecked: true,
-          // cart: this.state.cart - this.state.qty,
-          // qty: 1,
-          // totalMugsInCart: this.state.totalMugsInCart - this.state.qty,
           totalCosmeticBagsInCart:
             this.state.totalCosmeticBagsInCart - this.props.qty,
           productToPay: this.state.productToPay.slice(0, -1),
@@ -1043,7 +1005,7 @@ export default class index extends Component {
                   </h1>
                   {this.state.totalMugsInCart > 0 ? (
                     <div>
-                      <p>
+                      <p className="checkout-preview-elements">
                         Total Mugs in Cart: {this.state.totalMugsInCart}{" "}
                         <span>
                           (Mug: ${(product[0].Mug.price * 0.01).toFixed(2)} ea)
@@ -1053,7 +1015,7 @@ export default class index extends Component {
                   ) : null}
                   {this.state.totalShirtsInCart > 0 ? (
                     <div>
-                      <p>
+                      <p className="checkout-preview-elements">
                         Total Shirts in Cart: {this.state.totalShirtsInCart}{" "}
                         {""}
                         <span>
@@ -1065,7 +1027,7 @@ export default class index extends Component {
                   ) : null}
                   {this.state.totalPillowsInCart > 0 ? (
                     <div>
-                      <p>
+                      <p className="checkout-preview-elements">
                         Total Pillows in Cart: {this.state.totalPillowsInCart}{" "}
                         {""}
                         <span>
@@ -1077,7 +1039,7 @@ export default class index extends Component {
                   ) : null}
                   {this.state.totalPetTagBonesInCart > 0 ? (
                     <div>
-                      <p>
+                      <p className="checkout-preview-elements">
                         Total Pet-tag-bones in Cart:{" "}
                         {this.state.totalPetTagBonesInCart} {""}
                         <span>
@@ -1089,7 +1051,7 @@ export default class index extends Component {
                   ) : null}
                   {this.state.totalCosmeticBagsInCart > 0 ? (
                     <div>
-                      <p>
+                      <p className="checkout-preview-elements">
                         Total Cosmetic bags in Cart:{" "}
                         {this.state.totalCosmeticBagsInCart} {""}
                         <span>
@@ -1101,7 +1063,7 @@ export default class index extends Component {
                       </p>
                     </div>
                   ) : null}
-                  <p>
+                  <p className="checkout-preview-elements">
                     Sub-Total: $
                     {(
                       product[0].Mug.price * 0.01 * this.state.totalMugsInCart +
@@ -1119,36 +1081,33 @@ export default class index extends Component {
                         this.state.totalCosmeticBagsInCart
                     ).toFixed(2)}
                   </p>
-                  <p>
+                  <p className="checkout-preview-elements">
                     Total Tax: $
-                    {
-                      // 0.13 * this.state.mugPrice * this.state.totalMugsInCart +
-                      (
-                        product[0].Mug.price *
-                          this.state.totalMugsInCart *
-                          0.01 *
-                          0.13 +
-                        product[0].Shirt.price *
-                          this.state.totalShirtsInCart *
-                          0.01 *
-                          0.13 +
-                        product[0].Pillow.price *
-                          this.state.totalPillowsInCart *
-                          0.01 *
-                          0.13 +
-                        product[0].PetTagBone.price *
-                          this.state.totalPetTagBonesInCart *
-                          0.01 *
-                          0.13 +
-                        product[0].CosmeticBag.price *
-                          this.state.totalCosmeticBagsInCart *
-                          0.01 *
-                          0.13
-                      ).toFixed(2)
-                    }
+                    {(
+                      product[0].Mug.price *
+                        this.state.totalMugsInCart *
+                        0.01 *
+                        0.13 +
+                      product[0].Shirt.price *
+                        this.state.totalShirtsInCart *
+                        0.01 *
+                        0.13 +
+                      product[0].Pillow.price *
+                        this.state.totalPillowsInCart *
+                        0.01 *
+                        0.13 +
+                      product[0].PetTagBone.price *
+                        this.state.totalPetTagBonesInCart *
+                        0.01 *
+                        0.13 +
+                      product[0].CosmeticBag.price *
+                        this.state.totalCosmeticBagsInCart *
+                        0.01 *
+                        0.13
+                    ).toFixed(2)}
                   </p>
                   <hr />
-                  <p>
+                  <p className="checkout-preview-elements">
                     Grand Subtotal: $
                     {this.state.productToPay.length > 0
                       ? (
@@ -1242,26 +1201,46 @@ export default class index extends Component {
                     />
                   ) : null}
                   {this.state.step2ActualProd === "shirt" ? (
-                    <Shirts
-                      showGuide={this.state.designSquare}
-                      toggleDesignSquare={this.toggleDesignSquare}
-                      img={this.state.productImgShirt}
-                      imagePreviewUrl={this.state.imagePreviewUrl}
-                      textOnMugs={this.state.textOnMugs}
-                      textFormatOptions={this.state.textFormatOptions}
-                      photoControlShirts={this.state.photoControlShirts}
-                    />
+                    <Fragment>
+                      <Shirts
+                        showGuide={this.state.designSquare}
+                        toggleDesignSquare={this.toggleDesignSquare}
+                        img={this.state.productImgShirt}
+                        imagePreviewUrl={this.state.imagePreviewUrl}
+                        textOnMugs={this.state.textOnMugs}
+                        textFormatOptions={this.state.textFormatOptions}
+                        photoControlShirts={this.state.photoControlShirts}
+                      />
+                      {this.state.toggleStep2 &&
+                      !this.state.textOnMugs &&
+                      !this.state.imagePreviewUrl ? (
+                        <div className="shirt-mobile-heading">
+                          <h1>Design your shirt below</h1>
+                          <h1>&#8659;</h1>
+                        </div>
+                      ) : null}
+                    </Fragment>
                   ) : null}
                   {this.state.step2ActualProd === "pillow" ? (
-                    <Pillow
-                      showGuide={this.state.designSquare}
-                      toggleDesignSquare={this.toggleDesignSquare}
-                      img={this.state.productImgPillow}
-                      imagePreviewUrl={this.state.imagePreviewUrl}
-                      textOnMugs={this.state.textOnMugs}
-                      textFormatOptions={this.state.textFormatOptions}
-                      photoControlPillow={this.state.photoControlPillow}
-                    />
+                    <Fragment>
+                      <Pillow
+                        showGuide={this.state.designSquare}
+                        toggleDesignSquare={this.toggleDesignSquare}
+                        img={this.state.productImgPillow}
+                        imagePreviewUrl={this.state.imagePreviewUrl}
+                        textOnMugs={this.state.textOnMugs}
+                        textFormatOptions={this.state.textFormatOptions}
+                        photoControlPillow={this.state.photoControlPillow}
+                      />
+                      {this.state.toggleStep2 &&
+                      !this.state.textOnMugs &&
+                      !this.state.imagePreviewUrl ? (
+                        <div className="shirt-mobile-heading">
+                          <h1>Design your pillow below</h1>
+                          <h1>&#8659;</h1>
+                        </div>
+                      ) : null}
+                    </Fragment>
                   ) : null}
                   {this.state.step2ActualProd === "petTagBone" ? (
                     <PetTagBone
@@ -1275,13 +1254,25 @@ export default class index extends Component {
                     />
                   ) : null}
                   {this.state.step2ActualProd === "cosmeticBag" ? (
-                    <CosmeticBag
-                      // petName={this.state.petTagBonePetName}
-                      textOnMugs={this.state.textOnMugs}
-                      img={this.state.productImgCosmeticBag}
-                      imagePreviewUrl={this.state.imagePreviewUrl}
-                      btnConfirmed={this.state.textFormatOptionsForCosmeticBag}
-                    />
+                    <Fragment>
+                      <CosmeticBag
+                        // petName={this.state.petTagBonePetName}
+                        textOnMugs={this.state.textOnMugs}
+                        img={this.state.productImgCosmeticBag}
+                        imagePreviewUrl={this.state.imagePreviewUrl}
+                        btnConfirmed={
+                          this.state.textFormatOptionsForCosmeticBag
+                        }
+                      />
+                      {this.state.toggleStep2 &&
+                      !this.state.textOnMugs &&
+                      !this.state.imagePreviewUrl ? (
+                        <div className="shirt-mobile-heading">
+                          <h1>Design your Cosmetic bag below</h1>
+                          <h1>&#8659;</h1>
+                        </div>
+                      ) : null}
+                    </Fragment>
                   ) : null}
                 </div>
               </div>
@@ -1396,7 +1387,7 @@ export default class index extends Component {
                     <Select
                       isSearchable={false}
                       className="background-select"
-                      menuPlacement="top"
+                      menuPlacement="bottom"
                       placeholder="Choose background (optional)"
                       options={optionsBackgrounds}
                       onChange={this.onSelectedChange}
@@ -1566,8 +1557,10 @@ export default class index extends Component {
             {/* Modal To Checkout */}
             <Modal
               appElement={document.getElementById("root")}
-              style={customStylesCheckout}
+              // style={customStylesCheckout}
               isOpen={this.state.modalToCheckout}
+              className="Modal"
+              overlayClassName="Overlay"
             >
               <span className="x-close-modal" onClick={this.closeModalCheckout}>
                 X
@@ -1770,7 +1763,7 @@ export default class index extends Component {
                       onSubmit={this.submitBillingDetails}
                     >
                       <h3 className="text-center">
-                        Fill out your information to checkout
+                        Fill out the form to checkout
                       </h3>
                       <input
                         className="input-checkout"

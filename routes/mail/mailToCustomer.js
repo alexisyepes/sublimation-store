@@ -67,7 +67,7 @@ const sendMail = (
 		${pillows} 
     ${petTags} 
     ${cosmeticBags}
-		<p>Subtotal: $${subTotal}</p>
+		<p>Subtotal: $${subTotal.toFixed(2)}</p>
 		<p>hst: $${tax}</p>
 		${isShipping}
 		<hr />

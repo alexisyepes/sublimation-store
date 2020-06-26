@@ -267,7 +267,7 @@ class index extends Component {
               className="text-on-pillows__container text-center"
               style={{
                 marginTop: this.state.marginTop + "px",
-                marginRight: this.state.marginRight + "px",
+                marginLeft: this.state.marginRight + "px",
                 fontSize: this.state.fontSize + "px",
                 color: this.state.color,
               }}
@@ -282,7 +282,7 @@ class index extends Component {
               className="text-on-pillows__container text-center"
               style={{
                 marginTop: this.state.marginTop + "px",
-                marginRight: this.state.marginRight + "px",
+                marginLeft: this.state.marginRight + "px",
                 fontSize: this.state.fontSizeSmallScreens + "px",
                 color: this.state.color,
               }}

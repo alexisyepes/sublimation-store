@@ -18,6 +18,37 @@
   text-shadow: 2px 2px black;
 }
 
+.Modal {
+  position: absolute;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(154, 236, 146);
+  padding: 30px;
+  width: 50%;
+  // display: block;
+  border: 1px black solid;
+  box-shadow: 0px 15px 100px black;
+  height: auto;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  overflow: auto;
+  margin: 10px;
+  border-radius: 10px;
+
+  // bottom: auto;
+}
+
+.Overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(177, 197, 171, 0.822);
+  z-index: 1000;
+}
+
 .cart-container {
   text-align: center;
   font-size: 30px;
@@ -221,6 +252,13 @@
   }
 }
 
+.shirt-mobile-heading {
+  display: none;
+  position: absolute;
+  color: white;
+  text-shadow: 2px 2px 5px black;
+}
+
 .controls-to-add-content-to-mugs {
   background-color: #113743;
   padding: 20px;
@@ -248,7 +286,7 @@
       border-radius: 10px;
       outline: none;
       border: 1px solid rgb(41, 4, 4);
-      z-index: 300;
+      // z-index: 30;
 
       &:hover {
         background-color: rgb(204, 10, 10);
@@ -412,12 +450,13 @@
     margin-left: 30px;
     width: 20%;
     padding: 3px 0;
-    border-radius: 10px;
-    background-color: rgb(97, 236, 120);
-    box-shadow: 0px 10px 30px black;
+    border-radius: 5px;
+    background-color: rgb(25, 102, 38);
+    // box-shadow: 0px 10px 30px black;
+    padding: 5px;
     border: none;
 
-    color: rgb(0, 0, 0);
+    color: rgb(255, 254, 254);
     font-size: 18px;
     cursor: pointer;
     transition: all 0.2s;
@@ -800,6 +839,12 @@
     box-shadow: 0px 10px 30px black;
   }
 
+  .Modal {
+    width: 80%;
+    height: auto;
+    overflow: auto;
+  }
+
   .cart-container {
     font-size: 14px;
     left: 2%;
@@ -884,8 +929,38 @@
     margin-top: 45%;
   }
 
-  .checkout-modal-wrapper {
-    // overflow: scroll;
+  .shirt-mobile-heading {
+    display: block;
+    margin: 0 auto;
+  }
+
+  .Modal {
+    // padding: 100px 0;
+    width: 90%;
+    margin: 40px 0;
+    padding-bottom: 100px;
+    padding-top: 60px;
+    height: 100%;
+    overflow: scroll;
+  }
+
+  .shippingOptionsSelect {
+    width: 80% !important;
+    font-size: 14px;
+  }
+
+  .checkout-preview-elements {
+    font-size: 14px;
+  }
+
+  .modify-product-btn,
+  .btns-checkout__create-product,
+  .btns-checkout__checkout {
+    font-size: 14px !important;
+  }
+
+  .empty-cart-button {
+    font-size: 11px !important;
   }
 
   .agree-with-order {
@@ -942,12 +1017,13 @@
   .text-msg-input {
     width: 90% !important;
     margin: 2px auto !important;
+    font-size: 15px !important;
   }
 
   .heading-product__upload,
   .heading-product__message,
   .background-select {
-    font-size: 14px !important;
+    font-size: 12px !important;
     // font-weight: 800;
     width: 95% !important;
   }
@@ -964,10 +1040,11 @@
     padding: 4px 2px;
     margin: 2px auto;
     font-size: 15px;
+    text-shadow: 2px 2px black;
   }
 
   .confirm-product-button {
-    top: 100%;
+    top: 110%;
     left: 0;
     font-size: 15px;
     width: 100%;
@@ -976,6 +1053,7 @@
 
   .continue-button {
     width: 100% !important;
+    font-size: 15px !important;
   }
 
   .startOver-button {
@@ -1010,12 +1088,13 @@
   }
 
   .arrowToLeft {
-    font-size: 14px;
+    font-size: 12px !important;
     width: 50%;
     margin: 0 auto;
   }
 
   .hideInBigScreens {
     display: block;
+    font-size: 12px;
   }
 }

@@ -1,5 +1,5 @@
 .loading-status-full-page {
-  background-color: rgb(199, 218, 166);
+  background-color: rgb(154, 236, 146);
   position: absolute;
   top: -20px;
   left: 0;
@@ -11,14 +11,32 @@
 
 .loading-spinner {
   position: relative;
-  top: 0;
-  font-size: 32px;
+  top: 2%;
+  font-size: 30px;
   color: rgb(0, 0, 0);
   text-shadow: 2px 2px rgb(75, 255, 99);
   margin-right: auto;
   margin-left: auto;
   display: block;
   width: 100%;
-  padding-top: 4%;
+  padding: 5% 0;
   font-weight: 800;
+  background-color: rgb(253, 253, 253);
+}
+
+@media only screen and (min-device-width: 220px) and (max-device-width: 559px) {
+  .loading-spinner {
+    position: relative;
+    top: 0;
+    font-size: 22px;
+    color: rgb(0, 0, 0);
+    text-shadow: 2px 2px rgb(75, 255, 99);
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
+    width: 100%;
+    padding: 100px 0;
+    font-weight: 800;
+    background-color: rgb(253, 253, 253);
+  }
 }

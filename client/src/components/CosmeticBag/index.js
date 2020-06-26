@@ -275,7 +275,7 @@ class index extends Component {
                 <Select
                   isSearchable={false}
                   menuPlacement="bottom"
-                  placeholder="Text color"
+                  placeholder="Color"
                   className=""
                   onChange={this.onSelectedChangeColor}
                   options={optionsColor}

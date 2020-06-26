@@ -143,9 +143,9 @@ class index extends Component {
                 {this.props.textOnMugs}
               </h3>
             </div>
-            {this.props.textOnMugs && this.props.textFormatOptions ? (
-              // TEXT FORMAT CONTROL/////////////////////
-
+            {/* // TEXT FORMAT CONTROL///////////////////// */}
+            {/* {this.props.textOnMugs && this.props.textFormatOptions ? ( */}
+            {this.props.textFormatOptions ? (
               <div className="text-controls-container-mugs">
                 <h3 className="text-controls-container-mugs__heading">
                   Text Control
@@ -154,7 +154,7 @@ class index extends Component {
                   <Select
                     isSearchable={false}
                     menuPlacement="bottom"
-                    placeholder="Text color"
+                    placeholder="Color"
                     className="color-text-mugs"
                     onChange={this.onSelectedChangeColor}
                     options={optionsColor}
