@@ -1,0 +1,131 @@
+.ModalFonts {
+  position: absolute;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(250, 250, 250);
+  padding: 30px;
+  width: 50%;
+  // display: block;
+  border: 1px black solid;
+  box-shadow: 0px 15px 100px black;
+  height: auto;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  overflow: auto;
+  margin: 10px;
+  border-radius: 10px;
+
+  // bottom: auto;
+}
+
+.OverlayFonts {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  // background-color: rgba(177, 197, 171, 0.822);
+  z-index: 1000;
+}
+
+.font-group-wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  .font-type {
+    margin: 10px;
+    display: block;
+    cursor: pointer;
+    &:hover {
+      background-color: rgb(241, 240, 163);
+    }
+
+    &__1 {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    &__2 {
+      font-family: "Arial Black", Gadget, sans-serif;
+    }
+    &__3 {
+      font-family: "Comic Sans MS", cursive, sans-serif;
+    }
+    &__4 {
+      font-family: Impact, Charcoal, sans-serif;
+    }
+    &__5 {
+      font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    }
+    &__6 {
+      font-family: Tahoma, Geneva, sans-serif;
+    }
+    &__7 {
+      font-family: "Courier New", Courier, monospace;
+    }
+    &__8 {
+      font-family: Brush Script MT;
+    }
+    &__9 {
+      font-family: "Permanent Marker", cursive;
+    }
+    &__10 {
+      font-family: "Indie Flower", cursive;
+    }
+  }
+}
+
+.font-selector {
+  display: block;
+  background-color: rgb(255, 255, 255);
+  padding: 3px 0;
+  margin: 2px 0;
+  cursor: pointer;
+  font-family: "Permanent Marker", cursive;
+}
+
+.confirm-font-btn {
+  background-color: rgb(197, 248, 197);
+  border-radius: 5px;
+  text-align: center;
+  display: block;
+  margin: 0 auto;
+  font-size: 20px;
+  padding: 5px 20px;
+  width: 100%;
+  font-weight: 700;
+  transition: all 0.2s;
+  cursor: pointer;
+  &:hover {
+    background-color: rgb(119, 250, 119);
+    color: rgb(5, 48, 21);
+  }
+}
+
+@media only screen and (min-device-width: 760px) and (max-device-width: 1199px) {
+  .ModalFonts {
+    width: 80%;
+  }
+}
+
+@media only screen and (min-device-width: 560px) and (max-device-width: 759px) {
+  .ModalFonts {
+    width: 90%;
+    top: 40%;
+    left: 49%;
+  }
+}
+
+@media only screen and (min-device-width: 300px) and (max-device-width: 559px) {
+  .ModalFonts {
+    width: 80%;
+    top: 40%;
+    left: 47%;
+  }
+
+  .font-group-wrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .font-type {
+    font-size: 18px;
+  }
+}

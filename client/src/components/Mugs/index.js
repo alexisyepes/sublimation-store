@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import ButtonFont from "../FontButton";
 import Select from "react-select";
 
 import "./style.scss";
@@ -54,6 +55,17 @@ class index extends Component {
       marginRight: -10,
       fontSize: 30,
       color: "",
+      fontType: "Arial, Helvetica, sans-serif",
+      font1: "Arial, Helvetica, sans-serif",
+      font2: '"Arial Black", Gadget, sans-serif',
+      font3: '"Comic Sans MS", cursive, sans-serif',
+      font4: "Impact, Charcoal, sans-serif",
+      font5: '"Lucida Sans Unicode", "Lucida Grande", sans-serif',
+      font6: "Tahoma, Geneva, sans-serif",
+      font7: '"Courier New", Courier, monospace',
+      font8: "Brush Script MT",
+      font9: "'Permanent Marker', cursive",
+      font10: "'Indie Flower', cursive",
     };
   }
 
@@ -101,6 +113,57 @@ class index extends Component {
     }));
   };
 
+  font1 = async () => {
+    await this.setState({
+      fontType: this.state.font1,
+    });
+  };
+  font2 = async () => {
+    await this.setState({
+      fontType: this.state.font2,
+    });
+  };
+  font3 = async () => {
+    await this.setState({
+      fontType: this.state.font3,
+    });
+  };
+  font4 = async () => {
+    await this.setState({
+      fontType: this.state.font4,
+    });
+  };
+  font5 = async () => {
+    await this.setState({
+      fontType: this.state.font5,
+    });
+  };
+  font6 = async () => {
+    await this.setState({
+      fontType: this.state.font6,
+    });
+  };
+  font7 = async () => {
+    await this.setState({
+      fontType: this.state.font7,
+    });
+  };
+  font8 = async () => {
+    await this.setState({
+      fontType: this.state.font8,
+    });
+  };
+  font9 = async () => {
+    await this.setState({
+      fontType: this.state.font9,
+    });
+  };
+  font10 = async () => {
+    await this.setState({
+      fontType: this.state.font10,
+    });
+  };
+
   render() {
     return (
       <Fragment>
@@ -138,6 +201,7 @@ class index extends Component {
                   marginLeft: this.state.marginRight + "px",
                   fontSize: this.state.fontSize + "px",
                   color: this.state.color,
+                  fontFamily: this.state.fontType,
                 }}
               >
                 {this.props.textOnMugs}
@@ -151,6 +215,19 @@ class index extends Component {
                   Text Control
                 </h3>
                 <div className="move-text-btns-container-mug text-center">
+                  <ButtonFont
+                    fontType={this.state.fontType}
+                    font1={this.font1}
+                    font2={this.font2}
+                    font3={this.font3}
+                    font4={this.font4}
+                    font5={this.font5}
+                    font6={this.font6}
+                    font7={this.font7}
+                    font8={this.font8}
+                    font9={this.font9}
+                    font10={this.font10}
+                  />
                   <Select
                     isSearchable={false}
                     menuPlacement="bottom"
