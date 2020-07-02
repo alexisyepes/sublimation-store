@@ -39,7 +39,7 @@ const sendMail = (
       : `<span></span>`;
   let petTags =
     totalPetTagBonesInCart > 0
-      ? `<p>Total number of Pet Tags: ${totalPetTagBonesInCart} ($19.99 ea)</p>`
+      ? `<p>Total number of Pet Tags: ${totalPetTagBonesInCart} ($12.99 ea)</p>`
       : `<span></span>`;
   let cosmeticBags =
     totalCosmeticBagsInCart > 0

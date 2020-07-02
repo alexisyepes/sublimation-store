@@ -177,7 +177,7 @@ const product = [
     },
     PetTagBone: {
       name: "petTagBone",
-      price: 1999,
+      price: 1299,
     },
     Shirt: {
       name: "shirt",
@@ -953,7 +953,7 @@ export default class index extends Component {
                   className="product-select"
                   onClick={this.handlePetTagBoneImg}
                 >
-                  Pet-tag 1.25"w X 1"h ($19.99)
+                  Pet-tag 1.25"w X 1"h ($12.99)
                 </h2>
                 <h2
                   className="product-select"
