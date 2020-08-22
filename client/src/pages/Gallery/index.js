@@ -14,6 +14,7 @@ class index extends Component {
               alt="shirt sublimation"
             />
           </div>
+
           <div className="gallery-photo-container gallery-photo-container__2">
             <img
               className="gallery-img gallery-img__2"

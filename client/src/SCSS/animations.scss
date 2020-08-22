@@ -57,3 +57,17 @@
     transform: translateX(0);
   }
 }
+
+@keyframes colorFlashingConfirm {
+  0% {
+    background-color: rgb(226, 250, 181);
+  }
+
+  50% {
+    background-color: rgb(80, 240, 114);
+  }
+
+  100% {
+    background-color: rgb(226, 250, 181);
+  }
+}

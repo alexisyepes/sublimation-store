@@ -12,7 +12,7 @@
   margin-top: 25px;
   font-size: 35px;
   font-weight: 900;
-  background-color: $color-button-orange-1;
+  background-color: $color-blue-dark;
   color: white;
   padding: 5px;
   text-shadow: 2px 2px black;
@@ -22,7 +22,7 @@
   position: absolute;
   margin-right: -50%;
   transform: translate(-50%, -50%);
-  background-color: rgb(154, 236, 146);
+  background-color: rgb(255, 255, 255);
   padding: 30px;
   width: 50%;
   // display: block;
@@ -142,13 +142,13 @@
   text-shadow: 4px 4px 2px rgb(0, 0, 0);
 
   &__1 {
-    background-color: $color-button-orange-2;
+    background-color: $color-blue-dark;
   }
   &__2 {
-    background-color: $color-button-orange-2;
+    background-color: $color-blue-dark;
   }
   &__3 {
-    background-color: $color-button-orange-2;
+    background-color: $color-blue-dark;
   }
 }
 
@@ -159,11 +159,13 @@
 
 .order-summary {
   font-weight: 700;
-  background-color: rgb(199, 218, 166);
+  background-color: rgb(252, 252, 252);
   font-size: 20px;
   text-align: right;
   padding: 10px;
   margin: 10px;
+  border: black solid 1px;
+  border-radius: 5px;
 
   .arrowDown {
     margin: 0;
@@ -251,6 +253,22 @@
     }
   }
 }
+.empty-cart-button__checkout-modal {
+  background-color: darkred;
+  color: white;
+  left: 2%;
+  top: 2%;
+  float: left;
+  position: fixed;
+  font-size: 16px;
+  padding: 5px;
+  border-radius: 10px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: red;
+  }
+}
 
 .shirt-mobile-heading {
   display: none;
@@ -260,10 +278,11 @@
 }
 
 .controls-to-add-content-to-mugs {
-  background-color: #113743;
+  background-color: #5c7775;
   padding: 20px;
   margin: 5px;
   border-radius: 10px;
+  border: solid 2px rgb(58, 58, 58);
 
   .background-select {
     width: 41.5%;
@@ -475,21 +494,48 @@
 }
 
 .x-close-modal {
-  font-size: 22px;
+  font-size: 16px;
   cursor: pointer;
   transition: all 0.2s;
   float: right;
+  margin-top: -25px;
+  margin-right: -25px;
+  border: 1px black solid;
+  padding: 1px 3px;
+  border-radius: 5px;
+  background-color: rgb(31, 31, 31);
+  color: rgb(255, 255, 255);
 
   &:hover {
     color: red;
   }
 }
 
+.x-close-modal-step3 {
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  float: right;
+
+  border: 1px black solid;
+  padding: 1px 3px;
+  border-radius: 5px;
+  background-color: rgb(31, 31, 31);
+  color: rgb(255, 255, 255);
+
+  &:hover {
+    color: red;
+    transform: rotate(180deg);
+  }
+}
+
 .confirm-product-button {
   // @include button;
   margin-bottom: 30px;
-  background-color: $color-primary-dark;
-  color: white;
+  // background-color: $color-button-orange-2;
+  animation: colorFlashingConfirm 1s ease-in-out infinite;
+  font-weight: 900;
+  color: rgb(2, 0, 0);
   font-size: 24px;
   width: 40%;
   box-shadow: 0px 20px 30px black;
@@ -502,7 +548,7 @@
   z-index: 1000;
 
   &:hover {
-    background-color: $color-primary;
+    filter: brightness(1.1);
     transform: scale(1.2);
     box-shadow: 0px 20px 60px black;
   }
@@ -529,7 +575,7 @@
 
 .virtual-image-container {
   margin: 0px 20px;
-  background-color: rgb(192, 185, 127);
+  background-color: rgb(255, 255, 255);
   width: 100%;
   height: auto;
   border-radius: 10px;
@@ -540,11 +586,11 @@
     font-weight: 800;
     left: 2%;
     position: relative;
-    background-color: rgb(219, 217, 93);
+    background-color: $color-gray-medium;
     width: 25%;
     padding: 5px;
     text-align: center;
-    text-shadow: 2px 2px rgb(123, 129, 139);
+    text-shadow: 2px 2px rgb(255, 255, 255);
     border-radius: 10px;
   }
 
@@ -963,6 +1009,20 @@
     font-size: 11px !important;
   }
 
+  .empty-cart-button__checkout-modal {
+    top: 5%;
+    left: 4%;
+  }
+
+  .checkout-modal-wrapper {
+    margin-top: 45px;
+  }
+
+  .x-close-modal {
+    margin-top: 1%;
+    margin-right: 0;
+  }
+
   .agree-with-order {
     font-size: 14.5px !important;
   }
@@ -1096,5 +1156,11 @@
   .hideInBigScreens {
     display: block;
     font-size: 12px;
+  }
+}
+
+@media only screen and (min-device-width: 522px) and (max-device-width: 1199px) {
+  .checkout-modal-wrapper {
+    margin-top: 45px;
   }
 }

@@ -9,6 +9,7 @@ import Shirts from "../../components/Shirt";
 import Pillow from "../../components/Pillow";
 import PetTagBone from "../../components/PetTagBone";
 import CosmeticBag from "../../components/CosmeticBag";
+import FaceMaskHolder from "../../components/FaceMaskHolder";
 
 import "./style.scss";
 
@@ -218,6 +219,7 @@ export default class index extends Component {
         "./images/pillow.png",
         "./images/pet-tag-bone.png",
         "./images/cartera-front.png",
+        "./images/wood-sign-face-mask.png",
       ],
       productImg: "",
       productImgBack: "",
@@ -225,6 +227,8 @@ export default class index extends Component {
       productImgPillow: "",
       productImgPetTagBone: "",
       productImgCosmeticBag: "",
+      productImgFaceMaskHolder: "",
+      faceMaskHolderChosen: false,
       finalProductImg: null,
       file: "",
       fileArray: [],
@@ -377,6 +381,15 @@ export default class index extends Component {
     });
   };
 
+  handleFaceMaskHolder = async () => {
+    await this.setState({
+      step2ActualProd: "faceMaskHolder",
+      productImgFaceMaskHolder: this.state.productImgArray[5],
+      productImg: "",
+      step2: true,
+    });
+  };
+
   productSelectedConfirmed = () => {
     this.setState({
       btnStep1: false,
@@ -391,6 +404,7 @@ export default class index extends Component {
       textFormatOptionsForPetTagBone: true,
       textFormatOptionsForCosmeticBag: true,
       photoControlPetTagBone: true,
+      faceMaskHolderChosen: true,
     });
   };
 
@@ -961,6 +975,12 @@ export default class index extends Component {
                 >
                   Cosmetic bag / Pencil case 8.5"w X 5"h ($18.99)
                 </h2>
+                <h2
+                  className="product-select"
+                  onClick={this.handleFaceMaskHolder}
+                >
+                  Face Mask Wall Holder 11"w X 8.5"h ($34.99)
+                </h2>
                 <h2 className="product-select">More products coming soon...</h2>
                 {/* <h2 className="product-select" onClick={this.handleKeychainImg}>
                   Pet-walking-license ($20)
@@ -1177,7 +1197,7 @@ export default class index extends Component {
                       <span aria-label="0" role="img">
                         &#10003;{" "}
                       </span>
-                      Click here to confirm product
+                      Click here to build your product
                     </button>
                   ) : (
                     <div className="startover-btn-container">
@@ -1274,6 +1294,16 @@ export default class index extends Component {
                       ) : null}
                     </Fragment>
                   ) : null}
+                  {this.state.step2ActualProd === "faceMaskHolder" ? (
+                    <Fragment>
+                      <FaceMaskHolder
+                        // petName={this.state.petTagBonePetName}
+                        img={this.state.productImgFaceMaskHolder}
+                        faceMaskWasChosen={this.state.faceMaskHolderChosen}
+                        // imagePreviewUrl={this.state.imagePreviewUrl}
+                      />
+                    </Fragment>
+                  ) : null}
                 </div>
               </div>
             ) : (
@@ -1293,243 +1323,244 @@ export default class index extends Component {
 
             {this.state.toggleStep2 ? (
               <div className="step-2-container">
-                {/* CONTROLS TO ADD CONTENT ON PRODUCTS */}
-                <div className="  controls-to-add-content-to-mugs">
-                  {/* QUANTITY */}
-                  <div className="qty-container">
-                    <h4 className="h2-qty">
-                      QTY:
-                      <div className="qty-symbols qty-symbols__number">
-                        {this.props.qty}
-                      </div>
-                      <button
-                        onClick={this.props.increaseQty}
-                        className="qty-symbols qty-symbols__plus"
-                      >
-                        +
-                      </button>
-                      <button
-                        onClick={this.props.decreaseQty}
-                        className="qty-symbols qty-symbols__minus"
-                      >
-                        -
-                      </button>{" "}
-                    </h4>
-                    {this.state.step2ActualProd === "shirt" ? (
-                      <div>
+                {this.state.step2ActualProd === "faceMaskHolder" ? null : (
+                  <div className="  controls-to-add-content-to-mugs">
+                    {/* QUANTITY */}
+                    <div className="qty-container">
+                      <h4 className="h2-qty">
+                        QTY:
+                        <div className="qty-symbols qty-symbols__number">
+                          {this.props.qty}
+                        </div>
+                        <button
+                          onClick={this.props.increaseQty}
+                          className="qty-symbols qty-symbols__plus"
+                        >
+                          +
+                        </button>
+                        <button
+                          onClick={this.props.decreaseQty}
+                          className="qty-symbols qty-symbols__minus"
+                        >
+                          -
+                        </button>{" "}
+                      </h4>
+                      {this.state.step2ActualProd === "shirt" ? (
+                        <div>
+                          <div className="shirt-size-select">
+                            <Select
+                              isSearchable={false}
+                              menuPlacement="top"
+                              placeholder="Gender"
+                              onChange={this.onSelectedChangeGender}
+                              options={genderShirtsOptions}
+                            />
+                            {this.state.shirtGender === "male" ? (
+                              <Select
+                                isSearchable={false}
+                                menuPlacement="top"
+                                placeholder="size"
+                                onChange={this.onSelectedChangeSize}
+                                options={sizeShirtsOptionsMen}
+                              />
+                            ) : null}
+                            {this.state.shirtGender === "female" ? (
+                              <Select
+                                isSearchable={false}
+                                menuPlacement="top"
+                                placeholder="size"
+                                onChange={this.onSelectedChangeSize}
+                                options={sizeShirtsOptionsWoman}
+                              />
+                            ) : null}
+                            {this.state.shirtGender === "kid" ? (
+                              <Select
+                                isSearchable={false}
+                                menuPlacement="top"
+                                placeholder="size"
+                                onChange={this.onSelectedChangeSize}
+                                options={sizeShirtsOptionsKid}
+                              />
+                            ) : null}
+                          </div>
+                        </div>
+                      ) : null}
+                      {this.state.step2ActualProd === "petTagBone" ? (
                         <div className="shirt-size-select">
                           <Select
                             isSearchable={false}
                             menuPlacement="top"
-                            placeholder="Gender"
-                            onChange={this.onSelectedChangeGender}
-                            options={genderShirtsOptions}
+                            placeholder="Color"
+                            onChange={this.onSelectedChangeBone}
+                            options={selectColorOptions}
                           />
-                          {this.state.shirtGender === "male" ? (
-                            <Select
-                              isSearchable={false}
-                              menuPlacement="top"
-                              placeholder="size"
-                              onChange={this.onSelectedChangeSize}
-                              options={sizeShirtsOptionsMen}
-                            />
-                          ) : null}
-                          {this.state.shirtGender === "female" ? (
-                            <Select
-                              isSearchable={false}
-                              menuPlacement="top"
-                              placeholder="size"
-                              onChange={this.onSelectedChangeSize}
-                              options={sizeShirtsOptionsWoman}
-                            />
-                          ) : null}
-                          {this.state.shirtGender === "kid" ? (
-                            <Select
-                              isSearchable={false}
-                              menuPlacement="top"
-                              placeholder="size"
-                              onChange={this.onSelectedChangeSize}
-                              options={sizeShirtsOptionsKid}
-                            />
-                          ) : null}
                         </div>
-                      </div>
-                    ) : null}
-                    {this.state.step2ActualProd === "petTagBone" ? (
-                      <div className="shirt-size-select">
-                        <Select
-                          isSearchable={false}
-                          menuPlacement="top"
-                          placeholder="Color"
-                          onChange={this.onSelectedChangeBone}
-                          options={selectColorOptions}
-                        />
-                      </div>
-                    ) : null}
-                  </div>
-                  <div className="upload-photo-parent">
-                    <h2
-                      onClick={() => {
-                        this.fileInput.click();
-                      }}
-                      className="heading-product heading-product__upload text-center"
-                    >
-                      &#x2912; CLICK TO UPLOAD PHOTO
-                    </h2>
-                    <button
-                      onClick={this.clearPhoto}
-                      className="clear-photo-btn"
-                    >
-                      &#128465; Clear Photo
-                    </button>
-                  </div>
-                  {this.state.step2ActualProd === "mug" ? (
-                    <Select
-                      isSearchable={false}
-                      className="background-select"
-                      menuPlacement="bottom"
-                      placeholder="Choose background (optional)"
-                      options={optionsBackgrounds}
-                      onChange={this.onSelectedChange}
-                    />
-                  ) : null}
-                  <input
-                    capture="environment"
-                    ref={(fileInput) => (this.fileInput = fileInput)}
-                    className="input-img"
-                    type="file"
-                    onChange={this._handleImageChange}
-                    style={{ display: "none" }}
-                  />
-
-                  {this.state.step2ActualProd === "petTagBone" ? (
-                    <div>
-                      <h2
-                        onClick={this.showInputFields}
-                        className="heading-product heading-product__message text-center"
-                      >
-                        &darr; ADD NAME AND PHONE &darr;{" "}
-                      </h2>
-                      <div className="petTagBone-input-container">
-                        <input
-                          // maxLength="50"
-                          className="text-petTagBone-input "
-                          placeholder="Pet Name"
-                          name="petTagBonePetName"
-                          onChange={this.onChangeHandler}
-                          type="text"
-                        />
-                        <input
-                          // maxLength="50"
-                          className="text-petTagBone-input "
-                          placeholder="Phone number"
-                          name="petTagBonePhone"
-                          onChange={this.onChangeHandler}
-                          type="text"
-                        />
-                      </div>
+                      ) : null}
                     </div>
-                  ) : null}
 
-                  {/* CLICK TO ADD MESSAGE CONTROLS */}
-                  {this.state.step2ActualProd === "mug" ||
-                  this.state.step2ActualProd === "shirt" ||
-                  this.state.step2ActualProd === "pillow" ||
-                  this.state.step2ActualProd === "cosmeticBag" ? (
-                    <div>
-                      <h2
-                        onClick={this.showInputFields}
-                        className="heading-product heading-product__message"
-                      >
-                        &darr; CLICK TO ADD A MESSAGE &darr;{" "}
-                        {50 - this.state.textOnMugs.length + " letters left"}
-                      </h2>
-                      {this.state.showMsgInput ? (
-                        <div className="text-area-container">
-                          <textarea
-                            maxLength="50"
-                            className="text-msg-input "
-                            placeholder="Type your message here"
-                            name="textOnMugs"
+                    {this.state.step2ActualProd !== "faceMaskHolder" ? (
+                      <div className="upload-photo-parent">
+                        <h2
+                          onClick={() => {
+                            this.fileInput.click();
+                          }}
+                          className="heading-product heading-product__upload text-center"
+                        >
+                          &#x2912; CLICK TO UPLOAD PHOTO
+                        </h2>
+                        <button
+                          onClick={this.clearPhoto}
+                          className="clear-photo-btn"
+                        >
+                          &#128465; Clear Photo
+                        </button>
+                      </div>
+                    ) : null}
+                    {this.state.step2ActualProd === "mug" ? (
+                      <Select
+                        isSearchable={false}
+                        className="background-select"
+                        menuPlacement="bottom"
+                        placeholder="Choose background (optional)"
+                        options={optionsBackgrounds}
+                        onChange={this.onSelectedChange}
+                      />
+                    ) : null}
+                    <input
+                      capture="environment"
+                      ref={(fileInput) => (this.fileInput = fileInput)}
+                      className="input-img"
+                      type="file"
+                      onChange={this._handleImageChange}
+                      style={{ display: "none" }}
+                    />
+                    {this.state.step2ActualProd === "petTagBone" ? (
+                      <div>
+                        <h2
+                          onClick={this.showInputFields}
+                          className="heading-product heading-product__message text-center"
+                        >
+                          &darr; ADD NAME AND PHONE &darr;{" "}
+                        </h2>
+                        <div className="petTagBone-input-container">
+                          <input
+                            // maxLength="50"
+                            className="text-petTagBone-input "
+                            placeholder="Pet Name"
+                            name="petTagBonePetName"
+                            onChange={this.onChangeHandler}
+                            type="text"
+                          />
+                          <input
+                            // maxLength="50"
+                            className="text-petTagBone-input "
+                            placeholder="Phone number"
+                            name="petTagBonePhone"
                             onChange={this.onChangeHandler}
                             type="text"
                           />
                         </div>
-                      ) : null}
-                    </div>
-                  ) : null}
-
-                  {this.state.imagePreviewUrl.length > 0 ||
-                  this.state.textOnMugs !== "" ? (
-                    <div className="continue-button-container">
-                      <p className="agree-with-order">
-                        <input
-                          className="checkbox-order"
-                          onChange={this.toggleChangeTermsAndConditions}
-                          type="checkbox"
-                          name="checkbox"
-                          value={this.state.notChecked}
-                        />
-                        <b> I confirm my product is accurate</b>
-                      </p>
-                      {this.state.errorMsg ? (
-                        <p className="error-msg-confirm-product color-yellow">
-                          &#8593; {this.state.errorMsg}
+                      </div>
+                    ) : null}
+                    {/* CLICK TO ADD MESSAGE CONTROLS */}
+                    {this.state.step2ActualProd === "mug" ||
+                    this.state.step2ActualProd === "shirt" ||
+                    this.state.step2ActualProd === "pillow" ||
+                    this.state.step2ActualProd === "cosmeticBag" ? (
+                      <div>
+                        <h2
+                          onClick={this.showInputFields}
+                          className="heading-product heading-product__message"
+                        >
+                          &darr; CLICK TO ADD A MESSAGE &darr;{" "}
+                          {50 - this.state.textOnMugs.length + " letters left"}
+                        </h2>
+                        {this.state.showMsgInput ? (
+                          <div className="text-area-container">
+                            <textarea
+                              maxLength="50"
+                              className="text-msg-input "
+                              placeholder="Type your message here"
+                              name="textOnMugs"
+                              onChange={this.onChangeHandler}
+                              type="text"
+                            />
+                          </div>
+                        ) : null}
+                      </div>
+                    ) : null}
+                    {this.state.imagePreviewUrl.length > 0 ||
+                    this.state.textOnMugs !== "" ? (
+                      <div className="continue-button-container">
+                        <p className="agree-with-order">
+                          <input
+                            className="checkbox-order"
+                            onChange={this.toggleChangeTermsAndConditions}
+                            type="checkbox"
+                            name="checkbox"
+                            value={this.state.notChecked}
+                          />
+                          <b> I confirm my product is accurate</b>
                         </p>
-                      ) : null}
+                        {this.state.errorMsg ? (
+                          <p className="error-msg-confirm-product color-yellow">
+                            &#8593; {this.state.errorMsg}
+                          </p>
+                        ) : null}
 
-                      {/* CONFIRM ORDER FOR MUGS */}
-                      {this.state.step2ActualProd === "mug" ? (
-                        <button
-                          onClick={this.screenshotMugs}
-                          className="continue-button"
-                        >
-                          Click here if you're done &#10003;
-                        </button>
-                      ) : null}
+                        {/* CONFIRM ORDER FOR MUGS */}
+                        {this.state.step2ActualProd === "mug" ? (
+                          <button
+                            onClick={this.screenshotMugs}
+                            className="continue-button"
+                          >
+                            Click here if you're done &#10003;
+                          </button>
+                        ) : null}
 
-                      {/* CONFIRM ORDER FOR SHIRTS */}
-                      {this.state.step2ActualProd === "shirt" ? (
-                        <button
-                          onClick={this.screenshotShirts}
-                          className="continue-button"
-                        >
-                          Click here if you're done &#10003;
-                        </button>
-                      ) : null}
+                        {/* CONFIRM ORDER FOR SHIRTS */}
+                        {this.state.step2ActualProd === "shirt" ? (
+                          <button
+                            onClick={this.screenshotShirts}
+                            className="continue-button"
+                          >
+                            Click here if you're done &#10003;
+                          </button>
+                        ) : null}
 
-                      {/* CONFIRM ORDER FOR PILLOWS */}
-                      {this.state.step2ActualProd === "pillow" ? (
-                        <button
-                          onClick={this.screenshotPillow}
-                          className="continue-button"
-                        >
-                          Click here if you're done &#10003;
-                        </button>
-                      ) : null}
+                        {/* CONFIRM ORDER FOR PILLOWS */}
+                        {this.state.step2ActualProd === "pillow" ? (
+                          <button
+                            onClick={this.screenshotPillow}
+                            className="continue-button"
+                          >
+                            Click here if you're done &#10003;
+                          </button>
+                        ) : null}
 
-                      {/* CONFIRM ORDER FOR PET TAG BONES */}
-                      {this.state.step2ActualProd === "petTagBone" ? (
-                        <button
-                          onClick={this.screenshotPetTagBone}
-                          className="continue-button"
-                        >
-                          Click here if you're done &#10003;
-                        </button>
-                      ) : null}
+                        {/* CONFIRM ORDER FOR PET TAG BONES */}
+                        {this.state.step2ActualProd === "petTagBone" ? (
+                          <button
+                            onClick={this.screenshotPetTagBone}
+                            className="continue-button"
+                          >
+                            Click here if you're done &#10003;
+                          </button>
+                        ) : null}
 
-                      {/* CONFIRM ORDER FOR COSMETIC BAGS */}
-                      {this.state.step2ActualProd === "cosmeticBag" ? (
-                        <button
-                          onClick={this.screenshotCosmeticBag}
-                          className="continue-button"
-                        >
-                          Click here if you're done &#10003;
-                        </button>
-                      ) : null}
-                    </div>
-                  ) : null}
-                </div>
+                        {/* CONFIRM ORDER FOR COSMETIC BAGS */}
+                        {this.state.step2ActualProd === "cosmeticBag" ? (
+                          <button
+                            onClick={this.screenshotCosmeticBag}
+                            className="continue-button"
+                          >
+                            Click here if you're done &#10003;
+                          </button>
+                        ) : null}
+                      </div>
+                    ) : null}
+                  </div>
+                )}
               </div>
             ) : null}
 
@@ -1540,7 +1571,7 @@ export default class index extends Component {
               isOpen={this.state.modalToConfirm}
               onRequestClose={this.closeModal}
             >
-              <span className="x-close-modal" onClick={this.closeModal}>
+              <span className="x-close-modal-step3" onClick={this.closeModal}>
                 X
               </span>
               <h2 className="text-center">
@@ -1563,14 +1594,14 @@ export default class index extends Component {
               overlayClassName="Overlay"
             >
               <span className="x-close-modal" onClick={this.closeModalCheckout}>
-                X
+                Close
               </span>
               <div className="checkout-modal-wrapper">
                 {!this.state.checkOutStripe ? (
                   <div className="text-center">
                     <button
                       onClick={this.updateComponent}
-                      className="empty-cart-button__checkout"
+                      className="empty-cart-button__checkout-modal"
                     >
                       <i className="fas fa-trash"></i> Cancel and empty cart
                     </button>

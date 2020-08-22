@@ -39,7 +39,7 @@ const CarouselPage = () => {
                 <MDBView>
                   <img
                     className="d-block "
-                    src="./images/pet-tag-bone-img.png"
+                    src="./images/wood-sign-face-mask.png"
                     alt="Second slide"
                   />
                   <MDBMask overlay="black-strong" />
@@ -50,6 +50,17 @@ const CarouselPage = () => {
                 <MDBView>
                   <img
                     className="d-block "
+                    src="./images/pet-tag-bone-img.png"
+                    alt="Second slide"
+                  />
+                  <MDBMask overlay="black-strong" />
+                </MDBView>
+                <MDBCarouselCaption></MDBCarouselCaption>
+              </MDBCarouselItem>
+              <MDBCarouselItem itemId="4">
+                <MDBView>
+                  <img
+                    className="d-block "
                     src="./images/mug5.PNG"
                     alt="Third slide"
                   />
@@ -57,7 +68,7 @@ const CarouselPage = () => {
                 </MDBView>
                 <MDBCarouselCaption></MDBCarouselCaption>
               </MDBCarouselItem>
-              <MDBCarouselItem itemId="4">
+              <MDBCarouselItem itemId="5">
                 <MDBView>
                   <img
                     className="d-block w-300"
@@ -68,7 +79,7 @@ const CarouselPage = () => {
                 </MDBView>
                 <MDBCarouselCaption></MDBCarouselCaption>
               </MDBCarouselItem>
-              <MDBCarouselItem itemId="5">
+              <MDBCarouselItem itemId="6">
                 <MDBView>
                   <img
                     className="d-block w-300"
@@ -79,7 +90,7 @@ const CarouselPage = () => {
                 </MDBView>
                 <MDBCarouselCaption></MDBCarouselCaption>
               </MDBCarouselItem>
-              <MDBCarouselItem itemId="6">
+              <MDBCarouselItem itemId="7">
                 <MDBView>
                   <img
                     className="d-block w-300"
