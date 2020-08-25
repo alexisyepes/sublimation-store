@@ -35,6 +35,7 @@
   overflow: auto;
   margin: 10px;
   border-radius: 10px;
+  z-index: 100000;
 
   // bottom: auto;
 }
@@ -104,11 +105,13 @@
   text-align: right;
 }
 
-.startOver-button {
+.startOver-button,
+.startOver-button:active {
   @include button;
+  text-align: center;
   margin-bottom: 20px;
   top: -90px;
-  right: 0;
+  right: 10px;
   position: absolute;
   background-color: rgb(160, 11, 11);
   color: rgb(255, 255, 255);
@@ -537,15 +540,11 @@
   font-weight: 900;
   color: rgb(2, 0, 0);
   font-size: 24px;
-  width: 40%;
   box-shadow: 0px 20px 30px black;
   cursor: pointer;
   transition: all 0.1s;
-  position: absolute;
-  top: -60px;
-  left: 30%;
-  border-radius: 10px;
-  z-index: 1000;
+  border-radius: 5px;
+  // z-index: 1000;
 
   &:hover {
     filter: brightness(1.1);
@@ -639,11 +638,11 @@
     display: block;
   }
 
-  .confirm-product-button {
-    top: 100%;
-    left: 0;
-    width: 100% !important;
-  }
+  // .confirm-product-button {
+  //   top: 100%;
+  //   left: 0;
+  //   width: 100% !important;
+  // }
 
   .step-btn {
     width: 96% !important;

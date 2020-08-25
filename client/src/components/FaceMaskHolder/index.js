@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import Modal from "react-modal";
 import "./style.scss";
+import { Link } from "react-scroll";
 
 class index extends Component {
   constructor(props) {
@@ -15,22 +15,16 @@ class index extends Component {
       avatar: "",
       isFamilyName: false,
       errorMsg: "",
-      modalToConfirm: false,
       lastnameEditMode: false,
+      model1: false,
+      model2: false,
+      model3: false,
+      chosenModel: false,
+      showPreviewScreen: false,
+      nameForFaceMask: "",
+      namesArray: [],
     };
   }
-
-  toggleModalToConfirmOrder = () => {
-    this.setState({
-      modalToConfirm: true,
-    });
-  };
-
-  closeModal = () => {
-    this.setState({
-      modalToConfirm: false,
-    });
-  };
 
   changeHandler = (e) => {
     this.setState({
@@ -55,89 +49,134 @@ class index extends Component {
 
     let chosenImg;
     if (this.state.avatar === "1") {
-      chosenImg =
-        "https://res.cloudinary.com/ayp-sublimation/image/upload/v1597950354/avatars/avatar1_vjiews.png";
+      chosenImg = "./images/avatars/avatar1.png";
     } else if (this.state.avatar === "2") {
-      chosenImg =
-        "https://res.cloudinary.com/ayp-sublimation/image/upload/v1597950352/avatars/avatar2_dkyz9e.png";
+      chosenImg = "./images/avatars/avatar2.png";
     } else if (this.state.avatar === "3") {
-      chosenImg =
-        "https://res.cloudinary.com/ayp-sublimation/image/upload/v1597950352/avatars/avatar3_yxcowi.png";
+      chosenImg = "./images/avatars/avatar3.png";
     } else if (this.state.avatar === "4") {
-      chosenImg =
-        "https://res.cloudinary.com/ayp-sublimation/image/upload/v1597950352/avatars/avatar4_laionz.png";
+      chosenImg = "./images/avatars/avatar4.png";
     } else if (this.state.avatar === "5") {
-      chosenImg =
-        "https://res.cloudinary.com/ayp-sublimation/image/upload/v1597950352/avatars/avatar5_ljsrlz.png";
+      chosenImg = "./images/avatars/avatar5.png";
     } else if (this.state.avatar === "6") {
-      chosenImg =
-        "https://res.cloudinary.com/ayp-sublimation/image/upload/v1597950352/avatars/avatar6_ap1a0y.png";
+      chosenImg = "./images/avatars/avatar6.png";
     } else if (this.state.avatar === "7") {
-      chosenImg =
-        "https://res.cloudinary.com/ayp-sublimation/image/upload/v1597950352/avatars/avatar7_zvchbn.png";
+      chosenImg = "./images/avatars/avatar7.png";
     } else if (this.state.avatar === "8") {
-      chosenImg =
-        "https://res.cloudinary.com/ayp-sublimation/image/upload/v1597950353/avatars/avatar8_gb2sg1.png";
+      chosenImg = "./images/avatars/avatar8.png";
     } else if (this.state.avatar === "9") {
-      chosenImg =
-        "https://res.cloudinary.com/ayp-sublimation/image/upload/v1597950353/avatars/avatar9_m6bk7e.png";
+      chosenImg = "./images/avatars/avatar9.png";
     } else if (this.state.avatar === "10") {
-      chosenImg =
-        "https://res.cloudinary.com/ayp-sublimation/image/upload/v1597950353/avatars/avatar10_m56sy2.png";
+      chosenImg = "./images/avatars/avatar10.png";
     } else if (this.state.avatar === "11") {
-      chosenImg =
-        "https://res.cloudinary.com/ayp-sublimation/image/upload/v1597950353/avatars/avatar11_lg2uaf.png";
+      chosenImg = "./images/avatars/avatar11.png";
     } else if (this.state.avatar === "12") {
-      chosenImg =
-        "https://res.cloudinary.com/ayp-sublimation/image/upload/v1597950353/avatars/avatar12_snei9z.png";
+      chosenImg = "./images/avatars/avatar12.png";
     } else if (this.state.avatar === "13") {
-      chosenImg =
-        "https://res.cloudinary.com/ayp-sublimation/image/upload/v1597950353/avatars/avatar13_u8kudm.png";
+      chosenImg = "./images/avatars/avatar13.png";
     } else if (this.state.avatar === "14") {
-      chosenImg =
-        "https://res.cloudinary.com/ayp-sublimation/image/upload/v1597950353/avatars/avatar14_cvnizg.png";
+      chosenImg = "./images/avatars/avatar14.png";
     } else if (this.state.avatar === "15") {
-      chosenImg =
-        "https://res.cloudinary.com/ayp-sublimation/image/upload/v1597950353/avatars/avatar15_e8gonk.png";
+      chosenImg = "./images/avatars/avatar15.png";
     } else if (this.state.avatar === "16") {
-      chosenImg =
-        "https://res.cloudinary.com/ayp-sublimation/image/upload/v1597950353/avatars/avatar16_dbxcme.png";
+      chosenImg = "./images/avatars/avatar16.png";
     } else if (this.state.avatar === "17") {
-      chosenImg =
-        "https://res.cloudinary.com/ayp-sublimation/image/upload/v1597950353/avatars/avatar17_evosqm.png";
+      chosenImg = "./images/avatars/avatar17.png";
     } else if (this.state.avatar === "18") {
-      chosenImg =
-        "https://res.cloudinary.com/ayp-sublimation/image/upload/v1597950354/avatars/avatar18_wbjsvp.png";
+      chosenImg = "./images/avatars/avatar18.png";
     } else if (this.state.avatar === "19") {
-      chosenImg =
-        "https://res.cloudinary.com/ayp-sublimation/image/upload/v1597950354/avatars/avatar19_qnpwxn.png";
+      chosenImg = "./images/avatars/avatar19.png";
     } else if (this.state.avatar === "20") {
-      chosenImg =
-        "https://res.cloudinary.com/ayp-sublimation/image/upload/v1597950354/avatars/avatar20_eh7phx.png";
+      chosenImg = "./images/avatars/avatar20.png";
     } else if (this.state.avatar === "21") {
-      chosenImg =
-        "https://res.cloudinary.com/ayp-sublimation/image/upload/v1597950354/avatars/avatar21_mihksq.png";
+      chosenImg = "./images/avatars/avatar21.png";
     } else if (this.state.avatar === "22") {
-      chosenImg =
-        "https://res.cloudinary.com/ayp-sublimation/image/upload/v1597950354/avatars/avatar22_og3orv.png";
+      chosenImg = "./images/avatars/avatar22.png";
     } else if (this.state.avatar === "23") {
-      chosenImg =
-        "https://res.cloudinary.com/ayp-sublimation/image/upload/v1597950354/avatars/avatar23_n0gldg.png";
+      chosenImg = "./images/avatars/avatar23.png";
     } else if (this.state.avatar === "24") {
-      chosenImg =
-        "https://res.cloudinary.com/ayp-sublimation/image/upload/v1597950354/avatars/avatar24_c37vvw.png";
+      chosenImg = "./images/avatars/avatar24.png";
     } else if (this.state.avatar === "25") {
-      chosenImg =
-        "https://res.cloudinary.com/ayp-sublimation/image/upload/v1597950354/avatars/avatar25_wli2om.png";
+      chosenImg = "./images/avatars/avatar25.png";
     } else if (this.state.avatar === "26") {
-      chosenImg =
-        "https://res.cloudinary.com/ayp-sublimation/image/upload/v1597950354/avatars/avatar26_jfzp68.png";
+      chosenImg = "./images/avatars/avatar26.png";
     } else if (this.state.avatar === "27") {
-      chosenImg =
-        "https://res.cloudinary.com/ayp-sublimation/image/upload/v1597950354/avatars/avatar27_clh23o.png";
+      chosenImg = "./images/avatars/avatar27.png";
     } else if (this.state.avatar === "28") {
-      chosenImg =
-        "https://res.cloudinary.com/ayp-sublimation/image/upload/v1597950355/avatars/avatar28_lg2izo.png";
+      chosenImg = "./images/avatars/avatar28.png";
+    } else {
+      return await this.setState({
+        errorMsg: "Enter numbers only between 1 and 28!",
+      });
+    }
+    await this.setState((prevState) => ({
+      avatarNumber: [...prevState.avatarNumber, this.state.avatar],
+      avatarImages: [...prevState.avatarImages, chosenImg],
+      avatar: "",
+      errorMsg: "",
+    }));
+  };
+
+  addAvatarHandlerFaceMask = async (e) => {
+    e.preventDefault();
+
+    let chosenImg;
+    if (this.state.avatar === "1") {
+      chosenImg = "./images/elsa.jpg";
+    } else if (this.state.avatar === "2") {
+      chosenImg = "./images/avatars/avatar2.png";
+    } else if (this.state.avatar === "3") {
+      chosenImg = "./images/avatars/avatar3.png";
+    } else if (this.state.avatar === "4") {
+      chosenImg = "./images/avatars/avatar4.png";
+    } else if (this.state.avatar === "5") {
+      chosenImg = "./images/avatars/avatar5.png";
+    } else if (this.state.avatar === "6") {
+      chosenImg = "./images/avatars/avatar6.png";
+    } else if (this.state.avatar === "7") {
+      chosenImg = "./images/avatars/avatar7.png";
+    } else if (this.state.avatar === "8") {
+      chosenImg = "./images/avatars/avatar8.png";
+    } else if (this.state.avatar === "9") {
+      chosenImg = "./images/avatars/avatar9.png";
+    } else if (this.state.avatar === "10") {
+      chosenImg = "./images/avatars/avatar10.png";
+    } else if (this.state.avatar === "11") {
+      chosenImg = "./images/avatars/avatar11.png";
+    } else if (this.state.avatar === "12") {
+      chosenImg = "./images/avatars/avatar12.png";
+    } else if (this.state.avatar === "13") {
+      chosenImg = "./images/avatars/avatar13.png";
+    } else if (this.state.avatar === "14") {
+      chosenImg = "./images/avatars/avatar14.png";
+    } else if (this.state.avatar === "15") {
+      chosenImg = "./images/avatars/avatar15.png";
+    } else if (this.state.avatar === "16") {
+      chosenImg = "./images/avatars/avatar16.png";
+    } else if (this.state.avatar === "17") {
+      chosenImg = "./images/avatars/avatar17.png";
+    } else if (this.state.avatar === "18") {
+      chosenImg = "./images/avatars/avatar18.png";
+    } else if (this.state.avatar === "19") {
+      chosenImg = "./images/avatars/avatar19.png";
+    } else if (this.state.avatar === "20") {
+      chosenImg = "./images/avatars/avatar20.png";
+    } else if (this.state.avatar === "21") {
+      chosenImg = "./images/avatars/avatar21.png";
+    } else if (this.state.avatar === "22") {
+      chosenImg = "./images/avatars/avatar22.png";
+    } else if (this.state.avatar === "23") {
+      chosenImg = "./images/avatars/avatar23.png";
+    } else if (this.state.avatar === "24") {
+      chosenImg = "./images/avatars/avatar24.png";
+    } else if (this.state.avatar === "25") {
+      chosenImg = "./images/avatars/avatar25.png";
+    } else if (this.state.avatar === "26") {
+      chosenImg = "./images/avatars/avatar26.png";
+    } else if (this.state.avatar === "27") {
+      chosenImg = "./images/avatars/avatar27.png";
+    } else if (this.state.avatar === "28") {
+      chosenImg = "./images/avatars/avatar28.png";
     } else {
       return await this.setState({
         errorMsg: "Enter numbers only between 1 and 28!",
@@ -159,6 +198,14 @@ class index extends Component {
     }));
   };
 
+  removeName = ({ currentTarget }) => {
+    this.setState((prevState) => ({
+      namesArray: prevState.namesArray.filter(
+        (name) => name !== currentTarget.value
+      ),
+    }));
+  };
+
   submitFamilyName = async (e) => {
     e.preventDefault();
 
@@ -173,6 +220,7 @@ class index extends Component {
         this.state.familyInput.charAt(0).toUpperCase() +
         this.state.familyInput.slice(1),
       lastnameEditMode: false,
+      errorMsg: "",
     });
   };
 
@@ -182,8 +230,96 @@ class index extends Component {
     });
   };
 
+  model1ActiveHandler = () => {
+    this.setState({
+      model1: true,
+      model2: false,
+      model3: false,
+    });
+  };
+
+  model2ActiveHandler = () => {
+    this.setState({
+      model2: true,
+      model1: false,
+      model3: false,
+    });
+  };
+
+  model3ActiveHandler = () => {
+    this.setState({
+      model3: true,
+      model1: false,
+      model2: false,
+    });
+  };
+
+  showPreviewScreenHandler = () => {
+    this.setState({
+      showPreviewScreen: !this.state.showPreviewScreen,
+      avatar: "",
+      errorMsg: "",
+      model1: false,
+      model2: false,
+      model3: false,
+    });
+  };
+
+  submitFinalProduct = () => {
+    this.props.screenShotFunction();
+    this.setState({
+      wallHolder: "",
+      familyInput: "",
+      familyNameConfirmed: "",
+      avatarNumber: [],
+      avatarImages: [],
+      avatar: "",
+      isFamilyName: false,
+      errorMsg: "",
+      modalToConfirm: false,
+      lastnameEditMode: false,
+      model1: false,
+      model2: false,
+      model3: false,
+      chosenModel: false,
+      showPreviewScreen: false,
+    });
+  };
+
+  addNameHandler = async (e) => {
+    e.preventDefault();
+    if (this.state.nameForFaceMask === "") {
+      return;
+    }
+    await this.setState((prevState) => ({
+      namesArray: [...prevState.namesArray, this.state.nameForFaceMask],
+      nameForFaceMask: "",
+    }));
+    console.log(this.state.namesArray);
+  };
+
   render() {
     let familyNameConfirmed = this.state.familyNameConfirmed;
+
+    const nameForFaceMask = this.state.namesArray;
+    const namesList =
+      nameForFaceMask.length > 0
+        ? nameForFaceMask.map((name, index) => {
+            return (
+              <span className="name-hook" key={index}>
+                {index + 1}. {name}{" "}
+                <button
+                  className="removeName-btn"
+                  onClick={this.removeName}
+                  value={name}
+                >
+                  X
+                </button>
+              </span>
+            );
+          })
+        : null;
+
     const avatarsImages = this.state.avatarImages;
     const avatarImgList =
       avatarsImages.length > 0
@@ -202,6 +338,7 @@ class index extends Component {
             );
           })
         : null;
+
     const avatarImagesWoodenBg =
       avatarsImages.length > 0
         ? avatarsImages.map((img, index) => {
@@ -245,7 +382,7 @@ class index extends Component {
       );
     } else {
       return (
-        <div>
+        <div id="product-screen-container-facemask">
           {this.state.familyNameConfirmed.length > 0 ? (
             <div className="virtual-wood-sign-container">
               <h3 className="virtual-wood-sign-container__heading">
@@ -260,9 +397,12 @@ class index extends Component {
                   Edit Last Name
                 </button>
               </h3>
+
               {this.state.lastnameEditMode ? (
                 <form>
-                  <label htmlFor="family-input">Type your Family Name </label>
+                  <label className="lastName-label" htmlFor="family-input">
+                    Type your Family Name{" "}
+                  </label>
                   <input
                     defaultValue={this.state.familyNameConfirmed}
                     className="lastName-input"
@@ -281,19 +421,36 @@ class index extends Component {
                 </form>
               ) : null}
               <hr />
+
               <div className="avatarImgList-wrapper">{avatarImgList}</div>
+              <div className="namesList-wrapper">
+                {nameForFaceMask.length > 0 ? (
+                  <p className="text-center nameHooks-title">
+                    These names will be on top of each hook. One hook per
+                    person.
+                  </p>
+                ) : null}
+                {namesList}
+              </div>
             </div>
           ) : null}
+          {/* {!this.state.showPreviewScreen ? (
+            
+          ) : (
+
+          )} */}
           {this.state.wallHolder === "" ? (
             <div>
-              <h1>Choose one below</h1>
+              <h1 className="wooden-sign-primary-heading">Choose one below</h1>
               <hr />
               <div className="wood-sign-images-container">
                 <div
                   onClick={this.faceMaskHandler}
                   className="wood-sign-img-parent wood-sign-img-parent__face-mask"
                 >
-                  <h1>Wooden Face Mask Wall Holder</h1>
+                  <h1 className="wooden-sign-secondary-heading">
+                    Wooden Face Mask Wall Holder
+                  </h1>
                   <img
                     className="wood-sign-images"
                     src="./images/wood-sign-face-mask.png"
@@ -305,7 +462,9 @@ class index extends Component {
                   onClick={this.keyHolderHandler}
                   className="wood-sign-img-parent wood-sign-img-parent__keys"
                 >
-                  <h1>Wooden Key Holder</h1>
+                  <h1 className="wooden-sign-secondary-heading">
+                    Wooden Key Holder
+                  </h1>
                   <img
                     className="wood-sign-images"
                     src="./images/smith-family-drawing.png"
@@ -318,68 +477,107 @@ class index extends Component {
             <div>
               {this.state.isFamilyName ? (
                 <div>
-                  <div>
-                    <label
-                      className="avatarNumber-label"
-                      htmlFor="family-input"
-                    >
-                      Type Avatar Number{" "}
-                      <i className="fas fa-arrow-alt-circle-right"></i>
-                    </label>
-                    <input
-                      className="inputNumber"
-                      value={this.state.avatar}
-                      name="avatar"
-                      onChange={this.changeHandler}
-                      id="avatar-input"
-                      type="text"
-                    />
-                    <button
-                      className="addAvatar-btn"
-                      onClick={this.addAvatarHandler}
-                    >
-                      <i className="fas fa-user-plus"></i> Add Avatar
-                    </button>
-                    <p className="error-msg-wood-sign">{this.state.errorMsg}</p>
+                  {!this.state.showPreviewScreen ? (
+                    <div>
+                      <label
+                        className="avatarNumber-label"
+                        htmlFor="family-input"
+                      >
+                        Type Avatar Number{" "}
+                        <i className="fas fa-arrow-alt-circle-right"></i>
+                      </label>
+                      <input
+                        className="inputNumber"
+                        value={this.state.avatar}
+                        name="avatar"
+                        onChange={this.changeHandler}
+                        id="avatar-input"
+                        type="text"
+                      />
+                      <button
+                        className="addAvatar-btn"
+                        onClick={
+                          this.state.wallHolder === "keyHolder"
+                            ? this.addAvatarHandler
+                            : this.addAvatarHandlerFaceMask
+                        }
+                      >
+                        <i className="fas fa-user-plus"></i> Add Avatar
+                      </button>
+                      {this.state.wallHolder === "faceMask" ? (
+                        <form>
+                          <input
+                            value={this.state.nameForFaceMask}
+                            name="nameForFaceMask"
+                            onChange={this.changeHandler}
+                            type="text"
+                          />
+                          <button onClick={this.addNameHandler}>
+                            Add Name for Hooks
+                          </button>
+                        </form>
+                      ) : null}
+                      <p className="error-msg-wood-sign">
+                        {this.state.errorMsg}
+                      </p>
 
+                      <button
+                        onClick={this.showPreviewScreenHandler}
+                        className="done-btn-wood-sign"
+                      >
+                        <i className="fas fa-user-check"></i> Click here if
+                        you're done
+                      </button>
+                    </div>
+                  ) : (
                     <button
-                      onClick={this.toggleModalToConfirmOrder}
-                      className="done-btn-wood-sign"
+                      className="reset-progress-btn"
+                      onClick={this.showPreviewScreenHandler}
                     >
-                      <i className="fas fa-user-check"></i> Click here if you're
-                      done
+                      Back to avatars
                     </button>
-                  </div>
+                  )}
+
                   {this.state.wallHolder === "faceMask" ? (
                     <div>
-                      <h1>
-                        <i className="fas fa-arrow-down"></i> Choose your
-                        avatars <i className="fas fa-arrow-down"></i>
-                      </h1>
-                      <img
-                        className="avatars-poster"
-                        src="./images/wood-sign-face-masks-avatars.png"
-                        alt="avatars"
-                      />{" "}
+                      {!this.state.showPreviewScreen ? (
+                        <div>
+                          <h1 className="choose-avatars-title">
+                            <i className="fas fa-arrow-down"></i> Choose your
+                            avatars <i className="fas fa-arrow-down"></i>
+                          </h1>
+                          <img
+                            className="avatars-poster"
+                            src="./images/wood-sign-face-masks-avatars.png"
+                            alt="avatars"
+                          />{" "}
+                        </div>
+                      ) : null}
                     </div>
                   ) : (
                     <div>
-                      <h1 className="choose-avatars-title">
-                        <i className="fas fa-arrow-down"></i> Choose your
-                        avatars and type the avatar-number above{" "}
-                        <i className="fas fa-arrow-down"></i>
-                      </h1>{" "}
-                      <img
-                        className="avatars-poster"
-                        src="./images/wood-sign-keys-avatars.png"
-                        alt="avatars"
-                      />{" "}
+                      {!this.state.showPreviewScreen ? (
+                        <div>
+                          <h1 className="choose-avatars-title">
+                            <i className="fas fa-arrow-down"></i> Choose your
+                            avatars and type the avatar-number above{" "}
+                            <i className="fas fa-arrow-down"></i>
+                          </h1>{" "}
+                          <img
+                            className="avatars-poster"
+                            src="./images/wood-sign-keys-avatars.png"
+                            alt="avatars"
+                          />{" "}
+                        </div>
+                      ) : null}
                     </div>
                   )}
                 </div>
               ) : (
                 <form>
-                  <label htmlFor="family-input">Type your Family Name </label>
+                  <label className="lastName-label" htmlFor="family-input">
+                    Type your Family Name{" "}
+                  </label>{" "}
                   <input
                     className="lastName-input"
                     name="familyInput"
@@ -399,52 +597,205 @@ class index extends Component {
             </div>
           )}
 
-          {/* Modal Confirming creation of product */}
-          <Modal
-            appElement={document.getElementById("root")}
-            isOpen={this.state.modalToConfirm}
-            onRequestClose={this.closeModal}
-            className="Modal-wood-sign"
-            overlayClassName="Overlay-wood-sign"
-          >
-            <span className="x-close-modal-step3" onClick={this.closeModal}>
-              X
-            </span>
-            <h2 className="text-center">
-              This is your product Preview <br />
-            </h2>
-            <p className="noteAvatarsTitle text-center">
-              Note: Avatars will be centered together as a group and nicely
-              distributed, <br /> so do not worry if this preview is not in the
-              middle of the image, as it is not an Exact representation of the
-              final product.
-            </p>
+          {/* Screen Confirming creation of product */}
 
-            <div className="wood-bg-img-container">
-              <h1
-                className={
-                  familyNameConfirmed.length >= 17
-                    ? "wooden-bg-family-name__long_long"
-                    : familyNameConfirmed.length >= 14
-                    ? "wooden-bg-family-name__longest"
-                    : familyNameConfirmed.length >= 10
-                    ? "wooden-bg-family-name__long"
-                    : "wooden-bg-family-name__short"
-                }
-              >
-                {familyNameConfirmed + " Family"}
-              </h1>
-              <div className="avatar-img-list-container">
-                {avatarImagesWoodenBg}
+          {this.state.showPreviewScreen ? (
+            <div className="model-content-container">
+              <p className="noteAvatarsTitle text-center">
+                Note: Avatars will be nicely distributed accordingly to the
+                chosen model, so do not worry if this preview is not in the
+                middle of the image, as it is not an Exact representation of the
+                final product.
+              </p>
+
+              <div className="model-img-container">
+                <h5
+                  className={
+                    this.state.model1 || this.state.model2 || this.state.model3
+                      ? "models-title-no-flashing"
+                      : "models-title text-center"
+                  }
+                >
+                  &#8595; Select your model &#8595;
+                </h5>
+
+                <div
+                  className={
+                    this.state.model1
+                      ? "model-img-parent--1"
+                      : "model-img-parent"
+                  }
+                >
+                  {this.state.wallHolder === "keyHolder" ? (
+                    <img
+                      className="model-img"
+                      src="./images/wood-family-model1.png"
+                      alt="model1"
+                    />
+                  ) : (
+                    <img
+                      className="model-img"
+                      src="./images/wood-family-faceMask-model1.png"
+                      alt="model1"
+                    />
+                  )}
+
+                  <Link
+                    activeClass="active"
+                    to="product-preview"
+                    spy={true}
+                    smooth={true}
+                    offset={-70}
+                    duration={500}
+                  >
+                    <p
+                      onClick={this.model1ActiveHandler}
+                      className="text-center select-model"
+                    >
+                      {" "}
+                      Select Model 1
+                    </p>
+                  </Link>
+                </div>
+                <div
+                  className={
+                    this.state.model2
+                      ? "model-img-parent--2"
+                      : "model-img-parent"
+                  }
+                >
+                  {this.state.wallHolder === "keyHolder" ? (
+                    <img
+                      className="model-img"
+                      src="./images/wood-family-model2.png"
+                      alt="model1"
+                    />
+                  ) : (
+                    <img
+                      className="model-img"
+                      src="./images/wood-family-faceMask-model2.png"
+                      alt="model1"
+                    />
+                  )}
+
+                  <Link
+                    activeClass="active"
+                    to="product-preview"
+                    spy={true}
+                    smooth={true}
+                    offset={-70}
+                    duration={500}
+                  >
+                    <p
+                      onClick={this.model2ActiveHandler}
+                      className="text-center select-model"
+                    >
+                      Select Model 2
+                    </p>
+                  </Link>
+                </div>
+                <div
+                  className={
+                    this.state.model3
+                      ? "model-img-parent--3"
+                      : "model-img-parent"
+                  }
+                >
+                  {this.state.wallHolder === "keyHolder" ? (
+                    <img
+                      className="model-img"
+                      src="./images/wood-family-model3.png"
+                      alt="model1"
+                    />
+                  ) : (
+                    <img
+                      className="model-img"
+                      src="./images/wood-family-faceMask-model3.png"
+                      alt="model1"
+                    />
+                  )}
+
+                  <Link
+                    activeClass="active"
+                    to="product-preview"
+                    spy={true}
+                    smooth={true}
+                    offset={-70}
+                    duration={500}
+                  >
+                    <p
+                      onClick={this.model3ActiveHandler}
+                      className="text-center select-model"
+                    >
+                      Select Model 3
+                    </p>
+                  </Link>
+                </div>
               </div>
-              {/* <div className="avatar-img-list-container">{avatarImgList}</div> */}
-              <img
-                className="wood-bg-img"
-                src="./images/wood-bg.png"
-                alt="wood-bg"
-              />
+              {this.state.model1 || this.state.model2 || this.state.model3 ? (
+                <div>
+                  <button
+                    className="finish-add-product-to-cart-btn"
+                    onClick={this.submitFinalProduct}
+                  >
+                    <i className="fas fa-cart-plus"></i> Finish and Add product
+                    to Cart
+                  </button>
+                  <h2 className="text-center">
+                    &#8595; Product Preview &#8595; <br />
+                  </h2>
+
+                  <div className="wood-bg-img-container">
+                    <h1
+                      className={
+                        familyNameConfirmed.length >= 17
+                          ? "wooden-bg-family-name__longest"
+                          : familyNameConfirmed.length >= 14
+                          ? "wooden-bg-family-name__longer"
+                          : familyNameConfirmed.length >= 10
+                          ? "wooden-bg-family-name__long"
+                          : "wooden-bg-family-name__short"
+                      }
+                    >
+                      {familyNameConfirmed + " Family"}
+                      {this.state.wallHolder === "faceMask" ? (
+                        <span className="text-center year-on-bg">2020</span>
+                      ) : null}
+                    </h1>
+
+                    <div className="avatar-img-list-container">
+                      {avatarImagesWoodenBg}
+                    </div>
+                    {this.state.wallHolder === "keyHolder" ? (
+                      <img
+                        className="wood-bg-img"
+                        src="./images/wood-bg.png"
+                        alt="wood-bg"
+                      />
+                    ) : (
+                      <img
+                        className="wood-bg-img"
+                        src="./images/wood-bg.jpg"
+                        alt="wood-bg"
+                      />
+                    )}
+                    <button
+                      className="finish-add-product-to-cart-btn"
+                      onClick={this.submitFinalProduct}
+                    >
+                      <i className="fas fa-cart-plus"></i> Finish and Add
+                      product to Cart
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <h4 className="text-center choose-model-title">
+                  &#8593; Select your model &#8593;
+                </h4>
+              )}
             </div>
-          </Modal>
+          ) : null}
+          <div id="product-preview"></div>
         </div>
       );
     }

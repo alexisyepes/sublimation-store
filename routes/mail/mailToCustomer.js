@@ -20,6 +20,7 @@ const sendMail = (
   totalPillowsInCart,
   totalPetTagBonesInCart,
   totalCosmeticBagsInCart,
+  totalFacemaskHolderInCart,
   shippingMethod,
   subTotal,
   tax,
@@ -45,6 +46,10 @@ const sendMail = (
     totalCosmeticBagsInCart > 0
       ? `<p>Total number of Cosmetic Bags: ${totalCosmeticBagsInCart} ($18.99 ea)</p>`
       : `<span></span>`;
+  let faceMaskHolders =
+    totalFacemaskHolderInCart > 0
+      ? `<p>Total number of Wooden Signs: ${totalFacemaskHolderInCart} ($34.99 ea)</p>`
+      : `<span></span>`;
 
   let isShipping =
     shippingMethod === "delivery"
@@ -67,6 +72,7 @@ const sendMail = (
 		${pillows} 
     ${petTags} 
     ${cosmeticBags}
+    ${faceMaskHolders}
 		<p>Subtotal: $${subTotal.toFixed(2)}</p>
 		<p>hst: $${tax}</p>
 		${isShipping}

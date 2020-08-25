@@ -1,3 +1,15 @@
+@import "../../SCSS/animations.scss";
+
+@font-face {
+  font-family: "Nueva-Std";
+  src: local("Nueva Std"), url("../../fonts/NuevaStd-Regular.otf");
+}
+
+@font-face {
+  font-family: "Nueva-Std-Bold";
+  src: local("Nueva Std"), url("../../fonts/NuevaStd-Bold.otf");
+}
+
 .face-mask-container {
   background-color: #fff;
   padding: 30px 0;
@@ -52,6 +64,27 @@
   border-radius: 5px;
 }
 
+.reset-progress-btn {
+  text-align: center;
+  margin-top: -20px;
+  padding: 4px 10px;
+  border-radius: 5px;
+  background-color: rgb(160, 11, 11);
+  color: rgb(255, 255, 255);
+  font-size: 12px;
+  box-shadow: 0px 10px 30px black;
+  cursor: pointer;
+  transition: all 0.2s;
+  backface-visibility: hidden;
+  float: right;
+
+  &:hover {
+    background-color: yellow;
+    color: black;
+    box-shadow: 0px 20px 60px black;
+  }
+}
+
 .addAvatar-btn {
   font-size: 18px;
   cursor: pointer;
@@ -62,7 +95,7 @@
 }
 
 .choose-avatars-title {
-  background-color: rgb(99, 38, 38);
+  background-color: rgb(1, 53, 73);
   padding: 10px;
   color: white;
 }
@@ -109,11 +142,28 @@
   color: red;
 }
 
-.removeAvatar {
-  font-size: 10px;
-  position: absolute;
+.name-hook {
+  background-color: rgb(95, 95, 95);
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+
+  .removeAvatar {
+    font-size: 10px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: red;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+  }
+}
+
+.removeName-btn {
+  font-size: 8px;
+  position: relative;
   top: 0;
-  right: 0;
   background-color: red;
   border-radius: 5px;
   color: white;
@@ -132,6 +182,10 @@
     color: rgb(0, 0, 0);
     font-size: 20px;
   }
+}
+
+.choose-model-title {
+  // animation: colorFlashingConfirm 1s ease-in-out infinite;
 }
 
 .avatarImgList-wrapper {
@@ -174,54 +228,41 @@
   cursor: pointer;
 }
 
-.Modal-wood-sign {
-  position: absolute;
-  margin-right: -50%;
-  transform: translate(-50%, -50%);
-  background-color: rgb(255, 255, 255);
-  padding: 30px;
-  width: 50%;
-  // display: block;
-  border: 1px black solid;
-  box-shadow: 0px 15px 100px black;
-  height: 800px;
-  top: 50%;
-  left: 50%;
-  right: auto;
-  overflow: auto;
-  margin: 10px;
-  border-radius: 10px;
-}
-
 .wooden-bg-family-name__short,
 .wooden-bg-family-name__long,
-.wooden-bg-family-name__longest,
-.wooden-bg-family-name__long_long {
+.wooden-bg-family-name__longer,
+.wooden-bg-family-name__longest {
   position: relative;
   text-align: center;
-  z-index: 2000;
-  padding-top: 40px;
+  z-index: 20;
+  top: 10px;
+  font-family: "Nueva-Std-Bold";
+  font-weight: bolder;
 }
 
 .wooden-bg-family-name__short {
-  font-size: 90px;
+  font-size: 120px;
+  top: 60px;
 }
 
 .wooden-bg-family-name__long {
+  font-size: 80px;
+  top: 40px;
+}
+
+.wooden-bg-family-name__longer {
   font-size: 70px;
+  top: 20px;
 }
 
 .wooden-bg-family-name__longest {
-  font-size: 50px;
-}
-
-.wooden-bg-family-name__long_long {
-  font-size: 40px;
+  font-size: 60px;
+  top: 0;
 }
 
 .wood-bg-img-container {
   position: relative;
-  margin: 0;
+  top: 40px;
   padding: 0;
 
   .avatar-image-woodenBg {
@@ -235,8 +276,8 @@
   }
 
   .avatar-img-list-container {
-    position: absolute;
-    top: 160px;
+    position: relative;
+    top: 30px;
     z-index: 2;
     display: grid;
     grid-template-columns: 1fr;
@@ -244,6 +285,12 @@
     column-gap: 0px;
     width: 100%;
     text-align: center;
+  }
+
+  .year-on-bg {
+    display: block;
+    font-size: 40px;
+    margin-top: -20px;
   }
 
   .avatarImg-btn-container-woodenBg:nth-child(1) {
@@ -335,22 +382,200 @@
   }
 
   .wood-bg-img {
-    top: 0;
+    top: -460px;
     left: 0;
     right: 0;
-    width: 80%;
-    position: absolute;
+    width: 76%;
+    position: relative;
     text-align: center;
     margin: auto;
     z-index: 1;
+    padding-bottom: 100px;
   }
 }
+
+.finish-add-product-to-cart-btn {
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: 700;
+  display: block;
+  width: 100%;
+  padding: 5px;
+  font-size: 18px;
+  background-color: rgb(118, 247, 92);
+  animation: colorFlashingConfirm 1s ease-in-out infinite;
+  margin-top: 15px;
+}
+
+.namesList-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto, 1fr);
+  column-gap: 5px;
+  row-gap: 5px;
+  justify-items: center;
+  .nameHooks-title {
+    grid-column: 1 / 7;
+    font-size: 18px;
+    font-weight: 700;
+  }
+}
+
+.model-content-container {
+  padding-top: 20px;
+
+  .model-img-container {
+    border: 1px solid rgb(177, 177, 177);
+    border-radius: 5px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 5px;
+    justify-items: center;
+    // margin-top: 40px;
+    padding: 10px;
+    background-color: rgb(234, 235, 236);
+
+    .models-title,
+    .models-title-no-flashing {
+      grid-column: 1 / 4;
+      margin: 5px auto;
+      font-size: 18px;
+      padding: 3px 15px;
+      border-radius: 5px;
+      width: 60%;
+    }
+
+    .models-title {
+      animation: colorFlashingConfirm 1s ease-in-out infinite;
+    }
+
+    .model-img-parent,
+    .model-img-parent--1,
+    .model-img-parent--2,
+    .model-img-parent--3 {
+      text-align: center;
+      border: 1px solid rgb(177, 177, 177);
+      border-radius: 5px;
+      padding: 10px;
+      background-color: rgb(214, 214, 214);
+    }
+
+    .model-img-parent--1,
+    .model-img-parent--2,
+    .model-img-parent--3 {
+      box-shadow: 0 0 0 6px rgb(38, 228, 20);
+    }
+
+    .model-img {
+      width: 60%;
+    }
+
+    .select-model {
+      background-color: rgb(224, 253, 176);
+      padding: 5px;
+      font-weight: 600;
+      border-radius: 5px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: rgb(65, 75, 50);
+        color: white;
+      }
+    }
+  }
+}
+
 .noteAvatarsTitle {
-  background-color: rgb(242, 245, 68);
+  background-color: rgb(246, 248, 136);
   font-size: 16px;
   font-weight: 800;
   padding: 10px;
   border-radius: 5px;
   border: 1px solid gray;
-  margin-bottom: -30px;
+  width: 90%;
+  margin: 5px auto;
+}
+
+@media only screen and (min-device-width: 760px) and (max-device-width: 970px) {
+  .wooden-sign-secondary-heading {
+    font-size: 22px;
+  }
+
+  .wooden-sign-primary-heading {
+    font-size: 25px;
+    margin-top: -20px;
+    margin-bottom: -5px;
+  }
+
+  .choose-avatars-title {
+    font-size: 22px;
+  }
+
+  .done-btn-wood-sign {
+    width: 60%;
+  }
+
+  .noteAvatarsTitle {
+    width: 90%;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 5px auto;
+  }
+}
+
+@media only screen and (min-device-width: 560px) and (max-device-width: 759px) {
+  .wooden-sign-secondary-heading {
+    font-size: 18px;
+  }
+
+  .wooden-sign-primary-heading {
+    font-size: 22px;
+    margin-top: -20px;
+    margin-bottom: -5px;
+  }
+
+  .choose-avatars-title {
+    font-size: 18px;
+  }
+
+  .done-btn-wood-sign {
+    width: 70%;
+  }
+
+  .noteAvatarsTitle {
+    width: 90%;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 5px auto;
+  }
+}
+
+@media only screen and (min-device-width: 300px) and (max-device-width: 559px) {
+  .wooden-sign-secondary-heading {
+    font-size: 10px;
+  }
+
+  .wooden-sign-primary-heading {
+    font-size: 18px;
+    margin-top: -10px;
+    margin-bottom: -5px;
+  }
+
+  .lastName-label {
+    font-size: 14px;
+  }
+
+  .lastName-input {
+    width: 90%;
+    margin: 5px;
+  }
+
+  .choose-avatars-title {
+    font-size: 16px;
+  }
+
+  .done-btn-wood-sign {
+    width: 100%;
+  }
 }

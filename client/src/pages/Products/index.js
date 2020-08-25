@@ -192,6 +192,10 @@ const product = [
       name: "cosmeticBag",
       price: 1899,
     },
+    WoodSign: {
+      name: "woodSign",
+      price: 3499,
+    },
   },
 ];
 
@@ -254,6 +258,7 @@ export default class index extends Component {
       totalKeychainsInCart: 0,
       totalPetTagBonesInCart: 0,
       totalCosmeticBagsInCart: 0,
+      totalFacemaskHolderInCart: 0,
       firstName: "",
       email: "",
       address: "",
@@ -276,6 +281,9 @@ export default class index extends Component {
       petTagBonePhone: "123456789",
       petTagBonePetName: "Elsa",
       boneColor: "blue",
+
+      //Avatars
+      avatarsArray: [],
     };
   }
 
@@ -471,6 +479,7 @@ export default class index extends Component {
         textFormatOptionsForPetTagBone: false,
         textFormatOptions: false,
         notChecked: true,
+        faceMaskHolderChosen: false,
         // cart: 0,
         totalMugsInCart: 0,
         totalShirtsInCart: 0,
@@ -517,6 +526,7 @@ export default class index extends Component {
       petTagBonePetName: "Elsa",
       textFormatOptionsForPetTagBone: false,
       textFormatOptionsForCosmeticBag: false,
+      faceMaskHolderChosen: false,
     });
     this.props.resetQty();
   };
@@ -768,6 +778,38 @@ export default class index extends Component {
     });
   };
 
+  screenshotFaceMaskHolder = async () => {
+    this.toggleModalToConfirmOrder();
+
+    await html2canvas(
+      document.getElementById("product-screen-container-facemask"),
+      {
+        width: 1400,
+        height: 2800,
+      }
+    ).then(async (canvas) => {
+      // zip and convert
+      var zip = new JSZip();
+      var savable = new Image();
+      savable.src = canvas.toDataURL("image/jpeg", 0.5);
+      zip.file("image.png", savable.src.substr(savable.src.indexOf(",") + 1), {
+        base64: true,
+      });
+
+      await this.setState({
+        screenshot: [...this.state.screenshot, savable.src],
+        toggleStep3: true,
+        toggleStep2: false,
+        productToPay: this.state.productToPay.concat(
+          product[0].WoodSign.price * this.props.qty
+        ),
+        totalFacemaskHolderInCart:
+          this.state.totalFacemaskHolderInCart + this.props.qty,
+      });
+      this.props.updateCart();
+    });
+  };
+
   goBackToStep2 = async () => {
     if (
       window.confirm(
@@ -979,7 +1021,7 @@ export default class index extends Component {
                   className="product-select"
                   onClick={this.handleFaceMaskHolder}
                 >
-                  Face Mask Wall Holder 11"w X 8.5"h ($34.99)
+                  Wooden Wall Holder 11"w X 8.5"h ($34.99)
                 </h2>
                 <h2 className="product-select">More products coming soon...</h2>
                 {/* <h2 className="product-select" onClick={this.handleKeychainImg}>
@@ -1083,6 +1125,20 @@ export default class index extends Component {
                       </p>
                     </div>
                   ) : null}
+                  {this.state.totalFacemaskHolderInCart > 0 ? (
+                    <div>
+                      <p className="checkout-preview-elements">
+                        Total Wooden Signs in Cart:{" "}
+                        {this.state.totalFacemaskHolderInCart} {""}
+                        <span>
+                          (Wooden Sign: $
+                          {(product[0].WoodSign.price * 0.01).toFixed(2)}
+                          {""}
+                          ea)
+                        </span>
+                      </p>
+                    </div>
+                  ) : null}
                   <p className="checkout-preview-elements">
                     Sub-Total: $
                     {(
@@ -1098,7 +1154,10 @@ export default class index extends Component {
                         this.state.totalPetTagBonesInCart +
                       product[0].CosmeticBag.price *
                         0.01 *
-                        this.state.totalCosmeticBagsInCart
+                        this.state.totalCosmeticBagsInCart +
+                      product[0].WoodSign.price *
+                        0.01 *
+                        this.state.totalFacemaskHolderInCart
                     ).toFixed(2)}
                   </p>
                   <p className="checkout-preview-elements">
@@ -1122,6 +1181,10 @@ export default class index extends Component {
                         0.13 +
                       product[0].CosmeticBag.price *
                         this.state.totalCosmeticBagsInCart *
+                        0.01 *
+                        0.13 +
+                      product[0].WoodSign.price *
+                        this.state.totalFacemaskHolderInCart *
                         0.01 *
                         0.13
                     ).toFixed(2)}
@@ -1190,23 +1253,25 @@ export default class index extends Component {
               <div>
                 <div className="product-image-container text-center">
                   {this.state.toggleSelectProductBtn ? (
-                    <button
-                      onClick={this.productSelectedConfirmed}
-                      className="confirm-product-button"
-                    >
-                      <span aria-label="0" role="img">
-                        &#10003;{" "}
-                      </span>
-                      Click here to build your product
-                    </button>
+                    <div>
+                      <button
+                        onClick={this.productSelectedConfirmed}
+                        className="confirm-product-button"
+                      >
+                        <span aria-label="0" role="img">
+                          &#10003;{" "}
+                        </span>
+                        Build this product
+                      </button>
+                    </div>
                   ) : (
                     <div className="startover-btn-container">
-                      <button
+                      <span
                         onClick={this.resetForNewProduct}
                         className="startOver-button"
                       >
                         &#8634; Back to Step 1
-                      </button>
+                      </span>
                     </div>
                   )}
 
@@ -1295,14 +1360,14 @@ export default class index extends Component {
                     </Fragment>
                   ) : null}
                   {this.state.step2ActualProd === "faceMaskHolder" ? (
-                    <Fragment>
+                    <div>
                       <FaceMaskHolder
-                        // petName={this.state.petTagBonePetName}
+                        avatarsArray={this.addAvatarsToArray}
                         img={this.state.productImgFaceMaskHolder}
                         faceMaskWasChosen={this.state.faceMaskHolderChosen}
-                        // imagePreviewUrl={this.state.imagePreviewUrl}
+                        screenShotFunction={this.screenshotFaceMaskHolder}
                       />
-                    </Fragment>
+                    </div>
                   ) : null}
                 </div>
               </div>
@@ -1667,6 +1732,20 @@ export default class index extends Component {
                         </p>
                       </div>
                     ) : null}
+                    {this.state.totalFacemaskHolderInCart > 0 ? (
+                      <div>
+                        <p>
+                          Total Wooden Signs in Cart:{" "}
+                          {this.state.totalFacemaskHolderInCart} {""}
+                          <span>
+                            (Wooden Sign: $
+                            {(product[0].WoodSign.price * 0.01).toFixed(2)}
+                            {""}
+                            ea)
+                          </span>
+                        </p>
+                      </div>
+                    ) : null}
                     <p>
                       Sub-Total: $
                       {(
@@ -1684,7 +1763,10 @@ export default class index extends Component {
                           this.state.totalPetTagBonesInCart +
                         product[0].CosmeticBag.price *
                           0.01 *
-                          this.state.totalCosmeticBagsInCart
+                          this.state.totalCosmeticBagsInCart +
+                        product[0].WoodSign.price *
+                          0.01 *
+                          this.state.totalFacemaskHolderInCart
                       ).toFixed(2)}
                     </p>
                     <p>
@@ -1710,6 +1792,10 @@ export default class index extends Component {
                             0.13 +
                           product[0].CosmeticBag.price *
                             this.state.totalCosmeticBagsInCart *
+                            0.01 *
+                            0.13 +
+                          product[0].WoodSign.price *
+                            this.state.totalFacemaskHolderInCart *
                             0.01 *
                             0.13
                         ).toFixed(2)
@@ -1865,6 +1951,9 @@ export default class index extends Component {
                     totalPillowsInCart={this.state.totalPillowsInCart}
                     totalPetTagBonesInCart={this.state.totalPetTagBonesInCart}
                     totalCosmeticBagsInCart={this.state.totalCosmeticBagsInCart}
+                    totalFacemaskHolderInCart={
+                      this.state.totalFacemaskHolderInCart
+                    }
                     firstName={this.state.firstName}
                     email={this.state.email}
                     address={this.state.address}
@@ -1885,7 +1974,10 @@ export default class index extends Component {
                         this.state.totalPetTagBonesInCart +
                       product[0].CosmeticBag.price *
                         0.01 *
-                        this.state.totalCosmeticBagsInCart
+                        this.state.totalCosmeticBagsInCart +
+                      product[0].WoodSign.price *
+                        0.01 *
+                        this.state.totalFacemaskHolderInCart
                     }
                     tax={(
                       0.13 * this.state.mugPrice * this.state.totalMugsInCart +
@@ -1903,6 +1995,10 @@ export default class index extends Component {
                         0.13 +
                       product[0].CosmeticBag.price *
                         this.state.totalCosmeticBagsInCart *
+                        0.01 *
+                        0.13 +
+                      product[0].WoodSign.price *
+                        this.state.totalFacemaskHolderInCart *
                         0.01 *
                         0.13
                     ).toFixed(2)}
