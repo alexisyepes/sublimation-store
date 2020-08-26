@@ -56,12 +56,20 @@
   border-radius: 5px;
 }
 
-.inputNumber {
-  width: 50px;
+.inputNumber,
+.inputName {
   padding: 7px;
   border: 4px solid black;
   margin: 5px;
   border-radius: 5px;
+}
+
+.inputNumber {
+  width: 50px;
+}
+
+.inputName {
+  width: 100px;
 }
 
 .reset-progress-btn {
@@ -147,17 +155,16 @@
   color: white;
   padding: 5px;
   border-radius: 5px;
-
-  .removeAvatar {
-    font-size: 10px;
-    position: absolute;
-    top: 0;
-    right: 0;
-    background-color: red;
-    border-radius: 5px;
-    color: white;
-    cursor: pointer;
-  }
+}
+.removeAvatar {
+  font-size: 10px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: red;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
 }
 
 .removeName-btn {
@@ -218,8 +225,9 @@
 .done-btn-wood-sign {
   display: block;
   font-size: 18px;
-  background-color: rgb(18, 143, 49);
-  color: white;
+  font-weight: 700;
+  background-color: rgb(107, 247, 142);
+  color: rgb(7, 7, 7);
   padding: 5px 15px;
   width: 40%;
   border-radius: 5px;
@@ -235,34 +243,30 @@
   position: relative;
   text-align: center;
   z-index: 20;
-  top: 10px;
+  top: 60px;
   font-family: "Nueva-Std-Bold";
   font-weight: bolder;
 }
 
 .wooden-bg-family-name__short {
   font-size: 120px;
-  top: 60px;
 }
 
 .wooden-bg-family-name__long {
   font-size: 80px;
-  top: 40px;
 }
 
 .wooden-bg-family-name__longer {
   font-size: 70px;
-  top: 20px;
 }
 
 .wooden-bg-family-name__longest {
   font-size: 60px;
-  top: 0;
 }
 
 .wood-bg-img-container {
   position: relative;
-  top: 40px;
+  top: -30px;
   padding: 0;
 
   .avatar-image-woodenBg {
@@ -285,6 +289,20 @@
     column-gap: 0px;
     width: 100%;
     text-align: center;
+  }
+
+  .namesList-on-bg-wrapper {
+    // position: relative;
+    font-family: "Nueva-Std-Bold";
+    font-size: 45px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 60px;
+
+    .name-hook-container {
+      margin: 0 30px;
+    }
   }
 
   .year-on-bg {
@@ -391,6 +409,30 @@
     margin: auto;
     z-index: 1;
     padding-bottom: 100px;
+  }
+
+  .wood-bg-img-container-faceMask,
+  .wood-bg-img-container-keyHolder {
+    top: -30px;
+    left: 0;
+    right: 0;
+    width: 90%;
+    height: auto;
+    position: relative;
+    text-align: center;
+    margin: auto;
+    z-index: 1;
+    padding-bottom: 100px;
+    background-position: center;
+    background-size: cover;
+  }
+  .wood-bg-img-container-faceMask {
+    background-image: url("/images/wood-bg.jpg");
+  }
+
+  .wood-bg-img-container-keyHolder {
+    background-image: url("/images/wood-bg.png");
+    height: 800px;
   }
 }
 

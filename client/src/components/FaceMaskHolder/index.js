@@ -255,6 +255,19 @@ class index extends Component {
   };
 
   showPreviewScreenHandler = () => {
+    if (this.state.avatarImages.length < 1) {
+      return this.setState({
+        errorMsg: "Oops! You must add your avatar numbers above",
+      });
+    }
+    if (
+      this.state.namesArray.length === 0 &&
+      this.state.wallHolder === "faceMask"
+    ) {
+      return this.setState({
+        errorMsg: "Oops! You forgot to add the names for the wall hooks",
+      });
+    }
     this.setState({
       showPreviewScreen: !this.state.showPreviewScreen,
       avatar: "",
@@ -289,13 +302,19 @@ class index extends Component {
   addNameHandler = async (e) => {
     e.preventDefault();
     if (this.state.nameForFaceMask === "") {
-      return;
+      return this.setState({
+        errorMsg: "Field cannot be blank",
+      });
     }
     await this.setState((prevState) => ({
-      namesArray: [...prevState.namesArray, this.state.nameForFaceMask],
+      namesArray: [
+        ...prevState.namesArray,
+        this.state.nameForFaceMask.charAt(0).toUpperCase() +
+          this.state.nameForFaceMask.slice(1),
+      ],
       nameForFaceMask: "",
+      errorMsg: "",
     }));
-    console.log(this.state.namesArray);
   };
 
   render() {
@@ -308,14 +327,28 @@ class index extends Component {
             return (
               <span className="name-hook" key={index}>
                 {index + 1}. {name}{" "}
-                <button
-                  className="removeName-btn"
-                  onClick={this.removeName}
-                  value={name}
-                >
-                  X
-                </button>
+                {this.state.showPreviewScreen ? null : (
+                  <button
+                    className="removeName-btn"
+                    onClick={this.removeName}
+                    value={name}
+                  >
+                    X
+                  </button>
+                )}
               </span>
+            );
+          })
+        : null;
+
+    const namesListForBg =
+      nameForFaceMask.length > 0
+        ? nameForFaceMask.map((name, index) => {
+            return (
+              <div key={index} className="name-hook-container">
+                <p className="name-hook-on-bg">{name}</p>
+                <img src="./images/hook-single.png" alt="wall hook" />
+              </div>
             );
           })
         : null;
@@ -327,13 +360,15 @@ class index extends Component {
             return (
               <div key={index} className="avatarImg-btn-container">
                 <img className="avatar-image" src={img} alt="avatar" />
-                <button
-                  onClick={this.removeAvatar}
-                  value={img}
-                  className="removeAvatar"
-                >
-                  x
-                </button>
+                {this.state.showPreviewScreen ? null : (
+                  <button
+                    onClick={this.removeAvatar}
+                    value={img}
+                    className="removeAvatar"
+                  >
+                    x
+                  </button>
+                )}
               </div>
             );
           })
@@ -434,11 +469,7 @@ class index extends Component {
               </div>
             </div>
           ) : null}
-          {/* {!this.state.showPreviewScreen ? (
-            
-          ) : (
 
-          )} */}
           {this.state.wallHolder === "" ? (
             <div>
               <h1 className="wooden-sign-primary-heading">Choose one below</h1>
@@ -506,13 +537,21 @@ class index extends Component {
                       </button>
                       {this.state.wallHolder === "faceMask" ? (
                         <form>
+                          <label className="avatarNumber-label">
+                            Add Names{" "}
+                            <i className="fas fa-arrow-alt-circle-right"></i>
+                          </label>
                           <input
+                            className="inputName"
                             value={this.state.nameForFaceMask}
                             name="nameForFaceMask"
                             onChange={this.changeHandler}
                             type="text"
                           />
-                          <button onClick={this.addNameHandler}>
+                          <button
+                            className="addAvatar-btn"
+                            onClick={this.addNameHandler}
+                          >
                             Add Name for Hooks
                           </button>
                         </form>
@@ -521,11 +560,13 @@ class index extends Component {
                         {this.state.errorMsg}
                       </p>
 
+                      <hr />
+
                       <button
                         onClick={this.showPreviewScreenHandler}
                         className="done-btn-wood-sign"
                       >
-                        <i className="fas fa-user-check"></i> Click here if
+                        <i className="fas fa-user-check"></i> Click here when
                         you're done
                       </button>
                     </div>
@@ -534,7 +575,7 @@ class index extends Component {
                       className="reset-progress-btn"
                       onClick={this.showPreviewScreenHandler}
                     >
-                      Back to avatars
+                      Back to edit avatars
                     </button>
                   )}
 
@@ -602,10 +643,14 @@ class index extends Component {
           {this.state.showPreviewScreen ? (
             <div className="model-content-container">
               <p className="noteAvatarsTitle text-center">
-                Note: Avatars will be nicely distributed accordingly to the
-                chosen model, so do not worry if this preview is not in the
-                middle of the image, as it is not an Exact representation of the
-                final product.
+                Note: Avatars{" "}
+                {this.state.wallHolder === "faceMask" ? (
+                  <span>and Names</span>
+                ) : null}{" "}
+                will be nicely distributed accordingly to the chosen model when
+                we make the product, so do not worry if this preview is not in
+                the middle of the image as it is not an Exact representation of
+                the final product.
               </p>
 
               <div className="model-img-container">
@@ -746,39 +791,40 @@ class index extends Component {
                   </h2>
 
                   <div className="wood-bg-img-container">
-                    <h1
+                    <div
                       className={
-                        familyNameConfirmed.length >= 17
-                          ? "wooden-bg-family-name__longest"
-                          : familyNameConfirmed.length >= 14
-                          ? "wooden-bg-family-name__longer"
-                          : familyNameConfirmed.length >= 10
-                          ? "wooden-bg-family-name__long"
-                          : "wooden-bg-family-name__short"
+                        this.state.wallHolder === "faceMask"
+                          ? "wood-bg-img-container-faceMask"
+                          : "wood-bg-img-container-keyHolder"
                       }
                     >
-                      {familyNameConfirmed + " Family"}
-                      {this.state.wallHolder === "faceMask" ? (
-                        <span className="text-center year-on-bg">2020</span>
-                      ) : null}
-                    </h1>
+                      <h1
+                        className={
+                          familyNameConfirmed.length >= 17
+                            ? "wooden-bg-family-name__longest"
+                            : familyNameConfirmed.length >= 14
+                            ? "wooden-bg-family-name__longer"
+                            : familyNameConfirmed.length >= 10
+                            ? "wooden-bg-family-name__long"
+                            : "wooden-bg-family-name__short"
+                        }
+                      >
+                        {familyNameConfirmed + " Family"}
+                        {this.state.wallHolder === "faceMask" ? (
+                          <span className="text-center year-on-bg">2020</span>
+                        ) : null}
+                      </h1>
 
-                    <div className="avatar-img-list-container">
-                      {avatarImagesWoodenBg}
+                      <div className="avatar-img-list-container">
+                        {avatarImagesWoodenBg}
+                      </div>
+                      {this.state.wallHolder === "faceMask" ? (
+                        <div className="namesList-on-bg-wrapper">
+                          {namesListForBg}
+                        </div>
+                      ) : null}
                     </div>
-                    {this.state.wallHolder === "keyHolder" ? (
-                      <img
-                        className="wood-bg-img"
-                        src="./images/wood-bg.png"
-                        alt="wood-bg"
-                      />
-                    ) : (
-                      <img
-                        className="wood-bg-img"
-                        src="./images/wood-bg.jpg"
-                        alt="wood-bg"
-                      />
-                    )}
+
                     <button
                       className="finish-add-product-to-cart-btn"
                       onClick={this.submitFinalProduct}
