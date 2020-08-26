@@ -21,6 +21,7 @@ class index extends Component {
       model3: false,
       chosenModel: false,
       showPreviewScreen: false,
+      showWarningMsg: false,
       nameForFaceMask: "",
       namesArray: [],
     };
@@ -46,6 +47,11 @@ class index extends Component {
 
   addAvatarHandler = async (e) => {
     e.preventDefault();
+    if (this.state.avatarImages.length === 10) {
+      return this.setState({
+        errorMsg: "Sorry! You've entered the maximum number of avatars allowed",
+      });
+    }
 
     let chosenImg;
     if (this.state.avatar === "1") {
@@ -119,69 +125,87 @@ class index extends Component {
 
   addAvatarHandlerFaceMask = async (e) => {
     e.preventDefault();
+    if (this.state.avatarImages.length === 10) {
+      return this.setState({
+        errorMsg: "Sorry! You've entered the maximum number of avatars allowed",
+      });
+    }
 
     let chosenImg;
     if (this.state.avatar === "1") {
-      chosenImg = "./images/elsa.jpg";
+      chosenImg = "./images/avatars-facemask/avatar1.png";
     } else if (this.state.avatar === "2") {
-      chosenImg = "./images/avatars/avatar2.png";
+      chosenImg = "./images/avatars-facemask/avatar2.png";
     } else if (this.state.avatar === "3") {
-      chosenImg = "./images/avatars/avatar3.png";
+      chosenImg = "./images/avatars-facemask/avatar3.png";
     } else if (this.state.avatar === "4") {
-      chosenImg = "./images/avatars/avatar4.png";
+      chosenImg = "./images/avatars-facemask/avatar4.png";
     } else if (this.state.avatar === "5") {
-      chosenImg = "./images/avatars/avatar5.png";
+      chosenImg = "./images/avatars-facemask/avatar5.png";
     } else if (this.state.avatar === "6") {
-      chosenImg = "./images/avatars/avatar6.png";
+      chosenImg = "./images/avatars-facemask/avatar6.png";
     } else if (this.state.avatar === "7") {
-      chosenImg = "./images/avatars/avatar7.png";
+      chosenImg = "./images/avatars-facemask/avatar7.png";
     } else if (this.state.avatar === "8") {
-      chosenImg = "./images/avatars/avatar8.png";
+      chosenImg = "./images/avatars-facemask/avatar8.png";
     } else if (this.state.avatar === "9") {
-      chosenImg = "./images/avatars/avatar9.png";
+      chosenImg = "./images/avatars-facemask/avatar9.png";
     } else if (this.state.avatar === "10") {
-      chosenImg = "./images/avatars/avatar10.png";
+      chosenImg = "./images/avatars-facemask/avatar10.png";
     } else if (this.state.avatar === "11") {
-      chosenImg = "./images/avatars/avatar11.png";
+      chosenImg = "./images/avatars-facemask/avatar11.png";
     } else if (this.state.avatar === "12") {
-      chosenImg = "./images/avatars/avatar12.png";
+      chosenImg = "./images/avatars-facemask/avatar12.png";
     } else if (this.state.avatar === "13") {
-      chosenImg = "./images/avatars/avatar13.png";
+      chosenImg = "./images/avatars-facemask/avatar13.png";
     } else if (this.state.avatar === "14") {
-      chosenImg = "./images/avatars/avatar14.png";
+      chosenImg = "./images/avatars-facemask/avatar14.png";
     } else if (this.state.avatar === "15") {
-      chosenImg = "./images/avatars/avatar15.png";
+      chosenImg = "./images/avatars-facemask/avatar15.png";
     } else if (this.state.avatar === "16") {
-      chosenImg = "./images/avatars/avatar16.png";
+      chosenImg = "./images/avatars-facemask/avatar16.png";
     } else if (this.state.avatar === "17") {
-      chosenImg = "./images/avatars/avatar17.png";
+      chosenImg = "./images/avatars-facemask/avatar17.png";
     } else if (this.state.avatar === "18") {
-      chosenImg = "./images/avatars/avatar18.png";
+      chosenImg = "./images/avatars-facemask/avatar18.png";
     } else if (this.state.avatar === "19") {
-      chosenImg = "./images/avatars/avatar19.png";
+      chosenImg = "./images/avatars-facemask/avatar19.png";
     } else if (this.state.avatar === "20") {
-      chosenImg = "./images/avatars/avatar20.png";
+      chosenImg = "./images/avatars-facemask/avatar20.png";
     } else if (this.state.avatar === "21") {
-      chosenImg = "./images/avatars/avatar21.png";
+      chosenImg = "./images/avatars-facemask/avatar21.png";
     } else if (this.state.avatar === "22") {
-      chosenImg = "./images/avatars/avatar22.png";
+      chosenImg = "./images/avatars-facemask/avatar22.png";
     } else if (this.state.avatar === "23") {
-      chosenImg = "./images/avatars/avatar23.png";
+      chosenImg = "./images/avatars-facemask/avatar23.png";
     } else if (this.state.avatar === "24") {
-      chosenImg = "./images/avatars/avatar24.png";
+      chosenImg = "./images/avatars-facemask/avatar24.png";
     } else if (this.state.avatar === "25") {
-      chosenImg = "./images/avatars/avatar25.png";
+      chosenImg = "./images/avatars-facemask/avatar25.png";
     } else if (this.state.avatar === "26") {
-      chosenImg = "./images/avatars/avatar26.png";
+      chosenImg = "./images/avatars-facemask/avatar26.png";
     } else if (this.state.avatar === "27") {
-      chosenImg = "./images/avatars/avatar27.png";
+      chosenImg = "./images/avatars-facemask/avatar27.png";
     } else if (this.state.avatar === "28") {
-      chosenImg = "./images/avatars/avatar28.png";
+      chosenImg = "./images/avatars-facemask/avatar28.png";
+    } else if (this.state.avatar === "29") {
+      chosenImg = "./images/avatars-facemask/avatar29.png";
+    } else if (this.state.avatar === "30") {
+      chosenImg = "./images/avatars-facemask/avatar30.png";
+    } else if (this.state.avatar === "31") {
+      chosenImg = "./images/avatars-facemask/avatar31.png";
+    } else if (this.state.avatar === "32") {
+      chosenImg = "./images/avatars-facemask/avatar32.png";
+    } else if (this.state.avatar === "33") {
+      chosenImg = "./images/avatars-facemask/avatar33.png";
+    } else if (this.state.avatar === "34") {
+      chosenImg = "./images/avatars-facemask/avatar34.png";
     } else {
       return await this.setState({
         errorMsg: "Enter numbers only between 1 and 28!",
       });
     }
+
     await this.setState((prevState) => ({
       avatarNumber: [...prevState.avatarNumber, this.state.avatar],
       avatarImages: [...prevState.avatarImages, chosenImg],
@@ -235,6 +259,7 @@ class index extends Component {
       model1: true,
       model2: false,
       model3: false,
+      showWarningMsg: true,
     });
   };
 
@@ -243,6 +268,7 @@ class index extends Component {
       model2: true,
       model1: false,
       model3: false,
+      showWarningMsg: true,
     });
   };
 
@@ -251,6 +277,7 @@ class index extends Component {
       model3: true,
       model1: false,
       model2: false,
+      showWarningMsg: true,
     });
   };
 
@@ -278,25 +305,12 @@ class index extends Component {
     });
   };
 
-  submitFinalProduct = () => {
-    this.props.screenShotFunction();
-    this.setState({
-      wallHolder: "",
-      familyInput: "",
-      familyNameConfirmed: "",
-      avatarNumber: [],
-      avatarImages: [],
-      avatar: "",
-      isFamilyName: false,
-      errorMsg: "",
-      modalToConfirm: false,
-      lastnameEditMode: false,
-      model1: false,
-      model2: false,
-      model3: false,
-      chosenModel: false,
-      showPreviewScreen: false,
+  submitFinalProduct = async () => {
+    await this.setState({
+      showWarningMsg: false,
     });
+
+    this.props.screenShotFunction();
   };
 
   addNameHandler = async (e) => {
@@ -304,6 +318,11 @@ class index extends Component {
     if (this.state.nameForFaceMask === "") {
       return this.setState({
         errorMsg: "Field cannot be blank",
+      });
+    }
+    if (this.state.namesArray.length === 6) {
+      return this.setState({
+        errorMsg: "Sorry!, you've entered the maximum number of names allowed",
       });
     }
     await this.setState((prevState) => ({
@@ -345,8 +364,25 @@ class index extends Component {
       nameForFaceMask.length > 0
         ? nameForFaceMask.map((name, index) => {
             return (
-              <div key={index} className="name-hook-container">
-                <p className="name-hook-on-bg">{name}</p>
+              <div
+                key={index}
+                className={
+                  nameForFaceMask.length <= 3
+                    ? "name-hook-container__lessThan3"
+                    : nameForFaceMask.length <= 5
+                    ? "name-hook-container__range4-5"
+                    : "name-hook-container__range6"
+                }
+              >
+                <p
+                  className={
+                    nameForFaceMask.length < 6
+                      ? "name-hook-on-bg"
+                      : "name-hook-on-bg__smallerFontSize"
+                  }
+                >
+                  {name}
+                </p>
                 <img src="./images/hook-single.png" alt="wall hook" />
               </div>
             );
@@ -460,10 +496,13 @@ class index extends Component {
               <div className="avatarImgList-wrapper">{avatarImgList}</div>
               <div className="namesList-wrapper">
                 {nameForFaceMask.length > 0 ? (
-                  <p className="text-center nameHooks-title">
-                    These names will be on top of each hook. One hook per
-                    person.
-                  </p>
+                  <div className="nameHooks-title">
+                    <p className="text-center">
+                      These names will be on top of each hook. Only add the
+                      person's names and not the pet's names
+                    </p>
+                    <hr />
+                  </div>
                 ) : null}
                 {namesList}
               </div>
@@ -519,6 +558,7 @@ class index extends Component {
                       </label>
                       <input
                         className="inputNumber"
+                        placeholder="type here"
                         value={this.state.avatar}
                         name="avatar"
                         onChange={this.changeHandler}
@@ -543,6 +583,7 @@ class index extends Component {
                           </label>
                           <input
                             className="inputName"
+                            placeholder="type here"
                             value={this.state.nameForFaceMask}
                             name="nameForFaceMask"
                             onChange={this.changeHandler}
@@ -642,17 +683,6 @@ class index extends Component {
 
           {this.state.showPreviewScreen ? (
             <div className="model-content-container">
-              <p className="noteAvatarsTitle text-center">
-                Note: Avatars{" "}
-                {this.state.wallHolder === "faceMask" ? (
-                  <span>and Names</span>
-                ) : null}{" "}
-                will be nicely distributed accordingly to the chosen model when
-                we make the product, so do not worry if this preview is not in
-                the middle of the image as it is not an Exact representation of
-                the final product.
-              </p>
-
               <div className="model-img-container">
                 <h5
                   className={
@@ -789,6 +819,25 @@ class index extends Component {
                   <h2 className="text-center">
                     &#8595; Product Preview &#8595; <br />
                   </h2>
+                  {this.state.showWarningMsg ? (
+                    <p className="noteAvatarsTitle text-center">
+                      <span className="important">IMPORTANT</span>: Avatars{" "}
+                      {this.state.wallHolder === "faceMask" ? (
+                        <span>and Names</span>
+                      ) : null}{" "}
+                      will be nicely distributed and positioned, accordingly to
+                      the chosen model when we make the product.{" "}
+                      <span className="important">
+                        {" "}
+                        <br />
+                        We will arrange and fix the position of the items the
+                        same way as the chosen model.
+                      </span>{" "}
+                      This Preview represents the avatars and the names to be
+                      used to create the design; therefore, it's not an actual
+                      representation of the final product.
+                    </p>
+                  ) : null}
 
                   <div className="wood-bg-img-container">
                     <div
@@ -819,8 +868,13 @@ class index extends Component {
                         {avatarImagesWoodenBg}
                       </div>
                       {this.state.wallHolder === "faceMask" ? (
-                        <div className="namesList-on-bg-wrapper">
-                          {namesListForBg}
+                        <div>
+                          <h2 className="text-center heading-faceMasStation">
+                            Face-Mask Station
+                          </h2>
+                          <div className="namesList-on-bg-wrapper">
+                            {namesListForBg}
+                          </div>
                         </div>
                       ) : null}
                     </div>

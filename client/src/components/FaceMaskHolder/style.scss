@@ -65,7 +65,7 @@
 }
 
 .inputNumber {
-  width: 50px;
+  width: 60px;
 }
 
 .inputName {
@@ -291,17 +291,38 @@
     text-align: center;
   }
 
+  .heading-faceMasStation {
+    font-size: 40px;
+    margin-top: 40px;
+    margin-bottom: -35px;
+    font-family: "Nueva-Std-Bold";
+  }
   .namesList-on-bg-wrapper {
     // position: relative;
     font-family: "Nueva-Std-Bold";
-    font-size: 45px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin-top: 60px;
+    margin-top: 0px;
 
-    .name-hook-container {
-      margin: 0 30px;
+    .name-hook-container__lessThan3 {
+      margin: 0 10%;
+    }
+
+    .name-hook-container__range4-5 {
+      margin: 0 2%;
+    }
+
+    .name-hook-container__range6 {
+      margin: 0 2%;
+    }
+
+    .name-hook-on-bg {
+      font-size: 45px;
+    }
+
+    .name-hook-on-bg__smallerFontSize {
+      font-size: 35px;
     }
   }
 
@@ -391,12 +412,12 @@
   .avatarImg-btn-container-woodenBg__severalAvatars:nth-child(9) {
     grid-column: 1 / 2;
     grid-row: 1;
-    margin-left: 55%;
+    margin-left: 52%;
   }
   .avatarImg-btn-container-woodenBg__severalAvatars:nth-child(10) {
     grid-column: 1 / 2;
     grid-row: 1;
-    margin-left: 65%;
+    margin-left: 62%;
   }
 
   .wood-bg-img {
@@ -527,14 +548,18 @@
 }
 
 .noteAvatarsTitle {
-  background-color: rgb(246, 248, 136);
+  animation: colorFlashingYellow 3s ease-in-out infinite;
   font-size: 16px;
   font-weight: 800;
   padding: 10px;
   border-radius: 5px;
-  border: 1px solid gray;
+  border: 5px solid rgb(255, 2, 2);
   width: 90%;
   margin: 5px auto;
+
+  .important {
+    color: red;
+  }
 }
 
 @media only screen and (min-device-width: 760px) and (max-device-width: 970px) {

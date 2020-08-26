@@ -71,3 +71,17 @@
     background-color: rgb(226, 250, 181);
   }
 }
+
+@keyframes colorFlashingYellow {
+  0% {
+    background-color: rgb(234, 248, 209);
+  }
+
+  50% {
+    background-color: rgb(219, 230, 125);
+  }
+
+  100% {
+    background-color: rgb(226, 250, 181);
+  }
+}
