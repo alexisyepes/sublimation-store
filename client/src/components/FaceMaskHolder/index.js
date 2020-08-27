@@ -24,6 +24,7 @@ class index extends Component {
       showWarningMsg: false,
       nameForFaceMask: "",
       namesArray: [],
+      showModelSelected: false,
     };
   }
 
@@ -50,6 +51,16 @@ class index extends Component {
     if (this.state.avatarImages.length === 10) {
       return this.setState({
         errorMsg: "Sorry! You've entered the maximum number of avatars allowed",
+      });
+    }
+    if (this.state.avatar === "") {
+      return this.setState({
+        errorMsg: "Enter a number!",
+      });
+    }
+    if (isNaN(this.state.avatar)) {
+      return this.setState({
+        errorMsg: "Type numbers only in this field!",
       });
     }
 
@@ -110,9 +121,161 @@ class index extends Component {
       chosenImg = "./images/avatars/avatar27.png";
     } else if (this.state.avatar === "28") {
       chosenImg = "./images/avatars/avatar28.png";
+    } else if (this.state.avatar === "29") {
+      chosenImg = "./images/avatars/avatar29.png";
+    } else if (this.state.avatar === "30") {
+      chosenImg = "./images/avatars/avatar30.png";
+    } else if (this.state.avatar === "31") {
+      chosenImg = "./images/avatars/avatar31.png";
+    } else if (this.state.avatar === "32") {
+      chosenImg = "./images/avatars/avatar32.png";
+    } else if (this.state.avatar === "33") {
+      chosenImg = "./images/avatars/avatar33.png";
+    } else if (this.state.avatar === "34") {
+      chosenImg = "./images/avatars/avatar34.png";
+    } else if (this.state.avatar === "35") {
+      chosenImg = "./images/avatars/avatar35.png";
+    } else if (this.state.avatar === "36") {
+      chosenImg = "./images/avatars/avatar36.png";
+    } else if (this.state.avatar === "37") {
+      chosenImg = "./images/avatars/avatar37.png";
+    } else if (this.state.avatar === "38") {
+      chosenImg = "./images/avatars/avatar38.png";
+    } else if (this.state.avatar === "39") {
+      chosenImg = "./images/avatars/avatar39.png";
+    } else if (this.state.avatar === "40") {
+      chosenImg = "./images/avatars/avatar40.png";
+    } else if (this.state.avatar === "41") {
+      chosenImg = "./images/avatars/avatar41.png";
+    } else if (this.state.avatar === "42") {
+      chosenImg = "./images/avatars/avatar42.png";
+    } else if (this.state.avatar === "43") {
+      chosenImg = "./images/avatars/avatar43.png";
+    } else if (this.state.avatar === "44") {
+      chosenImg = "./images/avatars/avatar44.png";
+    } else if (this.state.avatar === "45") {
+      chosenImg = "./images/avatars/avatar45.png";
+    } else if (this.state.avatar === "46") {
+      chosenImg = "./images/avatars/avatar46.png";
+    } else if (this.state.avatar === "47") {
+      chosenImg = "./images/avatars/avatar47.png";
+    } else if (this.state.avatar === "48") {
+      chosenImg = "./images/avatars/avatar48.png";
+    } else if (this.state.avatar === "49") {
+      chosenImg = "./images/avatars/avatar49.png";
+    } else if (this.state.avatar === "50") {
+      chosenImg = "./images/avatars/avatar50.png";
+    } else if (this.state.avatar === "51") {
+      chosenImg = "./images/avatars/avatar51.png";
+    } else if (this.state.avatar === "52") {
+      chosenImg = "./images/avatars/avatar52.png";
+    } else if (this.state.avatar === "53") {
+      chosenImg = "./images/avatars/avatar53.png";
+    } else if (this.state.avatar === "54") {
+      chosenImg = "./images/avatars/avatar54.png";
+    } else if (this.state.avatar === "55") {
+      chosenImg = "./images/avatars/avatar55.png";
+    } else if (this.state.avatar === "56") {
+      chosenImg = "./images/avatars/avatar56.png";
+    } else if (this.state.avatar === "57") {
+      chosenImg = "./images/avatars/avatar57.png";
+    } else if (this.state.avatar === "58") {
+      chosenImg = "./images/avatars/avatar58.png";
+    } else if (this.state.avatar === "59") {
+      chosenImg = "./images/avatars/avatar59.png";
+    } else if (this.state.avatar === "60") {
+      chosenImg = "./images/avatars/avatar60.png";
+    } else if (this.state.avatar === "61") {
+      chosenImg = "./images/avatars/avatar61.png";
+    } else if (this.state.avatar === "62") {
+      chosenImg = "./images/avatars/avatar62.png";
+    } else if (this.state.avatar === "63") {
+      chosenImg = "./images/avatars/avatar63.png";
+    } else if (this.state.avatar === "64") {
+      chosenImg = "./images/avatars/avatar64.png";
+    } else if (this.state.avatar === "65") {
+      chosenImg = "./images/avatars/avatar65.png";
+    } else if (this.state.avatar === "66") {
+      chosenImg = "./images/avatars/avatar66.png";
+    } else if (this.state.avatar === "67") {
+      chosenImg = "./images/avatars/avatar67.png";
+    } else if (this.state.avatar === "68") {
+      chosenImg = "./images/avatars/avatar68.png";
+    } else if (this.state.avatar === "69") {
+      chosenImg = "./images/avatars/avatar69.png";
+    } else if (this.state.avatar === "70") {
+      chosenImg = "./images/avatars/avatar70.png";
+    } else if (this.state.avatar === "71") {
+      chosenImg = "./images/avatars/avatar71.png";
+    } else if (this.state.avatar === "72") {
+      chosenImg = "./images/avatars/avatar72.png";
+    } else if (this.state.avatar === "73") {
+      chosenImg = "./images/avatars/avatar73.png";
+    } else if (this.state.avatar === "74") {
+      chosenImg = "./images/avatars/avatar74.png";
+    } else if (this.state.avatar === "75") {
+      chosenImg = "./images/avatars/avatar75.png";
+    } else if (this.state.avatar === "76") {
+      chosenImg = "./images/avatars/avatar76.png";
+    } else if (this.state.avatar === "77") {
+      chosenImg = "./images/avatars/avatar77.png";
+    } else if (this.state.avatar === "78") {
+      chosenImg = "./images/avatars/avatar78.png";
+    } else if (this.state.avatar === "79") {
+      chosenImg = "./images/avatars/avatar79.png";
+    } else if (this.state.avatar === "80") {
+      chosenImg = "./images/avatars/avatar80.png";
+    } else if (this.state.avatar === "81") {
+      chosenImg = "./images/avatars/avatar81.png";
+    } else if (this.state.avatar === "82") {
+      chosenImg = "./images/avatars/avatar82.png";
+    } else if (this.state.avatar === "83") {
+      chosenImg = "./images/avatars/avatar83.png";
+    } else if (this.state.avatar === "84") {
+      chosenImg = "./images/avatars/avatar84.png";
+    } else if (this.state.avatar === "85") {
+      chosenImg = "./images/avatars/avatar85.png";
+    } else if (this.state.avatar === "86") {
+      chosenImg = "./images/avatars/avatar86.png";
+    } else if (this.state.avatar === "87") {
+      chosenImg = "./images/avatars/avatar87.png";
+    } else if (this.state.avatar === "88") {
+      chosenImg = "./images/avatars/avatar88.png";
+    } else if (this.state.avatar === "89") {
+      chosenImg = "./images/avatars/avatar89.png";
+    } else if (this.state.avatar === "90") {
+      chosenImg = "./images/avatars/avatar90.png";
+    } else if (this.state.avatar === "91") {
+      chosenImg = "./images/avatars/avatar91.png";
+    } else if (this.state.avatar === "92") {
+      chosenImg = "./images/avatars/avatar92.png";
+    } else if (this.state.avatar === "93") {
+      chosenImg = "./images/avatars/avatar93.png";
+    } else if (this.state.avatar === "94") {
+      chosenImg = "./images/avatars/avatar94.png";
+    } else if (this.state.avatar === "95") {
+      chosenImg = "./images/avatars/avatar95.png";
+    } else if (this.state.avatar === "96") {
+      chosenImg = "./images/avatars/avatar96.png";
+    } else if (this.state.avatar === "97") {
+      chosenImg = "./images/avatars/avatar97.png";
+    } else if (this.state.avatar === "98") {
+      chosenImg = "./images/avatars/avatar98.png";
+    } else if (this.state.avatar === "99") {
+      chosenImg = "./images/avatars/avatar99.png";
+    } else if (this.state.avatar === "100") {
+      chosenImg = "./images/avatars/avatar100.png";
+    } else if (this.state.avatar === "101") {
+      chosenImg = "./images/avatars/avatar101.png";
+    } else if (this.state.avatar === "102") {
+      chosenImg = "./images/avatars/avatar102.png";
+    } else if (this.state.avatar === "103") {
+      chosenImg = "./images/avatars/avatar103.png";
+    } else if (this.state.avatar === "104") {
+      chosenImg = "./images/avatars/avatar104.png";
     } else {
       return await this.setState({
-        errorMsg: "Enter numbers only between 1 and 28!",
+        errorMsg: "Enter numbers only between 1 and 104!",
       });
     }
     await this.setState((prevState) => ({
@@ -128,6 +291,16 @@ class index extends Component {
     if (this.state.avatarImages.length === 10) {
       return this.setState({
         errorMsg: "Sorry! You've entered the maximum number of avatars allowed",
+      });
+    }
+    if (this.state.avatar === "") {
+      return this.setState({
+        errorMsg: "Enter a number!",
+      });
+    }
+    if (isNaN(this.state.avatar)) {
+      return this.setState({
+        errorMsg: "Type numbers only in this field!",
       });
     }
 
@@ -200,9 +373,149 @@ class index extends Component {
       chosenImg = "./images/avatars-facemask/avatar33.png";
     } else if (this.state.avatar === "34") {
       chosenImg = "./images/avatars-facemask/avatar34.png";
+    } else if (this.state.avatar === "35") {
+      chosenImg = "./images/avatars-facemask/avatar35.png";
+    } else if (this.state.avatar === "36") {
+      chosenImg = "./images/avatars-facemask/avatar36.png";
+    } else if (this.state.avatar === "37") {
+      chosenImg = "./images/avatars-facemask/avatar37.png";
+    } else if (this.state.avatar === "38") {
+      chosenImg = "./images/avatars-facemask/avatar38.png";
+    } else if (this.state.avatar === "39") {
+      chosenImg = "./images/avatars-facemask/avatar39.png";
+    } else if (this.state.avatar === "40") {
+      chosenImg = "./images/avatars-facemask/avatar40.png";
+    } else if (this.state.avatar === "41") {
+      chosenImg = "./images/avatars-facemask/avatar41.png";
+    } else if (this.state.avatar === "42") {
+      chosenImg = "./images/avatars-facemask/avatar42.png";
+    } else if (this.state.avatar === "43") {
+      chosenImg = "./images/avatars-facemask/avatar43.png";
+    } else if (this.state.avatar === "44") {
+      chosenImg = "./images/avatars-facemask/avatar44.png";
+    } else if (this.state.avatar === "45") {
+      chosenImg = "./images/avatars-facemask/avatar45.png";
+    } else if (this.state.avatar === "46") {
+      chosenImg = "./images/avatars-facemask/avatar46.png";
+    } else if (this.state.avatar === "47") {
+      chosenImg = "./images/avatars-facemask/avatar47.png";
+    } else if (this.state.avatar === "48") {
+      chosenImg = "./images/avatars-facemask/avatar48.png";
+    } else if (this.state.avatar === "49") {
+      chosenImg = "./images/avatars-facemask/avatar49.png";
+    } else if (this.state.avatar === "50") {
+      chosenImg = "./images/avatars-facemask/avatar50.png";
+    } else if (this.state.avatar === "51") {
+      chosenImg = "./images/avatars-facemask/avatar51.png";
+    } else if (this.state.avatar === "52") {
+      chosenImg = "./images/avatars-facemask/avatar52.png";
+    } else if (this.state.avatar === "53") {
+      chosenImg = "./images/avatars-facemask/avatar53.png";
+    } else if (this.state.avatar === "54") {
+      chosenImg = "./images/avatars-facemask/avatar54.png";
+    } else if (this.state.avatar === "55") {
+      chosenImg = "./images/avatars-facemask/avatar55.png";
+    } else if (this.state.avatar === "56") {
+      chosenImg = "./images/avatars-facemask/avatar56.png";
+    } else if (this.state.avatar === "57") {
+      chosenImg = "./images/avatars-facemask/avatar57.png";
+    } else if (this.state.avatar === "58") {
+      chosenImg = "./images/avatars-facemask/avatar58.png";
+    } else if (this.state.avatar === "59") {
+      chosenImg = "./images/avatars-facemask/avatar59.png";
+    } else if (this.state.avatar === "60") {
+      chosenImg = "./images/avatars-facemask/avatar60.png";
+    } else if (this.state.avatar === "61") {
+      chosenImg = "./images/avatars-facemask/avatar61.png";
+    } else if (this.state.avatar === "62") {
+      chosenImg = "./images/avatars-facemask/avatar62.png";
+    } else if (this.state.avatar === "63") {
+      chosenImg = "./images/avatars-facemask/avatar63.png";
+    } else if (this.state.avatar === "64") {
+      chosenImg = "./images/avatars-facemask/avatar64.png";
+    } else if (this.state.avatar === "65") {
+      chosenImg = "./images/avatars-facemask/avatar65.png";
+    } else if (this.state.avatar === "66") {
+      chosenImg = "./images/avatars-facemask/avatar66.png";
+    } else if (this.state.avatar === "67") {
+      chosenImg = "./images/avatars-facemask/avatar67.png";
+    } else if (this.state.avatar === "68") {
+      chosenImg = "./images/avatars-facemask/avatar68.png";
+    } else if (this.state.avatar === "69") {
+      chosenImg = "./images/avatars-facemask/avatar69.png";
+    } else if (this.state.avatar === "70") {
+      chosenImg = "./images/avatars-facemask/avatar70.png";
+    } else if (this.state.avatar === "71") {
+      chosenImg = "./images/avatars-facemask/avatar71.png";
+    } else if (this.state.avatar === "72") {
+      chosenImg = "./images/avatars-facemask/avatar72.png";
+    } else if (this.state.avatar === "73") {
+      chosenImg = "./images/avatars-facemask/avatar73.png";
+    } else if (this.state.avatar === "74") {
+      chosenImg = "./images/avatars-facemask/avatar74.png";
+    } else if (this.state.avatar === "75") {
+      chosenImg = "./images/avatars-facemask/avatar75.png";
+    } else if (this.state.avatar === "76") {
+      chosenImg = "./images/avatars-facemask/avatar76.png";
+    } else if (this.state.avatar === "77") {
+      chosenImg = "./images/avatars-facemask/avatar77.png";
+    } else if (this.state.avatar === "78") {
+      chosenImg = "./images/avatars-facemask/avatar78.png";
+    } else if (this.state.avatar === "79") {
+      chosenImg = "./images/avatars-facemask/avatar79.png";
+    } else if (this.state.avatar === "80") {
+      chosenImg = "./images/avatars-facemask/avatar80.png";
+    } else if (this.state.avatar === "81") {
+      chosenImg = "./images/avatars-facemask/avatar81.png";
+    } else if (this.state.avatar === "82") {
+      chosenImg = "./images/avatars-facemask/avatar82.png";
+    } else if (this.state.avatar === "83") {
+      chosenImg = "./images/avatars-facemask/avatar83.png";
+    } else if (this.state.avatar === "84") {
+      chosenImg = "./images/avatars-facemask/avatar84.png";
+    } else if (this.state.avatar === "85") {
+      chosenImg = "./images/avatars-facemask/avatar85.png";
+    } else if (this.state.avatar === "86") {
+      chosenImg = "./images/avatars-facemask/avatar86.png";
+    } else if (this.state.avatar === "87") {
+      chosenImg = "./images/avatars-facemask/avatar87.png";
+    } else if (this.state.avatar === "88") {
+      chosenImg = "./images/avatars-facemask/avatar88.png";
+    } else if (this.state.avatar === "89") {
+      chosenImg = "./images/avatars-facemask/avatar89.png";
+    } else if (this.state.avatar === "90") {
+      chosenImg = "./images/avatars-facemask/avatar90.png";
+    } else if (this.state.avatar === "91") {
+      chosenImg = "./images/avatars-facemask/avatar91.png";
+    } else if (this.state.avatar === "92") {
+      chosenImg = "./images/avatars-facemask/avatar92.png";
+    } else if (this.state.avatar === "93") {
+      chosenImg = "./images/avatars-facemask/avatar93.png";
+    } else if (this.state.avatar === "94") {
+      chosenImg = "./images/avatars-facemask/avatar94.png";
+    } else if (this.state.avatar === "95") {
+      chosenImg = "./images/avatars-facemask/avatar95.png";
+    } else if (this.state.avatar === "96") {
+      chosenImg = "./images/avatars-facemask/avatar96.png";
+    } else if (this.state.avatar === "97") {
+      chosenImg = "./images/avatars-facemask/avatar97.png";
+    } else if (this.state.avatar === "98") {
+      chosenImg = "./images/avatars-facemask/avatar98.png";
+    } else if (this.state.avatar === "99") {
+      chosenImg = "./images/avatars-facemask/avatar99.png";
+    } else if (this.state.avatar === "100") {
+      chosenImg = "./images/avatars-facemask/avatar100.png";
+    } else if (this.state.avatar === "101") {
+      chosenImg = "./images/avatars-facemask/avatar101.png";
+    } else if (this.state.avatar === "102") {
+      chosenImg = "./images/avatars-facemask/avatar102.png";
+    } else if (this.state.avatar === "103") {
+      chosenImg = "./images/avatars-facemask/avatar103.png";
+    } else if (this.state.avatar === "104") {
+      chosenImg = "./images/avatars-facemask/avatar104.png";
     } else {
       return await this.setState({
-        errorMsg: "Enter numbers only between 1 and 28!",
+        errorMsg: "Enter numbers only between 1 and 104!",
       });
     }
 
@@ -260,6 +573,7 @@ class index extends Component {
       model2: false,
       model3: false,
       showWarningMsg: true,
+      showModelSelected: true,
     });
   };
 
@@ -269,6 +583,7 @@ class index extends Component {
       model1: false,
       model3: false,
       showWarningMsg: true,
+      showModelSelected: true,
     });
   };
 
@@ -278,6 +593,7 @@ class index extends Component {
       model1: false,
       model2: false,
       showWarningMsg: true,
+      showModelSelected: true,
     });
   };
 
@@ -311,6 +627,24 @@ class index extends Component {
     });
 
     this.props.screenShotFunction();
+    await this.setState({
+      model3: false,
+      model1: false,
+      model2: false,
+      showPreviewScreen: false,
+      avatarNumber: [],
+      avatarImages: [],
+      namesArray: [],
+      avatar: "",
+      isFamilyName: false,
+      errorMsg: "",
+      familyNameConfirmed: "",
+      lastnameEditMode: false,
+      wallHolder: "",
+      familyInput: "",
+      chosenModel: false,
+      nameForFaceMask: "",
+    });
   };
 
   addNameHandler = async (e) => {
@@ -318,6 +652,11 @@ class index extends Component {
     if (this.state.nameForFaceMask === "") {
       return this.setState({
         errorMsg: "Field cannot be blank",
+      });
+    }
+    if (!isNaN(this.state.nameForFaceMask)) {
+      return this.setState({
+        errorMsg: "Only letters allowed!",
       });
     }
     if (this.state.namesArray.length === 6) {
@@ -383,7 +722,11 @@ class index extends Component {
                 >
                   {name}
                 </p>
-                <img src="./images/hook-single.png" alt="wall hook" />
+                <img
+                  className="hook-single-img"
+                  src="./images/hook-single.png"
+                  alt="wall hook"
+                />
               </div>
             );
           })
@@ -549,32 +892,33 @@ class index extends Component {
                 <div>
                   {!this.state.showPreviewScreen ? (
                     <div>
-                      <label
-                        className="avatarNumber-label"
-                        htmlFor="family-input"
-                      >
-                        Type Avatar Number{" "}
-                        <i className="fas fa-arrow-alt-circle-right"></i>
-                      </label>
-                      <input
-                        className="inputNumber"
-                        placeholder="type here"
-                        value={this.state.avatar}
-                        name="avatar"
-                        onChange={this.changeHandler}
-                        id="avatar-input"
-                        type="text"
-                      />
-                      <button
-                        className="addAvatar-btn"
-                        onClick={
+                      <form
+                        onSubmit={
                           this.state.wallHolder === "keyHolder"
                             ? this.addAvatarHandler
                             : this.addAvatarHandlerFaceMask
                         }
                       >
-                        <i className="fas fa-user-plus"></i> Add Avatar
-                      </button>
+                        <label
+                          className="avatarNumber-label"
+                          htmlFor="family-input"
+                        >
+                          Type Avatar Number{" "}
+                          <i className="fas fa-arrow-alt-circle-right"></i>
+                        </label>
+                        <input
+                          className="inputNumber"
+                          placeholder="type here"
+                          value={this.state.avatar}
+                          name="avatar"
+                          onChange={this.changeHandler}
+                          id="avatar-input"
+                          type="text"
+                        />
+                        <button className="addAvatar-btn">
+                          <i className="fas fa-user-plus"></i> Add Avatar
+                        </button>
+                      </form>
                       {this.state.wallHolder === "faceMask" ? (
                         <form>
                           <label className="avatarNumber-label">
@@ -582,6 +926,7 @@ class index extends Component {
                             <i className="fas fa-arrow-alt-circle-right"></i>
                           </label>
                           <input
+                            maxLength="10"
                             className="inputName"
                             placeholder="type here"
                             value={this.state.nameForFaceMask}
@@ -816,6 +1161,19 @@ class index extends Component {
                     <i className="fas fa-cart-plus"></i> Finish and Add product
                     to Cart
                   </button>
+                  {this.state.showModelSelected ? (
+                    <p className="text-center">
+                      <strong>
+                        {this.state.model1
+                          ? "Model 1"
+                          : this.state.model2
+                          ? "Model 2"
+                          : this.state.model3
+                          ? "Model 3"
+                          : "No Model has been selected"}
+                      </strong>
+                    </p>
+                  ) : null}
                   <h2 className="text-center">
                     &#8595; Product Preview &#8595; <br />
                   </h2>
@@ -833,9 +1191,9 @@ class index extends Component {
                         We will arrange and fix the position of the items the
                         same way as the chosen model.
                       </span>{" "}
-                      This Preview represents the avatars and the names to be
-                      used to create the design; therefore, it's not an actual
-                      representation of the final product.
+                      This Preview just represents the avatars and the names to
+                      be used to create the design; therefore, it's not an
+                      actual representation of the final product.
                     </p>
                   ) : null}
 

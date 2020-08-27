@@ -271,12 +271,10 @@
 
   .avatar-image-woodenBg {
     width: 150px;
-    z-index: 10000;
   }
 
   .avatar-image-woodenBg-smaller {
-    width: 100px;
-    z-index: 10000;
+    width: 120px;
   }
 
   .avatar-img-list-container {
@@ -420,18 +418,6 @@
     margin-left: 62%;
   }
 
-  .wood-bg-img {
-    top: -460px;
-    left: 0;
-    right: 0;
-    width: 76%;
-    position: relative;
-    text-align: center;
-    margin: auto;
-    z-index: 1;
-    padding-bottom: 100px;
-  }
-
   .wood-bg-img-container-faceMask,
   .wood-bg-img-container-keyHolder {
     top: -30px;
@@ -444,8 +430,9 @@
     margin: auto;
     z-index: 1;
     padding-bottom: 100px;
-    background-position: center;
-    background-size: cover;
+    // background-position: center;
+    background-size: 100% 100%;
+    background-position: 0 0 !important;
   }
   .wood-bg-img-container-faceMask {
     background-image: url("/images/wood-bg.jpg");
@@ -556,9 +543,39 @@
   border: 5px solid rgb(255, 2, 2);
   width: 90%;
   margin: 5px auto;
+  margin-bottom: 60px;
 
   .important {
     color: red;
+  }
+}
+
+@media only screen and (min-device-width: 971px) and (max-device-width: 1450px) {
+  .name-hook-container__lessThan3 {
+    margin: 0 5% !important;
+  }
+
+  .name-hook-container__range4-5 {
+    margin: 0 2% !important;
+  }
+
+  .name-hook-container__range6 {
+    margin: 10px 1% !important;
+  }
+
+  .name-hook-on-bg,
+  .name-hook-on-bg__smallerFontSize {
+    font-size: 30px !important;
+  }
+
+  .hook-single-img {
+    width: 60px;
+  }
+
+  .wood-bg-img-container-keyHolder {
+    background-size: 100% 80% !important;
+    background-position: 0 0 !important;
+    background-repeat: no-repeat;
   }
 }
 
@@ -588,11 +605,133 @@
     font-weight: 600;
     margin: 5px auto;
   }
+
+  .model-img {
+    width: 100% !important;
+  }
+
+  .avatar-image {
+    width: 80px;
+  }
+
+  .lastName-label {
+    font-size: 14px;
+  }
+
+  .lastName-input {
+    width: 90%;
+    margin: 5px;
+  }
+
+  .choose-avatars-title {
+    font-size: 16px;
+  }
+
+  .avatar-image-woodenBg-smaller,
+  .avatar-image-woodenBg {
+    width: 70px !important;
+  }
+
+  .removeAvatar {
+    font-size: 15px;
+    padding: 0;
+  }
+
+  .wooden-bg-family-name__short {
+    font-size: 40px;
+  }
+
+  .wooden-bg-family-name__long {
+    font-size: 30px;
+  }
+
+  .wooden-bg-family-name__longer {
+    font-size: 22px;
+  }
+
+  .wooden-bg-family-name__longest {
+    font-size: 18px;
+  }
+
+  .wood-bg-img-container-keyHolder {
+    background-size: 100% 40% !important;
+    background-position: 0 50px !important;
+    background-repeat: no-repeat;
+    margin-top: 60px !important;
+  }
+
+  .wood-bg-img-container-faceMask {
+    background-size: 100% 80% !important;
+    background-position: 0 50px !important;
+    background-repeat: no-repeat;
+    margin-top: 60px !important;
+  }
+
+  .wooden-bg-family-name__short,
+  .wooden-bg-family-name__long,
+  .wooden-bg-family-name__longer,
+  .wooden-bg-family-name__longest {
+    top: 80px;
+  }
+
+  .avatar-img-list-container {
+    margin-top: 60px;
+  }
+
+  .year-on-bg {
+    font-size: 18px !important;
+    margin-top: -10px !important;
+  }
+
+  .heading-faceMasStation {
+    font-size: 16px !important;
+    margin-top: 25px !important;
+  }
+
+  .name-hook-container__lessThan3 {
+    margin: 0 5% !important;
+  }
+
+  .name-hook-container__range4-5 {
+    margin: 0 2% !important;
+  }
+
+  .name-hook-container__range6 {
+    margin: 10px 2% !important;
+  }
+
+  .namesList-on-bg-wrapper {
+    margin-top: 25px !important;
+  }
+
+  .name-hook-on-bg,
+  .name-hook-on-bg__smallerFontSize {
+    font-size: 18px !important;
+  }
+
+  .hook-single-img {
+    width: 30px;
+  }
+
+  .nameHooks-title {
+    font-size: 18px !important;
+  }
+
+  .namesList-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 }
 
 @media only screen and (min-device-width: 560px) and (max-device-width: 759px) {
   .wooden-sign-secondary-heading {
     font-size: 18px;
+  }
+
+  .avatarImg-btn-container-woodenBg,
+  .avatarImg-btn-container-woodenBg__severalAvatars {
+    margin-top: -60px;
   }
 
   .wooden-sign-primary-heading {
@@ -616,17 +755,13 @@
     font-weight: 600;
     margin: 5px auto;
   }
-}
 
-@media only screen and (min-device-width: 300px) and (max-device-width: 559px) {
-  .wooden-sign-secondary-heading {
-    font-size: 10px;
+  .model-img {
+    width: 100% !important;
   }
 
-  .wooden-sign-primary-heading {
-    font-size: 18px;
-    margin-top: -10px;
-    margin-bottom: -5px;
+  .avatar-image {
+    width: 80px;
   }
 
   .lastName-label {
@@ -642,7 +777,234 @@
     font-size: 16px;
   }
 
+  .avatar-image-woodenBg-smaller,
+  .avatar-image-woodenBg {
+    width: 70px !important;
+  }
+
+  .removeAvatar {
+    font-size: 15px;
+    padding: 0;
+  }
+
+  .wooden-bg-family-name__short {
+    font-size: 40px;
+  }
+
+  .wooden-bg-family-name__long {
+    font-size: 30px;
+  }
+
+  .wooden-bg-family-name__longer {
+    font-size: 22px;
+  }
+
+  .wooden-bg-family-name__longest {
+    font-size: 18px;
+  }
+
+  .wood-bg-img-container-keyHolder {
+    background-size: 100% 30% !important;
+    background-position: 0 50px !important;
+    background-repeat: no-repeat;
+    margin-top: 60px !important;
+  }
+
+  .wood-bg-img-container-faceMask {
+    background-size: 100% 80% !important;
+    background-position: 0 50px !important;
+    background-repeat: no-repeat;
+    margin-top: 60px !important;
+  }
+
+  .wooden-bg-family-name__short,
+  .wooden-bg-family-name__long,
+  .wooden-bg-family-name__longer,
+  .wooden-bg-family-name__longest {
+    top: 30px;
+  }
+
+  .avatar-img-list-container {
+    margin-top: 60px;
+  }
+
+  .year-on-bg {
+    font-size: 18px !important;
+    margin-top: -10px !important;
+  }
+
+  .heading-faceMasStation {
+    font-size: 16px !important;
+    margin-top: 25px !important;
+  }
+
+  .name-hook-container__lessThan3 {
+    margin: 0 5% !important;
+  }
+
+  .name-hook-container__range4-5 {
+    margin: 0 2% !important;
+  }
+
+  .name-hook-container__range6 {
+    margin: 10px 1% !important;
+  }
+
+  .namesList-on-bg-wrapper {
+    margin-top: 25px !important;
+  }
+
+  .name-hook-on-bg,
+  .name-hook-on-bg__smallerFontSize {
+    font-size: 18px !important;
+  }
+
+  .hook-single-img {
+    width: 30px;
+  }
+
+  .nameHooks-title {
+    font-size: 18px !important;
+  }
+
+  .namesList-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+@media only screen and (min-device-width: 300px) and (max-device-width: 559px) {
+  .wooden-sign-secondary-heading {
+    font-size: 10px;
+  }
+
+  .wooden-sign-primary-heading {
+    font-size: 18px;
+    margin-top: -10px;
+    margin-bottom: -5px;
+  }
+
   .done-btn-wood-sign {
     width: 100%;
+  }
+
+  .noteAvatarsTitle {
+    font-size: 12px;
+  }
+
+  .model-img {
+    width: 100% !important;
+  }
+
+  .avatar-image {
+    width: 50px;
+  }
+
+  .lastName-label {
+    font-size: 14px;
+  }
+
+  .lastName-input {
+    width: 90%;
+    margin: 5px;
+  }
+
+  .choose-avatars-title {
+    font-size: 16px;
+  }
+
+  .avatar-image-woodenBg-smaller,
+  .avatar-image-woodenBg {
+    width: 50px !important;
+  }
+
+  .removeAvatar {
+    font-size: 15px;
+    padding: 0;
+  }
+
+  .wooden-bg-family-name__short {
+    font-size: 40px;
+  }
+
+  .wooden-bg-family-name__long {
+    font-size: 30px;
+  }
+
+  .wooden-bg-family-name__longer {
+    font-size: 22px;
+  }
+
+  .wooden-bg-family-name__longest {
+    font-size: 18px;
+  }
+
+  .wood-bg-img-container-keyHolder {
+    background-size: 100% 30% !important;
+    background-position: 0 0 !important;
+    background-repeat: no-repeat;
+  }
+
+  .wood-bg-img-container-faceMask {
+    background-size: 100% 80% !important;
+    background-position: 0 0 !important;
+    background-repeat: no-repeat;
+  }
+
+  .wooden-bg-family-name__short,
+  .wooden-bg-family-name__long,
+  .wooden-bg-family-name__longer,
+  .wooden-bg-family-name__longest {
+    top: 20px;
+  }
+
+  .avatar-img-list-container {
+    margin-top: -20px;
+  }
+
+  .year-on-bg {
+    font-size: 18px !important;
+    margin-top: -10px !important;
+  }
+
+  .heading-faceMasStation {
+    font-size: 16px !important;
+    margin-top: 25px !important;
+  }
+
+  .name-hook-container__lessThan3 {
+    margin: 0 5% !important;
+  }
+
+  .name-hook-container__range4-5 {
+    margin: 0 2% !important;
+  }
+
+  .name-hook-container__range6 {
+    margin: 0 0% !important;
+  }
+
+  .namesList-on-bg-wrapper {
+    margin-top: 25px !important;
+  }
+
+  .name-hook-on-bg,
+  .name-hook-on-bg__smallerFontSize {
+    font-size: 12px !important;
+  }
+
+  .hook-single-img {
+    width: 20px;
+  }
+
+  .nameHooks-title {
+    font-size: 12px !important;
+  }
+
+  .namesList-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 }
