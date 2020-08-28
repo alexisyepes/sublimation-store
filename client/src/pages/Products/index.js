@@ -1021,7 +1021,7 @@ export default class index extends Component {
                   className="product-select"
                   onClick={this.handleFaceMaskHolder}
                 >
-                  Wooden Wall Holder 11"w X 8.5"h ($34.99)
+                  Wooden Sign Key/Facemask Holder 11"w X 8.5"h ($34.99)
                 </h2>
                 <h2 className="product-select">More products coming soon...</h2>
                 {/* <h2 className="product-select" onClick={this.handleKeychainImg}>
