@@ -1192,8 +1192,8 @@ class index extends Component {
                         same way as the chosen model.
                       </span>{" "}
                       This Preview just represents the avatars and the names to
-                      be used to create the design; therefore, it's not an
-                      actual representation of the final product.
+                      be used to create the design; therefore, it's Not an Exact
+                      representation of the final product.
                     </p>
                   ) : null}
 
