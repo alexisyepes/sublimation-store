@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const keys = require("../config/keys");
-const dbProduct = require("../models/products");
+const dbCoupon = require("../models/coupons");
+// const dbProduct = require("../models/products");
 const stripe = require("stripe")(keys.stripeSecretKey);
 const { v4: uuidv4 } = require("uuid");
 const EmailToAYP = require("./mail/mailToUs");
@@ -12,22 +13,46 @@ if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
 
-router.post("/product", (req, res) => {
-  let product = {
-    productName: req.body.productName,
+router.post("/coupon", (req, res) => {
+  let coupon = {
+    couponName: req.body.couponName,
     price: req.body.price,
-    customerName: req.body.customerName,
-    email: req.body.email,
-    purchaseDate: req.body.purchaseDate,
   };
-  dbProduct
-    .create(product)
-    .then(() => res.send(product))
+  dbCoupon
+    .create(coupon)
+    .then(() => res.send(coupon))
     .catch((err) => {
       console.log(err);
       res.json(err);
     });
 });
+
+router.get("/all_coupons", (req, res) => {
+  dbCoupon
+    .find()
+    .then((coupon) => res.json(coupon))
+    .catch((err) => {
+      console.log(err);
+      res.json(err);
+    });
+});
+
+// router.post("/product", (req, res) => {
+//   let product = {
+//     productName: req.body.productName,
+//     price: req.body.price,
+//     customerName: req.body.customerName,
+//     email: req.body.email,
+//     purchaseDate: req.body.purchaseDate,
+//   };
+//   dbProduct
+//     .create(product)
+//     .then(() => res.send(product))
+//     .catch((err) => {
+//       console.log(err);
+//       res.json(err);
+//     });
+// });
 
 router.post("/contact", (req, res) => {
   const { email, message } = req.body;
@@ -98,6 +123,7 @@ router.post("/products/payment", async (req, res) => {
     shippingMethod,
     subTotal,
     tax,
+    coupon,
   } = req.body;
   try {
     const payment = await stripe.paymentIntents.create({
@@ -128,6 +154,7 @@ router.post("/products/payment", async (req, res) => {
         subTotal,
         tax,
         amount,
+        coupon,
         "Product Confirmation",
         function (err, data) {
           if (err) {

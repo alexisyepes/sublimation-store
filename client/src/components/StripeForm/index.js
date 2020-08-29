@@ -62,6 +62,7 @@ const Index = (props) => {
           shippingMethod,
           subTotal: props.subTotal,
           tax: props.tax,
+          coupon: props.coupon,
         });
 
         if (data.requiresAction === true) {

@@ -10,6 +10,7 @@ import Pillow from "../../components/Pillow";
 import PetTagBone from "../../components/PetTagBone";
 import CosmeticBag from "../../components/CosmeticBag";
 import FaceMaskHolder from "../../components/FaceMaskHolder";
+import axios from "axios";
 
 import "./style.scss";
 
@@ -246,6 +247,7 @@ export default class index extends Component {
       notChecked: true,
       checkboxShipping: undefined,
       errorMsg: "",
+      errorCoupon: "",
       textFormatOptions: false,
       textFormatOptionsForPetTagBone: false,
       textFormatOptionsForCosmeticBag: false,
@@ -265,6 +267,7 @@ export default class index extends Component {
       city: "",
       province: "",
       postalCode: "",
+      couponCodeInput: "",
       billingDetails: false,
       checkOutStripe: false,
       showMsgInput: false,
@@ -284,6 +287,12 @@ export default class index extends Component {
 
       //Avatars
       avatarsArray: [],
+
+      //loadingAxios
+      loadingAxiosReq: false,
+      // coupons: [],
+      selectedCouponName: "",
+      selectedCouponPrice: 0,
     };
   }
 
@@ -318,6 +327,8 @@ export default class index extends Component {
   closeModalCheckout = () => {
     this.setState({
       modalToCheckout: false,
+      errorMsg: "",
+      selectedCouponPrice: 0,
     });
   };
 
@@ -527,6 +538,7 @@ export default class index extends Component {
       textFormatOptionsForPetTagBone: false,
       textFormatOptionsForCosmeticBag: false,
       faceMaskHolderChosen: false,
+      errorCoupon: "",
     });
     this.props.resetQty();
   };
@@ -829,6 +841,7 @@ export default class index extends Component {
           screenshot: this.state.screenshot.slice(0, -1),
           imagePreviewUrl: "",
           file: "",
+          errorCoupon: "",
         });
         this.props.updateCartToPrevQty();
         this.props.resetQty();
@@ -846,6 +859,7 @@ export default class index extends Component {
           imagePreviewUrl: "",
           file: "",
           shirtGender: "",
+          errorCoupon: "",
         });
         this.props.updateCartToPrevQty();
         this.props.resetQty();
@@ -862,6 +876,7 @@ export default class index extends Component {
           screenshot: this.state.screenshot.slice(0, -1),
           imagePreviewUrl: "",
           file: "",
+          errorCoupon: "",
         });
         this.props.updateCartToPrevQty();
         this.props.resetQty();
@@ -880,6 +895,7 @@ export default class index extends Component {
           file: "",
           textFormatOptionsForPetTagBone: true,
           photoControlPetTagBone: true,
+          errorCoupon: "",
         });
         this.props.updateCartToPrevQty();
         this.props.resetQty();
@@ -897,6 +913,7 @@ export default class index extends Component {
           imagePreviewUrl: "",
           file: "",
           textFormatOptionsForCosmeticBag: true,
+          errorCoupon: "",
         });
         this.props.updateCartToPrevQty();
         this.props.resetQty();
@@ -920,6 +937,52 @@ export default class index extends Component {
       checkboxShipping: !this.state.checkboxShipping,
     });
     console.log(this.state.checkboxShipping);
+  };
+
+  validateCouponHandler = async (e) => {
+    e.preventDefault();
+    if (this.state.productToPay.length === 0) {
+      return this.setState({
+        errorMsg: "No Coupons can be used without a product in cart!",
+      });
+    }
+    this.setState({
+      loadingAxiosReq: true,
+    });
+    await axios
+      .get("/all_coupons")
+      .then(async (res) => {
+        const couponName = res.data.map((coupon) => {
+          return coupon.couponName;
+        });
+        const couponPrice = res.data.map((coupon) => {
+          return coupon.price;
+        });
+        await this.setState({
+          loadingAxiosReq: false,
+          selectedCouponName: couponName[0],
+          selectedCouponPrice: couponPrice[0],
+        });
+        // console.log(this.state.selectedCouponName);
+        // console.log(this.state.selectedCouponPrice);
+      })
+      .catch((err) => {
+        this.setState({
+          loadingAxiosReq: false,
+        });
+        console.log(err);
+      });
+    if (this.state.couponCodeInput === this.state.selectedCouponName) {
+      await this.setState({
+        selectedCouponPrice: this.state.selectedCouponPrice,
+        errorCoupon: "",
+      });
+    } else {
+      await this.setState({
+        selectedCouponPrice: 0,
+        errorCoupon: "Coupon is Invalid",
+      });
+    }
   };
 
   submitBillingDetails = (e) => {
@@ -1769,38 +1832,41 @@ export default class index extends Component {
                           this.state.totalFacemaskHolderInCart
                       ).toFixed(2)}
                     </p>
+
                     <p>
                       Total Tax: $
-                      {
-                        // 0.13 * this.state.mugPrice * this.state.totalMugsInCart +
-                        (
-                          product[0].Mug.price *
-                            this.state.totalMugsInCart *
-                            0.01 *
-                            0.13 +
-                          product[0].Shirt.price *
-                            this.state.totalShirtsInCart *
-                            0.01 *
-                            0.13 +
-                          product[0].Pillow.price *
-                            this.state.totalPillowsInCart *
-                            0.01 *
-                            0.13 +
-                          product[0].PetTagBone.price *
-                            this.state.totalPetTagBonesInCart *
-                            0.01 *
-                            0.13 +
-                          product[0].CosmeticBag.price *
-                            this.state.totalCosmeticBagsInCart *
-                            0.01 *
-                            0.13 +
-                          product[0].WoodSign.price *
-                            this.state.totalFacemaskHolderInCart *
-                            0.01 *
-                            0.13
-                        ).toFixed(2)
-                      }
+                      {(
+                        product[0].Mug.price *
+                          this.state.totalMugsInCart *
+                          0.01 *
+                          0.13 +
+                        product[0].Shirt.price *
+                          this.state.totalShirtsInCart *
+                          0.01 *
+                          0.13 +
+                        product[0].Pillow.price *
+                          this.state.totalPillowsInCart *
+                          0.01 *
+                          0.13 +
+                        product[0].PetTagBone.price *
+                          this.state.totalPetTagBonesInCart *
+                          0.01 *
+                          0.13 +
+                        product[0].CosmeticBag.price *
+                          this.state.totalCosmeticBagsInCart *
+                          0.01 *
+                          0.13 +
+                        product[0].WoodSign.price *
+                          this.state.totalFacemaskHolderInCart *
+                          0.01 *
+                          0.13
+                      ).toFixed(2)}
                     </p>
+                    {this.state.selectedCouponPrice !== 0 ? (
+                      <p className="coupon-on-checkout">
+                        Coupon: -${this.state.selectedCouponPrice}
+                      </p>
+                    ) : null}
 
                     {this.state.shippingMethod === "delivery" ? (
                       <p>
@@ -1842,7 +1908,8 @@ export default class index extends Component {
                                 ) *
                                   0.01 *
                                   0.13 +
-                                15.0
+                                15.0 -
+                                this.state.selectedCouponPrice
                               ).toFixed(2)
                             : 0}{" "}
                           <span aria-label="0" role="img">
@@ -1865,7 +1932,8 @@ export default class index extends Component {
                                   (a, b) => a + b
                                 ) *
                                   0.01 *
-                                  0.13
+                                  0.13 -
+                                this.state.selectedCouponPrice
                               ).toFixed(2)
                             : 0}{" "}
                           <span aria-label="0" role="img">
@@ -1924,6 +1992,52 @@ export default class index extends Component {
                         type="email"
                         placeholder="Email"
                       />
+
+                      <div className="coupon-container">
+                        {this.state.selectedCouponPrice === 0 ? (
+                          <input
+                            className="input-checkout__coupon"
+                            name="couponCodeInput"
+                            onChange={this.onChangeHandlerBillingDetails}
+                            type="text"
+                            placeholder="Type Coupon Code Here"
+                          />
+                        ) : null}
+                        {this.state.errorCoupon === "" ? null : (
+                          <p className="coupon-error">
+                            {this.state.errorCoupon}
+                          </p>
+                        )}
+
+                        {this.state.loadingAxiosReq ? (
+                          <div className="coupon-results-wrapper">
+                            <button className="coupon-btn">
+                              Please Wait...
+                            </button>
+                          </div>
+                        ) : (
+                          <div
+                            className={
+                              this.state.selectedCouponPrice === 0
+                                ? "coupon-results-wrapper"
+                                : "coupon-results-wrapper__applied"
+                            }
+                          >
+                            {this.state.selectedCouponPrice !== 0 ? (
+                              <p className="coupon-applied">
+                                Coupon Applied <i className="fas fa-check"></i>
+                              </p>
+                            ) : (
+                              <button
+                                className="coupon-btn"
+                                onClick={this.validateCouponHandler}
+                              >
+                                Validate Coupon
+                              </button>
+                            )}
+                          </div>
+                        )}
+                      </div>
                       <Select
                         className="shippingOptionsSelect"
                         isSearchable={false}
@@ -1979,29 +2093,36 @@ export default class index extends Component {
                         0.01 *
                         this.state.totalFacemaskHolderInCart
                     }
-                    tax={(
-                      0.13 * this.state.mugPrice * this.state.totalMugsInCart +
-                      product[0].Shirt.price *
-                        this.state.totalShirtsInCart *
-                        0.01 *
-                        0.13 +
-                      product[0].Pillow.price *
-                        this.state.totalPillowsInCart *
-                        0.01 *
-                        0.13 +
-                      product[0].PetTagBone.price *
-                        this.state.totalPetTagBonesInCart *
-                        0.01 *
-                        0.13 +
-                      product[0].CosmeticBag.price *
-                        this.state.totalCosmeticBagsInCart *
-                        0.01 *
-                        0.13 +
-                      product[0].WoodSign.price *
-                        this.state.totalFacemaskHolderInCart *
-                        0.01 *
-                        0.13
-                    ).toFixed(2)}
+                    tax={
+                      // this.state.mugPrice * this.state.totalMugsInCart +
+                      (
+                        product[0].Mug.price *
+                          this.state.totalMugsInCart *
+                          0.01 *
+                          0.13 +
+                        product[0].Shirt.price *
+                          this.state.totalShirtsInCart *
+                          0.01 *
+                          0.13 +
+                        product[0].Pillow.price *
+                          this.state.totalPillowsInCart *
+                          0.01 *
+                          0.13 +
+                        product[0].PetTagBone.price *
+                          this.state.totalPetTagBonesInCart *
+                          0.01 *
+                          0.13 +
+                        product[0].CosmeticBag.price *
+                          this.state.totalCosmeticBagsInCart *
+                          0.01 *
+                          0.13 +
+                        product[0].WoodSign.price *
+                          this.state.totalFacemaskHolderInCart *
+                          0.01 *
+                          0.13
+                      ).toFixed(2)
+                    }
+                    coupon={this.state.selectedCouponPrice}
                     productWithCents={
                       this.state.productToPay.length > 0
                         ? (
@@ -2009,7 +2130,8 @@ export default class index extends Component {
                               0.01 +
                             this.state.productToPay.reduce((a, b) => a + b) *
                               0.01 *
-                              0.13
+                              0.13 -
+                            this.state.selectedCouponPrice
                           ).toFixed(2)
                         : null
                     }
@@ -2021,7 +2143,8 @@ export default class index extends Component {
                             this.state.productToPay.reduce((a, b) => a + b) *
                               0.01 *
                               0.13 +
-                            15
+                            15 -
+                            this.state.selectedCouponPrice
                           ).toFixed(2)
                         : null
                     }
@@ -2030,7 +2153,8 @@ export default class index extends Component {
                         ? Math.round(
                             this.state.productToPay.reduce((a, b) => a + b) *
                               0.13 +
-                              this.state.productToPay.reduce((a, b) => a + b)
+                              this.state.productToPay.reduce((a, b) => a + b) -
+                              this.state.selectedCouponPrice * 100
                           )
                         : 0
                     }
@@ -2040,7 +2164,8 @@ export default class index extends Component {
                             this.state.productToPay.reduce((a, b) => a + b) *
                               0.13 +
                               this.state.productToPay.reduce((a, b) => a + b) +
-                              1500
+                              1500 -
+                              this.state.selectedCouponPrice * 100
                           )
                         : 0
                     }

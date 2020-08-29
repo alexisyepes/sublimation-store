@@ -24,7 +24,8 @@ const sendMail = (
   shippingMethod,
   subTotal,
   tax,
-  amount
+  amount,
+  coupon
 ) => {
   let mugs =
     totalMugsInCart > 0
@@ -50,6 +51,8 @@ const sendMail = (
     totalFacemaskHolderInCart > 0
       ? `<p>Total number of Wooden Signs: ${totalFacemaskHolderInCart} ($34.99 ea)</p>`
       : `<span></span>`;
+  let isThereCoupon =
+    coupon !== 0 ? `<p>Coupon Provided: -$${coupon}</p>` : `<span></span>`;
 
   let isShipping =
     shippingMethod === "delivery"
@@ -76,6 +79,7 @@ const sendMail = (
 		<p>Subtotal: $${subTotal.toFixed(2)}</p>
 		<p>hst: $${tax}</p>
 		${isShipping}
+		${isThereCoupon}
 		<hr />
 		<p><b>Total paid: $${(amount * 0.01).toFixed(2)}</b></p>
 		<hr />

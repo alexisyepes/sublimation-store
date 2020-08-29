@@ -463,6 +463,53 @@
     // box-shadow: 0px 10px 10px rgb(146, 139, 139);
   }
 
+  .coupon-container {
+    // width: 80%;
+    margin: 6px auto;
+    padding: 5px;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+
+    .input-checkout__coupon {
+      padding: 0 5px;
+      margin: 0px;
+      grid-column: 3 / 4;
+      grid-row: 1;
+      border-radius: 5px;
+    }
+
+    .coupon-results-wrapper {
+      justify-self: start;
+      grid-column: 4 / 5;
+      grid-row: 1;
+    }
+
+    .coupon-results-wrapper__applied {
+      justify-self: center;
+      grid-column: 3 / 5;
+      grid-row: 1;
+    }
+
+    .coupon-btn {
+      padding: 7px;
+      background-color: rgb(29, 90, 56);
+      color: white;
+      border-radius: 5px;
+    }
+
+    .coupon-applied {
+      color: green;
+      margin: 0;
+    }
+
+    .coupon-error {
+      grid-column: 3 / 5;
+      grid-row: 2;
+      color: rgb(255, 136, 0);
+      font-size: 14px;
+    }
+  }
+
   .shippingOptionsSelect {
     width: 70%;
     margin: 10px auto;
@@ -633,16 +680,20 @@
   );
 }
 
+.coupon-on-checkout {
+  color: green;
+}
+
 @media only screen and (min-device-width: 1200px) and (max-device-width: 1717px) {
   .steps-parent {
     display: block;
   }
 
-  // .confirm-product-button {
-  //   top: 100%;
-  //   left: 0;
-  //   width: 100% !important;
-  // }
+  .coupon-results-wrapper {
+    justify-self: start;
+    grid-column: 4 / 7 !important;
+    grid-row: 1;
+  }
 
   .step-btn {
     width: 96% !important;
@@ -703,6 +754,15 @@
     display: block;
   }
 
+  .coupon-results-wrapper {
+    justify-self: start;
+    grid-column: 4 / 7 !important;
+  }
+
+  .input-checkout__coupon {
+    grid-column: 2 / 4 !important;
+  }
+
   .step-btn {
     width: 100%;
     display: block;
@@ -759,6 +819,15 @@
 @media only screen and (min-device-width: 760px) and (max-device-width: 959px) {
   .steps-parent {
     display: block;
+  }
+
+  .coupon-results-wrapper {
+    justify-self: start;
+    grid-column: 4 / 7 !important;
+  }
+
+  .input-checkout__coupon {
+    grid-column: 2 / 4 !important;
   }
 
   .home__heading {
@@ -854,6 +923,15 @@
 @media only screen and (min-device-width: 521px) and (max-device-width: 759px) {
   .steps-parent {
     display: block;
+  }
+
+  .coupon-results-wrapper {
+    justify-self: start;
+    grid-column: 4 / 7 !important;
+  }
+
+  .input-checkout__coupon {
+    grid-column: 2 / 4 !important;
   }
 
   .home__heading {
@@ -972,6 +1050,17 @@
 @media only screen and (min-device-width: 220px) and (max-device-width: 520px) {
   .controls-to-add-content-to-mugs {
     margin-top: 45%;
+  }
+
+  .coupon-results-wrapper {
+    justify-self: start;
+    grid-column: 4 / 7 !important;
+    margin: 0 auto;
+  }
+
+  .input-checkout__coupon {
+    grid-column: 1 / 4 !important;
+    margin-left: 20px !important;
   }
 
   .shirt-mobile-heading {
@@ -1161,5 +1250,13 @@
 @media only screen and (min-device-width: 522px) and (max-device-width: 1199px) {
   .checkout-modal-wrapper {
     margin-top: 45px;
+  }
+}
+
+@media only screen and (min-device-width: 200px) and (max-device-width: 521px) {
+  .coupon-results-wrapper__applied {
+    justify-self: center;
+    grid-column: 1 / 7 !important;
+    grid-row: 1;
   }
 }
