@@ -18,7 +18,9 @@
   text-shadow: 2px 2px black;
 }
 
-.Modal {
+.Modal,
+.Modal:focus {
+  outline: 0;
   position: absolute;
   margin-right: -50%;
   transform: translate(-50%, -50%);
@@ -26,15 +28,15 @@
   padding: 30px;
   width: 50%;
   // display: block;
-  border: 1px black solid;
-  box-shadow: 0px 15px 100px black;
+  border: none;
+  // box-shadow: 0px 15px 100px black;
   height: auto;
   top: 50%;
   left: 50%;
   right: auto;
   overflow: auto;
   margin: 10px;
-  border-radius: 10px;
+  border-radius: 5px;
   z-index: 100000;
 
   // bottom: auto;
@@ -46,7 +48,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(177, 197, 171, 0.822);
+  background-color: rgba(171, 197, 191, 0.822);
   z-index: 1000;
 }
 
@@ -257,7 +259,7 @@
   }
 }
 .empty-cart-button__checkout-modal {
-  background-color: darkred;
+  background-color: rgb(236, 76, 76);
   color: white;
   left: 2%;
   top: 2%;
@@ -265,7 +267,8 @@
   position: fixed;
   font-size: 16px;
   padding: 5px;
-  border-radius: 10px;
+  border-radius: 5px;
+  border: none;
   cursor: pointer;
 
   &:hover {
@@ -456,10 +459,19 @@
   }
 }
 
+.checkout-information {
+  font-size: 16px;
+}
+
+.payment-info-title {
+  font-weight: 500;
+  font-size: 24px;
+}
 .checkout-form {
   .input-checkout {
     padding: 10px;
     margin: 5px;
+    border: 1px solid rgb(182, 182, 182);
     // box-shadow: 0px 10px 10px rgb(146, 139, 139);
   }
 
@@ -476,6 +488,7 @@
       grid-column: 3 / 4;
       grid-row: 1;
       border-radius: 5px;
+      border: 1px solid rgb(182, 182, 182);
     }
 
     .coupon-results-wrapper {
@@ -490,11 +503,21 @@
       grid-row: 1;
     }
 
-    .coupon-btn {
+    .coupon-btn,
+    .coupon-btn:focus {
+      outline: 0;
       padding: 7px;
-      background-color: rgb(29, 90, 56);
+      background-color: rgb(52, 143, 246);
       color: white;
       border-radius: 5px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &:hover {
+        background-color: rgb(28, 95, 172);
+        color: white;
+      }
     }
 
     .coupon-applied {
@@ -515,12 +538,14 @@
     margin: 10px auto;
   }
 
-  .btn-checkout {
-    margin-left: 30px;
-    width: 20%;
+  .btn-checkout,
+  .btn-checkout:focus {
+    // margin-left: 30px;
+    outline: 0;
+    width: 100%;
     padding: 3px 0;
     border-radius: 5px;
-    background-color: rgb(25, 102, 38);
+    background-color: rgb(52, 143, 246);
     // box-shadow: 0px 10px 30px black;
     padding: 5px;
     border: none;
@@ -531,7 +556,7 @@
     transition: all 0.2s;
 
     &:hover {
-      background-color: rgb(70, 88, 73);
+      background-color: rgb(28, 95, 172);
       color: white;
     }
   }
@@ -550,14 +575,15 @@
   float: right;
   margin-top: -25px;
   margin-right: -25px;
-  border: 1px black solid;
-  padding: 1px 3px;
+  // border: 1px black solid;
+  padding: 2px 3px;
   border-radius: 5px;
   background-color: rgb(31, 31, 31);
   color: rgb(255, 255, 255);
 
   &:hover {
     color: red;
+    transform: rotate(180deg);
   }
 }
 

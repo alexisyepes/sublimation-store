@@ -329,6 +329,7 @@ export default class index extends Component {
       modalToCheckout: false,
       errorMsg: "",
       selectedCouponPrice: 0,
+      couponCodeInput: "",
     });
   };
 
@@ -1722,7 +1723,7 @@ export default class index extends Component {
               overlayClassName="Overlay"
             >
               <span className="x-close-modal" onClick={this.closeModalCheckout}>
-                Close
+                X
               </span>
               <div className="checkout-modal-wrapper">
                 {!this.state.checkOutStripe ? (
@@ -1731,11 +1732,15 @@ export default class index extends Component {
                       onClick={this.updateComponent}
                       className="empty-cart-button__checkout-modal"
                     >
-                      <i className="fas fa-trash"></i> Cancel and empty cart
+                      <i className="fas fa-trash"></i> Cancel order
                     </button>
+                    <h2 className="text-center payment-info-title">
+                      Payment Information
+                    </h2>
+                    <hr />
                     {this.state.totalMugsInCart > 0 ? (
                       <div>
-                        <p>
+                        <p className="checkout-information">
                           Total Mugs in Cart: {this.state.totalMugsInCart}{" "}
                           <span>
                             (Mug: ${(product[0].Mug.price * 0.01).toFixed(2)}
@@ -1746,7 +1751,7 @@ export default class index extends Component {
                     ) : null}
                     {this.state.totalShirtsInCart > 0 ? (
                       <div>
-                        <p>
+                        <p className="checkout-information">
                           Total Shirts in Cart: {this.state.totalShirtsInCart}{" "}
                           {""}
                           <span>
@@ -1758,7 +1763,7 @@ export default class index extends Component {
                     ) : null}
                     {this.state.totalPillowsInCart > 0 ? (
                       <div>
-                        <p>
+                        <p className="checkout-information">
                           Total Shirts in Cart: {this.state.totalPillowsInCart}{" "}
                           {""}
                           <span>
@@ -1770,7 +1775,7 @@ export default class index extends Component {
                     ) : null}
                     {this.state.totalPetTagBonesInCart > 0 ? (
                       <div>
-                        <p>
+                        <p className="checkout-information">
                           Total Pet-tags in Cart:{" "}
                           {this.state.totalPetTagBonesInCart} {""}
                           <span>
@@ -1783,7 +1788,7 @@ export default class index extends Component {
                     ) : null}
                     {this.state.totalCosmeticBagsInCart > 0 ? (
                       <div>
-                        <p>
+                        <p className="checkout-information">
                           Total Cosmetic bags in Cart:{" "}
                           {this.state.totalCosmeticBagsInCart} {""}
                           <span>
@@ -1797,7 +1802,7 @@ export default class index extends Component {
                     ) : null}
                     {this.state.totalFacemaskHolderInCart > 0 ? (
                       <div>
-                        <p>
+                        <p className="checkout-information">
                           Total Wooden Signs in Cart:{" "}
                           {this.state.totalFacemaskHolderInCart} {""}
                           <span>
@@ -1809,7 +1814,7 @@ export default class index extends Component {
                         </p>
                       </div>
                     ) : null}
-                    <p>
+                    <p className="checkout-information">
                       Sub-Total: $
                       {(
                         product[0].Mug.price *
@@ -1833,7 +1838,7 @@ export default class index extends Component {
                       ).toFixed(2)}
                     </p>
 
-                    <p>
+                    <p className="checkout-information">
                       Total Tax: $
                       {(
                         product[0].Mug.price *
@@ -1891,9 +1896,9 @@ export default class index extends Component {
                         </b>
                       </p>
                     ) : null}
-                    <hr />
+
                     {this.state.shippingMethod === "delivery" ? (
-                      <p>
+                      <p className="checkout-information">
                         <b>
                           {" "}
                           TOTAL: $
@@ -1918,7 +1923,7 @@ export default class index extends Component {
                         </b>
                       </p>
                     ) : (
-                      <p>
+                      <p className="checkout-information">
                         <b>
                           {" "}
                           GRAND SUBTOTAL: $
@@ -1947,9 +1952,9 @@ export default class index extends Component {
                       className="checkout-form"
                       onSubmit={this.submitBillingDetails}
                     >
-                      <h3 className="text-center">
+                      {/* <h3 className="text-center">
                         Fill out the form to checkout
-                      </h3>
+                      </h3> */}
                       <input
                         className="input-checkout"
                         name="firstName"
