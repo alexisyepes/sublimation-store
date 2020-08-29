@@ -370,6 +370,10 @@
 }
 
 @media only screen and (min-device-width: 360px) and (max-device-width: 399px) {
+  .shirt-container {
+    margin-top: 40px;
+  }
+
   .img-product__shirt {
     width: 40% !important;
     margin-top: -35px !important;

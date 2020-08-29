@@ -18,8 +18,8 @@
   text-shadow: 2px 2px black;
 }
 
-.Modal,
-.Modal:focus {
+.ModalToCheckOut,
+.ModalToCheckOut:focus {
   outline: 0;
   position: absolute;
   margin-right: -50%;
@@ -563,8 +563,8 @@
 
   .error-msg {
     color: red;
-    margin-top: 30px;
-    font-size: 20px;
+    margin: 0;
+    font-size: 16px;
   }
 }
 
@@ -602,6 +602,45 @@
   &:hover {
     color: red;
     transform: rotate(180deg);
+  }
+}
+
+.confirm-product-button__petTagBone {
+  // @include button;
+  margin-bottom: 30px;
+  // background-color: $color-button-orange-2;
+  animation: colorFlashingConfirm 1s ease-in-out infinite;
+  font-weight: 900;
+  color: rgb(2, 0, 0);
+  font-size: 24px;
+  box-shadow: 0px 20px 30px black;
+  cursor: pointer;
+  transition: all 0.1s;
+  border-radius: 5px;
+  // z-index: 1000;
+
+  &:hover {
+    filter: brightness(1.1);
+    transform: scale(1.2);
+    box-shadow: 0px 20px 60px black;
+  }
+}
+
+.confirm-product-button__pillow {
+  margin-bottom: 30px;
+  animation: colorFlashingConfirm 1s ease-in-out infinite;
+  font-weight: 900;
+  color: rgb(2, 0, 0);
+  font-size: 24px;
+  box-shadow: 0px 20px 30px black;
+  cursor: pointer;
+  transition: all 0.1s;
+  border-radius: 5px;
+
+  &:hover {
+    filter: brightness(1.1);
+    transform: scale(1.2);
+    box-shadow: 0px 20px 60px black;
   }
 }
 
@@ -808,6 +847,12 @@
     width: 100% !important;
   }
 
+  .confirm-product-button__pillow {
+    width: 30%;
+    font-size: 18px;
+    margin-left: 50%;
+  }
+
   .virtual-image-container {
     display: block;
     margin: 40px 0;
@@ -905,6 +950,12 @@
     width: 100% !important;
   }
 
+  .confirm-product-button__pillow {
+    width: 30%;
+    font-size: 17px;
+    margin-left: 60%;
+  }
+
   .step-btn {
     width: 100%;
     display: block;
@@ -988,7 +1039,7 @@
     box-shadow: 0px 10px 30px black;
   }
 
-  .Modal {
+  .ModalToCheckOut {
     width: 80%;
     height: auto;
     overflow: auto;
@@ -1026,6 +1077,12 @@
     top: 100%;
     left: 0;
     width: 100% !important;
+  }
+
+  .confirm-product-button__pillow {
+    width: 30%;
+    font-size: 16px;
+    margin-left: 70%;
   }
 
   .continue-button {
@@ -1089,19 +1146,30 @@
     margin-left: 20px !important;
   }
 
+  .coupon-error,
+  .coupon-applied,
+  .coupon-on-checkout {
+    font-size: 12px !important;
+  }
+
+  .coupon-error {
+    margin-bottom: 0;
+  }
+
+  .coupon-on-checkout {
+    margin: 5px;
+    text-align: left;
+  }
+
   .shirt-mobile-heading {
     display: block;
     margin: 0 auto;
   }
 
-  .Modal {
-    // padding: 100px 0;
-    width: 90%;
-    margin: 40px 0;
-    padding-bottom: 100px;
-    padding-top: 60px;
-    height: 100%;
-    overflow: scroll;
+  .ModalToCheckOut {
+    background-color: rgb(255, 255, 255);
+    width: 85% !important;
+    margin-left: 0px !important;
   }
 
   .shippingOptionsSelect {
@@ -1126,6 +1194,7 @@
   .empty-cart-button__checkout-modal {
     top: 5%;
     left: 4%;
+    font-size: 12px;
   }
 
   .checkout-modal-wrapper {
@@ -1158,6 +1227,7 @@
     width: 90% !important;
     margin: 10px auto !important;
     box-shadow: 0px 10px 30px black;
+    font-size: 14px !important;
   }
 
   .error-msg-confirm-product {
@@ -1225,6 +1295,18 @@
     margin: 0 auto;
   }
 
+  .confirm-product-button__pillow {
+    width: 30%;
+    font-size: 15px;
+    margin-left: 70%;
+  }
+
+  .confirm-product-button__petTagBone {
+    width: 30%;
+    font-size: 12px;
+    margin-left: -70%;
+  }
+
   .continue-button {
     width: 100% !important;
     font-size: 15px !important;
@@ -1271,11 +1353,39 @@
     display: block;
     font-size: 12px;
   }
+
+  .checkout-form .error-msg {
+    font-size: 14px;
+  }
+
+  .checkout-information {
+    font-size: 12px;
+    margin: 3px;
+    text-align: left;
+  }
+
+  .payment-info-title {
+    font-size: 17px;
+    margin: 0;
+  }
+
+  .input-checkout,
+  .input-checkout__coupon {
+    padding: 5px !important;
+    margin: 2px !important;
+    border-radius: 5px;
+  }
 }
 
 @media only screen and (min-device-width: 522px) and (max-device-width: 1199px) {
   .checkout-modal-wrapper {
     margin-top: 45px;
+  }
+
+  .ModalToCheckOut {
+    width: 100%;
+    height: auto;
+    overflow: auto;
   }
 }
 

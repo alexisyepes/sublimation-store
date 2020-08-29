@@ -1320,7 +1320,13 @@ export default class index extends Component {
                     <div>
                       <button
                         onClick={this.productSelectedConfirmed}
-                        className="confirm-product-button"
+                        className={
+                          this.state.step2ActualProd === "pillow"
+                            ? "confirm-product-button__pillow"
+                            : this.state.step2ActualProd === "petTagBone"
+                            ? "confirm-product-button__petTagBone"
+                            : "confirm-product-button"
+                        }
                       >
                         <span aria-label="0" role="img">
                           &#10003;{" "}
@@ -1719,7 +1725,7 @@ export default class index extends Component {
               appElement={document.getElementById("root")}
               // style={customStylesCheckout}
               isOpen={this.state.modalToCheckout}
-              className="Modal"
+              className="ModalToCheckOut"
               overlayClassName="Overlay"
             >
               <span className="x-close-modal" onClick={this.closeModalCheckout}>
@@ -1874,7 +1880,7 @@ export default class index extends Component {
                     ) : null}
 
                     {this.state.shippingMethod === "delivery" ? (
-                      <p>
+                      <p className="checkout-information">
                         <b>
                           {" "}
                           + Shipping to address below{" "}
@@ -1882,14 +1888,14 @@ export default class index extends Component {
                         </b>
                       </p>
                     ) : this.state.shippingMethod === "pickUpMilton" ? (
-                      <p>
+                      <p className="checkout-information">
                         <b>
                           Pickup from 724 Main St. Milton, ON L9T 3P6 Unit 2
                           (Free)
                         </b>
                       </p>
                     ) : this.state.shippingMethod === "pickUpCambridge" ? (
-                      <p>
+                      <p className="checkout-information">
                         <b>
                           Pickup from 205 Cowan Blvd, Cambridge, ON N1T 1J8
                           (Free)
@@ -1926,7 +1932,7 @@ export default class index extends Component {
                       <p className="checkout-information">
                         <b>
                           {" "}
-                          GRAND SUBTOTAL: $
+                          Grand Subtotal: $
                           {this.state.productToPay.length > 0
                             ? (
                                 this.state.productToPay.reduce(
@@ -2052,10 +2058,10 @@ export default class index extends Component {
                         onChange={this.onSelectedShipping}
                       />
 
-                      <button className="btn-checkout">Next &#8594;</button>
                       <p className="text-center error-msg">
                         {this.state.errorMsg}
                       </p>
+                      <button className="btn-checkout">Next &#8594;</button>
                     </form>
                   </div>
                 ) : null}
