@@ -20,12 +20,12 @@
 .photo-controls-container {
   z-index: 300;
   position: absolute;
-  background-color: rgb(201, 235, 178);
+  background-color: rgb(248, 78, 120);
   padding: 10px;
   margin: 20px;
   border-radius: 5px;
-  border: solid white 2px;
-  box-shadow: 0px 10px 40px black;
+  // border: solid white 2px;
+  box-shadow: 0px 5px 5px black;
 }
 
 .text-controls-container-cosmeticBag {
@@ -33,28 +33,32 @@
   width: 13%;
   left: 52%;
   top: 100%;
-  background-color: rgb(201, 235, 178);
+  background-color: rgb(248, 78, 120);
   padding: 10px;
   margin: 20px;
-  border: solid white 2px;
+  // border: solid white 2px;
   border-radius: 5px;
   z-index: 301;
+  box-shadow: 0px 5px 5px black;
 
   .size-title-cosmeticBag__move {
     grid-column-start: 2;
     grid-column-end: 3;
     grid-row: 1;
+    color: white;
   }
   .size-title-cosmeticBag__size {
     grid-column-start: 4;
     grid-column-end: 5;
     grid-row: 1;
     padding-left: 10px;
+    color: white;
   }
 
   &__heading {
     margin: 0;
     border-bottom: 1px solid black;
+    color: white;
   }
 
   &-box {
@@ -64,8 +68,12 @@
 
     .move-text-btns-cosmeticBag {
       width: 90%;
-      box-shadow: 0px 10px 40px black;
+      box-shadow: 0px 5px 5px black;
       border-radius: 5px;
+      cursor: pointer;
+      &:hover {
+        filter: brightness(1.75);
+      }
 
       &__up {
         grid-column: 2;

@@ -465,6 +465,9 @@ export default class index extends Component {
   };
 
   updateComponent = () => {
+    if (this.state.productToPay.length === 0) {
+      return;
+    }
     if (
       window.confirm(
         `Are you sure you wish to empty your cart? This operation cannot be reversed!`
@@ -499,6 +502,7 @@ export default class index extends Component {
         totalKeychainsInCart: 0,
         totalPetTagBonesInCart: 0,
         totalCosmeticBagsInCart: 0,
+        totalFacemaskHolderInCart: 0,
         // qty: 1,
         productToPay: [],
         showMsgInput: false,
@@ -964,8 +968,6 @@ export default class index extends Component {
           selectedCouponName: couponName[0],
           selectedCouponPrice: couponPrice[0],
         });
-        // console.log(this.state.selectedCouponName);
-        // console.log(this.state.selectedCouponPrice);
       })
       .catch((err) => {
         this.setState({
@@ -1058,39 +1060,42 @@ export default class index extends Component {
                   Choose one product below
                 </h1>
                 <h2 className="product-select" onClick={this.handleMugImg}>
-                  Mug 11-Oz($15.99)
+                  <i className="fas fa-coffee productList-icons"></i> Mug
+                  11-Oz($15.99)
                 </h2>
                 <h2 className="product-select" onClick={this.handleShirtImg}>
-                  Shirt ($19.99)
+                  <i className="fas fa-tshirt productList-icons"></i> Shirt
+                  ($19.99)
                 </h2>
                 <h2
                   className="product-select"
                   onClick={this.handlePillowcaseImg}
                 >
-                  Pillow (16"w X16"h) ($24.99)
+                  <i className="fas fa-couch productList-icons"></i> Pillow
+                  (16"w X16"h) ($24.99)
                 </h2>
                 <h2
                   className="product-select"
                   onClick={this.handlePetTagBoneImg}
                 >
-                  Pet-tag 1.25"w X 1"h ($12.99)
+                  <i className="fas fa-bone productList-icons"></i> Pet-tag
+                  1.25"w X 1"h ($12.99)
                 </h2>
                 <h2
                   className="product-select"
                   onClick={this.handleCosmeticBagImg}
                 >
-                  Cosmetic bag / Pencil case 8.5"w X 5"h ($18.99)
+                  <i className="fas fa-wallet productList-icons"></i> Cosmetic
+                  bag / Pencil case 8.5"w X 5"h ($18.99)
                 </h2>
                 <h2
                   className="product-select"
                   onClick={this.handleFaceMaskHolder}
                 >
-                  Wooden Sign Key/Facemask Holder 11"w X 8.5"h ($34.99)
+                  <i className="fas fa-smile-wink productList-icons"></i> Wooden
+                  Sign Key/Facemask Holder 11"w X 8.5"h ($34.99)
                 </h2>
                 <h2 className="product-select">More products coming soon...</h2>
-                {/* <h2 className="product-select" onClick={this.handleKeychainImg}>
-                  Pet-walking-license ($20)
-                </h2> */}
               </div>
             ) : null}
 
@@ -1312,7 +1317,7 @@ export default class index extends Component {
             id="product-screen-container"
             className="virtual-image-container"
           >
-            <h1 className="product-main-title">MY PRODUCT</h1>
+            <h1 className="product-main-title">My Product</h1>
             {this.state.step2 ? (
               <div>
                 <div className="product-image-container text-center">
@@ -1322,10 +1327,11 @@ export default class index extends Component {
                         onClick={this.productSelectedConfirmed}
                         className={
                           this.state.step2ActualProd === "pillow"
-                            ? "confirm-product-button__pillow"
-                            : this.state.step2ActualProd === "petTagBone"
-                            ? "confirm-product-button__petTagBone"
-                            : "confirm-product-button"
+                            ? "btn-to-confirm-product confirm-product-button__pillow"
+                            : this.state.step2ActualProd === "petTagBone" ||
+                              this.state.step2ActualProd === "shirt"
+                            ? "btn-to-confirm-product confirm-product-button__petTagBone"
+                            : "btn-to-confirm-product confirm-product-button"
                         }
                       >
                         <span aria-label="0" role="img">
@@ -1459,7 +1465,7 @@ export default class index extends Component {
             {this.state.toggleStep2 ? (
               <div className="step-2-container">
                 {this.state.step2ActualProd === "faceMaskHolder" ? null : (
-                  <div className="  controls-to-add-content-to-mugs">
+                  <div className="controls-to-add-content-to-mugs">
                     {/* QUANTITY */}
                     <div className="qty-container">
                       <h4 className="h2-qty">
@@ -1541,7 +1547,7 @@ export default class index extends Component {
                           }}
                           className="heading-product heading-product__upload text-center"
                         >
-                          &#x2912; CLICK TO UPLOAD PHOTO
+                          &#x2912; Upload Photo
                         </h2>
                         <button
                           onClick={this.clearPhoto}
@@ -1556,7 +1562,7 @@ export default class index extends Component {
                         isSearchable={false}
                         className="background-select"
                         menuPlacement="bottom"
-                        placeholder="Choose background (optional)"
+                        placeholder="Choose background"
                         options={optionsBackgrounds}
                         onChange={this.onSelectedChange}
                       />
@@ -1605,9 +1611,9 @@ export default class index extends Component {
                       <div>
                         <h2
                           onClick={this.showInputFields}
-                          className="heading-product heading-product__message"
+                          className="heading-product heading-product__message text-center"
                         >
-                          &darr; CLICK TO ADD A MESSAGE &darr;{" "}
+                          &darr; Click to Add Text &darr;{" "}
                           {50 - this.state.textOnMugs.length + " letters left"}
                         </h2>
                         {this.state.showMsgInput ? (
@@ -1638,7 +1644,7 @@ export default class index extends Component {
                           <b> I confirm my product is accurate</b>
                         </p>
                         {this.state.errorMsg ? (
-                          <p className="error-msg-confirm-product color-yellow">
+                          <p className="error-msg-confirm-product">
                             &#8593; {this.state.errorMsg}
                           </p>
                         ) : null}

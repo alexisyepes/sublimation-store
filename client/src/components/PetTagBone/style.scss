@@ -76,12 +76,13 @@
   position: absolute;
   width: 12%;
   right: 10%;
-  background-color: rgb(201, 235, 178);
+  background-color: rgb(248, 78, 120);
+  color: white;
   padding: 10px;
   margin: 20px;
   border-radius: 5px;
-  border: solid white 2px;
-  box-shadow: 0px 10px 40px black;
+  // border: solid white 2px;
+  box-shadow: 0px 5px 5px black;
 
   &__heading {
     margin: 0;
@@ -98,7 +99,7 @@
     .move-photo-btns {
       width: 90%;
       cursor: pointer;
-      box-shadow: 0px 10px 30px black;
+      box-shadow: 0px 5px 5px black;
       background-color: transparent;
       border-radius: 10px;
       margin: 2px 1px;
@@ -148,15 +149,16 @@
   width: 12%;
   right: 30%;
   top: 220px;
-  background-color: rgb(201, 235, 178);
+  background-color: rgb(248, 78, 120);
   padding: 10px;
   margin: 20px;
   border-radius: 5px;
-  border: solid white 2px;
-  box-shadow: 0px 10px 40px black;
+  // border: solid white 2px;
+  box-shadow: 0px 5px 5px black;
 
   &__heading {
     margin: 0;
+    color: white;
   }
 
   &-box {
@@ -167,6 +169,7 @@
 
     .move-text-btns {
       width: 90%;
+      box-shadow: 0px 5px 5px black;
 
       &__up {
         grid-column: 2;
@@ -923,7 +926,6 @@
     position: absolute;
     width: 20%;
     right: 1%;
-    background-color: rgb(201, 235, 178);
     padding: 10px;
     top: -30px;
 
@@ -944,7 +946,6 @@
         width: 25px;
 
         cursor: pointer;
-        box-shadow: 0px 10px 30px black;
         background-color: transparent;
         border-radius: 10px;
         margin: 2px 1px;
@@ -1017,7 +1018,8 @@
     position: absolute;
     width: 20%;
     right: -18px;
-    background-color: rgb(201, 235, 178);
+    background-color: rgb(248, 78, 120);
+    color: white;
     padding: 10px;
     top: -30px;
 
@@ -1038,7 +1040,7 @@
         width: 25px;
 
         cursor: pointer;
-        box-shadow: 0px 10px 30px black;
+        // box-shadow: 0px 10px 30px black;
         background-color: transparent;
         border-radius: 10px;
         margin: 2px 1px;
@@ -1118,7 +1120,6 @@
     position: absolute;
     width: 25%;
     right: -18px;
-    background-color: rgb(201, 235, 178);
     padding: 10px;
     top: -30px;
 
@@ -1134,7 +1135,6 @@
         width: 25px;
 
         cursor: pointer;
-        box-shadow: 0px 10px 30px black;
         background-color: transparent;
         border-radius: 10px;
         margin: 2px 1px;
@@ -1213,7 +1213,6 @@
     position: absolute;
     width: 32%;
     left: 1%;
-    background-color: rgb(201, 235, 178);
     padding: 10px;
     top: 130px;
 
@@ -1229,7 +1228,6 @@
         width: 25px;
 
         cursor: pointer;
-        box-shadow: 0px 10px 30px black;
         background-color: transparent;
         border-radius: 10px;
         margin: 2px 1px;
@@ -1316,7 +1314,6 @@
     position: absolute;
     width: 32%;
     left: 1%;
-    background-color: rgb(201, 235, 178);
     padding: 10px;
     top: 100px;
 
@@ -1332,7 +1329,6 @@
         width: 25px;
 
         cursor: pointer;
-        box-shadow: 0px 10px 30px black;
         background-color: transparent;
         border-radius: 10px;
         margin: 2px 1px;
@@ -1427,7 +1423,6 @@
     position: absolute;
     width: 35%;
     left: 1%;
-    background-color: rgb(201, 235, 178);
     padding: 10px;
     top: 90px;
 
@@ -1443,7 +1438,6 @@
         width: 25px;
 
         cursor: pointer;
-        box-shadow: 0px 10px 30px black;
         background-color: transparent;
         border-radius: 10px;
         margin: 2px 1px;
@@ -1531,7 +1525,6 @@
     position: absolute;
     width: 35%;
     left: 0;
-    background-color: rgb(201, 235, 178);
     padding: 10px;
     top: 90px;
 
@@ -1547,7 +1540,6 @@
         width: 25px;
 
         cursor: pointer;
-        box-shadow: 0px 10px 30px black;
         background-color: transparent;
         border-radius: 10px;
         margin: 2px 1px;

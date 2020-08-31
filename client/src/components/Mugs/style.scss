@@ -132,14 +132,15 @@
   width: 30%;
   left: 25%;
   top: 120%;
-  background-color: rgb(201, 235, 178);
+  background-color: rgb(248, 78, 120);
   padding: 10px;
   margin: 20px;
-  border: solid white 2px;
   border-radius: 5px;
+  box-shadow: 0px 5px 5px black;
 
   &__heading {
     margin: 0;
+    color: white;
   }
 
   &-box {
@@ -152,6 +153,11 @@
 
 .size-title__size {
   justify-self: center;
+  color: white;
+}
+
+.size-title__move {
+  color: white;
 }
 
 .move-text-btns-container-mug {
@@ -165,7 +171,8 @@
 .move-text-btns {
   width: 90%;
   cursor: pointer;
-  box-shadow: 0px 10px 40px black;
+  box-shadow: 0px 5px 5px black;
+  background-color: transparent;
   border-radius: 5px;
 
   &:hover {

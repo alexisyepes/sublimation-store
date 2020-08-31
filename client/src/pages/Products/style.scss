@@ -86,17 +86,19 @@
   .arrowToRight {
     transition: all 0.1s;
     animation: arrowRight ease-out 2s infinite;
+    font-family: "montserrat";
   }
 }
 
 .arrowToLeft {
   transition: all 0.1s;
   animation: arrowRight linear 2s infinite;
-  font-size: 30px;
+  font-size: 26px;
   width: 100%;
   margin: 15px;
   color: rgb(10, 7, 0);
   text-shadow: 4px 4px 6px white;
+  font-family: "montserrat";
 }
 
 .hideInBigScreens {
@@ -115,19 +117,18 @@
   top: -90px;
   right: 10px;
   position: absolute;
-  background-color: rgb(160, 11, 11);
+  background-color: rgb(236, 76, 76);
   color: rgb(255, 255, 255);
   width: 15%;
   font-size: 14px;
-  box-shadow: 0px 10px 30px black;
+  box-shadow: 0px 5px 5px black;
   cursor: pointer;
   transition: all 0.2s;
   backface-visibility: hidden;
 
   &:hover {
-    background-color: yellow;
-    color: black;
-    box-shadow: 0px 20px 60px black;
+    background-color: red;
+    box-shadow: 0px 7px 7px black;
   }
 }
 
@@ -140,11 +141,12 @@
   width: 500px;
   padding: 30px;
   margin: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 10px 20px black;
+  border-radius: 5px;
+  box-shadow: 0px 5px 5px black;
   font-weight: 800;
   color: rgb(255, 255, 255);
-  text-shadow: 4px 4px 2px rgb(0, 0, 0);
+  font-family: "montserrat";
+  // text-shadow: 4px 4px 2px rgb(0, 0, 0);
 
   &__1 {
     background-color: $color-blue-dark;
@@ -178,7 +180,7 @@
   }
 
   .empty-cart-button {
-    background-color: darkred;
+    background-color: rgb(236, 76, 76);
     color: white;
     margin-left: 10px;
     font-size: 16px;
@@ -194,20 +196,23 @@
   .btns-checkout {
     padding: 5px 20px;
     font-size: 18px;
-    border-radius: 10px;
+    border-radius: 5px;
     margin: 5px;
     margin-bottom: 20px;
     font-weight: 700;
     cursor: pointer;
     transition: all 0.2s;
+    border: none;
 
     .modify-product-btn {
       margin: 5px;
-      background-color: rgb(204, 204, 204);
+      background-color: rgb(121, 121, 121);
+      color: white;
       width: 100%;
       padding: 5px 20px;
       font-size: 18px;
-      border-radius: 10px;
+      border-radius: 5px;
+      border: none;
       font-weight: 700;
       cursor: pointer;
       transition: all 0.2s;
@@ -226,7 +231,7 @@
     }
 
     &__create-product {
-      background-color: rgb(255, 154, 21);
+      background-color: rgb(233, 52, 97);
       color: white;
       width: 100%;
       &:hover {
@@ -284,11 +289,11 @@
 }
 
 .controls-to-add-content-to-mugs {
-  background-color: #5c7775;
+  background-color: #e1fffd;
   padding: 20px;
   margin: 5px;
   border-radius: 10px;
-  border: solid 2px rgb(58, 58, 58);
+  border: solid 0.5px rgb(196, 216, 218);
 
   .background-select {
     width: 41.5%;
@@ -307,11 +312,10 @@
       font-size: 18px;
       color: white;
       cursor: pointer;
-      background-color: rgb(99, 38, 38);
+      background-color: rgb(236, 76, 76);
       border-radius: 10px;
       outline: none;
-      border: 1px solid rgb(41, 4, 4);
-      // z-index: 30;
+      border: none;
 
       &:hover {
         background-color: rgb(204, 10, 10);
@@ -326,12 +330,13 @@
     box-shadow: 0px 5px 10px rgb(228, 219, 219);
 
     &__upload {
-      background-color: rgb(163, 241, 176);
+      background-color: rgb(39, 171, 211);
+      color: white;
       cursor: pointer;
       width: 100%;
 
       &:hover {
-        background-color: white;
+        background-color: rgb(27, 116, 143);
       }
     }
 
@@ -340,12 +345,13 @@
     }
 
     &__message {
-      background-color: rgb(163, 241, 176);
+      background-color: rgb(39, 171, 211);
+      color: white;
       width: 40%;
       cursor: pointer;
 
       &:hover {
-        background-color: white;
+        background-color: rgb(27, 116, 143);
       }
     }
   }
@@ -369,6 +375,7 @@
     background-color: #fff;
     width: 25%;
     border-radius: 5px;
+    border: 0.5px solid rgb(187, 205, 221);
     display: grid;
     grid-template-columns: 50% 50%;
 
@@ -418,7 +425,7 @@
     margin-top: 10px;
 
     .agree-with-order {
-      color: white;
+      color: rgb(3, 79, 109);
       font-size: 22px;
       .checkbox-order {
         transform: scale(2);
@@ -428,28 +435,29 @@
     }
 
     .error-msg-confirm-product {
-      font-size: 24px;
+      font-size: 22px;
       margin-left: 5%;
+      color: rgb(241, 58, 144);
     }
 
     .continue-button {
       @include button;
       margin-top: 10px;
       margin-bottom: 20px;
-      background-color: rgb(15, 223, 15);
+      background-color: rgb(241, 58, 144);
       font-weight: 700;
-      color: rgb(0, 0, 0);
+      color: rgb(255, 255, 255);
       width: 41.5%;
-      box-shadow: 0px 10px 30px black;
+      box-shadow: 0px 5px 5px black;
       cursor: pointer;
       transition: all 0.2s;
       backface-visibility: hidden;
+      border: none;
 
       &:hover {
-        background-color: rgb(115, 197, 90);
-        color: black;
-        box-shadow: 0px 20px 60px black;
-        transform: scale(1.1);
+        background-color: rgb(252, 102, 172);
+        box-shadow: 0px 5px 5px black;
+        transform: scale(1.05);
       }
     }
 
@@ -564,6 +572,7 @@
   .error-msg {
     color: red;
     margin: 0;
+    margin-bottom: 4px;
     font-size: 16px;
   }
 }
@@ -605,65 +614,32 @@
   }
 }
 
-.confirm-product-button__petTagBone {
-  // @include button;
-  margin-bottom: 30px;
-  // background-color: $color-button-orange-2;
-  animation: colorFlashingConfirm 1s ease-in-out infinite;
-  font-weight: 900;
-  color: rgb(2, 0, 0);
-  font-size: 24px;
-  box-shadow: 0px 20px 30px black;
-  cursor: pointer;
-  transition: all 0.1s;
-  border-radius: 5px;
-  // z-index: 1000;
-
-  &:hover {
-    filter: brightness(1.1);
-    transform: scale(1.2);
-    box-shadow: 0px 20px 60px black;
-  }
-}
-
-.confirm-product-button__pillow {
+.btn-to-confirm-product {
   margin-bottom: 30px;
   animation: colorFlashingConfirm 1s ease-in-out infinite;
   font-weight: 900;
   color: rgb(2, 0, 0);
   font-size: 24px;
-  box-shadow: 0px 20px 30px black;
+  box-shadow: 0px 5px 5px black;
   cursor: pointer;
   transition: all 0.1s;
   border-radius: 5px;
 
   &:hover {
     filter: brightness(1.1);
-    transform: scale(1.2);
+    transform: scale(1.05);
     box-shadow: 0px 20px 60px black;
   }
 }
 
-.confirm-product-button {
-  // @include button;
-  margin-bottom: 30px;
-  // background-color: $color-button-orange-2;
-  animation: colorFlashingConfirm 1s ease-in-out infinite;
-  font-weight: 900;
-  color: rgb(2, 0, 0);
-  font-size: 24px;
-  box-shadow: 0px 20px 30px black;
-  cursor: pointer;
-  transition: all 0.1s;
-  border-radius: 5px;
-  // z-index: 1000;
+// .confirm-product-button__petTagBone {
+// }
 
-  &:hover {
-    filter: brightness(1.1);
-    transform: scale(1.2);
-    box-shadow: 0px 20px 60px black;
-  }
-}
+// .confirm-product-button__pillow {
+// }
+
+// .confirm-product-button {
+// }
 
 .petTagBone-input-container {
   .text-petTagBone-input {
@@ -675,13 +651,29 @@
   }
 }
 
-.product-select {
-  cursor: pointer;
+.product-select-title {
+  font-family: "montserrat";
+  margin: 0;
+}
 
-  &:hover {
-    background-color: rgb(44, 87, 167);
+.product-select {
+  font-size: 19px;
+  color: rgb(37, 37, 37);
+  text-align: left;
+  padding-left: 7%;
+  border-bottom: solid 1px rgb(65, 211, 204);
+  padding-bottom: 5px;
+
+  &:hover:not(:last-child) {
+    cursor: pointer;
+    background-color: rgb(44, 138, 167);
     color: white;
+    padding: 2px 0 2px 7%;
   }
+}
+
+.productList-icons {
+  margin-right: 10px;
 }
 
 .virtual-image-container {
@@ -690,19 +682,19 @@
   width: 100%;
   height: auto;
   border-radius: 10px;
-  box-shadow: 0px 10px 20px black;
+  box-shadow: 0px 5px 5px black;
 
   .product-main-title {
-    font-size: 25px;
-    font-weight: 800;
+    font-size: 23px;
+    font-weight: 700;
     left: 2%;
     position: relative;
-    background-color: $color-gray-medium;
+    background-color: rgb(86, 194, 202);
     width: 25%;
     padding: 5px;
     text-align: center;
     text-shadow: 2px 2px rgb(255, 255, 255);
-    border-radius: 10px;
+    border-radius: 5px;
   }
 
   .product-image-container {
