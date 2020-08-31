@@ -277,12 +277,12 @@ const Index = (props) => {
     );
   };
 
-  const stripePromise = loadStripe(
-    "pk_test_5Oyk1YnGn6dPTwNAJ5KhOIcN00lcwk3Oqk" //Test mode
-  );
   // const stripePromise = loadStripe(
-  //   "pk_live_X5VIPRMcJH7dLUplWTMEgTmg00DLrg3Eu6" //Live mode
+  //   "pk_test_5Oyk1YnGn6dPTwNAJ5KhOIcN00lcwk3Oqk" //Test mode
   // );
+  const stripePromise = loadStripe(
+    "pk_live_X5VIPRMcJH7dLUplWTMEgTmg00DLrg3Eu6" //Live mode
+  );
 
   return (
     <div className="container main-container-billing">

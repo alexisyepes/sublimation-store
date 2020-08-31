@@ -1881,7 +1881,7 @@ export default class index extends Component {
                     </p>
                     {this.state.selectedCouponPrice !== 0 ? (
                       <p className="coupon-on-checkout">
-                        Coupon: -${this.state.selectedCouponPrice}
+                        Coupon: {this.state.selectedCouponPrice}% off
                       </p>
                     ) : null}
 
@@ -1926,7 +1926,17 @@ export default class index extends Component {
                                   0.01 *
                                   0.13 +
                                 15.0 -
-                                this.state.selectedCouponPrice
+                                ((this.state.productToPay.reduce(
+                                  (a, b) => a + b
+                                ) *
+                                  0.01 +
+                                  this.state.productToPay.reduce(
+                                    (a, b) => a + b
+                                  ) *
+                                    0.01 *
+                                    0.13) *
+                                  this.state.selectedCouponPrice) /
+                                  100
                               ).toFixed(2)
                             : 0}{" "}
                           <span aria-label="0" role="img">
@@ -1950,7 +1960,17 @@ export default class index extends Component {
                                 ) *
                                   0.01 *
                                   0.13 -
-                                this.state.selectedCouponPrice
+                                ((this.state.productToPay.reduce(
+                                  (a, b) => a + b
+                                ) *
+                                  0.01 +
+                                  this.state.productToPay.reduce(
+                                    (a, b) => a + b
+                                  ) *
+                                    0.01 *
+                                    0.13) *
+                                  this.state.selectedCouponPrice) /
+                                  100
                               ).toFixed(2)
                             : 0}{" "}
                           <span aria-label="0" role="img">
@@ -1964,9 +1984,6 @@ export default class index extends Component {
                       className="checkout-form"
                       onSubmit={this.submitBillingDetails}
                     >
-                      {/* <h3 className="text-center">
-                        Fill out the form to checkout
-                      </h3> */}
                       <input
                         className="input-checkout"
                         name="firstName"
@@ -2148,7 +2165,13 @@ export default class index extends Component {
                             this.state.productToPay.reduce((a, b) => a + b) *
                               0.01 *
                               0.13 -
-                            this.state.selectedCouponPrice
+                            ((this.state.productToPay.reduce((a, b) => a + b) *
+                              0.01 +
+                              this.state.productToPay.reduce((a, b) => a + b) *
+                                0.01 *
+                                0.13) *
+                              this.state.selectedCouponPrice) /
+                              100
                           ).toFixed(2)
                         : null
                     }
@@ -2161,7 +2184,13 @@ export default class index extends Component {
                               0.01 *
                               0.13 +
                             15 -
-                            this.state.selectedCouponPrice
+                            ((this.state.productToPay.reduce((a, b) => a + b) *
+                              0.01 +
+                              this.state.productToPay.reduce((a, b) => a + b) *
+                                0.01 *
+                                0.13) *
+                              this.state.selectedCouponPrice) /
+                              100
                           ).toFixed(2)
                         : null
                     }
@@ -2171,7 +2200,18 @@ export default class index extends Component {
                             this.state.productToPay.reduce((a, b) => a + b) *
                               0.13 +
                               this.state.productToPay.reduce((a, b) => a + b) -
-                              this.state.selectedCouponPrice * 100
+                              (((this.state.productToPay.reduce(
+                                (a, b) => a + b
+                              ) *
+                                0.01 +
+                                this.state.productToPay.reduce(
+                                  (a, b) => a + b
+                                ) *
+                                  0.01 *
+                                  0.13) *
+                                this.state.selectedCouponPrice) /
+                                100) *
+                                100
                           )
                         : 0
                     }
@@ -2182,7 +2222,18 @@ export default class index extends Component {
                               0.13 +
                               this.state.productToPay.reduce((a, b) => a + b) +
                               1500 -
-                              this.state.selectedCouponPrice * 100
+                              (((this.state.productToPay.reduce(
+                                (a, b) => a + b
+                              ) *
+                                0.01 +
+                                this.state.productToPay.reduce(
+                                  (a, b) => a + b
+                                ) *
+                                  0.01 *
+                                  0.13) *
+                                this.state.selectedCouponPrice) /
+                                100) *
+                                100
                           )
                         : 0
                     }

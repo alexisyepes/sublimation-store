@@ -52,7 +52,7 @@ const sendMail = (
       ? `<p>Total number of Wooden Signs: ${totalFacemaskHolderInCart} ($34.99 ea)</p>`
       : `<span></span>`;
   let isThereCoupon =
-    coupon !== 0 ? `<p>Coupon Provided: -$${coupon}</p>` : `<span></span>`;
+    coupon !== 0 ? `<p>Coupon Provided: ${coupon}% off</p>` : `<span></span>`;
 
   let isShipping =
     shippingMethod === "delivery"
