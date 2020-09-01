@@ -1281,15 +1281,17 @@ export default class index extends Component {
                     </button>
                   </p>
                   <div className="btns-checkout">
-                    <button
-                      onClick={this.goBackToStep2}
-                      className="modify-product-btn"
-                    >
-                      Modify the Last product added {""}
-                      <span aria-label="0" role="img">
-                        <i className="fas fa-cog"></i>
-                      </span>
-                    </button>
+                    {this.state.step2ActualProd === "faceMaskHolder" ? null : (
+                      <button
+                        onClick={this.goBackToStep2}
+                        className="modify-product-btn"
+                      >
+                        Modify the Last product added {""}
+                        <span aria-label="0" role="img">
+                          <i className="fas fa-cog"></i>
+                        </span>
+                      </button>
+                    )}
 
                     <button
                       onClick={this.resetForNewProduct}
