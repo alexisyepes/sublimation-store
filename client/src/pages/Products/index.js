@@ -290,7 +290,7 @@ export default class index extends Component {
 
       //loadingAxios
       loadingAxiosReq: false,
-      // coupons: [],
+      coupons: [],
       selectedCouponName: "",
       selectedCouponPrice: 0,
     };
@@ -957,17 +957,24 @@ export default class index extends Component {
     await axios
       .get("/all_coupons")
       .then(async (res) => {
-        const couponName = res.data.map((coupon) => {
-          return coupon.couponName;
-        });
-        const couponPrice = res.data.map((coupon) => {
-          return coupon.price;
-        });
-        await this.setState({
-          loadingAxiosReq: false,
-          selectedCouponName: couponName[0],
-          selectedCouponPrice: couponPrice[0],
-        });
+        const couponValidated = res.data.filter((word) =>
+          word.couponName.includes(this.state.couponCodeInput)
+        );
+        // console.log(couponValidated[0]);
+        if (couponValidated.length !== 0) {
+          await this.setState({
+            loadingAxiosReq: false,
+            selectedCouponName: couponValidated[0].couponName,
+            selectedCouponPrice: couponValidated[0].price,
+            errorCoupon: "",
+          });
+        } else {
+          await this.setState({
+            loadingAxiosReq: false,
+            selectedCouponPrice: 0,
+            errorCoupon: "Coupon is Invalid",
+          });
+        }
       })
       .catch((err) => {
         this.setState({
@@ -975,17 +982,6 @@ export default class index extends Component {
         });
         console.log(err);
       });
-    if (this.state.couponCodeInput === this.state.selectedCouponName) {
-      await this.setState({
-        selectedCouponPrice: this.state.selectedCouponPrice,
-        errorCoupon: "",
-      });
-    } else {
-      await this.setState({
-        selectedCouponPrice: 0,
-        errorCoupon: "Coupon is Invalid",
-      });
-    }
   };
 
   submitBillingDetails = (e) => {
