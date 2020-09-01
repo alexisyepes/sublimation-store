@@ -130,6 +130,7 @@ const Index = (props) => {
                     province: props.province,
                     postalCode: props.postalCode,
                     shippingMethod,
+                    couponName: props.couponName,
                   };
                   // console.log(dataObj);
 
@@ -210,6 +211,7 @@ const Index = (props) => {
               province: props.province,
               postalCode: props.postalCode,
               shippingMethod,
+              couponName: props.couponName,
             };
             // console.log(dataObj);
 

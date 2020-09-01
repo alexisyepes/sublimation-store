@@ -82,6 +82,7 @@ router.post("/email_to_ayp_sublimation", (req, res) => {
     province,
     postalCode,
     shippingMethod,
+    couponName,
   } = req.body;
 
   console.log(req.body);
@@ -95,6 +96,7 @@ router.post("/email_to_ayp_sublimation", (req, res) => {
     province,
     postalCode,
     shippingMethod,
+    couponName,
     "New Product Sublimation",
     function (err, data) {
       if (err) {

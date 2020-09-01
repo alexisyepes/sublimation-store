@@ -21,7 +21,8 @@ const sendMailToUs = (
   city,
   province,
   postalCode,
-  shippingMethod
+  shippingMethod,
+  couponName
 ) => {
   let imgArr = img.map((image) => {
     // return image;
@@ -44,6 +45,11 @@ const sendMailToUs = (
       ? `<p>Pickup from Amazing Pet Grooming</p>`
       : `<p>Pickup from Cambridge`;
 
+  let couponWasUsed =
+    couponName.length > 0
+      ? `<p>Coupon used: ${couponName}</p>`
+      : `<p>No Coupon was used by customer</p>`;
+
   // console.log(ImgScrShtArr);
   const mailOptions = {
     from: "info@aypwebcreations.com",
@@ -57,6 +63,7 @@ const sendMailToUs = (
     <p>City: ${city}</p>
     <p>Province: ${province}</p>
     <p>Postal Code: ${postalCode}</p>
+    <p>${couponWasUsed}</p>
     <p>  Main Photos: </p>
       ${imgArr}
     <p>Screenshots of product designed: </p>

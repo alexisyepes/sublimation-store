@@ -2155,6 +2155,7 @@ export default class index extends Component {
                       ).toFixed(2)
                     }
                     coupon={this.state.selectedCouponPrice}
+                    couponName={this.state.selectedCouponName}
                     productWithCents={
                       this.state.productToPay.length > 0
                         ? (
