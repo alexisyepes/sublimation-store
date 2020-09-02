@@ -324,12 +324,14 @@ export default class index extends Component {
     });
   };
 
-  closeModalCheckout = () => {
-    this.setState({
+  closeModalCheckout = async () => {
+    await this.setState({
       modalToCheckout: false,
       errorMsg: "",
+      errorCoupon: "",
       selectedCouponPrice: 0,
-      couponCodeInput: "",
+      couponCodeInput: "h873huih8",
+      selectedCouponName: "",
     });
   };
 
@@ -958,7 +960,7 @@ export default class index extends Component {
       .get("/all_coupons")
       .then(async (res) => {
         const couponValidated = res.data.filter((word) =>
-          word.couponName.includes(this.state.couponCodeInput)
+          word.couponName.includes(this.state.couponCodeInput.trim())
         );
         // console.log(couponValidated[0]);
         if (couponValidated.length !== 0) {
