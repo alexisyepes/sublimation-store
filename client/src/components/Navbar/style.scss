@@ -64,13 +64,16 @@
     order: 0;
   }
   &__contact {
-    order: 3;
+    order: 4;
   }
   &__about {
     order: 1;
   }
   &__products {
     order: 2;
+  }
+  &__general {
+    order: 3;
   }
   &__ {
     order: 2;
@@ -97,7 +100,7 @@
   }
 }
 
-@media only screen and (min-device-width: 519px) and (max-device-width: 768px) {
+@media only screen and (min-device-width: 769px) and (max-device-width: 1199px) {
   .nav-link {
     color: rgb(0, 0, 0);
     font-size: 20px;
@@ -125,7 +128,19 @@
   }
 }
 
-@media only screen and (min-device-width: 300px) and (max-device-width: 518px) {
+@media only screen and (min-device-width: 519px) and (max-device-width: 768px) {
+  .nav-link {
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+    text-decoration: none;
+  }
+
+  .links-home {
+    font-weight: 600;
+  }
+}
+
+@media only screen and (min-device-width: 200px) and (max-device-width: 615px) {
   .nav-link {
     display: none;
   }

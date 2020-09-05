@@ -78,6 +78,17 @@ export default class index extends Component {
     }
   };
 
+  checkCartGeneralProducts = async () => {
+    if (
+      this.state.cart > 0 &&
+      window.confirm(
+        "There are products in the shopping cart; if you leave or refresh this page, or continue, all your progress will be lost and the cart will be empty. \nAre you sure you wish to continue?"
+      )
+    ) {
+      return (window.location.href = "/general_products");
+    }
+  };
+
   render() {
     return (
       <nav className="nav-bar-container">
@@ -109,11 +120,11 @@ export default class index extends Component {
           <li className="nav-link nav-link__home">
             {this.state.cart > 0 ? (
               <div onClick={this.checkCartHome} className="links-home" href="/">
-                Home
+                <i className="fas fa-home"></i>
               </div>
             ) : (
               <a className="links-home" href="/">
-                Home
+                <i className="fas fa-home"></i>
               </a>
             )}
           </li>
@@ -166,6 +177,22 @@ export default class index extends Component {
                 href="/products"
               >
                 Create product
+              </a>
+            )}
+          </li>
+
+          <li className="nav-link nav-link__general">
+            {this.state.cart > 0 ? (
+              <div
+                onClick={this.checkCartGeneralProducts}
+                className="links-home"
+                href="/general_products"
+              >
+                More...
+              </div>
+            ) : (
+              <a className="links-home" href="/general_products">
+                More...
               </a>
             )}
           </li>
@@ -250,6 +277,21 @@ export default class index extends Component {
               ) : (
                 <a className="links-home" href="/products">
                   Create my product
+                </a>
+              )}
+            </li>
+            <li className="nav-link-sidebar nav-link__products">
+              {this.state.cart > 0 ? (
+                <div
+                  onClick={this.checkCartGeneralProducts}
+                  className="links-home"
+                  href="/general_products"
+                >
+                  More...
+                </div>
+              ) : (
+                <a className="links-home" href="/general_products">
+                  More...
                 </a>
               )}
             </li>

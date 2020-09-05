@@ -5,9 +5,12 @@ import About from "./pages/About";
 import Products from "./pages/Products";
 import Contact from "./pages/Contact";
 import Gallery from "./pages/Gallery";
+import GeneralProducts from "./pages/GeneralProducts";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import "./SCSS/Main.scss";
+// import { Provider } from "react-redux";
+// import store from "./store";
 
 class App extends Component {
   constructor(props) {
@@ -30,6 +33,12 @@ class App extends Component {
     });
   };
 
+  updateCartNumberAfterRemovingProduct = (qtyToRemove) => {
+    this.setState({
+      cart: this.state.cart - qtyToRemove,
+    });
+  };
+
   setCartToNewQty = () => {
     this.setState({
       cart: this.state.cart + this.state.qty,
@@ -42,21 +51,6 @@ class App extends Component {
     });
   };
 
-  increaseQty = () => {
-    this.setState({
-      qty: this.state.qty + 1,
-    });
-  };
-
-  decreaseQty = () => {
-    if (this.state.qty === 1) {
-      return;
-    }
-    this.setState({
-      qty: this.state.qty - 1,
-    });
-  };
-
   render() {
     return (
       <Router>
@@ -66,6 +60,25 @@ class App extends Component {
             <Route exact path="/" component={Home} />
             <Route exact path="/about" component={About} />
             <Route exact path="/gallery" component={Gallery} />
+            <Route
+              exact
+              path="/general_products"
+              render={() => (
+                <GeneralProducts
+                // resetCart={this.setCartToZero}
+                // resetQty={this.setQtyToOne}
+                // updateCart={this.setCartToNewQty}
+                // updateCartToPrevQty={this.setCartToPrevQty}
+                // cart={this.state.cart}
+                // qty={this.state.qty}
+                // increaseQty={this.increaseQty}
+                // decreaseQty={this.decreaseQty}
+                // updateCartNumberAfterRemovingProduct={
+                //   this.updateCartNumberAfterRemovingProduct
+                // }
+                />
+              )}
+            />
             <Route
               exact
               path="/products"

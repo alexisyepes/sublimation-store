@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const keys = require("../config/keys");
 const dbCoupon = require("../models/coupons");
-// const dbProduct = require("../models/products");
+const dbProduct = require("../models/products");
 const stripe = require("stripe")(keys.stripeSecretKey);
 const { v4: uuidv4 } = require("uuid");
 const EmailToAYP = require("./mail/mailToUs");
@@ -13,6 +13,7 @@ if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
 
+//add coupon
 router.post("/coupon", (req, res) => {
   let coupon = {
     couponName: req.body.couponName,
@@ -27,6 +28,7 @@ router.post("/coupon", (req, res) => {
     });
 });
 
+//all coupons
 router.get("/all_coupons", (req, res) => {
   dbCoupon
     .find()
@@ -37,22 +39,49 @@ router.get("/all_coupons", (req, res) => {
     });
 });
 
-// router.post("/product", (req, res) => {
-//   let product = {
-//     productName: req.body.productName,
-//     price: req.body.price,
-//     customerName: req.body.customerName,
-//     email: req.body.email,
-//     purchaseDate: req.body.purchaseDate,
-//   };
-//   dbProduct
-//     .create(product)
-//     .then(() => res.send(product))
-//     .catch((err) => {
-//       console.log(err);
-//       res.json(err);
-//     });
-// });
+//all products
+router.get("/all_products", (req, res) => {
+  dbProduct
+    .find()
+    .then((product) => res.json(product))
+    .catch((err) => {
+      console.log(err);
+      res.json(err);
+    });
+});
+
+router.get("/product/:id", function (req, res) {
+  dbProduct.findOne(
+    {
+      _id: req.params.id,
+    },
+    function (error, found) {
+      // log any errors
+      if (error) {
+        console.log(error);
+        res.send(error);
+      } else {
+        // Otherwise, send the note to the browser
+        // This will fire off the success function of the ajax request
+        console.log(found);
+        res.send(found);
+      }
+    }
+  );
+});
+
+router.post("/product", (req, res) => {
+  let product = {
+    ...req.body,
+  };
+  dbProduct
+    .create(product)
+    .then(() => res.send(product))
+    .catch((err) => {
+      console.log(err);
+      res.json(err);
+    });
+});
 
 router.post("/contact", (req, res) => {
   const { email, message } = req.body;

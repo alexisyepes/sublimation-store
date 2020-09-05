@@ -2,11 +2,11 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const storeSchema = new Schema({
-	productName: { type: String, required: true },
-	price: { type: Number, required: true },
-	customerName: { type: String, required: true },
-	email: { type: String, required: true },
-	purchaseDate: { type: String, required: true },
+  productName: { type: String, required: true },
+  description: { type: String, required: true },
+  measurements: { type: String, required: false },
+  size: { type: String, required: false },
+  price: { type: Number, required: true },
 });
 
 const Sublimation = mongoose.model("Sublimation", storeSchema);

@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import axios from "axios";
 import LoadPage from "../../components/LoadPage";
 import "./style.scss";
+import { connect } from "react-redux";
+import { getCart, addItemToCart } from "../../actions/cartActions";
 
-export default class index extends Component {
+class index extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -11,6 +13,14 @@ export default class index extends Component {
       message: "",
       loadingAxiosReq: false,
     };
+  }
+
+  componentDidMount() {
+    this.props.getCart();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
   }
 
   handleChange = (e) => {
@@ -107,3 +117,19 @@ export default class index extends Component {
     );
   }
 }
+
+// index.propTypes = {
+//   getProducts: PropTypes.func.isRequired,
+//   products: PropTypes.object.isRequired,
+//   // cart: PropTypes.array.isRequired,
+// };
+
+const mapStateToProps = (state) => ({
+  cart: state.cart.cart,
+});
+//
+
+export default connect(mapStateToProps, {
+  getCart,
+  addItemToCart,
+})(index);
