@@ -2,7 +2,6 @@ import { GET_PRODUCTS } from "../actions/types";
 
 const initialState = {
   products: [],
-  product: {},
 };
 
 export default function (state = initialState, action) {
@@ -13,6 +12,6 @@ export default function (state = initialState, action) {
         products: action.payload,
       };
     default:
-      return state;
+      return { ...state };
   }
 }

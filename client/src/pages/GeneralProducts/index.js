@@ -49,41 +49,24 @@ class index extends Component {
       selectedCouponName: "",
       loadingAxiosReq: false,
 
+      qty: 1,
+
       //state managed in App.js
       productToPay: [],
       productsInCart: [],
       //state managed in App.js
 
       //State in Redux Store
-      qty: 1,
+      cartInLocalComponent: 0,
 
       productBeingAdded: "",
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.props.getProducts();
-    this.props.getCart();
-  }
-
-  increaseQty = () => {
-    this.setState({
-      qty: this.state.qty + 1,
-    });
-  };
-
-  decreaseQty = () => {
-    if (this.state.qty === 1) {
-      return;
-    }
-    this.setState({
-      qty: this.state.qty - 1,
-    });
-  };
-
-  async componentWillReceiveProps(nextProps) {
-    // console.log(nextProps);
-    // console.log(nextProps);
+    await this.props.getCart();
+    console.log(this.props);
   }
 
   closeModalCheckout = async () => {
@@ -157,6 +140,21 @@ class index extends Component {
     });
   };
 
+  increaseQty = () => {
+    this.setState({
+      qty: this.state.qty + 1,
+    });
+  };
+
+  decreaseQty = () => {
+    if (this.state.qty === 1) {
+      return;
+    }
+    this.setState({
+      qty: this.state.qty - 1,
+    });
+  };
+
   validateCouponHandler = async (e) => {
     e.preventDefault();
     // if (this.state.productToPay.length === 0) {
@@ -211,13 +209,12 @@ class index extends Component {
   };
 
   addProductToCart = async ({ currentTarget }) => {
-    // console.log(currentTarget.value);
     let _id = currentTarget.value;
 
     await axios
       .get("/product/" + _id)
       .then((res) => {
-        // console.log(res.data);
+        // console.log(res);
         let productToAddToCart = {
           productName: res.data.productName,
           price: res.data.price,
@@ -225,12 +222,15 @@ class index extends Component {
         };
         this.props.addItemToCart(productToAddToCart);
       })
-
+      .then(
+        this.setState({
+          qty: 1,
+          productBeingAdded: "",
+        })
+      )
       .catch((err) => console.log(err));
-    this.setState({
-      qty: 1,
-    });
-    this.props.getCart();
+
+    // this.props.getCart();
   };
 
   removeItemFromCart = ({ currentTarget }) => {
@@ -259,10 +259,10 @@ class index extends Component {
         cartContent.map((item, index) => {
           return (
             <div className="itemInCart-wrapper" key={index}>
-              <h6>Product Name: {item.item.productName}</h6>
-              <p>Price: {item.item.price / 100}</p>
-              <p>Qty: {item.item.qty}</p>
-              <button value={item.item.id} onClick={this.removeItemFromCart}>
+              <h6>Product Name: {item.productName}</h6>
+              <p>Price: {item.price / 100}</p>
+              <p>Qty: {item.qty}</p>
+              <button value={item.id} onClick={this.removeItemFromCart}>
                 Remove
               </button>
               <hr />
@@ -279,9 +279,13 @@ class index extends Component {
         {!this.state.modalToCheckout ? (
           <div onClick={this.modalToCheckoutOpen} className="cart-container">
             <span aria-label="0" role="img">
-              &#128722; {this.props.cart.length}
+              &#128722;{" "}
+              {this.props.cart.length > 0
+                ? this.props.cart.map((qty) => qty.qty).reduce((a, b) => a + b)
+                : 0}
             </span>
             <button onClick={this.trashAllCartItems}>Empty out Cart</button>
+            {/* {this.props.cart.lengt > 0 ? this.props.cart.map((qty) => qty.qty).reduce((a, b) => a + b) : 0} */}
           </div>
         ) : null}
         <div className="products-general-wrapper">
@@ -383,7 +387,7 @@ class index extends Component {
             </div>
           </div>
           <div className="product-general-products-container">
-            <h2 className="text-center">T-shirt Bunny Design </h2>
+            <h2 className="text-center">Another product not defined yet </h2>
             {/* QUANTITY */}
             {this.state.productBeingAdded === "Bunny shirt" ? (
               <div className="qty-container">
