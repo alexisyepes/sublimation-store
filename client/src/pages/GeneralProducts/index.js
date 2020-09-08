@@ -11,6 +11,7 @@ import {
   getCart,
   addItemToCart,
   emptyOutCart,
+  removeItemFromCart,
 } from "../../actions/cartActions";
 
 let shippingOptions = [
@@ -216,36 +217,18 @@ class index extends Component {
       .then((res) => {
         // console.log(res);
         let productToAddToCart = {
+          _id: res.data._id,
           productName: res.data.productName,
           price: res.data.price,
           qty: this.state.qty,
         };
         this.props.addItemToCart(productToAddToCart);
       })
-      .then(
-        this.setState({
-          qty: 1,
-          productBeingAdded: "",
-        })
-      )
       .catch((err) => console.log(err));
-
-    // this.props.getCart();
-  };
-
-  removeItemFromCart = ({ currentTarget }) => {
-    const itemToBeRemovedQty = this.state.productsInCart.filter(
-      (item) => item.id === currentTarget.value
-    );
-    const qtyToRemoveFromCart = itemToBeRemovedQty[0].qty;
-
     this.setState({
-      productsInCart: this.state.productsInCart.filter(
-        (item) => item.id !== currentTarget.value
-      ),
+      qty: 1,
+      productBeingAdded: "",
     });
-
-    this.props.updateCartNumberAfterRemovingProduct(qtyToRemoveFromCart);
   };
 
   trashAllCartItems = () => {
@@ -256,13 +239,17 @@ class index extends Component {
     const cartContent = this.props.cart;
     const itemsInCartList =
       cartContent.length > 0 ? (
-        cartContent.map((item, index) => {
+        cartContent.map((item) => {
           return (
-            <div className="itemInCart-wrapper" key={index}>
+            <div className="itemInCart-wrapper" key={item._id}>
               <h6>Product Name: {item.productName}</h6>
               <p>Price: {item.price / 100}</p>
               <p>Qty: {item.qty}</p>
-              <button value={item.id} onClick={this.removeItemFromCart}>
+              <button
+                onClick={() => {
+                  this.props.removeItemFromCart(item._id);
+                }}
+              >
                 Remove
               </button>
               <hr />
@@ -281,7 +268,9 @@ class index extends Component {
             <span aria-label="0" role="img">
               &#128722;{" "}
               {this.props.cart.length > 0
-                ? this.props.cart.map((qty) => qty.qty).reduce((a, b) => a + b)
+                ? this.props.cart
+                    .map((item) => item.qty)
+                    .reduce((a, b) => a + b)
                 : 0}
             </span>
             <button onClick={this.trashAllCartItems}>Empty out Cart</button>
@@ -595,5 +584,6 @@ export default connect(mapStateToProps, {
   getProducts,
   getCart,
   addItemToCart,
+  removeItemFromCart,
   emptyOutCart,
 })(index);

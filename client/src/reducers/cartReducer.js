@@ -19,7 +19,7 @@ export default function (state = initialState, action) {
     case REMOVED_FROM_CART:
       return {
         ...state,
-        cart: action.payload,
+        cart: state.cart.filter((item) => item._id !== action.id),
       };
     case EMPTY_OUT_CART:
       return {

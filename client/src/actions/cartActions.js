@@ -28,14 +28,6 @@ export const emptyOutCart = () => (dispatch) => {
 export const removeItemFromCart = (id) => (dispatch) => {
   dispatch({
     type: REMOVED_FROM_CART,
-    payload: {
-      id,
-    },
+    id,
   });
 };
-
-// export const getQty = () => (dispatch) => {
-//   dispatch({
-//     type: GET_QTY,
-//   });
-// };
