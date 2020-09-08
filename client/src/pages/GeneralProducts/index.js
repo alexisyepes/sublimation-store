@@ -46,6 +46,7 @@ class index extends Component {
       checkOutStripe: false,
       showMsgInput: false,
       showQtyToUpdate: false,
+      showCheckout: false,
       errorMsg: "",
       errorCoupon: "",
       selectedCouponPrice: 0,
@@ -270,12 +271,19 @@ class index extends Component {
       (item) => item._id === currentTarget.value
     );
 
-    console.log(checkQtyFirst[0].qty);
-
     if (checkQtyFirst[0].qty === 1) {
       return;
     }
     this.props.decreaseQtyInCart(currentTarget.value);
+  };
+
+  showCheckoutFormHandler = () => {
+    if (this.props.cart.length === 0) {
+      return;
+    }
+    this.setState({
+      showCheckout: !this.state.showCheckout,
+    });
   };
 
   render() {
@@ -285,36 +293,39 @@ class index extends Component {
         cartContent.map((item) => {
           return (
             <div className="itemInCart-wrapper" key={item._id}>
-              <h6>Product Name: {item.productName}</h6>
-              <h6>Price: {item.price / 100}</h6>
+              <p className="cart-info-parag">
+                Product Name: {item.productName}
+              </p>
+              <p className="cart-info-parag">Price: {item.price / 100}</p>
               <div>
-                <h6 className="">
+                <p className="cart-info-parag">
                   <span>Qty: {item.qty}</span>{" "}
                   <button
                     value={item._id}
                     onClick={this.increaseQtyInCart}
-                    className=""
+                    className="counter-btns counter-btns__plus"
                   >
                     {" "}
-                    +
+                    <i className="fas fa-plus"></i>
                   </button>{" "}
                   <button
                     value={item._id}
                     onClick={this.decreaseQtyInCart}
-                    className=""
+                    className="counter-btns counter-btns__minus"
                   >
-                    -
+                    <i className="fas fa-minus"></i>
                   </button>{" "}
-                </h6>
+                  <button
+                    className="remove-item-from-cart-modal-btn"
+                    onClick={() => {
+                      this.props.removeItemFromCart(item._id);
+                    }}
+                  >
+                    <i className="fas fa-trash-alt"></i>
+                  </button>
+                </p>
               </div>
 
-              <button
-                onClick={() => {
-                  this.props.removeItemFromCart(item._id);
-                }}
-              >
-                Remove Item
-              </button>
               <hr />
             </div>
           );
@@ -336,7 +347,6 @@ class index extends Component {
                     .reduce((a, b) => a + b)
                 : 0}
             </span>
-            {/* {this.props.cart.lengt > 0 ? this.props.cart.map((qty) => qty.qty).reduce((a, b) => a + b) : 0} */}
           </div>
         ) : null}
         <div className="products-general-wrapper">
@@ -491,138 +501,161 @@ class index extends Component {
           <span className="x-close-modal" onClick={this.closeModalCheckout}>
             X
           </span>
-          <div className="cart-summary-container">{itemsInCartList}</div>
-          <button className="checkout-btn-moreProducts">Checkout</button>
-          <div className="checkout-modal-wrapper">
-            {!this.state.checkOutStripe ? (
-              <div className="text-center">
-                <button
-                  onClick={this.trashAllCartItems}
-                  className="empty-cart-button__checkout-modal"
-                >
-                  <i className="fas fa-trash"></i> Cancel order
-                </button>
-                <h2 className="text-center payment-info-title">
-                  Payment Information
-                </h2>
-                <form
-                  className="checkout-form"
-                  onSubmit={this.submitBillingDetails}
-                >
-                  <input
-                    className="input-checkout"
-                    name="firstName"
-                    onChange={this.onChangeHandlerBillingDetails}
-                    type="text"
-                    placeholder="Full Name"
-                  />
-                  <input
-                    className="input-checkout"
-                    name="address"
-                    onChange={this.onChangeHandlerBillingDetails}
-                    type="text"
-                    placeholder="Address"
-                  />
-                  <input
-                    className="input-checkout"
-                    name="city"
-                    onChange={this.onChangeHandlerBillingDetails}
-                    type="text"
-                    placeholder="City"
-                  />
-                  <input
-                    className="input-checkout"
-                    name="province"
-                    onChange={this.onChangeHandlerBillingDetails}
-                    type="text"
-                    placeholder="Province"
-                  />
-                  <input
-                    className="input-checkout"
-                    name="postalCode"
-                    onChange={this.onChangeHandlerBillingDetails}
-                    type="text"
-                    placeholder="Postal Code"
-                  />
-                  <input
-                    className="input-checkout"
-                    name="email"
-                    onChange={this.onChangeHandlerBillingDetails}
-                    type="email"
-                    placeholder="Email"
-                  />
+          {this.state.showCheckout ? (
+            <div className="checkout-modal-wrapper">
+              {!this.state.checkOutStripe ? (
+                <div className="text-center">
+                  <button
+                    onClick={this.trashAllCartItems}
+                    className="empty-cart-button__checkout-modal"
+                  >
+                    <i className="fas fa-trash"></i> Cancel order
+                  </button>
+                  <h2 className="text-center payment-info-title">
+                    Payment Information
+                  </h2>
+                  <form
+                    className="checkout-form"
+                    onSubmit={this.submitBillingDetails}
+                  >
+                    <input
+                      className="input-checkout"
+                      name="firstName"
+                      onChange={this.onChangeHandlerBillingDetails}
+                      type="text"
+                      placeholder="Full Name"
+                    />
+                    <input
+                      className="input-checkout"
+                      name="address"
+                      onChange={this.onChangeHandlerBillingDetails}
+                      type="text"
+                      placeholder="Address"
+                    />
+                    <input
+                      className="input-checkout"
+                      name="city"
+                      onChange={this.onChangeHandlerBillingDetails}
+                      type="text"
+                      placeholder="City"
+                    />
+                    <input
+                      className="input-checkout"
+                      name="province"
+                      onChange={this.onChangeHandlerBillingDetails}
+                      type="text"
+                      placeholder="Province"
+                    />
+                    <input
+                      className="input-checkout"
+                      name="postalCode"
+                      onChange={this.onChangeHandlerBillingDetails}
+                      type="text"
+                      placeholder="Postal Code"
+                    />
+                    <input
+                      className="input-checkout"
+                      name="email"
+                      onChange={this.onChangeHandlerBillingDetails}
+                      type="email"
+                      placeholder="Email"
+                    />
 
-                  <div className="coupon-container">
-                    {this.state.selectedCouponPrice === 0 ? (
-                      <input
-                        className="input-checkout__coupon"
-                        name="couponCodeInput"
-                        onChange={this.onChangeHandlerBillingDetails}
-                        type="text"
-                        placeholder="Type Coupon Code Here"
-                      />
-                    ) : null}
-                    {this.state.errorCoupon === "" ? null : (
-                      <p className="coupon-error">{this.state.errorCoupon}</p>
-                    )}
+                    <div className="coupon-container">
+                      {this.state.selectedCouponPrice === 0 ? (
+                        <input
+                          className="input-checkout__coupon"
+                          name="couponCodeInput"
+                          onChange={this.onChangeHandlerBillingDetails}
+                          type="text"
+                          placeholder="Type Coupon Code Here"
+                        />
+                      ) : null}
+                      {this.state.errorCoupon === "" ? null : (
+                        <p className="coupon-error">{this.state.errorCoupon}</p>
+                      )}
 
-                    {this.state.loadingAxiosReq ? (
-                      <div className="coupon-results-wrapper">
-                        <button className="coupon-btn">Please Wait...</button>
-                      </div>
-                    ) : (
-                      <div
-                        className={
-                          this.state.selectedCouponPrice === 0
-                            ? "coupon-results-wrapper"
-                            : "coupon-results-wrapper__applied"
-                        }
-                      >
-                        {this.state.selectedCouponPrice !== 0 ? (
-                          <p className="coupon-applied">
-                            Coupon Applied <i className="fas fa-check"></i>
-                          </p>
-                        ) : (
-                          <button
-                            className="coupon-btn"
-                            onClick={this.validateCouponHandler}
-                          >
-                            Validate Coupon
-                          </button>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                  <Select
-                    className="shippingOptionsSelect"
-                    isSearchable={false}
-                    menuPlacement="top"
-                    placeholder="Choose one"
-                    options={shippingOptions}
-                    onChange={this.onSelectedShipping}
-                  />
+                      {this.state.loadingAxiosReq ? (
+                        <div className="coupon-results-wrapper">
+                          <button className="coupon-btn">Please Wait...</button>
+                        </div>
+                      ) : (
+                        <div
+                          className={
+                            this.state.selectedCouponPrice === 0
+                              ? "coupon-results-wrapper"
+                              : "coupon-results-wrapper__applied"
+                          }
+                        >
+                          {this.state.selectedCouponPrice !== 0 ? (
+                            <p className="coupon-applied">
+                              Coupon Applied <i className="fas fa-check"></i>
+                            </p>
+                          ) : (
+                            <button
+                              className="coupon-btn"
+                              onClick={this.validateCouponHandler}
+                            >
+                              Validate Coupon
+                            </button>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                    <Select
+                      className="shippingOptionsSelect"
+                      isSearchable={false}
+                      menuPlacement="top"
+                      placeholder="Choose one"
+                      options={shippingOptions}
+                      onChange={this.onSelectedShipping}
+                    />
 
-                  <p className="text-center error-msg">{this.state.errorMsg}</p>
-                  <button className="btn-checkout">Next &#8594;</button>
-                </form>
+                    <p className="text-center error-msg">
+                      {this.state.errorMsg}
+                    </p>
+                    <button className="btn-checkout">Next &#8594;</button>
+                  </form>
+                  <hr />
+                  <button
+                    onClick={this.showCheckoutFormHandler}
+                    className="checkout-btn-moreProducts"
+                  >
+                    Back &#8592;
+                  </button>
+                </div>
+              ) : null}
+
+              {this.state.billingDetails ? (
+                <CheckoutStripe
+                  resetModal={this.closeModalCheckout}
+                  firstName={this.state.firstName}
+                  email={this.state.email}
+                  address={this.state.address}
+                  city={this.state.city}
+                  province={this.state.province}
+                  postalCode={this.state.postalCode}
+                  shippingMethod={this.state.shippingMethod}
+                  coupon={this.state.selectedCouponPrice}
+                  couponName={this.state.selectedCouponName}
+                />
+              ) : null}
+            </div>
+          ) : (
+            <div>
+              <div className="cart-summary-container">
+                <h3 className="text-center">Cart Summary</h3>
+                {itemsInCartList}
               </div>
-            ) : null}
 
-            {this.state.billingDetails ? (
-              <CheckoutStripe
-                resetModal={this.closeModalCheckout}
-                firstName={this.state.firstName}
-                email={this.state.email}
-                address={this.state.address}
-                city={this.state.city}
-                province={this.state.province}
-                postalCode={this.state.postalCode}
-                shippingMethod={this.state.shippingMethod}
-                coupon={this.state.selectedCouponPrice}
-                couponName={this.state.selectedCouponName}
-              />
-            ) : null}
-          </div>
+              <button
+                onClick={this.showCheckoutFormHandler}
+                className="checkout-btn-moreProducts"
+              >
+                Checkout
+              </button>
+            </div>
+          )}
         </Modal>
       </div>
     );
