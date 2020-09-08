@@ -53,7 +53,7 @@ class index extends Component {
       selectedCouponName: "",
       loadingAxiosReq: false,
 
-      qty: 0,
+      qty: 1,
 
       //state managed in App.js
       productToPay: [],
@@ -70,7 +70,7 @@ class index extends Component {
   async componentDidMount() {
     this.props.getProducts();
     await this.props.getCart();
-    console.log(this.props);
+    // console.log(this.props);
   }
 
   closeModalCheckout = async () => {
@@ -203,17 +203,28 @@ class index extends Component {
     if (currentTarget.value === "1") {
       this.setState({
         productBeingAdded: "Keychain",
+        qty: 1,
       });
     }
     if (currentTarget.value === "2") {
       this.setState({
         productBeingAdded: "Bunny shirt",
+        qty: 1,
       });
     }
   };
 
   addProductToCart = async ({ currentTarget }) => {
     let _id = currentTarget.value;
+    this.props.getCart();
+    const checkCartIfProductExists = this.props.cart.filter(
+      (item) => item._id === _id
+    );
+    if (checkCartIfProductExists.length > 0) {
+      return alert(
+        "This item is already in the cart. \nClick on the cart icon to update it."
+      );
+    }
 
     await axios
       .get("/product/" + _id)
@@ -230,7 +241,7 @@ class index extends Component {
       })
       .catch((err) => console.log(err));
     this.setState({
-      qty: 0,
+      qty: 1,
       productBeingAdded: "",
     });
     this.props.getCart();
@@ -242,14 +253,10 @@ class index extends Component {
     });
   };
 
-  // increaseQtyInCart = ({ currentTarget }) => {
-  //   this.props.increaseQtyInCart(currentTarget.value);
-  // };
-
   trashAllCartItems = () => {
     this.props.emptyOutCart();
     this.setState({
-      qty: 0,
+      qty: 1,
     });
   };
 
@@ -258,6 +265,16 @@ class index extends Component {
   };
 
   decreaseQtyInCart = ({ currentTarget }) => {
+    this.props.getCart();
+    const checkQtyFirst = this.props.cart.filter(
+      (item) => item._id === currentTarget.value
+    );
+
+    console.log(checkQtyFirst[0].qty);
+
+    if (checkQtyFirst[0].qty === 1) {
+      return;
+    }
     this.props.decreaseQtyInCart(currentTarget.value);
   };
 
@@ -290,13 +307,7 @@ class index extends Component {
                   </button>{" "}
                 </h6>
               </div>
-              <button
-                value={item._id}
-                onClick={this.showQtyToUpdateHandler}
-                className=""
-              >
-                Modify Qty
-              </button>{" "}
+
               <button
                 onClick={() => {
                   this.props.removeItemFromCart(item._id);
@@ -325,7 +336,6 @@ class index extends Component {
                     .reduce((a, b) => a + b)
                 : 0}
             </span>
-            <button onClick={this.trashAllCartItems}>Empty out Cart</button>
             {/* {this.props.cart.lengt > 0 ? this.props.cart.map((qty) => qty.qty).reduce((a, b) => a + b) : 0} */}
           </div>
         ) : null}
@@ -487,7 +497,7 @@ class index extends Component {
             {!this.state.checkOutStripe ? (
               <div className="text-center">
                 <button
-                  onClick={this.updateComponent}
+                  onClick={this.trashAllCartItems}
                   className="empty-cart-button__checkout-modal"
                 >
                   <i className="fas fa-trash"></i> Cancel order
