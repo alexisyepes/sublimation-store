@@ -3,6 +3,8 @@ import {
   REMOVED_FROM_CART,
   EMPTY_OUT_CART,
   GET_CART,
+  INCREASE_QTY_IN_CART,
+  DECREASE_QTY_IN_CART,
 } from "../actions/types";
 
 const initialState = {
@@ -16,6 +18,30 @@ export default function (state = initialState, action) {
         ...state,
         cart: [...state.cart, action.payload],
       };
+
+    case INCREASE_QTY_IN_CART:
+      const index = state.cart.findIndex((item) => item._id === action._id);
+      const newArray = [...state.cart];
+      newArray[index].qty = newArray[index].qty + 1;
+
+      return {
+        ...state,
+        cart: newArray,
+      };
+
+    case DECREASE_QTY_IN_CART:
+      const indexToDecrease = state.cart.findIndex(
+        (item) => item._id === action._id
+      );
+      const newArrayToDecrease = [...state.cart];
+      newArrayToDecrease[indexToDecrease].qty =
+        newArrayToDecrease[indexToDecrease].qty - 1;
+
+      return {
+        ...state,
+        cart: newArrayToDecrease,
+      };
+
     case REMOVED_FROM_CART:
       return {
         ...state,

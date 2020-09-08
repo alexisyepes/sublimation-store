@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import axios from "axios";
 import LoadPage from "../../components/LoadPage";
 import "./style.scss";
-import { connect } from "react-redux";
-import { getCart, addItemToCart } from "../../actions/cartActions";
+// import { connect } from "react-redux";
+// import { getCart, addItemToCart } from "../../actions/cartActions";
 
 class index extends Component {
   constructor(props) {
@@ -15,13 +15,14 @@ class index extends Component {
     };
   }
 
-  componentDidMount() {
-    this.props.getCart();
-  }
+  // async componentDidMount() {
+  //   await this.props.getCart();
+  //   console.log(this.props);
+  // }
 
-  componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   console.log(nextProps);
+  // }
 
   handleChange = (e) => {
     this.setState({
@@ -118,18 +119,20 @@ class index extends Component {
   }
 }
 
+export default index;
+
 // index.propTypes = {
 //   getProducts: PropTypes.func.isRequired,
 //   products: PropTypes.object.isRequired,
 //   // cart: PropTypes.array.isRequired,
 // };
 
-const mapStateToProps = (state) => ({
-  cart: state.cart.cart,
-});
-//
+// const mapStateToProps = (state) => ({
+//   cart: state.cart.cart,
+// });
+// //
 
-export default connect(mapStateToProps, {
-  getCart,
-  addItemToCart,
-})(index);
+// export default connect(mapStateToProps, {
+//   getCart,
+//   addItemToCart,
+// })(index);

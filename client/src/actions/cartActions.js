@@ -1,5 +1,7 @@
 import {
   GET_CART,
+  INCREASE_QTY_IN_CART,
+  DECREASE_QTY_IN_CART,
   ADDED_TO_CART,
   REMOVED_FROM_CART,
   EMPTY_OUT_CART,
@@ -9,6 +11,20 @@ export const getCart = (item) => (dispatch) => {
   dispatch({
     type: GET_CART,
     payload: [item],
+  });
+};
+
+export const increaseQtyInCart = (_id) => (dispatch) => {
+  dispatch({
+    type: INCREASE_QTY_IN_CART,
+    _id,
+  });
+};
+
+export const decreaseQtyInCart = (_id) => (dispatch) => {
+  dispatch({
+    type: DECREASE_QTY_IN_CART,
+    _id,
   });
 };
 

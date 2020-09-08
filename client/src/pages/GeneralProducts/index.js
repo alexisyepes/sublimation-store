@@ -9,6 +9,8 @@ import { connect } from "react-redux";
 import { getProducts } from "../../actions/productActions";
 import {
   getCart,
+  increaseQtyInCart,
+  decreaseQtyInCart,
   addItemToCart,
   emptyOutCart,
   removeItemFromCart,
@@ -43,6 +45,7 @@ class index extends Component {
       billingDetails: false,
       checkOutStripe: false,
       showMsgInput: false,
+      showQtyToUpdate: false,
       errorMsg: "",
       errorCoupon: "",
       selectedCouponPrice: 0,
@@ -50,7 +53,7 @@ class index extends Component {
       selectedCouponName: "",
       loadingAxiosReq: false,
 
-      qty: 1,
+      qty: 0,
 
       //state managed in App.js
       productToPay: [],
@@ -221,18 +224,41 @@ class index extends Component {
           productName: res.data.productName,
           price: res.data.price,
           qty: this.state.qty,
+          updatingMode: false,
         };
         this.props.addItemToCart(productToAddToCart);
       })
       .catch((err) => console.log(err));
     this.setState({
-      qty: 1,
+      qty: 0,
       productBeingAdded: "",
+    });
+    this.props.getCart();
+  };
+
+  increaseQtyToUpdate = ({ currentTarget }) => {
+    this.setState({
+      qty: currentTarget.value + 1,
     });
   };
 
+  // increaseQtyInCart = ({ currentTarget }) => {
+  //   this.props.increaseQtyInCart(currentTarget.value);
+  // };
+
   trashAllCartItems = () => {
     this.props.emptyOutCart();
+    this.setState({
+      qty: 0,
+    });
+  };
+
+  increaseQtyInCart = ({ currentTarget }) => {
+    this.props.increaseQtyInCart(currentTarget.value);
+  };
+
+  decreaseQtyInCart = ({ currentTarget }) => {
+    this.props.decreaseQtyInCart(currentTarget.value);
   };
 
   render() {
@@ -243,14 +269,40 @@ class index extends Component {
           return (
             <div className="itemInCart-wrapper" key={item._id}>
               <h6>Product Name: {item.productName}</h6>
-              <p>Price: {item.price / 100}</p>
-              <p>Qty: {item.qty}</p>
+              <h6>Price: {item.price / 100}</h6>
+              <div>
+                <h6 className="">
+                  <span>Qty: {item.qty}</span>{" "}
+                  <button
+                    value={item._id}
+                    onClick={this.increaseQtyInCart}
+                    className=""
+                  >
+                    {" "}
+                    +
+                  </button>{" "}
+                  <button
+                    value={item._id}
+                    onClick={this.decreaseQtyInCart}
+                    className=""
+                  >
+                    -
+                  </button>{" "}
+                </h6>
+              </div>
+              <button
+                value={item._id}
+                onClick={this.showQtyToUpdateHandler}
+                className=""
+              >
+                Modify Qty
+              </button>{" "}
               <button
                 onClick={() => {
                   this.props.removeItemFromCart(item._id);
                 }}
               >
-                Remove
+                Remove Item
               </button>
               <hr />
             </div>
@@ -576,13 +628,15 @@ index.propTypes = {
 const mapStateToProps = (state) => ({
   products: state.products,
   cart: state.cart.cart,
-  qty: state.qty,
+  // qty: state.qty,
 });
 //
 
 export default connect(mapStateToProps, {
   getProducts,
   getCart,
+  increaseQtyInCart,
+  decreaseQtyInCart,
   addItemToCart,
   removeItemFromCart,
   emptyOutCart,
