@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
-// import "./style.scss";
+import "./style.scss";
 import Modal from "react-modal";
 import Select from "react-select";
 import CheckoutStripe from "../../components/StripeForm";
@@ -546,7 +546,7 @@ class index extends Component {
           ) : (
             <div>
               <div className="cart-summary-container">
-                <h3 className="text-center">Cart Summary</h3>
+                <h3 className="text-center">Order Summary</h3>
                 {itemsInCartList}
                 <p className="cart-info-parag">
                   Subtotal: ${(this.state.subTotal / 100).toFixed(2)}

@@ -9,9 +9,6 @@ import GeneralProducts from "./pages/GeneralProducts";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import "./SCSS/Main.scss";
-// import { Provider } from "react-redux";
-// import store from "./store";
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -63,21 +60,7 @@ class App extends Component {
             <Route
               exact
               path="/general_products"
-              render={() => (
-                <GeneralProducts
-                // resetCart={this.setCartToZero}
-                // resetQty={this.setQtyToOne}
-                // updateCart={this.setCartToNewQty}
-                // updateCartToPrevQty={this.setCartToPrevQty}
-                // cart={this.state.cart}
-                // qty={this.state.qty}
-                // increaseQty={this.increaseQty}
-                // decreaseQty={this.decreaseQty}
-                // updateCartNumberAfterRemovingProduct={
-                //   this.updateCartNumberAfterRemovingProduct
-                // }
-                />
-              )}
+              render={() => <GeneralProducts />}
             />
             <Route
               exact

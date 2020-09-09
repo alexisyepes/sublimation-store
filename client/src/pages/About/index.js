@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Card from "../../components/Card";
 import "./style.scss";
+import ShoppingCart from "../../components/ShoppingCart";
 
 export default class index extends Component {
   constructor(props) {
@@ -18,6 +19,9 @@ export default class index extends Component {
   render() {
     return (
       <div className="about-container">
+        <div className="shoppingCart-container">
+          <ShoppingCart />
+        </div>
         <h1 className="primary-heading-about text-center">About us </h1>
         <div className="images-about__1">
           <Card img={this.state.img2} />

@@ -10,6 +10,7 @@ import Pillow from "../../components/Pillow";
 import PetTagBone from "../../components/PetTagBone";
 import CosmeticBag from "../../components/CosmeticBag";
 import FaceMaskHolder from "../../components/FaceMaskHolder";
+import ShoppingCart from "../../components/ShoppingCart";
 import axios from "axios";
 
 import "./style.scss";
@@ -103,6 +104,7 @@ let sizeShirtsOptionsKid = [
 ];
 
 let shippingOptions = [
+  // DELETE
   {
     value: "delivery",
     label: "Delivered to you $15.00 (3-4 business days. Ontario only)",
@@ -172,6 +174,7 @@ const genderShirtsOptions = [
 ];
 
 const product = [
+  //DELETE
   {
     Mug: {
       name: "mug",
@@ -1029,16 +1032,20 @@ export default class index extends Component {
   render() {
     return (
       <div className="product-creation-container">
+        <div className="shoppingCart-container">
+          <ShoppingCart />
+        </div>
         <h1 className="home__heading text-center">
           Create your product in 3 easy steps{" "}
         </h1>
-        {!this.state.modalToCheckout ? (
+
+        {/* {!this.state.modalToCheckout ? (
           <div onClick={this.modalToCheckoutOpen} className="cart-container">
             <span aria-label="0" role="img">
               &#128722; {this.props.cart}
             </span>
           </div>
-        ) : null}
+        ) : null} */}
         <div className="steps-parent">
           {/* STEPS */}
 

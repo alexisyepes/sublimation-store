@@ -1,10 +1,14 @@
 import React, { Component } from "react";
 import "./style.scss";
+import ShoppingCart from "../../components/ShoppingCart";
 
 class index extends Component {
   render() {
     return (
       <div className="gallery-container">
+        <div className="shoppingCart-container">
+          <ShoppingCart />
+        </div>
         <h1 className="gallery-heading text-center">Some of our products</h1>
         <div className="gallery-photos-wrapper">
           <div className="gallery-photo-container gallery-photo-container__1">

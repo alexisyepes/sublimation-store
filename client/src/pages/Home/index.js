@@ -1,11 +1,23 @@
 import React, { Component } from "react";
 import Carousel from "../../components/Carousel";
 import "./style.scss";
+import ShoppingCart from "../../components/ShoppingCart";
+import { connect } from "react-redux";
+import { getCart } from "../../actions/cartActions";
 
-export default class index extends Component {
+class index extends Component {
+  async componentDidMount() {
+    await this.props.getCart();
+  }
+
   render() {
     return (
       <div className="home-container">
+        {this.props.cart.length > 0 ? (
+          <div className="shoppingCart-container">
+            <ShoppingCart />
+          </div>
+        ) : null}
         <h1 className="home__heading text-center">Memories that matter...</h1>
         <div className="image-home-parent text-center">
           <Carousel className="carousel-parent" />
@@ -63,3 +75,11 @@ export default class index extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  cart: state.cart.cart,
+});
+
+export default connect(mapStateToProps, {
+  getCart,
+})(index);

@@ -3,6 +3,7 @@ const router = express.Router();
 const keys = require("../config/keys");
 const dbCoupon = require("../models/coupons");
 const dbProduct = require("../models/products");
+const dbCustomizedProduct = require("../models/productsCustomized");
 const stripe = require("stripe")(keys.stripeSecretKey);
 const { v4: uuidv4 } = require("uuid");
 const EmailToAYP = require("./mail/mailToUs");
@@ -56,13 +57,10 @@ router.get("/product/:id", function (req, res) {
       _id: req.params.id,
     },
     function (error, found) {
-      // log any errors
       if (error) {
         console.log(error);
         res.send(error);
       } else {
-        // Otherwise, send the note to the browser
-        // This will fire off the success function of the ajax request
         console.log(found);
         res.send(found);
       }
@@ -81,6 +79,39 @@ router.post("/product", (req, res) => {
       console.log(err);
       res.json(err);
     });
+});
+
+router.post("/customized_product", (req, res) => {
+  let product = {
+    ...req.body,
+  };
+  dbCustomizedProduct
+    .create(product)
+    .then(() => res.send(product))
+    .catch((err) => {
+      console.log(err);
+      res.json(err);
+    });
+});
+
+router.get("/customized_product/:id", function (req, res) {
+  dbCustomizedProduct.findOne(
+    {
+      _id: req.params.id,
+    },
+    function (error, found) {
+      // log any errors
+      if (error) {
+        console.log(error);
+        res.send(error);
+      } else {
+        // Otherwise, send the note to the browser
+        // This will fire off the success function of the ajax request
+        console.log(found);
+        res.send(found);
+      }
+    }
+  );
 });
 
 router.post("/contact", (req, res) => {
