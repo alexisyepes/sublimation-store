@@ -339,7 +339,7 @@ class index extends Component {
               <p className="cart-info-parag">
                 Product Name: {item.productName}
               </p>
-              <p className="cart-info-parag">Price: {item.price / 100}</p>
+              <p className="cart-info-parag">Price: ${item.price / 100}</p>
               <div>
                 <p className="cart-info-parag">
                   <span>Qty: {item.qty}</span>{" "}
@@ -439,11 +439,11 @@ class index extends Component {
                     <p className="product-info-paragraph">
                       <strong>Description:</strong> {product.description}
                     </p>
-                    <p className="product-info-paragraph">
+                    {/* <p className="product-info-paragraph">
                       <strong>Measurements:</strong> {product.measurements}
-                    </p>
+                    </p> */}
                     <p className="product-info-paragraph">
-                      <strong>Size:</strong> {product.size}
+                      <strong>Size / Dimensions:</strong> {product.size}
                     </p>
                     <p className="product-info-paragraph">
                       <strong>Price:</strong> ${product.price / 100}
@@ -486,16 +486,11 @@ class index extends Component {
                       </button>
                     )}
                   </div>
+
                   <div className="promo-video">
                     <video className="promo-video__content" autoPlay muted loop>
-                      <source
-                        src="./videos/keychain-facemask.mp4"
-                        type="video/mp4"
-                      />
-                      <source
-                        src="./videos/keychain-facemask.mp4"
-                        type="video/webm"
-                      />
+                      <source src={product.images[3]} type="video/mp4" />
+                      <source src={product.images[3]} type="video/webm" />
                       Your browser is not supported!
                     </video>
                   </div>
@@ -505,48 +500,6 @@ class index extends Component {
           ) : (
             <p>Loading Products...</p>
           )}
-
-          <div className="product-general-products-container">
-            <h2 className="text-center">Another product not defined yet </h2>
-            {/* QUANTITY */}
-            {this.state.productBeingAdded === "Bunny shirt" ? (
-              <div className="qty-container">
-                <h4 className="h2-qty">
-                  QTY:
-                  <div className="qty-symbols qty-symbols__number">
-                    {this.state.qty}
-                  </div>
-                  <button
-                    onClick={this.increaseQty}
-                    className="qty-symbols qty-symbols__plus"
-                  >
-                    +
-                  </button>
-                  <button
-                    onClick={this.decreaseQty}
-                    className="qty-symbols qty-symbols__minus"
-                  >
-                    -
-                  </button>{" "}
-                </h4>
-                <button
-                  value="5f53e46ac03e493538b78e00"
-                  onClick={this.addProductToCart}
-                  className="adToCart-btn"
-                >
-                  Add to Cart <i className="fas fa-cart-plus"></i>
-                </button>{" "}
-              </div>
-            ) : (
-              <button
-                className="selectItem-btn"
-                value="2"
-                onClick={this.showQtyContainer}
-              >
-                Select this Item
-              </button>
-            )}
-          </div>
         </div>
         {/* //modalToCheckout */}
         <Modal
@@ -712,7 +665,8 @@ class index extends Component {
                   Tax: ${(this.state.tax / 100).toFixed(2)}
                 </p>
                 <p className="cart-info-parag">
-                  Total: ${(this.state.total / 100).toFixed(2)}
+                  Total: ${(this.state.total / 100).toFixed(2)} (Shipping not
+                  calculated yet)
                 </p>
               </div>
 
