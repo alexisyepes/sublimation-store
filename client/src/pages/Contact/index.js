@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import LoadPage from "../../components/LoadPage";
 import "./style.scss";
-// import { connect } from "react-redux";
-// import { getCart, addItemToCart } from "../../actions/cartActions";
+import ShoppingCart from "../../components/ShoppingCart";
 
 class index extends Component {
   constructor(props) {
@@ -14,15 +13,6 @@ class index extends Component {
       loadingAxiosReq: false,
     };
   }
-
-  // async componentDidMount() {
-  //   await this.props.getCart();
-  //   console.log(this.props);
-  // }
-
-  // componentWillReceiveProps(nextProps) {
-  //   console.log(nextProps);
-  // }
 
   handleChange = (e) => {
     this.setState({
@@ -64,6 +54,9 @@ class index extends Component {
   render() {
     return (
       <div className="contact-container">
+        <div className="shoppingCart-container">
+          <ShoppingCart />
+        </div>
         <h1 className="primary-heading-contact text-center">
           Contact us <hr className="hr-home" />
         </h1>

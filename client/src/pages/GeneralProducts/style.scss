@@ -1,11 +1,18 @@
 @import "../../SCSS/animations.scss";
 
+.shoppingCart-container {
+  position: absolute;
+  width: 100%;
+  top: 15%;
+  left: 0;
+}
+
 .products-general-wrapper {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   margin: 0 auto;
-  margin-top: -60px;
+  margin-top: -10px;
   margin-bottom: 160px;
 
   .article-not-included {
