@@ -5,6 +5,7 @@ import {
   GET_CART,
   INCREASE_QTY_IN_CART,
   DECREASE_QTY_IN_CART,
+  GET_SUBTOTAL_PRICE,
 } from "../actions/types";
 
 const initialState = {
@@ -23,6 +24,7 @@ export default function (state = initialState, action) {
       const index = state.cart.findIndex((item) => item._id === action._id);
       const newArray = [...state.cart];
       newArray[index].qty = newArray[index].qty + 1;
+      newArray[index].subTotal = newArray[index].qty * newArray[index].price;
 
       return {
         ...state,
@@ -36,6 +38,9 @@ export default function (state = initialState, action) {
       const newArrayToDecrease = [...state.cart];
       newArrayToDecrease[indexToDecrease].qty =
         newArrayToDecrease[indexToDecrease].qty - 1;
+      newArrayToDecrease[indexToDecrease].subTotal =
+        newArrayToDecrease[indexToDecrease].qty *
+        newArrayToDecrease[indexToDecrease].price;
 
       return {
         ...state,
@@ -51,6 +56,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         cart: [],
+      };
+    case GET_SUBTOTAL_PRICE:
+      return {
+        ...state,
+        cart: [...state.cart],
       };
     case GET_CART:
       return {

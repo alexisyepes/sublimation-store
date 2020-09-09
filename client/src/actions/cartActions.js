@@ -5,12 +5,19 @@ import {
   ADDED_TO_CART,
   REMOVED_FROM_CART,
   EMPTY_OUT_CART,
+  GET_SUBTOTAL_PRICE,
 } from "./types";
 
 export const getCart = (item) => (dispatch) => {
   dispatch({
     type: GET_CART,
     payload: [item],
+  });
+};
+
+export const getSubTotalPrice = () => (dispatch) => {
+  dispatch({
+    type: GET_SUBTOTAL_PRICE,
   });
 };
 

@@ -14,6 +14,7 @@ import {
   addItemToCart,
   emptyOutCart,
   removeItemFromCart,
+  getSubTotalPrice,
 } from "../../actions/cartActions";
 
 let shippingOptions = [
@@ -55,7 +56,9 @@ class index extends Component {
       loadingAxiosReq: false,
 
       qty: 1,
-
+      subTotal: 0,
+      tax: 0,
+      total: 0,
       //state managed in App.js
       productToPay: [],
       productsInCart: [],
@@ -100,9 +103,19 @@ class index extends Component {
     });
   };
 
-  modalToCheckoutOpen = () => {
+  modalToCheckoutOpen = async () => {
     if (!this.state.modalToCheckout) {
-      this.setState({
+      await this.props.getSubTotalPrice();
+      const subTotal =
+        this.props.cart.length > 0
+          ? this.props.cart.map((item) => item.subTotal).reduce((a, b) => a + b)
+          : 0;
+      const tax = subTotal * 0.13;
+
+      await this.setState({
+        subTotal: subTotal,
+        tax: subTotal * 0.13,
+        total: subTotal + tax,
         firstName: "",
         email: "",
         billingDetails: false,
@@ -115,6 +128,57 @@ class index extends Component {
     }
     this.setState({
       modalToCheckout: true,
+    });
+  };
+
+  removeItemFromCart = async ({ currentTarget }) => {
+    await this.props.removeItemFromCart(currentTarget.value);
+    const subTotal =
+      this.props.cart.length > 0
+        ? this.props.cart.map((item) => item.subTotal).reduce((a, b) => a + b)
+        : 0;
+    const tax = subTotal * 0.13;
+
+    this.setState({
+      subTotal: subTotal,
+      tax: subTotal * 0.13,
+      total: subTotal + tax,
+    });
+  };
+
+  increaseQtyInCart = ({ currentTarget }) => {
+    this.props.increaseQtyInCart(currentTarget.value);
+    const subTotal = this.props.cart
+      .map((item) => item.subTotal)
+      .reduce((a, b) => a + b);
+    const tax = subTotal * 0.13;
+
+    this.setState({
+      subTotal: subTotal,
+      tax: subTotal * 0.13,
+      total: subTotal + tax,
+    });
+  };
+
+  decreaseQtyInCart = ({ currentTarget }) => {
+    const checkQtyFirst = this.props.cart.filter(
+      (item) => item._id === currentTarget.value
+    );
+
+    if (checkQtyFirst[0].qty === 1) {
+      return;
+    }
+    this.props.decreaseQtyInCart(currentTarget.value);
+    // this.props.getCart();
+    const subTotal = this.props.cart
+      .map((item) => item.subTotal)
+      .reduce((a, b) => a + b);
+    const tax = subTotal * 0.13;
+
+    this.setState({
+      subTotal: subTotal,
+      tax: subTotal * 0.13,
+      total: subTotal + tax,
     });
   };
 
@@ -217,7 +281,7 @@ class index extends Component {
 
   addProductToCart = async ({ currentTarget }) => {
     let _id = currentTarget.value;
-    this.props.getCart();
+    await this.props.getCart();
     const checkCartIfProductExists = this.props.cart.filter(
       (item) => item._id === _id
     );
@@ -236,7 +300,7 @@ class index extends Component {
           productName: res.data.productName,
           price: res.data.price,
           qty: this.state.qty,
-          updatingMode: false,
+          subTotal: res.data.price * this.state.qty,
         };
         this.props.addItemToCart(productToAddToCart);
       })
@@ -248,33 +312,18 @@ class index extends Component {
     this.props.getCart();
   };
 
-  increaseQtyToUpdate = ({ currentTarget }) => {
-    this.setState({
-      qty: currentTarget.value + 1,
-    });
-  };
+  // increaseQtyToUpdate = ({ currentTarget }) => {
+  //   this.setState({
+  //     qty: currentTarget.value + 1,
+  //   });
+  // };
 
   trashAllCartItems = () => {
     this.props.emptyOutCart();
     this.setState({
       qty: 1,
+      subTotal: null,
     });
-  };
-
-  increaseQtyInCart = ({ currentTarget }) => {
-    this.props.increaseQtyInCart(currentTarget.value);
-  };
-
-  decreaseQtyInCart = ({ currentTarget }) => {
-    this.props.getCart();
-    const checkQtyFirst = this.props.cart.filter(
-      (item) => item._id === currentTarget.value
-    );
-
-    if (checkQtyFirst[0].qty === 1) {
-      return;
-    }
-    this.props.decreaseQtyInCart(currentTarget.value);
   };
 
   showCheckoutFormHandler = () => {
@@ -316,10 +365,9 @@ class index extends Component {
                     <i className="fas fa-minus"></i>
                   </button>{" "}
                   <button
+                    value={item._id}
                     className="remove-item-from-cart-modal-btn"
-                    onClick={() => {
-                      this.props.removeItemFromCart(item._id);
-                    }}
+                    onClick={this.removeItemFromCart}
                   >
                     <i className="fas fa-trash-alt"></i>
                   </button>
@@ -501,16 +549,16 @@ class index extends Component {
           <span className="x-close-modal" onClick={this.closeModalCheckout}>
             X
           </span>
+          <button
+            onClick={this.trashAllCartItems}
+            className="empty-cart-button__checkout-modal"
+          >
+            <i className="fas fa-trash"></i> Cancel order
+          </button>
           {this.state.showCheckout ? (
             <div className="checkout-modal-wrapper">
               {!this.state.checkOutStripe ? (
                 <div className="text-center">
-                  <button
-                    onClick={this.trashAllCartItems}
-                    className="empty-cart-button__checkout-modal"
-                  >
-                    <i className="fas fa-trash"></i> Cancel order
-                  </button>
                   <h2 className="text-center payment-info-title">
                     Payment Information
                   </h2>
@@ -646,6 +694,15 @@ class index extends Component {
               <div className="cart-summary-container">
                 <h3 className="text-center">Cart Summary</h3>
                 {itemsInCartList}
+                <p className="cart-info-parag">
+                  Subtotal: ${(this.state.subTotal / 100).toFixed(2)}
+                </p>
+                <p className="cart-info-parag">
+                  Tax: ${(this.state.tax / 100).toFixed(2)}
+                </p>
+                <p className="cart-info-parag">
+                  Total: ${(this.state.total / 100).toFixed(2)}
+                </p>
               </div>
 
               <button
@@ -683,4 +740,5 @@ export default connect(mapStateToProps, {
   addItemToCart,
   removeItemFromCart,
   emptyOutCart,
+  getSubTotalPrice,
 })(index);
