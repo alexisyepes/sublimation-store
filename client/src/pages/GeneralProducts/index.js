@@ -72,9 +72,9 @@ class index extends Component {
   }
 
   async componentDidMount() {
-    this.props.getProducts();
+    await this.props.getProducts();
     await this.props.getCart();
-    // console.log(this.props);
+    console.log(this.props.products.products.data.length);
   }
 
   closeModalCheckout = async () => {
@@ -312,12 +312,6 @@ class index extends Component {
     this.props.getCart();
   };
 
-  // increaseQtyToUpdate = ({ currentTarget }) => {
-  //   this.setState({
-  //     qty: currentTarget.value + 1,
-  //   });
-  // };
-
   trashAllCartItems = () => {
     this.props.emptyOutCart();
     this.setState({
@@ -398,103 +392,120 @@ class index extends Component {
           </div>
         ) : null}
         <div className="products-general-wrapper">
-          <div className="product-general-products-container">
-            <h2 className="text-center keychain-facemask-heading">Keychain </h2>
-            <div className="keychain-facemask-img-container">
-              <img
-                className="keychain-facemask-img"
-                src="./images/keychain-facemask.png"
-                alt="keychain"
-              />
-            </div>
-            <div className="keychain-facemask-img-container__purse">
-              <i className="zoomIcon fas fa-search-plus"></i>
-              <img
-                className="keychain-facemask-img__purse"
-                src="./images/keychain-purse.png"
-                alt="keychain"
-              />
-              <p className="text-center article-not-included">
-                Purse not included
-              </p>
-            </div>
-            <div className="keychain-facemask-img-container__backpack">
-              <i className="zoomIcon__backpack fas fa-search-plus"></i>
-              <img
-                className="keychain-facemask-img__backpack"
-                src="./images/keychain-backpack.png"
-                alt="keychain"
-              />{" "}
-              <p className="text-center article-not-included">
-                Backpack not included
-              </p>
-            </div>
-            <div className="product-general-info-container">
-              <h4 className="text-center productGeneral-info-heading">
-                Product Info
-              </h4>
-              <p className="product-info-paragraph">
-                <strong>Description:</strong> This keychain will send a clear
-                message to people around you or your children, when they're too
-                close for comfort. It can be attached to backpacks, or purses.{" "}
-                <br /> The image goes on both sides and it is made of Aluminum
-                with a shiny finish.
-              </p>
-              <p className="product-info-paragraph">
-                <strong>Measurements:</strong> 0.045"x2.25"x1.6"
-              </p>
-              <p className="product-info-paragraph">
-                <strong>Price:</strong> $7.99
-              </p>
-              {this.state.productBeingAdded === "Keychain" ? (
-                <div className="qty-container">
-                  <h4 className="h2-qty">
-                    QTY:
-                    <div className="qty-symbols qty-symbols__number">
-                      {this.state.qty}
-                    </div>
-                    <button
-                      onClick={this.increaseQty}
-                      className="qty-symbols qty-symbols__plus"
-                    >
-                      +
-                    </button>
-                    <button
-                      onClick={this.decreaseQty}
-                      className="qty-symbols qty-symbols__minus"
-                    >
-                      -
-                    </button>{" "}
-                  </h4>
-                  <button
-                    value="5f52afd53e9d054edc8b7bad"
-                    onClick={this.addProductToCart}
-                    className="adToCart-btn"
-                  >
-                    Add to Cart <i className="fas fa-cart-plus"></i>
-                  </button>{" "}
-                </div>
-              ) : (
-                <button
-                  className="selectItem-btn"
-                  value="1"
-                  onClick={this.showQtyContainer}
+          {this.props.products.products.data ? (
+            this.props.products.products.data.map((product) => {
+              return (
+                <div
+                  key={product._id}
+                  className="product-general-products-container"
                 >
-                  Select this Item
-                </button>
-              )}
-            </div>
-            <div className="promo-video">
-              <video className="promo-video__content" autoPlay muted loop>
-                <source src="./videos/keychain-facemask.mp4" type="video/mp4" />
-                <source
-                  src="./videos/keychain-facemask.mp4"
-                  type="video/webm"
-                />
-                Your browser is not supported!
-              </video>
-            </div>
-          </div>
+                  <h2 className="text-center keychain-facemask-heading">
+                    {product.productName}{" "}
+                  </h2>
+
+                  <div className="keychain-facemask-img-container">
+                    <img
+                      className="keychain-facemask-img"
+                      src={product.images[0]}
+                      alt="keychain"
+                    />
+                  </div>
+                  <div className="keychain-facemask-img-container__purse">
+                    <i className="zoomIcon fas fa-search-plus"></i>
+                    <img
+                      className="keychain-facemask-img__purse"
+                      src={product.images[1]}
+                      alt="keychain"
+                    />
+                    <p className="text-center article-not-included">
+                      Purse not included
+                    </p>
+                  </div>
+                  <div className="keychain-facemask-img-container__backpack">
+                    <i className="zoomIcon__backpack fas fa-search-plus"></i>
+                    <img
+                      className="keychain-facemask-img__backpack"
+                      src={product.images[2]}
+                      alt="keychain"
+                    />{" "}
+                    <p className="text-center article-not-included">
+                      Backpack not included
+                    </p>
+                  </div>
+                  <div className="product-general-info-container">
+                    <h4 className="text-center productGeneral-info-heading">
+                      Product Info
+                    </h4>
+                    <p className="product-info-paragraph">
+                      <strong>Description:</strong> {product.description}
+                    </p>
+                    <p className="product-info-paragraph">
+                      <strong>Measurements:</strong> {product.measurements}
+                    </p>
+                    <p className="product-info-paragraph">
+                      <strong>Size:</strong> {product.size}
+                    </p>
+                    <p className="product-info-paragraph">
+                      <strong>Price:</strong> ${product.price / 100}
+                    </p>
+                    {this.state.productBeingAdded === "Keychain" ? (
+                      <div className="qty-container">
+                        <h4 className="h2-qty">
+                          QTY:
+                          <div className="qty-symbols qty-symbols__number">
+                            {this.state.qty}
+                          </div>
+                          <button
+                            onClick={this.increaseQty}
+                            className="qty-symbols qty-symbols__plus"
+                          >
+                            +
+                          </button>
+                          <button
+                            onClick={this.decreaseQty}
+                            className="qty-symbols qty-symbols__minus"
+                          >
+                            -
+                          </button>{" "}
+                        </h4>
+                        <button
+                          value={product._id}
+                          onClick={this.addProductToCart}
+                          className="adToCart-btn"
+                        >
+                          Add to Cart <i className="fas fa-cart-plus"></i>
+                        </button>{" "}
+                      </div>
+                    ) : (
+                      <button
+                        className="selectItem-btn"
+                        value="1"
+                        onClick={this.showQtyContainer}
+                      >
+                        Select this Item
+                      </button>
+                    )}
+                  </div>
+                  <div className="promo-video">
+                    <video className="promo-video__content" autoPlay muted loop>
+                      <source
+                        src="./videos/keychain-facemask.mp4"
+                        type="video/mp4"
+                      />
+                      <source
+                        src="./videos/keychain-facemask.mp4"
+                        type="video/webm"
+                      />
+                      Your browser is not supported!
+                    </video>
+                  </div>
+                </div>
+              );
+            })
+          ) : (
+            <p>Loading Products...</p>
+          )}
+
           <div className="product-general-products-container">
             <h2 className="text-center">Another product not defined yet </h2>
             {/* QUANTITY */}
