@@ -3,7 +3,6 @@ import Select from "react-select";
 import html2canvas from "html2canvas";
 import JSZip from "jszip";
 import Modal from "react-modal";
-import CheckoutStripe from "../../components/StripeForm";
 import Mugs from "../../components/Mugs";
 import Shirts from "../../components/Shirt";
 import Pillow from "../../components/Pillow";
@@ -13,6 +12,7 @@ import FaceMaskHolder from "../../components/FaceMaskHolder";
 import axios from "axios";
 import { connect } from "react-redux";
 import { getCart, addItemToCart } from "../../actions/cartActions";
+import { getProductsCustomized } from "../../actions/productActions";
 import ShoppingCart from "../../components/ShoppingCart";
 
 import "./style.scss";
@@ -102,22 +102,6 @@ let sizeShirtsOptionsKid = [
   {
     value: "one",
     label: "One size",
-  },
-];
-
-let shippingOptions = [
-  // DELETE
-  {
-    value: "delivery",
-    label: "Delivered to you $15.00 (3-4 business days. Ontario only)",
-  },
-  {
-    value: "pickUpCambridge",
-    label: "Pickup from Cambridge, ON (FREE)",
-  },
-  {
-    value: "pickUpMilton",
-    label: "Pickup from Milton, ON (FREE)",
   },
 ];
 
@@ -299,6 +283,11 @@ class index extends Component {
       selectedCouponName: "",
       selectedCouponPrice: 0,
     };
+  }
+
+  async componentDidMount() {
+    await this.props.getProductsCustomized();
+    console.log(this.props);
   }
 
   toggleModalToConfirmOrder = () => {
@@ -1000,6 +989,52 @@ class index extends Component {
   };
 
   render() {
+    const cartContent = this.props.cart;
+    const itemsInCartList =
+      cartContent.length > 0 ? (
+        cartContent.map((item) => {
+          return (
+            <div key={item._id} className="itemInCart-wrapper">
+              <p className="cart-info-parag">
+                Product Name: {item.productName}
+              </p>
+              <p className="cart-info-parag">Price: ${item.price / 100}</p>
+              <div>
+                <p className="cart-info-parag">
+                  <span>Qty: {item.qty}</span>{" "}
+                  <button
+                    value={item._id}
+                    onClick={this.increaseQtyInCart}
+                    className="counter-btns counter-btns__plus"
+                  >
+                    {" "}
+                    <i className="fas fa-plus"></i>
+                  </button>{" "}
+                  <button
+                    value={item._id}
+                    onClick={this.decreaseQtyInCart}
+                    className="counter-btns counter-btns__minus"
+                  >
+                    <i className="fas fa-minus"></i>
+                  </button>{" "}
+                  <button
+                    value={item._id}
+                    className="remove-item-from-cart-modal-btn"
+                    onClick={this.removeItemFromCart}
+                  >
+                    <i className="fas fa-trash-alt"></i>
+                  </button>
+                </p>
+              </div>
+
+              <hr />
+            </div>
+          );
+        })
+      ) : (
+        <p className="text-center">Cart is empty</p>
+      );
+
     return (
       <div className="product-creation-container">
         <div className="shoppingCart-container">
@@ -1099,188 +1134,10 @@ class index extends Component {
               >
                 STEP 3
               </button>
-              {this.state.toggleStep3 ? (
-                <div className="order-summary text-center">
-                  <h1 className="text-center arrowToRight arrowDown">
-                    &#8659;
-                  </h1>
-                  {this.state.totalMugsInCart > 0 ? (
-                    <div>
-                      <p className="checkout-preview-elements">
-                        Total Mugs in Cart: {this.state.totalMugsInCart}{" "}
-                        <span>
-                          (Mug: ${(product[0].Mug.price * 0.01).toFixed(2)} ea)
-                        </span>
-                      </p>
-                    </div>
-                  ) : null}
-                  {this.state.totalShirtsInCart > 0 ? (
-                    <div>
-                      <p className="checkout-preview-elements">
-                        Total Shirts in Cart: {this.state.totalShirtsInCart}{" "}
-                        {""}
-                        <span>
-                          (Shirt: ${(product[0].Shirt.price * 0.01).toFixed(2)}{" "}
-                          ea)
-                        </span>
-                      </p>
-                    </div>
-                  ) : null}
-                  {this.state.totalPillowsInCart > 0 ? (
-                    <div>
-                      <p className="checkout-preview-elements">
-                        Total Pillows in Cart: {this.state.totalPillowsInCart}{" "}
-                        {""}
-                        <span>
-                          (Pillow: $
-                          {(product[0].Pillow.price * 0.01).toFixed(2)} ea)
-                        </span>
-                      </p>
-                    </div>
-                  ) : null}
-                  {this.state.totalPetTagBonesInCart > 0 ? (
-                    <div>
-                      <p className="checkout-preview-elements">
-                        Total Pet-tag-bones in Cart:{" "}
-                        {this.state.totalPetTagBonesInCart} {""}
-                        <span>
-                          (Pet-tag: $
-                          {(product[0].PetTagBone.price * 0.01).toFixed(2)} ea)
-                        </span>
-                      </p>
-                    </div>
-                  ) : null}
-                  {this.state.totalCosmeticBagsInCart > 0 ? (
-                    <div>
-                      <p className="checkout-preview-elements">
-                        Total Cosmetic bags in Cart:{" "}
-                        {this.state.totalCosmeticBagsInCart} {""}
-                        <span>
-                          (Cosmetic bag: $
-                          {(product[0].CosmeticBag.price * 0.01).toFixed(2)}
-                          {""}
-                          ea)
-                        </span>
-                      </p>
-                    </div>
-                  ) : null}
-                  {this.state.totalFacemaskHolderInCart > 0 ? (
-                    <div>
-                      <p className="checkout-preview-elements">
-                        Total Wooden Signs in Cart:{" "}
-                        {this.state.totalFacemaskHolderInCart} {""}
-                        <span>
-                          (Wooden Sign: $
-                          {(product[0].WoodSign.price * 0.01).toFixed(2)}
-                          {""}
-                          ea)
-                        </span>
-                      </p>
-                    </div>
-                  ) : null}
-                  <p className="checkout-preview-elements">
-                    Sub-Total: $
-                    {(
-                      product[0].Mug.price * 0.01 * this.state.totalMugsInCart +
-                      product[0].Shirt.price *
-                        0.01 *
-                        this.state.totalShirtsInCart +
-                      product[0].Pillow.price *
-                        0.01 *
-                        this.state.totalPillowsInCart +
-                      product[0].PetTagBone.price *
-                        0.01 *
-                        this.state.totalPetTagBonesInCart +
-                      product[0].CosmeticBag.price *
-                        0.01 *
-                        this.state.totalCosmeticBagsInCart +
-                      product[0].WoodSign.price *
-                        0.01 *
-                        this.state.totalFacemaskHolderInCart
-                    ).toFixed(2)}
-                  </p>
-                  <p className="checkout-preview-elements">
-                    Total Tax: $
-                    {(
-                      product[0].Mug.price *
-                        this.state.totalMugsInCart *
-                        0.01 *
-                        0.13 +
-                      product[0].Shirt.price *
-                        this.state.totalShirtsInCart *
-                        0.01 *
-                        0.13 +
-                      product[0].Pillow.price *
-                        this.state.totalPillowsInCart *
-                        0.01 *
-                        0.13 +
-                      product[0].PetTagBone.price *
-                        this.state.totalPetTagBonesInCart *
-                        0.01 *
-                        0.13 +
-                      product[0].CosmeticBag.price *
-                        this.state.totalCosmeticBagsInCart *
-                        0.01 *
-                        0.13 +
-                      product[0].WoodSign.price *
-                        this.state.totalFacemaskHolderInCart *
-                        0.01 *
-                        0.13
-                    ).toFixed(2)}
-                  </p>
-                  <hr />
-                  <p className="checkout-preview-elements">
-                    Grand Subtotal: $
-                    {this.state.productToPay.length > 0
-                      ? (
-                          this.state.productToPay.reduce((a, b) => a + b) *
-                            0.01 +
-                          this.state.productToPay.reduce((a, b) => a + b) *
-                            0.01 *
-                            0.13
-                        ).toFixed(2)
-                      : 0}{" "}
-                    <span aria-label="0" role="img">
-                      &#128722;
-                    </span>
-                    <button
-                      onClick={this.updateComponent}
-                      className="empty-cart-button"
-                    >
-                      <i className="fas fa-trash"></i> Empty cart
-                    </button>
-                  </p>
-                  <div className="btns-checkout">
-                    {this.state.step2ActualProd === "faceMaskHolder" ? null : (
-                      <button
-                        onClick={this.goBackToStep2}
-                        className="modify-product-btn"
-                      >
-                        Modify the Last product added {""}
-                        <span aria-label="0" role="img">
-                          <i className="fas fa-cog"></i>
-                        </span>
-                      </button>
-                    )}
-
-                    <button
-                      onClick={this.resetForNewProduct}
-                      className="btns-checkout btns-checkout__create-product"
-                    >
-                      &#x271C; Create more products {""}
-                    </button>
-                    <button
-                      onClick={this.modalToCheckoutOpen}
-                      className="btns-checkout btns-checkout__checkout"
-                    >
-                      Checkout now{" "}
-                      <span aria-label="0" role="img">
-                        &#128722;
-                      </span>
-                    </button>
-                  </div>
-                </div>
-              ) : null}
+              <div className="order-summary text-center">
+                <h4>Cart Summary</h4>
+                {itemsInCartList}
+              </div>
             </div>
             {/* step 3 Container ENDS***********************/}
           </div>
@@ -1702,523 +1559,6 @@ class index extends Component {
                 <br /> You can proceed to step 3
               </h2>
             </Modal>
-
-            {/* Modal To Checkout */}
-            <Modal
-              appElement={document.getElementById("root")}
-              // style={customStylesCheckout}
-              isOpen={this.state.modalToCheckout}
-              className="ModalToCheckOut"
-              overlayClassName="Overlay"
-            >
-              <span className="x-close-modal" onClick={this.closeModalCheckout}>
-                X
-              </span>
-              <div className="checkout-modal-wrapper">
-                {!this.state.checkOutStripe ? (
-                  <div className="text-center">
-                    <button
-                      onClick={this.updateComponent}
-                      className="empty-cart-button__checkout-modal"
-                    >
-                      <i className="fas fa-trash"></i> Cancel order
-                    </button>
-                    <h2 className="text-center payment-info-title">
-                      Payment Information
-                    </h2>
-                    <hr />
-                    {this.state.totalMugsInCart > 0 ? (
-                      <div>
-                        <p className="checkout-information">
-                          Total Mugs in Cart: {this.state.totalMugsInCart}{" "}
-                          <span>
-                            (Mug: ${(product[0].Mug.price * 0.01).toFixed(2)}
-                            ea)
-                          </span>
-                        </p>
-                      </div>
-                    ) : null}
-                    {this.state.totalShirtsInCart > 0 ? (
-                      <div>
-                        <p className="checkout-information">
-                          Total Shirts in Cart: {this.state.totalShirtsInCart}{" "}
-                          {""}
-                          <span>
-                            (Shirt: $
-                            {(product[0].Shirt.price * 0.01).toFixed(2)} ea)
-                          </span>
-                        </p>
-                      </div>
-                    ) : null}
-                    {this.state.totalPillowsInCart > 0 ? (
-                      <div>
-                        <p className="checkout-information">
-                          Total Shirts in Cart: {this.state.totalPillowsInCart}{" "}
-                          {""}
-                          <span>
-                            (Pillow: $
-                            {(product[0].Pillow.price * 0.01).toFixed(2)} ea)
-                          </span>
-                        </p>
-                      </div>
-                    ) : null}
-                    {this.state.totalPetTagBonesInCart > 0 ? (
-                      <div>
-                        <p className="checkout-information">
-                          Total Pet-tags in Cart:{" "}
-                          {this.state.totalPetTagBonesInCart} {""}
-                          <span>
-                            (Pet-tag: $
-                            {(product[0].PetTagBone.price * 0.01).toFixed(2)}{" "}
-                            ea)
-                          </span>
-                        </p>
-                      </div>
-                    ) : null}
-                    {this.state.totalCosmeticBagsInCart > 0 ? (
-                      <div>
-                        <p className="checkout-information">
-                          Total Cosmetic bags in Cart:{" "}
-                          {this.state.totalCosmeticBagsInCart} {""}
-                          <span>
-                            (Cosmetic bag: $
-                            {(product[0].CosmeticBag.price * 0.01).toFixed(2)}
-                            {""}
-                            ea)
-                          </span>
-                        </p>
-                      </div>
-                    ) : null}
-                    {this.state.totalFacemaskHolderInCart > 0 ? (
-                      <div>
-                        <p className="checkout-information">
-                          Total Wooden Signs in Cart:{" "}
-                          {this.state.totalFacemaskHolderInCart} {""}
-                          <span>
-                            (Wooden Sign: $
-                            {(product[0].WoodSign.price * 0.01).toFixed(2)}
-                            {""}
-                            ea)
-                          </span>
-                        </p>
-                      </div>
-                    ) : null}
-                    <p className="checkout-information">
-                      Sub-Total: $
-                      {(
-                        product[0].Mug.price *
-                          0.01 *
-                          this.state.totalMugsInCart +
-                        product[0].Shirt.price *
-                          0.01 *
-                          this.state.totalShirtsInCart +
-                        product[0].Pillow.price *
-                          0.01 *
-                          this.state.totalPillowsInCart +
-                        product[0].PetTagBone.price *
-                          0.01 *
-                          this.state.totalPetTagBonesInCart +
-                        product[0].CosmeticBag.price *
-                          0.01 *
-                          this.state.totalCosmeticBagsInCart +
-                        product[0].WoodSign.price *
-                          0.01 *
-                          this.state.totalFacemaskHolderInCart
-                      ).toFixed(2)}
-                    </p>
-
-                    <p className="checkout-information">
-                      Total Tax: $
-                      {(
-                        product[0].Mug.price *
-                          this.state.totalMugsInCart *
-                          0.01 *
-                          0.13 +
-                        product[0].Shirt.price *
-                          this.state.totalShirtsInCart *
-                          0.01 *
-                          0.13 +
-                        product[0].Pillow.price *
-                          this.state.totalPillowsInCart *
-                          0.01 *
-                          0.13 +
-                        product[0].PetTagBone.price *
-                          this.state.totalPetTagBonesInCart *
-                          0.01 *
-                          0.13 +
-                        product[0].CosmeticBag.price *
-                          this.state.totalCosmeticBagsInCart *
-                          0.01 *
-                          0.13 +
-                        product[0].WoodSign.price *
-                          this.state.totalFacemaskHolderInCart *
-                          0.01 *
-                          0.13
-                      ).toFixed(2)}
-                    </p>
-                    {this.state.selectedCouponPrice !== 0 ? (
-                      <p className="coupon-on-checkout">
-                        Coupon: {this.state.selectedCouponPrice}% off
-                      </p>
-                    ) : null}
-
-                    {this.state.shippingMethod === "delivery" ? (
-                      <p className="checkout-information">
-                        <b>
-                          {" "}
-                          + Shipping to address below{" "}
-                          <i className="fas fa-truck"></i>: $15.00
-                        </b>
-                      </p>
-                    ) : this.state.shippingMethod === "pickUpMilton" ? (
-                      <p className="checkout-information">
-                        <b>
-                          Pickup from 724 Main St. Milton, ON L9T 3P6 Unit 2
-                          (Free)
-                        </b>
-                      </p>
-                    ) : this.state.shippingMethod === "pickUpCambridge" ? (
-                      <p className="checkout-information">
-                        <b>
-                          Pickup from 205 Cowan Blvd, Cambridge, ON N1T 1J8
-                          (Free)
-                        </b>
-                      </p>
-                    ) : null}
-
-                    {this.state.shippingMethod === "delivery" ? (
-                      <p className="checkout-information">
-                        <b>
-                          {" "}
-                          TOTAL: $
-                          {this.state.productToPay.length > 0
-                            ? (
-                                this.state.productToPay.reduce(
-                                  (a, b) => a + b
-                                ) *
-                                  0.01 +
-                                this.state.productToPay.reduce(
-                                  (a, b) => a + b
-                                ) *
-                                  0.01 *
-                                  0.13 +
-                                15.0 -
-                                ((this.state.productToPay.reduce(
-                                  (a, b) => a + b
-                                ) *
-                                  0.01 +
-                                  this.state.productToPay.reduce(
-                                    (a, b) => a + b
-                                  ) *
-                                    0.01 *
-                                    0.13) *
-                                  this.state.selectedCouponPrice) /
-                                  100
-                              ).toFixed(2)
-                            : 0}{" "}
-                          <span aria-label="0" role="img">
-                            &#128722;
-                          </span>
-                        </b>
-                      </p>
-                    ) : (
-                      <p className="checkout-information">
-                        <b>
-                          {" "}
-                          Grand Subtotal: $
-                          {this.state.productToPay.length > 0
-                            ? (
-                                this.state.productToPay.reduce(
-                                  (a, b) => a + b
-                                ) *
-                                  0.01 +
-                                this.state.productToPay.reduce(
-                                  (a, b) => a + b
-                                ) *
-                                  0.01 *
-                                  0.13 -
-                                ((this.state.productToPay.reduce(
-                                  (a, b) => a + b
-                                ) *
-                                  0.01 +
-                                  this.state.productToPay.reduce(
-                                    (a, b) => a + b
-                                  ) *
-                                    0.01 *
-                                    0.13) *
-                                  this.state.selectedCouponPrice) /
-                                  100
-                              ).toFixed(2)
-                            : 0}{" "}
-                          <span aria-label="0" role="img">
-                            &#128722;
-                          </span>
-                        </b>
-                      </p>
-                    )}
-
-                    <form
-                      className="checkout-form"
-                      onSubmit={this.submitBillingDetails}
-                    >
-                      <input
-                        className="input-checkout"
-                        name="firstName"
-                        onChange={this.onChangeHandlerBillingDetails}
-                        type="text"
-                        placeholder="Full Name"
-                      />
-                      <input
-                        className="input-checkout"
-                        name="address"
-                        onChange={this.onChangeHandlerBillingDetails}
-                        type="text"
-                        placeholder="Address"
-                      />
-                      <input
-                        className="input-checkout"
-                        name="city"
-                        onChange={this.onChangeHandlerBillingDetails}
-                        type="text"
-                        placeholder="City"
-                      />
-                      <input
-                        className="input-checkout"
-                        name="province"
-                        onChange={this.onChangeHandlerBillingDetails}
-                        type="text"
-                        placeholder="Province"
-                      />
-                      <input
-                        className="input-checkout"
-                        name="postalCode"
-                        onChange={this.onChangeHandlerBillingDetails}
-                        type="text"
-                        placeholder="Postal Code"
-                      />
-                      <input
-                        className="input-checkout"
-                        name="email"
-                        onChange={this.onChangeHandlerBillingDetails}
-                        type="email"
-                        placeholder="Email"
-                      />
-
-                      <div className="coupon-container">
-                        {this.state.selectedCouponPrice === 0 ? (
-                          <input
-                            className="input-checkout__coupon"
-                            name="couponCodeInput"
-                            onChange={this.onChangeHandlerBillingDetails}
-                            type="text"
-                            placeholder="Type Coupon Code Here"
-                          />
-                        ) : null}
-                        {this.state.errorCoupon === "" ? null : (
-                          <p className="coupon-error">
-                            {this.state.errorCoupon}
-                          </p>
-                        )}
-
-                        {this.state.loadingAxiosReq ? (
-                          <div className="coupon-results-wrapper">
-                            <button className="coupon-btn">
-                              Please Wait...
-                            </button>
-                          </div>
-                        ) : (
-                          <div
-                            className={
-                              this.state.selectedCouponPrice === 0
-                                ? "coupon-results-wrapper"
-                                : "coupon-results-wrapper__applied"
-                            }
-                          >
-                            {this.state.selectedCouponPrice !== 0 ? (
-                              <p className="coupon-applied">
-                                Coupon Applied <i className="fas fa-check"></i>
-                              </p>
-                            ) : (
-                              <button
-                                className="coupon-btn"
-                                onClick={this.validateCouponHandler}
-                              >
-                                Validate Coupon
-                              </button>
-                            )}
-                          </div>
-                        )}
-                      </div>
-                      <Select
-                        className="shippingOptionsSelect"
-                        isSearchable={false}
-                        menuPlacement="top"
-                        placeholder="Choose one"
-                        options={shippingOptions}
-                        onChange={this.onSelectedShipping}
-                      />
-
-                      <p className="text-center error-msg">
-                        {this.state.errorMsg}
-                      </p>
-                      <button className="btn-checkout">Next &#8594;</button>
-                    </form>
-                  </div>
-                ) : null}
-
-                {this.state.billingDetails ? (
-                  <CheckoutStripe
-                    resetModal={this.closeModalCheckout}
-                    // screenshot={this.state.screenshot}
-                    // imgForProduct={this.state.fileArray}
-                    totalMugsInCart={this.state.totalMugsInCart}
-                    totalShirtsInCart={this.state.totalShirtsInCart}
-                    totalPillowsInCart={this.state.totalPillowsInCart}
-                    totalPetTagBonesInCart={this.state.totalPetTagBonesInCart}
-                    totalCosmeticBagsInCart={this.state.totalCosmeticBagsInCart}
-                    totalFacemaskHolderInCart={
-                      this.state.totalFacemaskHolderInCart
-                    }
-                    // firstName={this.state.firstName}
-                    // email={this.state.email}
-                    // address={this.state.address}
-                    // city={this.state.city}
-                    // province={this.state.province}
-                    // postalCode={this.state.postalCode}
-                    // shippingMethod={this.state.shippingMethod}
-                    subTotal={
-                      product[0].Mug.price * 0.01 * this.state.totalMugsInCart +
-                      product[0].Shirt.price *
-                        0.01 *
-                        this.state.totalShirtsInCart +
-                      product[0].Pillow.price *
-                        0.01 *
-                        this.state.totalPillowsInCart +
-                      product[0].PetTagBone.price *
-                        0.01 *
-                        this.state.totalPetTagBonesInCart +
-                      product[0].CosmeticBag.price *
-                        0.01 *
-                        this.state.totalCosmeticBagsInCart +
-                      product[0].WoodSign.price *
-                        0.01 *
-                        this.state.totalFacemaskHolderInCart
-                    }
-                    tax={
-                      // this.state.mugPrice * this.state.totalMugsInCart +
-                      (
-                        product[0].Mug.price *
-                          this.state.totalMugsInCart *
-                          0.01 *
-                          0.13 +
-                        product[0].Shirt.price *
-                          this.state.totalShirtsInCart *
-                          0.01 *
-                          0.13 +
-                        product[0].Pillow.price *
-                          this.state.totalPillowsInCart *
-                          0.01 *
-                          0.13 +
-                        product[0].PetTagBone.price *
-                          this.state.totalPetTagBonesInCart *
-                          0.01 *
-                          0.13 +
-                        product[0].CosmeticBag.price *
-                          this.state.totalCosmeticBagsInCart *
-                          0.01 *
-                          0.13 +
-                        product[0].WoodSign.price *
-                          this.state.totalFacemaskHolderInCart *
-                          0.01 *
-                          0.13
-                      ).toFixed(2)
-                    }
-                    coupon={this.state.selectedCouponPrice}
-                    couponName={this.state.selectedCouponName}
-                    productWithCents={
-                      this.state.productToPay.length > 0
-                        ? (
-                            this.state.productToPay.reduce((a, b) => a + b) *
-                              0.01 +
-                            this.state.productToPay.reduce((a, b) => a + b) *
-                              0.01 *
-                              0.13 -
-                            ((this.state.productToPay.reduce((a, b) => a + b) *
-                              0.01 +
-                              this.state.productToPay.reduce((a, b) => a + b) *
-                                0.01 *
-                                0.13) *
-                              this.state.selectedCouponPrice) /
-                              100
-                          ).toFixed(2)
-                        : null
-                    }
-                    productWithCentsPlusShipping={
-                      this.state.productToPay.length > 0
-                        ? (
-                            this.state.productToPay.reduce((a, b) => a + b) *
-                              0.01 +
-                            this.state.productToPay.reduce((a, b) => a + b) *
-                              0.01 *
-                              0.13 +
-                            15 -
-                            ((this.state.productToPay.reduce((a, b) => a + b) *
-                              0.01 +
-                              this.state.productToPay.reduce((a, b) => a + b) *
-                                0.01 *
-                                0.13) *
-                              this.state.selectedCouponPrice) /
-                              100
-                          ).toFixed(2)
-                        : null
-                    }
-                    product={
-                      this.state.productToPay.length > 0
-                        ? Math.round(
-                            this.state.productToPay.reduce((a, b) => a + b) *
-                              0.13 +
-                              this.state.productToPay.reduce((a, b) => a + b) -
-                              (((this.state.productToPay.reduce(
-                                (a, b) => a + b
-                              ) *
-                                0.01 +
-                                this.state.productToPay.reduce(
-                                  (a, b) => a + b
-                                ) *
-                                  0.01 *
-                                  0.13) *
-                                this.state.selectedCouponPrice) /
-                                100) *
-                                100
-                          )
-                        : 0
-                    }
-                    productPluShipping={
-                      this.state.productToPay.length > 0
-                        ? Math.round(
-                            this.state.productToPay.reduce((a, b) => a + b) *
-                              0.13 +
-                              this.state.productToPay.reduce((a, b) => a + b) +
-                              1500 -
-                              (((this.state.productToPay.reduce(
-                                (a, b) => a + b
-                              ) *
-                                0.01 +
-                                this.state.productToPay.reduce(
-                                  (a, b) => a + b
-                                ) *
-                                  0.01 *
-                                  0.13) *
-                                this.state.selectedCouponPrice) /
-                                100) *
-                                100
-                          )
-                        : 0
-                    }
-                  />
-                ) : null}
-              </div>
-            </Modal>
           </div>
         </div>
       </div>
@@ -2226,13 +1566,13 @@ class index extends Component {
   }
 }
 
-// export default index;
-
 const mapStateToProps = (state) => ({
   cart: state.cart.cart,
+  products: state.products,
 });
 
 export default connect(mapStateToProps, {
   getCart,
   addItemToCart,
+  getProductsCustomized,
 })(index);

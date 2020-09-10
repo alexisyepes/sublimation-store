@@ -69,6 +69,7 @@ class index extends Component {
           price: res.data.price,
           qty: this.state.qty,
           subTotal: res.data.price * this.state.qty,
+          screenShots: "",
         };
         this.props.addItemToCart(productToAddToCart);
       })

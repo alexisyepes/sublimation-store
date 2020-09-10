@@ -81,6 +81,17 @@ router.post("/product", (req, res) => {
     });
 });
 
+//all products Customized
+router.get("/all_products_customized", (req, res) => {
+  dbCustomizedProduct
+    .find()
+    .then((product) => res.json(product))
+    .catch((err) => {
+      console.log(err);
+      res.json(err);
+    });
+});
+
 router.post("/customized_product", (req, res) => {
   let product = {
     ...req.body,
@@ -100,13 +111,10 @@ router.get("/customized_product/:id", function (req, res) {
       _id: req.params.id,
     },
     function (error, found) {
-      // log any errors
       if (error) {
         console.log(error);
         res.send(error);
       } else {
-        // Otherwise, send the note to the browser
-        // This will fire off the success function of the ajax request
         console.log(found);
         res.send(found);
       }
@@ -143,9 +151,10 @@ router.post("/email_to_ayp_sublimation", (req, res) => {
     postalCode,
     shippingMethod,
     couponName,
+    orderSummary,
   } = req.body;
 
-  console.log(req.body);
+  // console.log(req.body);
 
   EmailToAYP(
     email,
@@ -157,6 +166,7 @@ router.post("/email_to_ayp_sublimation", (req, res) => {
     postalCode,
     shippingMethod,
     couponName,
+    orderSummary,
     "New Product Sublimation",
     function (err, data) {
       if (err) {
@@ -176,16 +186,8 @@ router.post("/products/payment", async (req, res) => {
     id,
     amount,
     email,
-    // totalMugsInCart,
-    // totalShirtsInCart,
-    // totalPillowsInCart,
-    // totalPetTagBonesInCart,
-    // totalCosmeticBagsInCart,
-    // totalFacemaskHolderInCart,
+
     shippingMethod,
-    // subTotal,
-    // tax,
-    // coupon,
   } = req.body;
   try {
     const payment = await stripe.paymentIntents.create({

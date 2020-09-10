@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import {
   Elements,
@@ -18,9 +18,9 @@ const Index = (props) => {
   const [clicks, setClicks] = useState(1);
   const shippingMethod = props.shippingMethod;
 
-  useEffect(() => {
-    console.log(props);
-  });
+  // useEffect(() => {
+  //   console.log(props.cart);
+  // });
 
   const CheckoutForm = () => {
     const stripe = useStripe();
@@ -83,7 +83,11 @@ const Index = (props) => {
                   return fd;
                 });
 
-                const screenShotsFormData = props.cart.map((item) => {
+                const filteredScrsht = props.cart.filter(
+                  (item) => item.scrsht !== ""
+                );
+
+                const screenShotsFormData = filteredScrsht.map((item) => {
                   const fd = new FormData();
                   fd.append("file", item.screenShots);
                   fd.append("upload_preset", "sublimation");
@@ -128,8 +132,8 @@ const Index = (props) => {
                     postalCode: props.postalCode,
                     shippingMethod,
                     couponName: props.couponName,
+                    orderSummary: props.cart,
                   };
-                  // console.log(dataObj);
 
                   new Promise((resolve, reject) => {
                     axios.post("/email_to_ayp_sublimation", dataObj);
@@ -166,7 +170,11 @@ const Index = (props) => {
             return fd;
           });
 
-          const screenShotsFormData = props.cart.map((item) => {
+          const filteredScrsht = props.cart.filter(
+            (item) => item.scrsht !== ""
+          );
+
+          const screenShotsFormData = filteredScrsht.map((item) => {
             const fd = new FormData();
             fd.append("file", item.screenShots);
             fd.append("upload_preset", "sublimation");
@@ -191,12 +199,10 @@ const Index = (props) => {
               return imgUrl.push(res.data.secure_url);
             });
 
-            const screenshotsResponses = await axios.all(screenshotsRequests);
+            let screenshotsResponses = await axios.all(screenshotsRequests);
+            screenshotsResponses.filter((res) => res !== null);
             screenshotsResponses.map((res) => {
-              // console.log(res.data.secure_url);
-              return res.data.secure_url
-                ? imgScrSht.push(res.data.secure_url)
-                : null;
+              return res !== null ? imgScrSht.push(res.data.secure_url) : null;
             });
 
             let dataObj = {
@@ -209,6 +215,7 @@ const Index = (props) => {
               postalCode: props.postalCode,
               shippingMethod,
               couponName: props.couponName,
+              orderSummary: props.cart,
             };
             // console.log(dataObj);
 
