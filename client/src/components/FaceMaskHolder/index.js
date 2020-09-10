@@ -1156,7 +1156,7 @@ class index extends Component {
                 <div>
                   <button
                     className="finish-add-product-to-cart-btn"
-                    onClick={this.submitFinalProduct}
+                    onClick={this.props.screenShotFunction}
                   >
                     <i className="fas fa-cart-plus"></i> Finish and Add product
                     to Cart
@@ -1239,7 +1239,7 @@ class index extends Component {
 
                     <button
                       className="finish-add-product-to-cart-btn"
-                      onClick={this.submitFinalProduct}
+                      onClick={this.props.screenShotFunction}
                     >
                       <i className="fas fa-cart-plus"></i> Finish and Add
                       product to Cart

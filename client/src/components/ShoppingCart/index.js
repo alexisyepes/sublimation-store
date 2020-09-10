@@ -48,6 +48,7 @@ class index extends Component {
       showMsgInput: false,
       showQtyToUpdate: false,
       showCheckout: false,
+      shippingMethod: "",
       errorMsg: "",
       errorCoupon: "",
       selectedCouponPrice: 0,
@@ -74,7 +75,6 @@ class index extends Component {
   async componentDidMount() {
     await this.props.getProducts();
     await this.props.getCart();
-    console.log(this.props.products.products.data.length);
   }
 
   closeModalCheckout = async () => {
@@ -110,11 +110,11 @@ class index extends Component {
         this.props.cart.length > 0
           ? this.props.cart.map((item) => item.subTotal).reduce((a, b) => a + b)
           : 0;
-      const tax = subTotal * 0.13;
+      const tax = (subTotal * 13) / 100;
 
       await this.setState({
         subTotal: subTotal,
-        tax: subTotal * 0.13,
+        tax: tax,
         total: subTotal + tax,
         firstName: "",
         email: "",
@@ -139,6 +139,13 @@ class index extends Component {
         : 0;
     const tax = subTotal * 0.13;
 
+    if (this.props.cart.length === 0) {
+      this.setState({
+        modalToCheckout: false,
+        billingDetails: false,
+        showCheckout: false,
+      });
+    }
     this.setState({
       subTotal: subTotal,
       tax: subTotal * 0.13,
@@ -335,7 +342,7 @@ class index extends Component {
       cartContent.length > 0 ? (
         cartContent.map((item) => {
           return (
-            <div className="itemInCart-wrapper" key={item._id}>
+            <div key={item._id} className="itemInCart-wrapper">
               <p className="cart-info-parag">
                 Product Name: {item.productName}
               </p>
@@ -540,6 +547,16 @@ class index extends Component {
                   shippingMethod={this.state.shippingMethod}
                   coupon={this.state.selectedCouponPrice}
                   couponName={this.state.selectedCouponName}
+                  screenshot={this.props.screenshot}
+                  imgForProduct={this.props.imgForProduct}
+                  cart={this.props.cart}
+                  total={this.state.total}
+                  subTotal={this.state.subTotal}
+                  totalPlusShippipng={
+                    this.state.total === 0 ? 0 : this.state.total + 1500
+                  }
+                  tax={this.state.tax}
+                  itemsInCartList={itemsInCartList}
                 />
               ) : null}
             </div>

@@ -76,12 +76,12 @@ const sendMail = (
     ${petTags} 
     ${cosmeticBags}
     ${faceMaskHolders}
-		<p>Subtotal: $${subTotal.toFixed(2)}</p>
+		<p>Subtotal: $${subTotal}</p>
 		<p>hst: $${tax}</p>
 		${isShipping}
 		${isThereCoupon}
 		<hr />
-		<p><b>Total paid: $${(amount * 0.01).toFixed(2)}</b></p>
+		<p><b>Total paid: $${amount * 0.01}</b></p>
 		<hr />
 		<p>https://www.printingmemories.ca</p>
 		<div>

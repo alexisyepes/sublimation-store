@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import {
   Elements,
@@ -9,12 +9,18 @@ import {
 import LoadPage from "../LoadPage";
 import axios from "axios";
 import "./style.scss";
+import { connect } from "react-redux";
+import { emptyOutCart } from "../../actions/cartActions";
 
 const Index = (props) => {
   const [loadingAxiosReq, setLoadingAxiosReq] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [clicks, setClicks] = useState(1);
   const shippingMethod = props.shippingMethod;
+
+  useEffect(() => {
+    console.log(props);
+  });
 
   const CheckoutForm = () => {
     const stripe = useStripe();
@@ -50,19 +56,10 @@ const Index = (props) => {
           id,
           amount:
             props.shippingMethod !== "delivery"
-              ? props.product
-              : props.productPluShipping,
+              ? parseInt(props.total)
+              : props.totalPlusShippipng,
           email: props.email,
-          totalMugsInCart: props.totalMugsInCart,
-          totalShirtsInCart: props.totalShirtsInCart,
-          totalPillowsInCart: props.totalPillowsInCart,
-          totalPetTagBonesInCart: props.totalPetTagBonesInCart,
-          totalCosmeticBagsInCart: props.totalCosmeticBagsInCart,
-          totalFacemaskHolderInCart: props.totalFacemaskHolderInCart,
           shippingMethod,
-          subTotal: props.subTotal,
-          tax: props.tax,
-          coupon: props.coupon,
         });
 
         if (data.requiresAction === true) {
@@ -79,16 +76,16 @@ const Index = (props) => {
                 const URL =
                   "https://api.cloudinary.com/v1_1/ayp-sublimation/image/upload";
 
-                const imgForProductFormData = props.imgForProduct.map((img) => {
+                const imgForProductFormData = props.cart.map((item) => {
                   const fd = new FormData();
-                  fd.append("file", img);
+                  fd.append("file", item.images);
                   fd.append("upload_preset", "sublimation");
                   return fd;
                 });
 
-                const screenShotsFormData = props.screenshot.map((img) => {
+                const screenShotsFormData = props.cart.map((item) => {
                   const fd = new FormData();
-                  fd.append("file", img);
+                  fd.append("file", item.screenShots);
                   fd.append("upload_preset", "sublimation");
                   return fd;
                 });
@@ -105,10 +102,10 @@ const Index = (props) => {
                     imgForProductRequests
                   );
                   imgForProductResponses.map((res) => {
-                    // console.log(res.data.secure_url);
-                    return res.data.secure_url
-                      ? imgUrl.push(res.data.secure_url)
-                      : null;
+                    if (!res || res === null) {
+                      return imgUrl.push("No photo provided!");
+                    }
+                    return imgUrl.push(res.data.secure_url);
                   });
 
                   const screenshotsResponses = await axios.all(
@@ -162,16 +159,16 @@ const Index = (props) => {
           const URL =
             "https://api.cloudinary.com/v1_1/ayp-sublimation/image/upload";
 
-          const imgForProductFormData = props.imgForProduct.map((img) => {
+          const imgForProductFormData = props.cart.map((item) => {
             const fd = new FormData();
-            fd.append("file", img);
+            fd.append("file", item.images);
             fd.append("upload_preset", "sublimation");
             return fd;
           });
 
-          const screenShotsFormData = props.screenshot.map((img) => {
+          const screenShotsFormData = props.cart.map((item) => {
             const fd = new FormData();
-            fd.append("file", img);
+            fd.append("file", item.screenShots);
             fd.append("upload_preset", "sublimation");
             return fd;
           });
@@ -188,7 +185,7 @@ const Index = (props) => {
               imgForProductRequests
             );
             imgForProductResponses.map((res) => {
-              if (!res) {
+              if (!res || res === null) {
                 return imgUrl.push("No photo provided!");
               }
               return imgUrl.push(res.data.secure_url);
@@ -226,6 +223,7 @@ const Index = (props) => {
             });
             setLoadingAxiosReq(false);
             props.resetModal();
+            props.emptyOutCart();
             function announceSuccess() {
               alert(
                 "Order submitted successfully... check your email for updates"
@@ -239,10 +237,10 @@ const Index = (props) => {
           }
         }
       } catch (error) {
-        // console.log(error.response.data);
-        alert(
-          error.response.data + "\nTry to check out using a different card"
-        );
+        console.log(error);
+        // alert(
+        //   error.response.data + "\nTry to check out using a different card"
+        // );
         setLoadingAxiosReq(false);
         props.resetModal();
       }
@@ -253,8 +251,8 @@ const Index = (props) => {
         <h3 className="text-center">
           Total to Pay: $
           {props.shippingMethod !== "delivery"
-            ? props.productWithCents
-            : props.productWithCentsPlusShipping}
+            ? (props.total / 100).toFixed(2)
+            : (props.totalPlusShippipng / 100).toFixed(2)}
           <img
             className="credit-cards"
             src="./images/credit-cards.png"
@@ -279,17 +277,42 @@ const Index = (props) => {
     );
   };
 
-  // const stripePromise = loadStripe(
-  //   "pk_test_5Oyk1YnGn6dPTwNAJ5KhOIcN00lcwk3Oqk" //Test mode
-  // );
   const stripePromise = loadStripe(
-    "pk_live_X5VIPRMcJH7dLUplWTMEgTmg00DLrg3Eu6" //Live mode
+    "pk_test_5Oyk1YnGn6dPTwNAJ5KhOIcN00lcwk3Oqk" //Test mode
   );
+  // const stripePromise = loadStripe(
+  //   "pk_live_X5VIPRMcJH7dLUplWTMEgTmg00DLrg3Eu6" //Live mode
+  // );
 
   return (
     <div className="container main-container-billing">
       <h1 className="text-center payment-info-title">Checkout</h1>
       <hr />
+      <div className="cart-summary-container">
+        <h3 className="text-center">Order Summary</h3>
+        {props.itemsInCartList}
+        <p className="cart-info-parag">
+          Subtotal: ${(props.subTotal / 100).toFixed(2)}
+        </p>
+        <p className="cart-info-parag">Tax: ${(props.tax / 100).toFixed(2)}</p>
+        {props.shippingMethod === "delivery" ? (
+          <p className="cart-info-parag">Shipping: $15</p>
+        ) : props.shippingMethod === "pickUpMilton" ? (
+          <p className="cart-info-parag">
+            Order to be picked up from our Milton pickup spot
+          </p>
+        ) : (
+          <p className="cart-info-parag">
+            Order to be picked up from our Cambridge pickup spot
+          </p>
+        )}
+        <p className="cart-info-parag">
+          Total to Pay: $
+          {props.shippingMethod !== "delivery"
+            ? (props.total / 100).toFixed(2)
+            : (props.totalPlusShippipng / 100).toFixed(2)}
+        </p>
+      </div>
       <Elements stripe={stripePromise}>
         <div className="card-element-wrapper">
           <CardElement />
@@ -309,4 +332,11 @@ const Index = (props) => {
   );
 };
 
-export default Index;
+const mapStateToProps = (state) => ({
+  cart: state.cart.cart,
+});
+//
+
+export default connect(mapStateToProps, {
+  emptyOutCart,
+})(Index);
