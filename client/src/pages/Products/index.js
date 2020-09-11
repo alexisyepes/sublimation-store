@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import { Link } from "react-router-dom";
 import Select from "react-select";
 import html2canvas from "html2canvas";
 import JSZip from "jszip";
@@ -11,7 +12,13 @@ import CosmeticBag from "../../components/CosmeticBag";
 import FaceMaskHolder from "../../components/FaceMaskHolder";
 import axios from "axios";
 import { connect } from "react-redux";
-import { getCart, addItemToCart } from "../../actions/cartActions";
+import {
+  getCart,
+  addItemToCart,
+  increaseQtyInCart,
+  decreaseQtyInCart,
+  removeItemFromCart,
+} from "../../actions/cartActions";
 import { getProductsCustomized } from "../../actions/productActions";
 import ShoppingCart from "../../components/ShoppingCart";
 
@@ -159,36 +166,6 @@ const genderShirtsOptions = [
   },
 ];
 
-const product = [
-  //DELETE
-  {
-    Mug: {
-      name: "mug",
-      price: 1599,
-    },
-    PetTagBone: {
-      name: "petTagBone",
-      price: 1299,
-    },
-    Shirt: {
-      name: "shirt",
-      price: 1999,
-    },
-    Pillow: {
-      name: "pillow",
-      price: 2499,
-    },
-    CosmeticBag: {
-      name: "cosmeticBag",
-      price: 1899,
-    },
-    WoodSign: {
-      name: "woodSign",
-      price: 3499,
-    },
-  },
-];
-
 class index extends Component {
   constructor(props) {
     super(props);
@@ -240,16 +217,6 @@ class index extends Component {
       textFormatOptions: false,
       textFormatOptionsForPetTagBone: false,
       textFormatOptionsForCosmeticBag: false,
-      mugPrice: 0,
-      productToPay: [],
-      // cart: this.props.cart,
-      totalMugsInCart: 0,
-      totalShirtsInCart: 0,
-      totalPillowsInCart: 0,
-      totalKeychainsInCart: 0,
-      totalPetTagBonesInCart: 0,
-      totalCosmeticBagsInCart: 0,
-      totalFacemaskHolderInCart: 0,
       firstName: "",
       email: "",
       address: "",
@@ -282,12 +249,17 @@ class index extends Component {
       coupons: [],
       selectedCouponName: "",
       selectedCouponPrice: 0,
+
+      productsList: [],
     };
   }
 
   async componentDidMount() {
     await this.props.getProductsCustomized();
-    console.log(this.props);
+    this.setState({
+      productsList: this.props.products.productsCustomized.data,
+    });
+    console.log(this.state.productsList);
   }
 
   toggleModalToConfirmOrder = () => {
@@ -344,65 +316,6 @@ class index extends Component {
     this.setState({
       toggleStep3: !this.state.toggleStep3,
       btnStep3: !this.state.btnStep3,
-    });
-  };
-
-  handleMugImg = () => {
-    this.setState({
-      productImg: this.state.productImgArray[0].mug1,
-      productImgBack: this.state.productImgArray[0].mug2,
-      mugPrice: 12.0,
-      productImgShirt: "",
-      step2ActualProd: "mug",
-      step2: true,
-    });
-  };
-
-  handleShirtImg = async () => {
-    await this.setState({
-      step2ActualProd: "shirt",
-      productImgShirt: this.state.productImgArray[1],
-      productImg: "",
-      step2: true,
-      photoControlShirts: true,
-    });
-    // console.log(this.state.productImgShirt);
-  };
-
-  handlePillowcaseImg = async () => {
-    await this.setState({
-      step2ActualProd: "pillow",
-      productImgPillow: this.state.productImgArray[2],
-      productImg: "",
-      step2: true,
-      photoControlPillow: true,
-    });
-  };
-
-  handlePetTagBoneImg = async () => {
-    await this.setState({
-      step2ActualProd: "petTagBone",
-      productImgPetTagBone: this.state.productImgArray[3],
-      productImg: "",
-      step2: true,
-    });
-  };
-
-  handleCosmeticBagImg = async () => {
-    await this.setState({
-      step2ActualProd: "cosmeticBag",
-      productImgCosmeticBag: this.state.productImgArray[4],
-      productImg: "",
-      step2: true,
-    });
-  };
-
-  handleFaceMaskHolder = async () => {
-    await this.setState({
-      step2ActualProd: "faceMaskHolder",
-      productImgFaceMaskHolder: this.state.productImgArray[5],
-      productImg: "",
-      step2: true,
     });
   };
 
@@ -718,9 +631,7 @@ class index extends Component {
               fileArray: this.state.file,
               screenshot: savable.src,
               textFormatOptions: false,
-              productToPay: this.state.productToPay.concat(
-                product[0].Mug.price * this.props.qty
-              ),
+
               totalMugsInCart: this.state.totalMugsInCart + this.props.qty,
             });
           }
@@ -730,9 +641,7 @@ class index extends Component {
               screenshot: savable.src,
               textFormatOptions: false,
               photoControlShirts: false,
-              productToPay: this.state.productToPay.concat(
-                product[0].Shirt.price * this.props.qty
-              ),
+
               // cart: this.state.cart + this.state.qty,
               totalShirtsInCart: this.state.totalShirtsInCart + this.props.qty,
             });
@@ -743,9 +652,7 @@ class index extends Component {
               screenshot: savable.src,
               textFormatOptionsForPetTagBone: false,
               photoControlPetTagBone: false,
-              productToPay: this.state.productToPay.concat(
-                product[0].PetTagBone.price * this.props.qty
-              ),
+
               // cart: this.state.cart + this.state.qty,
               totalPetTagBonesInCart:
                 this.state.totalPetTagBonesInCart + this.props.qty,
@@ -756,9 +663,7 @@ class index extends Component {
               fileArray: this.state.file,
               screenshot: savable.src,
               textFormatOptionsForCosmeticBag: false,
-              productToPay: this.state.productToPay.concat(
-                product[0].CosmeticBag.price * this.props.qty
-              ),
+
               totalCosmeticBagsInCart:
                 this.state.totalCosmeticBagsInCart + this.props.qty,
             });
@@ -988,6 +893,132 @@ class index extends Component {
     }));
   };
 
+  removeItemFromCart = async ({ currentTarget }) => {
+    await this.props.removeItemFromCart(currentTarget.value);
+    this.setState({
+      toggleStep3: false,
+    });
+    // const subTotal =
+    //   this.props.cart.length > 0
+    //     ? this.props.cart.map((item) => item.subTotal).reduce((a, b) => a + b)
+    //     : 0;
+    // const tax = subTotal * 0.13;
+
+    // if (this.props.cart.length === 0) {
+    //   this.setState({
+    //     modalToCheckout: false,
+    //     billingDetails: false,
+    //     showCheckout: false,
+    //   });
+    // }
+    // this.setState({
+    //   subTotal: subTotal,
+    //   tax: subTotal * 0.13,
+    //   total: subTotal + tax,
+    // });
+  };
+
+  increaseQtyInCart = ({ currentTarget }) => {
+    this.props.increaseQtyInCart(currentTarget.value);
+    // const subTotal = this.props.cart
+    //   .map((item) => item.subTotal)
+    //   .reduce((a, b) => a + b);
+    // const tax = subTotal * 0.13;
+
+    // this.setState({
+    //   subTotal: subTotal,
+    //   tax: subTotal * 0.13,
+    //   total: subTotal + tax,
+    // });
+  };
+
+  decreaseQtyInCart = ({ currentTarget }) => {
+    const checkQtyFirst = this.props.cart.filter(
+      (item) => item._id === currentTarget.value
+    );
+
+    if (checkQtyFirst[0].qty === 1) {
+      return;
+    }
+    this.props.decreaseQtyInCart(currentTarget.value);
+    // this.props.getCart();
+    // const subTotal = this.props.cart
+    //   .map((item) => item.subTotal)
+    //   .reduce((a, b) => a + b);
+    // const tax = subTotal * 0.13;
+
+    // this.setState({
+    //   subTotal: subTotal,
+    //   tax: subTotal * 0.13,
+    //   total: subTotal + tax,
+    // });
+  };
+
+  handleProductSelect = async (id) => {
+    //Mug
+    if (id === "5f59fad398979f54486e2b40") {
+      this.setState({
+        productImg: this.state.productImgArray[0].mug1,
+        productImgBack: this.state.productImgArray[0].mug2,
+        productImgShirt: "",
+        step2ActualProd: "mug",
+        step2: true,
+      });
+    }
+
+    //Pet Tag Bone
+    if (id === "5f59fb2a98979f54486e2b41") {
+      await this.setState({
+        step2ActualProd: "petTagBone",
+        productImgPetTagBone: this.state.productImgArray[3],
+        productImg: "",
+        step2: true,
+      });
+    }
+
+    //T-shirt
+    if (id === "5f59fb3d98979f54486e2b42") {
+      await this.setState({
+        step2ActualProd: "shirt",
+        productImgShirt: this.state.productImgArray[1],
+        productImg: "",
+        step2: true,
+        photoControlShirts: true,
+      });
+    }
+
+    //Pillow
+    if (id === "5f59fb4e98979f54486e2b43") {
+      await this.setState({
+        step2ActualProd: "pillow",
+        productImgPillow: this.state.productImgArray[2],
+        productImg: "",
+        step2: true,
+        photoControlPillow: true,
+      });
+    }
+
+    //Cosmetic Bag
+    if (id === "5f59fb6298979f54486e2b44") {
+      await this.setState({
+        step2ActualProd: "cosmeticBag",
+        productImgCosmeticBag: this.state.productImgArray[4],
+        productImg: "",
+        step2: true,
+      });
+    }
+
+    //Wood Sign
+    if (id === "5f59fb8298979f54486e2b45") {
+      await this.setState({
+        step2ActualProd: "faceMaskHolder",
+        productImgFaceMaskHolder: this.state.productImgArray[5],
+        productImg: "",
+        step2: true,
+      });
+    }
+  };
+
   render() {
     const cartContent = this.props.cart;
     const itemsInCartList =
@@ -1035,6 +1066,37 @@ class index extends Component {
         <p className="text-center">Cart is empty</p>
       );
 
+    const products = this.state.productsList;
+    const productsList =
+      products.length > 0 ? (
+        products.map((product) => {
+          return (
+            <h2
+              onClick={() => this.handleProductSelect(product._id)}
+              key={product._id}
+              className="product-select"
+            >
+              {product._id === "5f59fad398979f54486e2b40" ? (
+                <i className="fas fa-coffee productList-icons"></i>
+              ) : product._id === "5f59fb2a98979f54486e2b41" ? (
+                <i className="fas fa-tshirt productList-icons"></i>
+              ) : product._id === "5f59fb3d98979f54486e2b42" ? (
+                <i className="fas fa-bone productList-icons"></i>
+              ) : product._id === "5f59fb4e98979f54486e2b43" ? (
+                <i className="fas fa-couch productList-icons"></i>
+              ) : product._id === "5f59fb6298979f54486e2b44" ? (
+                <i className="fas fa-wallet productList-icons"></i>
+              ) : product._id === "5f59fb8298979f54486e2b45" ? (
+                <i className="fas fa-smile-wink productList-icons"></i>
+              ) : null}
+              {product.productName} ${product.price / 100}
+            </h2>
+          );
+        })
+      ) : (
+        <p>Loading Products...</p>
+      );
+
     return (
       <div className="product-creation-container">
         <div className="shoppingCart-container">
@@ -1064,43 +1126,13 @@ class index extends Component {
                 <h1 className="product-select-title">
                   Choose one product below
                 </h1>
-                <h2 className="product-select" onClick={this.handleMugImg}>
-                  <i className="fas fa-coffee productList-icons"></i> Mug
-                  11-Oz($15.99)
-                </h2>
-                <h2 className="product-select" onClick={this.handleShirtImg}>
-                  <i className="fas fa-tshirt productList-icons"></i> Shirt
-                  ($19.99)
-                </h2>
-                <h2
-                  className="product-select"
-                  onClick={this.handlePillowcaseImg}
-                >
-                  <i className="fas fa-couch productList-icons"></i> Pillow
-                  (16"w X16"h) ($24.99)
-                </h2>
-                <h2
-                  className="product-select"
-                  onClick={this.handlePetTagBoneImg}
-                >
-                  <i className="fas fa-bone productList-icons"></i> Pet-tag
-                  1.25"w X 1"h ($12.99)
-                </h2>
-                <h2
-                  className="product-select"
-                  onClick={this.handleCosmeticBagImg}
-                >
-                  <i className="fas fa-wallet productList-icons"></i> Cosmetic
-                  bag / Pencil case 8.5"w X 5"h ($18.99)
-                </h2>
-                <h2
-                  className="product-select"
-                  onClick={this.handleFaceMaskHolder}
-                >
-                  <i className="fas fa-smile-wink productList-icons"></i> Wooden
-                  Sign Key/Facemask Holder 11"w X 8.5"h ($34.99)
-                </h2>
-                <h2 className="product-select">More products coming soon...</h2>
+                <div>
+                  {" "}
+                  {productsList}
+                  <Link to="/general_products">
+                    <h2 className="product-select">More Products...</h2>
+                  </Link>
+                </div>
               </div>
             ) : null}
 
@@ -1134,10 +1166,17 @@ class index extends Component {
               >
                 STEP 3
               </button>
-              <div className="order-summary text-center">
-                <h4>Cart Summary</h4>
-                {itemsInCartList}
-              </div>
+              {this.state.toggleStep3 ? (
+                <div>
+                  <h1 className="text-center arrowToRight arrowDown">
+                    &#8659;
+                  </h1>
+                  <div className="order-summary text-center">
+                    <h4>Cart Summary</h4>
+                    {itemsInCartList}
+                  </div>
+                </div>
+              ) : null}
             </div>
             {/* step 3 Container ENDS***********************/}
           </div>
@@ -1575,4 +1614,7 @@ export default connect(mapStateToProps, {
   getCart,
   addItemToCart,
   getProductsCustomized,
+  increaseQtyInCart,
+  decreaseQtyInCart,
+  removeItemFromCart,
 })(index);

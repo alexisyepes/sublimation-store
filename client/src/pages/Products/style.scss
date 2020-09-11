@@ -664,7 +664,7 @@
   border-bottom: solid 1px rgb(65, 211, 204);
   padding-bottom: 5px;
 
-  &:hover:not(:last-child) {
+  &:hover {
     cursor: pointer;
     background-color: rgb(44, 138, 167);
     color: white;
