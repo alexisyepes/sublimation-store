@@ -7,7 +7,7 @@ class index extends Component {
     return (
       <div className="gallery-container">
         <div className="shoppingCart-container">
-          <ShoppingCart />
+          <ShoppingCart onRef={(ref) => (this.shoppingCartComponent = ref)} />
         </div>
         <h1 className="gallery-heading text-center">Some of our products</h1>
         <div className="gallery-photos-wrapper">

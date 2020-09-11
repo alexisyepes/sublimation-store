@@ -20,7 +20,7 @@ export default class index extends Component {
     return (
       <div className="about-container">
         <div className="shoppingCart-container">
-          <ShoppingCart />
+          <ShoppingCart onRef={(ref) => (this.shoppingCartComponent = ref)} />
         </div>
         <h1 className="primary-heading-about text-center">About us </h1>
         <div className="images-about__1">

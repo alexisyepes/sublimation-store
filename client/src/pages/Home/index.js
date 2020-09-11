@@ -15,7 +15,7 @@ class index extends Component {
       <div className="home-container">
         {this.props.cart.length > 0 ? (
           <div className="shoppingCart-container">
-            <ShoppingCart />
+            <ShoppingCart onRef={(ref) => (this.shoppingCartComponent = ref)} />
           </div>
         ) : null}
         <h1 className="home__heading text-center">Memories that matter...</h1>

@@ -85,7 +85,7 @@ class index extends Component {
     return (
       <div>
         <div className="shoppingCart-container">
-          <ShoppingCart />
+          <ShoppingCart onRef={(ref) => (this.shoppingCartComponent = ref)} />
         </div>
         <h1 className="text-center more-products__heading">More products</h1>
         <div className="products-general-wrapper">

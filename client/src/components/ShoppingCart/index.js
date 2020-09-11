@@ -35,6 +35,7 @@ let shippingOptions = [
 class index extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       modalToCheckout: false,
       firstName: "",
@@ -60,14 +61,9 @@ class index extends Component {
       subTotal: 0,
       tax: 0,
       total: 0,
-      //state managed in App.js
       productToPay: [],
       productsInCart: [],
-      //state managed in App.js
-
-      //State in Redux Store
       cartInLocalComponent: 0,
-
       productBeingAdded: "",
     };
   }
@@ -75,6 +71,11 @@ class index extends Component {
   async componentDidMount() {
     await this.props.getProducts();
     await this.props.getCart();
+    await this.props.onRef(this);
+  }
+
+  componentWillUnmount() {
+    this.props.onRef(undefined);
   }
 
   closeModalCheckout = async () => {
@@ -102,6 +103,8 @@ class index extends Component {
       [e.target.name]: e.target.value,
     });
   };
+
+  openModalToCheckOutFromProducts = () => {};
 
   modalToCheckoutOpen = async () => {
     if (!this.state.modalToCheckout) {

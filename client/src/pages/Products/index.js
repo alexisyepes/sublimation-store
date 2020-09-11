@@ -170,13 +170,15 @@ class index extends Component {
   constructor(props) {
     super(props);
 
+    this.shoppingCartComponent = React.createRef();
+
     this.state = {
       btnStep1: true,
       btnStep2: false,
       btnStep3: false,
       toggleStep1: false,
       toggleStep2: false,
-      toggleStep3: false,
+      toggleStep3: this.props.cart.length > 0 ? true : false,
       toggleSelectProductBtn: true,
       step1: false,
       step2: false,
@@ -217,14 +219,6 @@ class index extends Component {
       textFormatOptions: false,
       textFormatOptionsForPetTagBone: false,
       textFormatOptionsForCosmeticBag: false,
-      firstName: "",
-      email: "",
-      address: "",
-      city: "",
-      province: "",
-      postalCode: "",
-      couponCodeInput: "",
-      billingDetails: false,
       checkOutStripe: false,
       showMsgInput: false,
       showPetTagsInput: false,
@@ -233,7 +227,6 @@ class index extends Component {
       designSquare: true,
       shirtSize: "",
       shirtGender: "",
-      shippingMethod: "",
       photoControlShirts: false,
       photoControlPillow: false,
       photoControlPetTagBone: false,
@@ -256,10 +249,10 @@ class index extends Component {
 
   async componentDidMount() {
     await this.props.getProductsCustomized();
+    await this.props.getCart();
     this.setState({
       productsList: this.props.products.productsCustomized.data,
     });
-    console.log(this.state.productsList);
   }
 
   toggleModalToConfirmOrder = () => {
@@ -268,36 +261,13 @@ class index extends Component {
     });
   };
 
-  modalToCheckoutOpen = () => {
-    if (!this.state.modalToCheckout) {
-      this.setState({
-        firstName: "",
-        email: "",
-        billingDetails: false,
-        checkOutStripe: false,
-        errorMsg: "",
-        shippingMethod: "",
-      });
-    }
-    this.setState({
-      modalToCheckout: true,
-    });
+  openModalToCheckOutFromProducts = () => {
+    this.shoppingCartComponent.modalToCheckoutOpen();
   };
 
   closeModal = () => {
     this.setState({
       modalToConfirm: false,
-    });
-  };
-
-  closeModalCheckout = async () => {
-    await this.setState({
-      modalToCheckout: false,
-      errorMsg: "",
-      errorCoupon: "",
-      selectedCouponPrice: 0,
-      couponCodeInput: "h873huih8",
-      selectedCouponName: "",
     });
   };
 
@@ -431,7 +401,7 @@ class index extends Component {
       btnStep3: false,
       toggleStep1: false,
       toggleStep2: false,
-      toggleStep3: false,
+      toggleStep3: this.props.cart.length > 0 ? true : false,
       toggleSelectProductBtn: true,
       step1: false,
       step2: false,
@@ -444,7 +414,6 @@ class index extends Component {
       textOnMugs: "",
       textFormatOptions: false,
       notChecked: true,
-      // qty: 1,
       showMsgInput: false,
       boneColor: "blue",
       petTagBonePhone: "123456789",
@@ -552,6 +521,7 @@ class index extends Component {
             screenshot: savable.src,
             toggleStep3: true,
             toggleStep2: false,
+            qty: 1,
           });
         });
 
@@ -670,10 +640,16 @@ class index extends Component {
           }
 
           await this.setState({
-            // fileArray: this.state.file,
-            // screenshot: savable.src,
             toggleStep3: true,
             toggleStep2: false,
+            qty: 1,
+            btnStep1: true,
+            btnStep2: false,
+            btnStep3: false,
+            toggleStep1: false,
+            toggleSelectProductBtn: true,
+            step1: false,
+            // step3: false,
           });
         });
 
@@ -896,7 +872,7 @@ class index extends Component {
   removeItemFromCart = async ({ currentTarget }) => {
     await this.props.removeItemFromCart(currentTarget.value);
     this.setState({
-      toggleStep3: false,
+      toggleStep3: this.props.cart.length > 0 ? true : false,
     });
     // const subTotal =
     //   this.props.cart.length > 0
@@ -1101,6 +1077,7 @@ class index extends Component {
       <div className="product-creation-container">
         <div className="shoppingCart-container">
           <ShoppingCart
+            onRef={(ref) => (this.shoppingCartComponent = ref)}
             screenshot={this.state.screenshot}
             imgForProduct={this.state.fileArray}
           />
@@ -1174,6 +1151,9 @@ class index extends Component {
                   <div className="order-summary text-center">
                     <h4>Cart Summary</h4>
                     {itemsInCartList}
+                    <button onClick={this.openModalToCheckOutFromProducts}>
+                      Checkout
+                    </button>
                   </div>
                 </div>
               ) : null}
@@ -1285,7 +1265,6 @@ class index extends Component {
                   {this.state.step2ActualProd === "cosmeticBag" ? (
                     <Fragment>
                       <CosmeticBag
-                        // petName={this.state.petTagBonePetName}
                         textOnMugs={this.state.textOnMugs}
                         img={this.state.productImgCosmeticBag}
                         imagePreviewUrl={this.state.imagePreviewUrl}
@@ -1526,10 +1505,7 @@ class index extends Component {
                           >
                             Click here if you're done &#10003;
                           </button>
-                        ) : null}
-
-                        {/* CONFIRM ORDER FOR SHIRTS */}
-                        {this.state.step2ActualProd === "shirt" ? (
+                        ) : this.state.step2ActualProd === "shirt" ? (
                           <button
                             value="5f59fb3d98979f54486e2b42"
                             onClick={this.addProductToCart}
@@ -1537,10 +1513,7 @@ class index extends Component {
                           >
                             Click here if you're done &#10003;
                           </button>
-                        ) : null}
-
-                        {/* CONFIRM ORDER FOR PILLOWS */}
-                        {this.state.step2ActualProd === "pillow" ? (
+                        ) : this.state.step2ActualProd === "pillow" ? (
                           <button
                             value="5f59fb4e98979f54486e2b43"
                             onClick={this.addProductToCart}
@@ -1548,10 +1521,7 @@ class index extends Component {
                           >
                             Click here if you're done &#10003;
                           </button>
-                        ) : null}
-
-                        {/* CONFIRM ORDER FOR PET TAG BONES */}
-                        {this.state.step2ActualProd === "petTagBone" ? (
+                        ) : this.state.step2ActualProd === "petTagBone" ? (
                           <button
                             value="5f59fb2a98979f54486e2b41"
                             onClick={this.addProductToCart}
@@ -1559,10 +1529,7 @@ class index extends Component {
                           >
                             Click here if you're done &#10003;
                           </button>
-                        ) : null}
-
-                        {/* CONFIRM ORDER FOR COSMETIC BAGS */}
-                        {this.state.step2ActualProd === "cosmeticBag" ? (
+                        ) : this.state.step2ActualProd === "cosmeticBag" ? (
                           <button
                             value="5f59fb6298979f54486e2b44"
                             onClick={this.addProductToCart}
@@ -1571,6 +1538,50 @@ class index extends Component {
                             Click here if you're done &#10003;
                           </button>
                         ) : null}
+
+                        {/* CONFIRM ORDER FOR SHIRTS */}
+                        {/* {this.state.step2ActualProd === "shirt" ? (
+                          <button
+                            value="5f59fb3d98979f54486e2b42"
+                            onClick={this.addProductToCart}
+                            className="continue-button"
+                          >
+                            Click here if you're done &#10003;
+                          </button>
+                        ) : null} */}
+
+                        {/* CONFIRM ORDER FOR PILLOWS */}
+                        {/* {this.state.step2ActualProd === "pillow" ? (
+                          <button
+                            value="5f59fb4e98979f54486e2b43"
+                            onClick={this.addProductToCart}
+                            className="continue-button"
+                          >
+                            Click here if you're done &#10003;
+                          </button>
+                        ) : null} */}
+
+                        {/* CONFIRM ORDER FOR PET TAG BONES */}
+                        {/* {this.state.step2ActualProd === "petTagBone" ? (
+                          <button
+                            value="5f59fb2a98979f54486e2b41"
+                            onClick={this.addProductToCart}
+                            className="continue-button"
+                          >
+                            Click here if you're done &#10003;
+                          </button>
+                        ) : null} */}
+
+                        {/* CONFIRM ORDER FOR COSMETIC BAGS */}
+                        {/* {this.state.step2ActualProd === "cosmeticBag" ? (
+                          <button
+                            value="5f59fb6298979f54486e2b44"
+                            onClick={this.addProductToCart}
+                            className="continue-button"
+                          >
+                            Click here if you're done &#10003;
+                          </button>
+                        ) : null} */}
                       </div>
                     ) : null}
                   </div>
