@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
+import { Link } from "react-scroll";
 import Select from "react-select";
 import html2canvas from "html2canvas";
 import JSZip from "jszip";
@@ -10,6 +11,7 @@ import Pillow from "../../components/Pillow";
 import PetTagBone from "../../components/PetTagBone";
 import CosmeticBag from "../../components/CosmeticBag";
 import FaceMaskHolder from "../../components/FaceMaskHolder";
+// import LoadingPage from "../../components/LoadPage";
 import axios from "axios";
 import { connect } from "react-redux";
 import {
@@ -18,6 +20,9 @@ import {
   increaseQtyInCart,
   decreaseQtyInCart,
   removeItemFromCart,
+  storeImgFromProducts,
+  removeImageFromState,
+  emptyOutImages,
 } from "../../actions/cartActions";
 import { getProductsCustomized } from "../../actions/productActions";
 import ShoppingCart from "../../components/ShoppingCart";
@@ -207,7 +212,8 @@ class index extends Component {
       fileArray: [],
       imagePreviewUrl: "",
       imgPreviewArray: [],
-      screenshot: [],
+      screenshot: "",
+      imgUrl: "",
       bg: "",
       textOnMugs: "",
       modalToConfirm: false,
@@ -244,6 +250,7 @@ class index extends Component {
       selectedCouponPrice: 0,
 
       productsList: [],
+      productImgId: "",
     };
   }
 
@@ -253,6 +260,10 @@ class index extends Component {
     this.setState({
       productsList: this.props.products.productsCustomized.data,
     });
+    console.log(this.props);
+
+    // this.props.emptyOutImages();
+    // this.props.removeImageFromState("5f59fad398979f54486e2b40");
   }
 
   toggleModalToConfirmOrder = () => {
@@ -325,7 +336,10 @@ class index extends Component {
 
   _handleImageChange = (e) => {
     e.preventDefault();
+    // const { files } = e.target;
+    // const localImageUrl = window.URL.createObjectURL(files[0]);
 
+    // console.log(e.target.files[0]);
     let reader = new FileReader();
     let file = e.target.files[0];
 
@@ -336,10 +350,12 @@ class index extends Component {
     reader.onloadend = () => {
       this.setState({
         file: file,
-        imagePreviewUrl: reader.result,
+        // imagePreviewUrl: file,
         photoControlPetTagBone: true,
-        // imagePreviewUrl: [...this.state.imagePreviewUrl, reader.result], to add to array
+        imagePreviewUrl: [...this.state.imagePreviewUrl, reader.result],
+        // to add to array
       });
+      // this.props.storeImgFromProducts(5);
     };
   };
 
@@ -515,14 +531,6 @@ class index extends Component {
               base64: true,
             }
           );
-
-          await this.setState({
-            fileArray: this.state.file,
-            screenshot: savable.src,
-            toggleStep3: true,
-            toggleStep2: false,
-            qty: 1,
-          });
         });
 
         let productToAddToCart = {
@@ -535,7 +543,12 @@ class index extends Component {
           screenShots: this.state.screenshot,
         };
 
+        this.setState({
+          qty: 1,
+        });
+
         this.props.addItemToCart(productToAddToCart);
+        this.resetForNewProduct();
       })
       .catch((err) => console.log(err));
   };
@@ -574,6 +587,10 @@ class index extends Component {
       (item) => item._id === _id
     );
 
+    this.setState({
+      loadingAxiosReq: true,
+    });
+
     return await axios
       .get("/customized_product/" + _id)
       .then(async (res) => {
@@ -584,7 +601,6 @@ class index extends Component {
           height: 1400,
         }).then(async (canvas) => {
           // zip and convert
-          this.toggleModalToConfirmOrder();
           var zip = new JSZip();
           var savable = new Image();
           savable.src = canvas.toDataURL("image/jpeg", 0.5);
@@ -596,61 +612,71 @@ class index extends Component {
             }
           );
 
+          const fd = new FormData();
+          fd.append("file", savable.src);
+          fd.append("upload_preset", "sublimation");
+
+          await axios
+            .post(
+              "https://api.cloudinary.com/v1_1/ayp-sublimation/image/upload",
+              fd
+            )
+            .then((res) => this.setState({ screenshot: res.data.secure_url }))
+            .catch((err) => console.log(err));
+
           if (this.state.step2ActualProd === "mug") {
             await this.setState({
-              fileArray: this.state.file,
-              screenshot: savable.src,
+              // fileArray: this.state.file,
+              // screenshot: savable.src,
               textFormatOptions: false,
-
-              totalMugsInCart: this.state.totalMugsInCart + this.props.qty,
             });
           }
           if (this.state.step2ActualProd === "shirt") {
             await this.setState({
-              fileArray: this.state.file,
-              screenshot: savable.src,
+              // fileArray: this.state.file,
+              // screenshot: savable.src,
               textFormatOptions: false,
               photoControlShirts: false,
-
-              // cart: this.state.cart + this.state.qty,
-              totalShirtsInCart: this.state.totalShirtsInCart + this.props.qty,
             });
           }
           if (this.state.step2ActualProd === "petTagBone") {
             await this.setState({
-              fileArray: this.state.file,
-              screenshot: savable.src,
+              // fileArray: this.state.file,
+              // screenshot: savable.src,
               textFormatOptionsForPetTagBone: false,
               photoControlPetTagBone: false,
-
-              // cart: this.state.cart + this.state.qty,
-              totalPetTagBonesInCart:
-                this.state.totalPetTagBonesInCart + this.props.qty,
             });
           }
           if (this.state.step2ActualProd === "cosmeticBag") {
             await this.setState({
-              fileArray: this.state.file,
-              screenshot: savable.src,
+              // fileArray: this.state.file,
+              // screenshot: savable.src,
               textFormatOptionsForCosmeticBag: false,
-
-              totalCosmeticBagsInCart:
-                this.state.totalCosmeticBagsInCart + this.props.qty,
             });
           }
+        });
 
-          await this.setState({
-            toggleStep3: true,
-            toggleStep2: false,
-            qty: 1,
-            btnStep1: true,
-            btnStep2: false,
-            btnStep3: false,
-            toggleStep1: false,
-            toggleSelectProductBtn: true,
-            step1: false,
-            // step3: false,
-          });
+        const fd = new FormData();
+        fd.append("file", this.state.file);
+        fd.append("upload_preset", "sublimation");
+
+        await axios
+          .post(
+            "https://api.cloudinary.com/v1_1/ayp-sublimation/image/upload",
+            fd
+          )
+          .then((res) => this.setState({ imgUrl: res.data.secure_url }))
+          .catch((err) => console.log(err));
+
+        this.toggleModalToConfirmOrder();
+
+        this.setState({
+          toggleStep3: true,
+          toggleStep2: false,
+          btnStep1: true,
+          btnStep2: false,
+          btnStep3: false,
+          toggleStep1: false,
         });
 
         let productToAddToCart = {
@@ -662,113 +688,25 @@ class index extends Component {
           price: res.data.price,
           qty: this.state.qty,
           subTotal: res.data.price * this.state.qty,
-          images: this.state.fileArray,
+          images: this.state.imgUrl,
           screenShots: this.state.screenshot,
         };
 
-        this.props.addItemToCart(productToAddToCart);
-        // console.log(this.props.cart);
-      })
-      .catch((err) => console.log(err));
-  };
+        this.setState({
+          qty: 1,
+          loadingAxiosReq: false,
+        });
 
-  goBackToStep2 = async () => {
-    if (
-      window.confirm(
-        `If you continue, some of your progress will be lost and you will need to re-create this product and its quantities. \nDo you still want to proceed?`
-      )
-    ) {
-      if (this.state.step2ActualProd === "mug") {
-        await this.setState({
-          toggleStep3: false,
-          toggleStep2: true,
-          btnStep2: true,
-          textFormatOptions: true,
-          notChecked: true,
-          totalMugsInCart: this.state.totalMugsInCart - this.props.qty,
-          productToPay: this.state.productToPay.slice(0, -1),
-          fileArray: this.state.fileArray.slice(0, -1),
-          screenshot: this.state.screenshot.slice(0, -1),
-          imagePreviewUrl: "",
-          file: "",
-          errorCoupon: "",
+        this.props.addItemToCart(productToAddToCart);
+        this.resetForNewProduct();
+        console.log(this.props);
+      })
+      .catch((err) => {
+        this.setState({
+          loadingAxiosReq: false,
         });
-        this.props.updateCartToPrevQty();
-        this.props.resetQty();
-      }
-      if (this.state.step2ActualProd === "shirt") {
-        await this.setState({
-          toggleStep3: false,
-          toggleStep2: true,
-          textFormatOptions: true,
-          notChecked: true,
-          totalShirtsInCart: this.state.totalShirtsInCart - this.state.qty,
-          productToPay: this.state.productToPay.slice(0, -1),
-          fileArray: this.state.fileArray.slice(0, -1),
-          screenshot: this.state.screenshot.slice(0, -1),
-          imagePreviewUrl: "",
-          file: "",
-          shirtGender: "",
-          errorCoupon: "",
-        });
-        this.props.updateCartToPrevQty();
-        this.props.resetQty();
-      }
-      if (this.state.step2ActualProd === "pillow") {
-        await this.setState({
-          toggleStep3: false,
-          toggleStep2: true,
-          textFormatOptions: true,
-          notChecked: true,
-          totalPillowsInCart: this.state.totalPillowsInCart - this.props.qty,
-          productToPay: this.state.productToPay.slice(0, -1),
-          fileArray: this.state.fileArray.slice(0, -1),
-          screenshot: this.state.screenshot.slice(0, -1),
-          imagePreviewUrl: "",
-          file: "",
-          errorCoupon: "",
-        });
-        this.props.updateCartToPrevQty();
-        this.props.resetQty();
-      }
-      if (this.state.step2ActualProd === "petTagBone") {
-        await this.setState({
-          toggleStep3: false,
-          toggleStep2: true,
-          notChecked: true,
-          totalPetTagBonesInCart:
-            this.state.totalPetTagBonesInCart - this.props.qty,
-          productToPay: this.state.productToPay.slice(0, -1),
-          fileArray: this.state.fileArray.slice(0, -1),
-          screenshot: this.state.screenshot.slice(0, -1),
-          imagePreviewUrl: "",
-          file: "",
-          textFormatOptionsForPetTagBone: true,
-          photoControlPetTagBone: true,
-          errorCoupon: "",
-        });
-        this.props.updateCartToPrevQty();
-        this.props.resetQty();
-      }
-      if (this.state.step2ActualProd === "cosmeticBag") {
-        await this.setState({
-          toggleStep3: false,
-          toggleStep2: true,
-          notChecked: true,
-          totalCosmeticBagsInCart:
-            this.state.totalCosmeticBagsInCart - this.props.qty,
-          productToPay: this.state.productToPay.slice(0, -1),
-          fileArray: this.state.fileArray.slice(0, -1),
-          screenshot: this.state.screenshot.slice(0, -1),
-          imagePreviewUrl: "",
-          file: "",
-          textFormatOptionsForCosmeticBag: true,
-          errorCoupon: "",
-        });
-        this.props.updateCartToPrevQty();
-        this.props.resetQty();
-      }
-    }
+        console.log(err);
+      });
   };
 
   toggleChangeTermsAndConditions = () => {
@@ -938,6 +876,7 @@ class index extends Component {
         productImgBack: this.state.productImgArray[0].mug2,
         productImgShirt: "",
         step2ActualProd: "mug",
+        productImgId: id,
         step2: true,
       });
     }
@@ -1074,12 +1013,34 @@ class index extends Component {
       );
 
     return (
-      <div className="product-creation-container">
+      <div
+        id="product-container-top-of-page"
+        className="product-creation-container"
+      >
+        <div
+          // className="loadingScreen"
+          className={
+            this.state.loadingAxiosReq
+              ? "loadingScreen"
+              : "loadingScreen-hidden"
+          }
+        >
+          <div className="loading-video">
+            <video className="loading-video__content" autoPlay muted loop>
+              <source src="./videos/clock.mp4" type="video/mp4" />
+              <source src="./videos/clock.mp4" type="video/webm" />
+              Your browser is not supported!
+            </video>
+          </div>
+          <h1 className="please-wait text-center">
+            Creating product, please wait ...
+          </h1>{" "}
+        </div>
         <div className="shoppingCart-container">
           <ShoppingCart
             onRef={(ref) => (this.shoppingCartComponent = ref)}
-            screenshot={this.state.screenshot}
-            imgForProduct={this.state.fileArray}
+            // screenshot={this.state.screenshot}
+            // imgForProduct={this.state.fileArray}
           />
         </div>
         <h1 className="home__heading text-center">
@@ -1106,9 +1067,9 @@ class index extends Component {
                 <div>
                   {" "}
                   {productsList}
-                  <Link to="/general_products">
+                  <a href="/general_products">
                     <h2 className="product-select">More Products...</h2>
-                  </Link>
+                  </a>
                 </div>
               </div>
             ) : null}
@@ -1298,12 +1259,22 @@ class index extends Component {
               <div>
                 <div className="arrowToLeft hideInSmallScreens">
                   <h1 className="text-center">
-                    &#x21da; Click on Step 1 to begin
+                    &#x21da; Click on Step 1 to create{" "}
+                    {this.props.cart.length > 0 ? (
+                      <span>
+                        <br /> or Checkout in step 3
+                      </span>
+                    ) : null}
                   </h1>
                 </div>
                 <div className="arrowToLeft hideInBigScreens">
                   <h1 className="text-center">
-                    &uArr; Click on Step 1 to begin
+                    &uArr; Click on Step 1 to create{" "}
+                    {this.props.cart.length > 0 ? (
+                      <span>
+                        <br /> or Checkout in step 3
+                      </span>
+                    ) : null}
                   </h1>
                 </div>
               </div>
@@ -1497,91 +1468,62 @@ class index extends Component {
                         ) : null}
 
                         {/* CONFIRM ORDER FOR MUGS */}
-                        {this.state.step2ActualProd === "mug" ? (
-                          <button
-                            value="5f59fad398979f54486e2b40"
-                            onClick={this.addProductToCart}
-                            className="continue-button"
-                          >
-                            Click here if you're done &#10003;
+                        {this.state.loadingAxiosReq ? (
+                          <button className="continue-button_flashing">
+                            Creating your Product...
                           </button>
-                        ) : this.state.step2ActualProd === "shirt" ? (
-                          <button
-                            value="5f59fb3d98979f54486e2b42"
-                            onClick={this.addProductToCart}
-                            className="continue-button"
+                        ) : (
+                          <Link
+                            activeClass="active"
+                            to="product-container-top-of-page"
+                            spy={true}
+                            smooth={true}
+                            offset={-70}
+                            duration={500}
                           >
-                            Click here if you're done &#10003;
-                          </button>
-                        ) : this.state.step2ActualProd === "pillow" ? (
-                          <button
-                            value="5f59fb4e98979f54486e2b43"
-                            onClick={this.addProductToCart}
-                            className="continue-button"
-                          >
-                            Click here if you're done &#10003;
-                          </button>
-                        ) : this.state.step2ActualProd === "petTagBone" ? (
-                          <button
-                            value="5f59fb2a98979f54486e2b41"
-                            onClick={this.addProductToCart}
-                            className="continue-button"
-                          >
-                            Click here if you're done &#10003;
-                          </button>
-                        ) : this.state.step2ActualProd === "cosmeticBag" ? (
-                          <button
-                            value="5f59fb6298979f54486e2b44"
-                            onClick={this.addProductToCart}
-                            className="continue-button"
-                          >
-                            Click here if you're done &#10003;
-                          </button>
-                        ) : null}
-
-                        {/* CONFIRM ORDER FOR SHIRTS */}
-                        {/* {this.state.step2ActualProd === "shirt" ? (
-                          <button
-                            value="5f59fb3d98979f54486e2b42"
-                            onClick={this.addProductToCart}
-                            className="continue-button"
-                          >
-                            Click here if you're done &#10003;
-                          </button>
-                        ) : null} */}
-
-                        {/* CONFIRM ORDER FOR PILLOWS */}
-                        {/* {this.state.step2ActualProd === "pillow" ? (
-                          <button
-                            value="5f59fb4e98979f54486e2b43"
-                            onClick={this.addProductToCart}
-                            className="continue-button"
-                          >
-                            Click here if you're done &#10003;
-                          </button>
-                        ) : null} */}
-
-                        {/* CONFIRM ORDER FOR PET TAG BONES */}
-                        {/* {this.state.step2ActualProd === "petTagBone" ? (
-                          <button
-                            value="5f59fb2a98979f54486e2b41"
-                            onClick={this.addProductToCart}
-                            className="continue-button"
-                          >
-                            Click here if you're done &#10003;
-                          </button>
-                        ) : null} */}
-
-                        {/* CONFIRM ORDER FOR COSMETIC BAGS */}
-                        {/* {this.state.step2ActualProd === "cosmeticBag" ? (
-                          <button
-                            value="5f59fb6298979f54486e2b44"
-                            onClick={this.addProductToCart}
-                            className="continue-button"
-                          >
-                            Click here if you're done &#10003;
-                          </button>
-                        ) : null} */}
+                            {this.state.step2ActualProd === "mug" ? (
+                              <button
+                                value="5f59fad398979f54486e2b40"
+                                onClick={this.addProductToCart}
+                                className="continue-button"
+                              >
+                                Click here if you're done &#10003;
+                              </button>
+                            ) : this.state.step2ActualProd === "shirt" ? (
+                              <button
+                                value="5f59fb3d98979f54486e2b42"
+                                onClick={this.addProductToCart}
+                                className="continue-button"
+                              >
+                                Click here if you're done &#10003;
+                              </button>
+                            ) : this.state.step2ActualProd === "pillow" ? (
+                              <button
+                                value="5f59fb4e98979f54486e2b43"
+                                onClick={this.addProductToCart}
+                                className="continue-button"
+                              >
+                                Click here if you're done &#10003;
+                              </button>
+                            ) : this.state.step2ActualProd === "petTagBone" ? (
+                              <button
+                                value="5f59fb2a98979f54486e2b41"
+                                onClick={this.addProductToCart}
+                                className="continue-button"
+                              >
+                                Click here if you're done &#10003;
+                              </button>
+                            ) : this.state.step2ActualProd === "cosmeticBag" ? (
+                              <button
+                                value="5f59fb6298979f54486e2b44"
+                                onClick={this.addProductToCart}
+                                className="continue-button"
+                              >
+                                Click here if you're done &#10003;
+                              </button>
+                            ) : null}
+                          </Link>
+                        )}
                       </div>
                     ) : null}
                   </div>
@@ -1619,6 +1561,7 @@ class index extends Component {
 const mapStateToProps = (state) => ({
   cart: state.cart.cart,
   products: state.products,
+  images: state.images,
 });
 
 export default connect(mapStateToProps, {
@@ -1628,4 +1571,7 @@ export default connect(mapStateToProps, {
   increaseQtyInCart,
   decreaseQtyInCart,
   removeItemFromCart,
+  storeImgFromProducts,
+  removeImageFromState,
+  emptyOutImages,
 })(index);

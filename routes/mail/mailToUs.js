@@ -15,8 +15,8 @@ const transporter = nodemailer.createTransport(mailGun(auth));
 
 const sendMailToUs = (
   email,
-  img,
-  screenshot,
+  // img,
+  // screenshot,
   address,
   city,
   province,
@@ -25,25 +25,27 @@ const sendMailToUs = (
   couponName,
   orderSummary
 ) => {
-  let imgArr = img.map((image) => {
-    // return image;
-    return `<p>"${image}" <p/> <br/>
-    <img src="${image}" alt="Img Product" width="200" height="300">`;
-  });
-
   let cartSummary = orderSummary.map((item) => {
     // return image;
     return `<p>Item Name: ${item.productName}</p> 
               <p>Qty: ${item.qty}</p> 
               <p>Qty: $${item.price / 100}</p>
+              <p>  Main Photo: </p>
+              <img src="${
+                item.images
+              }" alt="Img Product" width="300" height="150">
+              <p>Screenshot of designed product: </p>
+              <img src="${
+                item.screenShots
+              }" alt="Img Product" width="300" height="150">
               <hr />`;
   });
 
-  let ImgScrShtArr = screenshot.map((scrSht) => {
-    // return scrSht;
-    return `<p>"${scrSht}" <p/> <br/>
-    <img src="${scrSht}" alt="Img Product" width="300" height="150">`;
-  });
+  // let ImgScrShtArr = screenshot.map((scrSht) => {
+  //   // return scrSht;
+  //   return `<p>"${scrSht}" <p/> <br/>
+  //   <img src="${scrSht}" alt="Img Product" width="300" height="150">`;
+  // });
 
   let isShipping =
     shippingMethod === "delivery"
@@ -75,10 +77,7 @@ const sendMailToUs = (
     <p>Province: ${province}</p>
     <p>Postal Code: ${postalCode}</p>
     <p>${couponWasUsed}</p>
-    <p>  Main Photos: </p>
-      ${imgArr}
-    <p>Screenshots of product designed: </p>
-      ${ImgScrShtArr}
+  
     </html>`,
   };
 

@@ -6,10 +6,14 @@ import {
   INCREASE_QTY_IN_CART,
   DECREASE_QTY_IN_CART,
   GET_SUBTOTAL_PRICE,
+  STORE_IMG_FROM_PRODUCTS,
+  REMOVED_IMAGE_FROM_STATE,
+  EMPTY_OUT_IMAGES,
 } from "../actions/types";
 
 const initialState = {
   cart: [],
+  images: [],
 };
 
 export default function (state = initialState, action) {
@@ -18,6 +22,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         cart: [...state.cart, action.payload],
+      };
+
+    case STORE_IMG_FROM_PRODUCTS:
+      return {
+        ...state,
+        images: [...state.images, action.payload],
       };
 
     case INCREASE_QTY_IN_CART:
@@ -52,16 +62,31 @@ export default function (state = initialState, action) {
         ...state,
         cart: state.cart.filter((item) => item._id !== action.id),
       };
+
+    case REMOVED_IMAGE_FROM_STATE:
+      return {
+        ...state,
+        images: state.images.filter((item) => item._id !== action.id),
+      };
+
     case EMPTY_OUT_CART:
       return {
         ...state,
         cart: [],
       };
+
+    case EMPTY_OUT_IMAGES:
+      return {
+        ...state,
+        images: [],
+      };
+
     case GET_SUBTOTAL_PRICE:
       return {
         ...state,
         cart: [...state.cart],
       };
+
     case GET_CART:
       return {
         ...state,

@@ -143,8 +143,8 @@ router.post("/contact", (req, res) => {
 router.post("/email_to_ayp_sublimation", (req, res) => {
   const {
     email,
-    img,
-    screenshot,
+    // img,
+    // screenshot,
     address,
     city,
     province,
@@ -158,8 +158,8 @@ router.post("/email_to_ayp_sublimation", (req, res) => {
 
   EmailToAYP(
     email,
-    img,
-    screenshot,
+    // img,
+    // screenshot,
     address,
     city,
     province,

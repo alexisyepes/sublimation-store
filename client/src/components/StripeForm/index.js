@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import {
   Elements,
@@ -18,9 +18,9 @@ const Index = (props) => {
   const [clicks, setClicks] = useState(1);
   const shippingMethod = props.shippingMethod;
 
-  // useEffect(() => {
-  //   console.log(props.cart);
-  // });
+  useEffect(() => {
+    console.log(props);
+  });
 
   const CheckoutForm = () => {
     const stripe = useStripe();
@@ -57,11 +57,12 @@ const Index = (props) => {
           amount:
             props.shippingMethod !== "delivery"
               ? parseInt(props.total)
-              : props.totalPlusShippipng,
+              : parseInt(props.totalPlusShippipng),
           email: props.email,
           shippingMethod,
         });
 
+        //R E Q U I R E S   2 F A C T O R   A U T H E N T I C A T I O N  ///////////////////////
         if (data.requiresAction === true) {
           stripe.confirmCardPayment(data.clientSecret).then(async (result) => {
             if (result.error) {
@@ -71,177 +72,189 @@ const Index = (props) => {
               setLoadingAxiosReq(false);
             } else {
               if (result.paymentIntent.status === "succeeded") {
-                let imgUrl = [];
-                let imgScrSht = [];
-                const URL =
-                  "https://api.cloudinary.com/v1_1/ayp-sublimation/image/upload";
+                // let imgUrl = [];
+                // let imgScrSht = [];
+                // const URL =
+                //   "https://api.cloudinary.com/v1_1/ayp-sublimation/image/upload";
 
-                const imgForProductFormData = props.cart.map((item) => {
-                  const fd = new FormData();
-                  fd.append("file", item.images);
-                  fd.append("upload_preset", "sublimation");
-                  return fd;
+                // const imgForProductFormData = props.cart.map((item) => {
+                //   let reader = new FileReader();
+                //   let file = item.images;
+
+                //   if (file && file.type.match("image.*")) {
+                //     reader.readAsDataURL(file);
+                //   }
+
+                //   return (reader.onloadend = () => {
+                //     const fd = new FormData();
+                //     fd.append("file", reader.result);
+                //     fd.append("upload_preset", "sublimation");
+                //     return fd;
+                //   });
+                //   // this.setState({
+                //   //   file: localImageUrl,
+                //   //   imagePreviewUrl: localImageUrl,
+                //   //   photoControlPetTagBone: true,
+                //   // imagePreviewUrl: [...this.state.imagePreviewUrl, reader.result], to add to array
+                //   // });
+                // });
+
+                // const filteredScrsht = props.cart.filter(
+                //   (item) => item.scrsht !== ""
+                // );
+
+                // const screenShotsFormData = filteredScrsht.map((item) => {
+                //   const fd = new FormData();
+                //   fd.append("file", item.screenShots);
+                //   fd.append("upload_preset", "sublimation");
+                //   return fd;
+                // });
+
+                // const imgForProductRequests = imgForProductFormData.map(
+                //   async (fd) => await axios.post(URL, fd).catch((err) => null)
+                // );
+                // const screenshotsRequests = screenShotsFormData.map(
+                //   async (fd) => await axios.post(URL, fd).catch((err) => null)
+                // );
+
+                // try {
+                //   const imgForProductResponses = await axios.all(
+                //     imgForProductRequests
+                //   );
+                //   imgForProductResponses.map((res) => {
+                //     if (!res || res === null) {
+                //       return imgUrl.push("No photo provided!");
+                //     }
+                //     return imgUrl.push(res.data.secure_url);
+                //   });
+
+                //   const screenshotsResponses = await axios.all(
+                //     screenshotsRequests
+                //   );
+                //   screenshotsResponses.map((res) => {
+                //     // console.log(res.data.secure_url);
+                //     return res.data.secure_url
+                //       ? imgScrSht.push(res.data.secure_url)
+                //       : null;
+                //   });
+
+                let dataObj = {
+                  email: props.email,
+                  // img: imgUrl,
+                  // screenshot: imgScrSht,
+                  address: props.address,
+                  city: props.city,
+                  province: props.province,
+                  postalCode: props.postalCode,
+                  shippingMethod,
+                  couponName: props.couponName,
+                  orderSummary: props.cart,
+                };
+
+                new Promise((resolve, reject) => {
+                  axios.post("/email_to_ayp_sublimation", dataObj);
+                  resolve((res) => {
+                    console.log(res);
+                  });
+                  reject((err) => {
+                    console.log(err);
+                  });
                 });
-
-                const filteredScrsht = props.cart.filter(
-                  (item) => item.scrsht !== ""
+                setLoadingAxiosReq(false);
+                alert(
+                  "Your order will be ready soon, check your email for updates"
                 );
-
-                const screenShotsFormData = filteredScrsht.map((item) => {
-                  const fd = new FormData();
-                  fd.append("file", item.screenShots);
-                  fd.append("upload_preset", "sublimation");
-                  return fd;
-                });
-
-                const imgForProductRequests = imgForProductFormData.map(
-                  async (fd) => await axios.post(URL, fd).catch((err) => null)
-                );
-                const screenshotsRequests = screenShotsFormData.map(
-                  async (fd) => await axios.post(URL, fd).catch((err) => null)
-                );
-
-                try {
-                  const imgForProductResponses = await axios.all(
-                    imgForProductRequests
-                  );
-                  imgForProductResponses.map((res) => {
-                    if (!res || res === null) {
-                      return imgUrl.push("No photo provided!");
-                    }
-                    return imgUrl.push(res.data.secure_url);
-                  });
-
-                  const screenshotsResponses = await axios.all(
-                    screenshotsRequests
-                  );
-                  screenshotsResponses.map((res) => {
-                    // console.log(res.data.secure_url);
-                    return res.data.secure_url
-                      ? imgScrSht.push(res.data.secure_url)
-                      : null;
-                  });
-
-                  let dataObj = {
-                    email: props.email,
-                    img: imgUrl,
-                    screenshot: imgScrSht,
-                    address: props.address,
-                    city: props.city,
-                    province: props.province,
-                    postalCode: props.postalCode,
-                    shippingMethod,
-                    couponName: props.couponName,
-                    orderSummary: props.cart,
-                  };
-
-                  new Promise((resolve, reject) => {
-                    axios.post("/email_to_ayp_sublimation", dataObj);
-                    resolve((res) => {
-                      console.log(res);
-                    });
-                    reject((err) => {
-                      console.log(err);
-                    });
-                  });
-                  setLoadingAxiosReq(false);
-                  alert(
-                    "Your order will be ready soon, check your email for updates"
-                  );
-                  window.location.href = "/";
-                } catch (err) {
-                  console.log(err);
-                }
+                // window.location.href = "/";
+                // } catch (err) {
+                //   console.log(err);
+                // }
                 props.resetModal();
                 setLoadingAxiosReq(false);
               }
             }
           });
+          //R E Q U I R E S   2 F A C T O R   A U T H E N T I C A T I O N   E N D S S S S S S
         } else {
-          let imgUrl = [];
-          let imgScrSht = [];
-          const URL =
-            "https://api.cloudinary.com/v1_1/ayp-sublimation/image/upload";
+          // let imgUrl = [];
+          // let imgScrSht = [];
+          // const URL =
+          //   "https://api.cloudinary.com/v1_1/ayp-sublimation/image/upload";
 
-          const imgForProductFormData = props.cart.map((item) => {
-            const fd = new FormData();
-            fd.append("file", item.images);
-            fd.append("upload_preset", "sublimation");
-            return fd;
+          // const imgForProductFormData = props.cart.map((item) => {
+          //   const fd = new FormData();
+          //   fd.append("file", item.images);
+          //   fd.append("upload_preset", "sublimation");
+          //   return fd;
+          // });
+
+          // const filteredScrsht = props.cart.filter(
+          //   (item) => item.scrsht !== ""
+          // );
+
+          // const screenShotsFormData = filteredScrsht.map((item) => {
+          //   const fd = new FormData();
+          //   fd.append("file", item.screenShots);
+          //   fd.append("upload_preset", "sublimation");
+          //   return fd;
+          // });
+
+          // const imgForProductRequests = imgForProductFormData.map(
+          //   async (fd) => await axios.post(URL, fd).catch((err) => null)
+          // );
+          // const screenshotsRequests = screenShotsFormData.map(
+          //   async (fd) => await axios.post(URL, fd).catch((err) => null)
+          // );
+
+          // try {
+          //   let imgForProductResponses = await axios.all(imgForProductRequests);
+          //   imgForProductResponses.map((res) => {
+          //     // console.log(res);
+          //     return res !== null ? imgUrl.push(res.data.secure_url) : null;
+          //   });
+
+          //   let screenshotsResponses = await axios.all(screenshotsRequests);
+          //   screenshotsResponses.filter((res) => res !== null);
+          //   screenshotsResponses.map((res) => {
+          //     return res !== null ? imgScrSht.push(res.data.secure_url) : null;
+          //   });
+
+          let dataObj = {
+            email: props.email,
+            // img: imgUrl,
+            // screenshot: imgScrSht,
+            address: props.address,
+            city: props.city,
+            province: props.province,
+            postalCode: props.postalCode,
+            shippingMethod,
+            couponName: props.couponName,
+            orderSummary: props.cart,
+          };
+          //   // console.log(dataObj);
+
+          new Promise((resolve, reject) => {
+            axios.post("/email_to_ayp_sublimation", dataObj);
+            resolve((res) => {
+              console.log(res);
+            });
+            reject((err) => {
+              console.log(err);
+            });
           });
-
-          const filteredScrsht = props.cart.filter(
-            (item) => item.scrsht !== ""
-          );
-
-          const screenShotsFormData = filteredScrsht.map((item) => {
-            const fd = new FormData();
-            fd.append("file", item.screenShots);
-            fd.append("upload_preset", "sublimation");
-            return fd;
-          });
-
-          const imgForProductRequests = imgForProductFormData.map(
-            async (fd) => await axios.post(URL, fd).catch((err) => null)
-          );
-          const screenshotsRequests = screenShotsFormData.map(
-            async (fd) => await axios.post(URL, fd).catch((err) => null)
-          );
-
-          try {
-            const imgForProductResponses = await axios.all(
-              imgForProductRequests
+          setLoadingAxiosReq(false);
+          props.resetModal();
+          props.emptyOutCart();
+          function announceSuccess() {
+            alert(
+              "Order submitted successfully... check your email for updates"
             );
-            imgForProductResponses.map((res) => {
-              if (!res || res === null) {
-                return imgUrl.push("No photo provided!");
-              }
-              return imgUrl.push(res.data.secure_url);
-            });
-
-            let screenshotsResponses = await axios.all(screenshotsRequests);
-            screenshotsResponses.filter((res) => res !== null);
-            screenshotsResponses.map((res) => {
-              return res !== null ? imgScrSht.push(res.data.secure_url) : null;
-            });
-
-            let dataObj = {
-              email: props.email,
-              img: imgUrl,
-              screenshot: imgScrSht,
-              address: props.address,
-              city: props.city,
-              province: props.province,
-              postalCode: props.postalCode,
-              shippingMethod,
-              couponName: props.couponName,
-              orderSummary: props.cart,
-            };
-            // console.log(dataObj);
-
-            new Promise((resolve, reject) => {
-              axios.post("/email_to_ayp_sublimation", dataObj);
-              resolve((res) => {
-                console.log(res);
-              });
-              reject((err) => {
-                console.log(err);
-              });
-            });
-            setLoadingAxiosReq(false);
-            props.resetModal();
-            props.emptyOutCart();
-            function announceSuccess() {
-              alert(
-                "Order submitted successfully... check your email for updates"
-              );
-              window.location.href = "/";
-            }
-            setTimeout(announceSuccess, 1000);
-          } catch (err) {
-            console.log(err);
-            props.resetModal();
+            // window.location.href = "/";
           }
+          setTimeout(announceSuccess, 1000);
+          // } catch (err) {
+          //   console.log(err);
+          //   props.resetModal();
+          // }
         }
       } catch (error) {
         console.log(error);
