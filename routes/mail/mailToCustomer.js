@@ -13,55 +13,27 @@ const auth = {
 
 const transporter = nodemailer.createTransport(mailGun(auth));
 
-const sendMail = (
-  email,
-  totalMugsInCart,
-  totalShirtsInCart,
-  totalPillowsInCart,
-  totalPetTagBonesInCart,
-  totalCosmeticBagsInCart,
-  totalFacemaskHolderInCart,
-  shippingMethod,
-  subTotal,
-  tax,
-  amount,
-  coupon
-) => {
-  let mugs =
-    totalMugsInCart > 0
-      ? `<p>Total number of Mugs: ${totalMugsInCart} ($15.99 ea)</p>`
-      : `<span></span>`;
-  let shirts =
-    totalShirtsInCart > 0
-      ? `<p>Total number of Shirts: ${totalShirtsInCart} ($19.99 ea)</p>`
-      : `<span></span>`;
-  let pillows =
-    totalPillowsInCart > 0
-      ? `<p>Total number of Pillows: ${totalPillowsInCart} ($24.99 ea)</p>`
-      : `<span></span>`;
-  let petTags =
-    totalPetTagBonesInCart > 0
-      ? `<p>Total number of Pet Tags: ${totalPetTagBonesInCart} ($12.99 ea)</p>`
-      : `<span></span>`;
-  let cosmeticBags =
-    totalCosmeticBagsInCart > 0
-      ? `<p>Total number of Cosmetic Bags: ${totalCosmeticBagsInCart} ($18.99 ea)</p>`
-      : `<span></span>`;
-  let faceMaskHolders =
-    totalFacemaskHolderInCart > 0
-      ? `<p>Total number of Wooden Signs: ${totalFacemaskHolderInCart} ($34.99 ea)</p>`
-      : `<span></span>`;
+const sendMail = (email, shippingMethod, amount, orderSummary, coupon, tax) => {
   let isThereCoupon =
     coupon !== 0 ? `<p>Coupon Provided: ${coupon}% off</p>` : `<span></span>`;
 
   let isShipping =
     shippingMethod === "delivery"
       ? `
-		<p>Delivery costs: $15.00
+		<p>Shipping: $15.00
 		<br /> <br /> Your order will be delivered to the address provided soon.</p>`
       : shippingMethod === "pickUpMilton"
       ? `<p>Thanks for your purchase! \nYour order will be ready to be picked up from our Milton partner location soon; you will receive another email to notify you when the order is ready. </p>`
       : `<p>Thanks for your purchase! \nYour order will be ready to be picked up from our Cambridge partner location soon; you will receive another email to notify you when the order is ready.</p>`;
+
+  let cartSummary = orderSummary.map((item) => {
+    // return image;
+    return `<p>Item Name: ${item.productName}</p>
+              <p>Qty: ${item.qty}</p>
+              <p>Price: $${item.price / 100}</p>
+              <hr />`;
+  });
+
   const mailOptions = {
     from: "aypsublimation@gmail.com",
     to: email,
@@ -69,19 +41,13 @@ const sendMail = (
     html: `
 		<div style="border:1px solid black; padding:10px">
 		<h2>Thanks for your purchase!</h2> 
-		<h3>Order Summary: </h3>  
-		${mugs} 
-		${shirts} 
-		${pillows} 
-    ${petTags} 
-    ${cosmeticBags}
-    ${faceMaskHolders}
-		<p>Subtotal: $${subTotal}</p>
-		<p>hst: $${tax}</p>
+     <h4>Order Summary</h4>
+		${cartSummary}
+    ${isThereCoupon}
+    <h4>Tax: $${(tax / 100).toFixed(2)}</h4>
 		${isShipping}
-		${isThereCoupon}
+    <h4>Total Paid: $${amount / 100}</h4>
 		<hr />
-		<p><b>Total paid: $${amount * 0.01}</b></p>
 		<hr />
 		<p>https://www.printingmemories.ca</p>
 		<div>

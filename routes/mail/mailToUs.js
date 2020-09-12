@@ -15,8 +15,6 @@ const transporter = nodemailer.createTransport(mailGun(auth));
 
 const sendMailToUs = (
   email,
-  // img,
-  // screenshot,
   address,
   city,
   province,

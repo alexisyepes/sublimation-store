@@ -28,7 +28,7 @@ const Index = (props) => {
     const handleSubmitCheckoutForm = async (event) => {
       event.preventDefault();
       setClicks(clicks + 1);
-      console.log(clicks);
+      // console.log(clicks);
       if (clicks !== 1) {
         setLoadingAxiosReq(false);
         return setClicks(1);
@@ -60,6 +60,9 @@ const Index = (props) => {
               : parseInt(props.totalPlusShippipng),
           email: props.email,
           shippingMethod,
+          orderSummary: props.cart,
+          tax: props.tax,
+          coupon: props.coupon,
         });
 
         //R E Q U I R E S   2 F A C T O R   A U T H E N T I C A T I O N  ///////////////////////
@@ -81,6 +84,11 @@ const Index = (props) => {
                   shippingMethod,
                   couponName: props.couponName,
                   orderSummary: props.cart,
+                  amount:
+                    props.shippingMethod !== "delivery"
+                      ? parseInt(props.total)
+                      : parseInt(props.totalPlusShippipng),
+                  tax: props.tax,
                 };
 
                 new Promise((resolve, reject) => {
@@ -108,7 +116,6 @@ const Index = (props) => {
         } else {
           let dataObj = {
             email: props.email,
-
             address: props.address,
             city: props.city,
             province: props.province,
@@ -116,6 +123,11 @@ const Index = (props) => {
             shippingMethod,
             couponName: props.couponName,
             orderSummary: props.cart,
+            amount:
+              props.shippingMethod !== "delivery"
+                ? parseInt(props.total)
+                : parseInt(props.totalPlusShippipng),
+            tax: props.tax,
           };
 
           new Promise((resolve, reject) => {
@@ -139,7 +151,6 @@ const Index = (props) => {
           setTimeout(announceSuccess, 1000);
         }
       } catch (error) {
-        // console.log(error);
         alert(error.response.data + "\nTry to checkout using a different card");
         setLoadingAxiosReq(false);
         props.resetModal();
@@ -195,6 +206,11 @@ const Index = (props) => {
           Subtotal: ${(props.subTotal / 100).toFixed(2)}
         </p>
         <p className="cart-info-parag">Tax: ${(props.tax / 100).toFixed(2)}</p>
+        {props.couponName !== "" ? (
+          <p className="cart-info-parag coupon-stripe">
+            Coupon Applied: {props.coupon}% off
+          </p>
+        ) : null}
         {props.shippingMethod === "delivery" ? (
           <p className="cart-info-parag">Shipping: $15</p>
         ) : props.shippingMethod === "pickUpMilton" ? (
@@ -206,6 +222,7 @@ const Index = (props) => {
             Order to be picked up from our Cambridge pickup spot
           </p>
         )}
+
         <p className="cart-info-parag">
           Total to Pay: $
           {props.shippingMethod !== "delivery"

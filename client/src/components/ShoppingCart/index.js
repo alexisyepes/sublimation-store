@@ -167,6 +167,11 @@ class index extends Component {
       subTotal: subTotal,
       tax: subTotal * 0.13,
       total: subTotal + tax,
+      billingDetails: false,
+      checkOutStripe: false,
+      showCheckout: false,
+      selectedCouponName: "",
+      selectedCouponPrice: 0,
     });
   };
 
@@ -189,6 +194,11 @@ class index extends Component {
       subTotal: subTotal,
       tax: subTotal * 0.13,
       total: subTotal + tax,
+      billingDetails: false,
+      checkOutStripe: false,
+      showCheckout: false,
+      selectedCouponName: "",
+      selectedCouponPrice: 0,
     });
   };
 
@@ -236,11 +246,11 @@ class index extends Component {
 
   validateCouponHandler = async (e) => {
     e.preventDefault();
-    // if (this.state.productToPay.length === 0) {
-    //   return this.setState({
-    //     errorMsg: "No Coupons can be used without a product in cart!",
-    //   });
-    // }
+    if (this.props.cart.length === 0) {
+      return this.setState({
+        errorMsg: "No Coupons can be used without a product in cart!",
+      });
+    }
     this.setState({
       loadingAxiosReq: true,
     });
@@ -257,7 +267,11 @@ class index extends Component {
             selectedCouponName: couponValidated[0].couponName,
             selectedCouponPrice: couponValidated[0].price,
             errorCoupon: "",
+            total:
+              this.state.total -
+              (this.state.total * couponValidated[0].price) / 100,
           });
+          console.log(this.state.total / 100);
         } else {
           await this.setState({
             loadingAxiosReq: false,

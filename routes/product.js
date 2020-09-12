@@ -143,8 +143,6 @@ router.post("/contact", (req, res) => {
 router.post("/email_to_ayp_sublimation", (req, res) => {
   const {
     email,
-    // img,
-    // screenshot,
     address,
     city,
     province,
@@ -158,8 +156,6 @@ router.post("/email_to_ayp_sublimation", (req, res) => {
 
   EmailToAYP(
     email,
-    // img,
-    // screenshot,
     address,
     city,
     province,
@@ -186,8 +182,10 @@ router.post("/products/payment", async (req, res) => {
     id,
     amount,
     email,
-
     shippingMethod,
+    orderSummary,
+    coupon,
+    tax,
   } = req.body;
   try {
     const payment = await stripe.paymentIntents.create({
@@ -197,6 +195,8 @@ router.post("/products/payment", async (req, res) => {
       payment_method: id,
       confirm: true,
     });
+
+    // console.log(req.body);
 
     console.log(payment.status);
     if (payment.status === "requires_action") {
@@ -208,17 +208,11 @@ router.post("/products/payment", async (req, res) => {
     if (payment.status === "succeeded") {
       EmailToCustomer(
         email,
-        // totalMugsInCart,
-        // totalShirtsInCart,
-        // totalPillowsInCart,
-        // totalPetTagBonesInCart,
-        // totalCosmeticBagsInCart,
-        // totalFacemaskHolderInCart,
         shippingMethod,
-        // subTotal,
-        // tax,
         amount,
-        // coupon,
+        orderSummary,
+        coupon,
+        tax,
         "Product Confirmation",
         function (err, data) {
           if (err) {
