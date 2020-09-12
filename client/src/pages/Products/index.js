@@ -502,7 +502,6 @@ class index extends Component {
   };
 
   addFaceMaskHolderToCart = async () => {
-    this.toggleModalToConfirmOrder();
     let _id = "5f59fb8298979f54486e2b45";
 
     await this.props.getCart();
@@ -531,6 +530,22 @@ class index extends Component {
               base64: true,
             }
           );
+
+          const fd = new FormData();
+          fd.append("file", savable.src);
+          fd.append("upload_preset", "sublimation");
+
+          this.setState({
+            loadingAxiosReq: true,
+          });
+
+          await axios
+            .post(
+              "https://api.cloudinary.com/v1_1/ayp-sublimation/image/upload",
+              fd
+            )
+            .then((res) => this.setState({ screenshot: res.data.secure_url }))
+            .catch((err) => console.log(err));
         });
 
         let productToAddToCart = {
@@ -545,7 +560,9 @@ class index extends Component {
 
         this.setState({
           qty: 1,
+          loadingAxiosReq: false,
         });
+        this.toggleModalToConfirmOrder();
 
         this.props.addItemToCart(productToAddToCart);
         this.resetForNewProduct();
@@ -626,31 +643,23 @@ class index extends Component {
 
           if (this.state.step2ActualProd === "mug") {
             await this.setState({
-              // fileArray: this.state.file,
-              // screenshot: savable.src,
               textFormatOptions: false,
             });
           }
           if (this.state.step2ActualProd === "shirt") {
             await this.setState({
-              // fileArray: this.state.file,
-              // screenshot: savable.src,
               textFormatOptions: false,
               photoControlShirts: false,
             });
           }
           if (this.state.step2ActualProd === "petTagBone") {
             await this.setState({
-              // fileArray: this.state.file,
-              // screenshot: savable.src,
               textFormatOptionsForPetTagBone: false,
               photoControlPetTagBone: false,
             });
           }
           if (this.state.step2ActualProd === "cosmeticBag") {
             await this.setState({
-              // fileArray: this.state.file,
-              // screenshot: savable.src,
               textFormatOptionsForCosmeticBag: false,
             });
           }
@@ -1112,7 +1121,10 @@ class index extends Component {
                   <div className="order-summary text-center">
                     <h4>Cart Summary</h4>
                     {itemsInCartList}
-                    <button onClick={this.openModalToCheckOutFromProducts}>
+                    <button
+                      className="checkout-step3"
+                      onClick={this.openModalToCheckOutFromProducts}
+                    >
                       Checkout
                     </button>
                   </div>

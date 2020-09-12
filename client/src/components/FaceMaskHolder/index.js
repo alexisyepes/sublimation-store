@@ -1154,13 +1154,22 @@ class index extends Component {
               </div>
               {this.state.model1 || this.state.model2 || this.state.model3 ? (
                 <div>
-                  <button
-                    className="finish-add-product-to-cart-btn"
-                    onClick={this.props.screenShotFunction}
+                  <Link
+                    activeClass="active"
+                    to="product-container-top-of-page"
+                    spy={true}
+                    smooth={true}
+                    offset={-70}
+                    duration={500}
                   >
-                    <i className="fas fa-cart-plus"></i> Finish and Add product
-                    to Cart
-                  </button>
+                    <button
+                      className="finish-add-product-to-cart-btn"
+                      onClick={this.props.screenShotFunction}
+                    >
+                      <i className="fas fa-cart-plus"></i> Finish and Add
+                      product to Cart
+                    </button>
+                  </Link>
                   {this.state.showModelSelected ? (
                     <p className="text-center">
                       <strong>
@@ -1237,13 +1246,22 @@ class index extends Component {
                       ) : null}
                     </div>
 
-                    <button
-                      className="finish-add-product-to-cart-btn"
-                      onClick={this.props.screenShotFunction}
+                    <Link
+                      activeClass="active"
+                      to="product-container-top-of-page"
+                      spy={true}
+                      smooth={true}
+                      offset={-70}
+                      duration={500}
                     >
-                      <i className="fas fa-cart-plus"></i> Finish and Add
-                      product to Cart
-                    </button>
+                      <button
+                        className="finish-add-product-to-cart-btn"
+                        onClick={this.props.screenShotFunction}
+                      >
+                        <i className="fas fa-cart-plus"></i> Finish and Add
+                        product to Cart
+                      </button>
+                    </Link>
                   </div>
                 </div>
               ) : (
