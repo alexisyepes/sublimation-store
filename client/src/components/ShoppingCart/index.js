@@ -260,7 +260,6 @@ class index extends Component {
         const couponValidated = res.data.filter((word) =>
           word.couponName.includes(this.state.couponCodeInput.trim())
         );
-        // console.log(couponValidated[0]);
         if (couponValidated.length !== 0) {
           await this.setState({
             loadingAxiosReq: false,
@@ -360,11 +359,11 @@ class index extends Component {
         cartContent.map((item) => {
           return (
             <div key={item._id} className="itemInCart-wrapper">
-              <p className="cart-info-parag">
-                Product Name: {item.productName}
-              </p>
-              <p className="cart-info-parag">Price: ${item.price / 100}</p>
               <div>
+                <p className="cart-info-parag">
+                  Product Name: {item.productName}
+                </p>
+                <p className="cart-info-parag">Price: ${item.price / 100}</p>
                 <p className="cart-info-parag">
                   <span>Qty: {item.qty}</span>{" "}
                   <button
@@ -391,8 +390,13 @@ class index extends Component {
                   </button>
                 </p>
               </div>
+              <img
+                className="productImage"
+                src={item.productImage}
+                alt="product"
+              />
 
-              <hr />
+              <hr className="hr__cart" />
             </div>
           );
         })
@@ -580,15 +584,19 @@ class index extends Component {
           ) : (
             <div>
               <div className="cart-summary-container">
-                <h3 className="text-center">Order Summary</h3>
-                {itemsInCartList}
-                <p className="cart-info-parag">
+                <h3 className="text-center">
+                  Order Summary <i className="fas fa-cart-arrow-down"></i>
+                </h3>
+                <div className="contentInCart-mainWrapper">
+                  {itemsInCartList}
+                </div>
+                <p className="cart-info-parag cart-info-parag__subTotal">
                   Subtotal: ${(this.state.subTotal / 100).toFixed(2)}
                 </p>
-                <p className="cart-info-parag">
+                <p className="cart-info-parag cart-info-parag__tax">
                   Tax: ${(this.state.tax / 100).toFixed(2)}
                 </p>
-                <p className="cart-info-parag">
+                <p className="cart-info-parag cart-info-parag__total">
                   Total: ${(this.state.total / 100).toFixed(2)} (Shipping not
                   calculated yet)
                 </p>

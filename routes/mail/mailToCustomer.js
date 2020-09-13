@@ -23,8 +23,8 @@ const sendMail = (email, shippingMethod, amount, orderSummary, coupon, tax) => {
 		<p>Shipping: $15.00
 		<br /> <br /> Your order will be delivered to the address provided soon.</p>`
       : shippingMethod === "pickUpMilton"
-      ? `<p>Thanks for your purchase! \nYour order will be ready to be picked up from our Milton partner location soon; you will receive another email to notify you when the order is ready. </p>`
-      : `<p>Thanks for your purchase! \nYour order will be ready to be picked up from our Cambridge partner location soon; you will receive another email to notify you when the order is ready.</p>`;
+      ? `<p>Thanks for your purchase! \nYour order will be ready to be picked up from our Milton partner location soon; you will receive another email with all the necessary details. </p>`
+      : `<p>Thanks for your purchase! \nYour order will be ready to be picked up from our Cambridge partner location soon; you will receive another email with all the necessary details.</p>`;
 
   let cartSummary = orderSummary.map((item) => {
     // return image;

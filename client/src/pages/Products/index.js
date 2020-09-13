@@ -260,10 +260,7 @@ class index extends Component {
     this.setState({
       productsList: this.props.products.productsCustomized.data,
     });
-    console.log(this.props);
-
-    // this.props.emptyOutImages();
-    // this.props.removeImageFromState("5f59fad398979f54486e2b40");
+    // console.log(this.props);
   }
 
   toggleModalToConfirmOrder = () => {
@@ -336,10 +333,7 @@ class index extends Component {
 
   _handleImageChange = (e) => {
     e.preventDefault();
-    // const { files } = e.target;
-    // const localImageUrl = window.URL.createObjectURL(files[0]);
 
-    // console.log(e.target.files[0]);
     let reader = new FileReader();
     let file = e.target.files[0];
 
@@ -350,64 +344,10 @@ class index extends Component {
     reader.onloadend = () => {
       this.setState({
         file: file,
-        // imagePreviewUrl: file,
         photoControlPetTagBone: true,
         imagePreviewUrl: [...this.state.imagePreviewUrl, reader.result],
-        // to add to array
       });
-      // this.props.storeImgFromProducts(5);
     };
-  };
-
-  updateComponent = () => {
-    if (this.state.productToPay.length === 0) {
-      return;
-    }
-    if (
-      window.confirm(
-        `Are you sure you wish to empty your cart? This operation cannot be reversed!`
-      )
-    ) {
-      this.props.resetCart();
-      this.setState({
-        modalToCheckout: false,
-        btnStep1: true,
-        btnStep2: false,
-        btnStep3: false,
-        toggleStep1: false,
-        toggleStep2: false,
-        toggleStep3: false,
-        toggleSelectProductBtn: true,
-        step1: false,
-        step2: false,
-        step3: false,
-        productImg: "",
-        productImgBack: "",
-        imagePreviewUrl: "",
-        bg: "",
-        textOnMugs: "",
-        textFormatOptionsForPetTagBone: false,
-        textFormatOptions: false,
-        notChecked: true,
-        faceMaskHolderChosen: false,
-        // cart: 0,
-        totalMugsInCart: 0,
-        totalShirtsInCart: 0,
-        totalPillowsInCart: 0,
-        totalKeychainsInCart: 0,
-        totalPetTagBonesInCart: 0,
-        totalCosmeticBagsInCart: 0,
-        totalFacemaskHolderInCart: 0,
-        // qty: 1,
-        productToPay: [],
-        showMsgInput: false,
-        boneColor: "blue",
-        photoControlPetTagBone: false,
-        btnConfirmed: false,
-      });
-      this.props.resetQty();
-      this.props.resetCart();
-    }
   };
 
   resetForNewProduct = () => {
@@ -480,12 +420,6 @@ class index extends Component {
     });
   };
 
-  onChangeHandlerBillingDetails = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
-  };
-
   increaseQty = () => {
     this.setState({
       qty: this.state.qty + 1,
@@ -551,6 +485,7 @@ class index extends Component {
         let productToAddToCart = {
           _id: checkCartIfProductExists.length > 0 ? _id + Date.now() : _id,
           productName: res.data.productName,
+          productImage: res.data.productImg,
           price: res.data.price,
           qty: this.state.qty,
           subTotal: res.data.price * this.state.qty,
@@ -665,8 +600,14 @@ class index extends Component {
           }
         });
 
+        let imageFile = this.state.file;
+        if (imageFile === "") {
+          imageFile = this.state.screenshot;
+        } else {
+          imageFile = this.state.file;
+        }
         const fd = new FormData();
-        fd.append("file", this.state.file);
+        fd.append("file", imageFile);
         fd.append("upload_preset", "sublimation");
 
         await axios
@@ -694,6 +635,7 @@ class index extends Component {
               ? res.data._id + Date.now()
               : res.data._id,
           productName: res.data.productName,
+          productImage: res.data.productImg,
           price: res.data.price,
           qty: this.state.qty,
           subTotal: res.data.price * this.state.qty,
@@ -708,7 +650,7 @@ class index extends Component {
 
         this.props.addItemToCart(productToAddToCart);
         this.resetForNewProduct();
-        console.log(this.props);
+        // console.log(this.props);
       })
       .catch((err) => {
         this.setState({
@@ -734,73 +676,6 @@ class index extends Component {
       checkboxShipping: !this.state.checkboxShipping,
     });
     console.log(this.state.checkboxShipping);
-  };
-
-  validateCouponHandler = async (e) => {
-    e.preventDefault();
-    if (this.state.productToPay.length === 0) {
-      return this.setState({
-        errorMsg: "No Coupons can be used without a product in cart!",
-      });
-    }
-    this.setState({
-      loadingAxiosReq: true,
-    });
-    await axios
-      .get("/all_coupons")
-      .then(async (res) => {
-        const couponValidated = res.data.filter((word) =>
-          word.couponName.includes(this.state.couponCodeInput.trim())
-        );
-        // console.log(couponValidated[0]);
-        if (couponValidated.length !== 0) {
-          await this.setState({
-            loadingAxiosReq: false,
-            selectedCouponName: couponValidated[0].couponName,
-            selectedCouponPrice: couponValidated[0].price,
-            errorCoupon: "",
-          });
-        } else {
-          await this.setState({
-            loadingAxiosReq: false,
-            selectedCouponPrice: 0,
-            errorCoupon: "Coupon is Invalid",
-          });
-        }
-      })
-      .catch((err) => {
-        this.setState({
-          loadingAxiosReq: false,
-        });
-        console.log(err);
-      });
-  };
-
-  submitBillingDetails = (e) => {
-    e.preventDefault();
-
-    if (
-      !this.state.firstName ||
-      !this.state.email ||
-      !this.state.address ||
-      !this.state.city ||
-      !this.state.province ||
-      !this.state.postalCode
-    ) {
-      return this.setState({
-        errorMsg: "All the fields are required!",
-      });
-    }
-    if (!this.state.shippingMethod) {
-      return this.setState({
-        errorMsg: "Please choose one of the delivery or pickup options above",
-      });
-    }
-
-    this.setState({
-      billingDetails: true,
-      checkOutStripe: true,
-    });
   };
 
   showInputFields = () => {
@@ -1046,11 +921,7 @@ class index extends Component {
           </h1>{" "}
         </div>
         <div className="shoppingCart-container">
-          <ShoppingCart
-            onRef={(ref) => (this.shoppingCartComponent = ref)}
-            // screenshot={this.state.screenshot}
-            // imgForProduct={this.state.fileArray}
-          />
+          <ShoppingCart onRef={(ref) => (this.shoppingCartComponent = ref)} />
         </div>
         <h1 className="home__heading text-center">
           Create your product in 3 easy steps{" "}
@@ -1326,33 +1197,21 @@ class index extends Component {
                               onChange={this.onSelectedChangeGender}
                               options={genderShirtsOptions}
                             />
-                            {this.state.shirtGender === "male" ? (
-                              <Select
-                                isSearchable={false}
-                                menuPlacement="top"
-                                placeholder="size"
-                                onChange={this.onSelectedChangeSize}
-                                options={sizeShirtsOptionsMen}
-                              />
-                            ) : null}
-                            {this.state.shirtGender === "female" ? (
-                              <Select
-                                isSearchable={false}
-                                menuPlacement="top"
-                                placeholder="size"
-                                onChange={this.onSelectedChangeSize}
-                                options={sizeShirtsOptionsWoman}
-                              />
-                            ) : null}
-                            {this.state.shirtGender === "kid" ? (
-                              <Select
-                                isSearchable={false}
-                                menuPlacement="top"
-                                placeholder="size"
-                                onChange={this.onSelectedChangeSize}
-                                options={sizeShirtsOptionsKid}
-                              />
-                            ) : null}
+                            <Select
+                              isSearchable={false}
+                              menuPlacement="top"
+                              placeholder="size"
+                              onChange={this.onSelectedChangeSize}
+                              options={
+                                this.state.shirtGender === "male"
+                                  ? sizeShirtsOptionsMen
+                                  : this.state.shirtGender === "female"
+                                  ? sizeShirtsOptionsWoman
+                                  : this.state.shirtGender === "kid"
+                                  ? sizeShirtsOptionsKid
+                                  : ""
+                              }
+                            />
                           </div>
                         </div>
                       ) : null}

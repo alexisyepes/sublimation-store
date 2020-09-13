@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import {
   Elements,
@@ -18,9 +18,9 @@ const Index = (props) => {
   const [clicks, setClicks] = useState(1);
   const shippingMethod = props.shippingMethod;
 
-  useEffect(() => {
-    console.log(props);
-  });
+  // useEffect(() => {
+  //   console.log(props);
+  // });
 
   const CheckoutForm = () => {
     const stripe = useStripe();
