@@ -27,7 +27,7 @@
 .sidebar {
   margin-top: -10px;
   padding: 10px;
-  background-color: #fff494e7;
+  background-color: #94ffede7;
   position: fixed;
   left: 0;
   z-index: 20000;
@@ -100,24 +100,28 @@
   }
 }
 
-@media only screen and (min-device-width: 769px) and (max-device-width: 1199px) {
+@media only screen and (min-device-width: 760px) and (max-device-width: 1199px) {
   .nav-link {
     color: rgb(0, 0, 0);
-    font-size: 20px;
+    font-size: 16px;
     text-decoration: none;
 
     &__home {
       order: 0;
     }
-    &__contact {
+    &__about {
       order: 1;
     }
-    &__about {
-      order: 2;
-    }
     &__products {
+      order: 2;
+      text-align: justify;
+    }
+    &__cool_products {
       order: 3;
       text-align: justify;
+    }
+    &__contact {
+      order: 4;
     }
   }
 
@@ -140,7 +144,7 @@
   }
 }
 
-@media only screen and (min-device-width: 200px) and (max-device-width: 615px) {
+@media only screen and (min-device-width: 200px) and (max-device-width: 759px) {
   .nav-link {
     display: none;
   }

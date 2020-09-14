@@ -946,7 +946,7 @@ class index extends Component {
                 <div>
                   {" "}
                   {productsList}
-                  <a href="/general_products">
+                  <a className="more-products-a" href="/general_products">
                     <h2 className="product-select">More Products...</h2>
                   </a>
                 </div>

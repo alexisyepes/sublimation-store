@@ -93,22 +93,13 @@ export default class index extends Component {
     return (
       <nav className="nav-bar-container">
         <div className="logo">
-          {this.state.cart > 0 ? (
+          <a href="/">
             <img
-              onClick={this.checkCartHome}
               className="logo logo__navbar"
               src="./images/logo.png"
               alt="logo sub"
             />
-          ) : (
-            <a href="/">
-              <img
-                className="logo logo__navbar"
-                src="./images/logo.png"
-                alt="logo sub"
-              />
-            </a>
-          )}
+          </a>
         </div>
         <ul className="menu">
           <div className="hamburger">
@@ -118,197 +109,81 @@ export default class index extends Component {
           {/* Navbar */}
 
           <li className="nav-link nav-link__home">
-            {this.state.cart > 0 ? (
-              <div onClick={this.checkCartHome} className="links-home" href="/">
-                <i className="fas fa-home"></i>
-              </div>
-            ) : (
-              <a className="links-home" href="/">
-                <i className="fas fa-home"></i>
-              </a>
-            )}
+            <a className="links-home" href="/">
+              <i className="fas fa-home"></i>
+            </a>
           </li>
 
           <li className="nav-link nav-link__about">
-            {this.state.cart > 0 ? (
-              <div
-                onClick={this.checkCartAbout}
-                className="links-home"
-                href="/about"
-              >
-                About
-              </div>
-            ) : (
-              <a className="links-home" href="/about">
-                About
-              </a>
-            )}
+            <a className="links-home" href="/about">
+              About
+            </a>
           </li>
 
           <li className="nav-link nav-link__about">
-            {this.state.cart > 0 ? (
-              <div
-                onClick={this.checkCartAbout}
-                className="links-home"
-                href="/gallery"
-              >
-                Gallery
-              </div>
-            ) : (
-              <a className="links-home" href="/gallery">
-                Gallery
-              </a>
-            )}
+            <a className="links-home" href="/gallery">
+              Gallery
+            </a>
           </li>
 
           <li className="nav-link nav-link__products">
-            {this.state.cart > 0 ? (
-              <div
-                onClick={this.checkCartProducts}
-                className="links-home"
-                href="/products"
-              >
-                Create product
-              </div>
-            ) : (
-              <a
-                onClick={this.checkCartProducts}
-                className="links-home"
-                href="/products"
-              >
-                Create product
-              </a>
-            )}
+            <a
+              onClick={this.checkCartProducts}
+              className="links-home"
+              href="/products"
+            >
+              Custom Products
+            </a>
           </li>
 
           <li className="nav-link nav-link__general">
-            {this.state.cart > 0 ? (
-              <div
-                onClick={this.checkCartGeneralProducts}
-                className="links-home"
-                href="/general_products"
-              >
-                More...
-              </div>
-            ) : (
-              <a className="links-home" href="/general_products">
-                More...
-              </a>
-            )}
+            <a className="links-home" href="/general_products">
+              Cool Products
+            </a>
           </li>
 
           <li className="nav-link nav-link__contact">
-            {this.state.cart > 0 ? (
-              <div
-                onClick={this.checkCartContact}
-                className="links-home"
-                href="/contact"
-              >
-                Contact
-              </div>
-            ) : (
-              <a
-                onClick={this.checkCartContact}
-                className="links-home"
-                href="/contact"
-              >
-                Contact
-              </a>
-            )}
+            <a
+              onClick={this.checkCartContact}
+              className="links-home"
+              href="/contact"
+            >
+              Contact
+            </a>
           </li>
         </ul>
         {/* Sidebar */}
         {this.state.hamburger ? (
           <nav className="sidebar">
             <li className="nav-link-sidebar nav-link__home">
-              {this.state.cart > 0 ? (
-                <div
-                  onClick={this.checkCartHome}
-                  className="links-home"
-                  href="/"
-                >
-                  Home
-                </div>
-              ) : (
-                <a className="links-home" href="/">
-                  Home
-                </a>
-              )}
+              <a className="links-home" href="/">
+                Home
+              </a>
             </li>
             <li className="nav-link-sidebar nav-link__about">
-              {this.state.cart > 0 ? (
-                <div
-                  onClick={this.checkCartAbout}
-                  className="links-home"
-                  href="/about"
-                >
-                  About
-                </div>
-              ) : (
-                <a className="links-home" href="/about">
-                  About
-                </a>
-              )}
+              <a className="links-home" href="/about">
+                About
+              </a>
             </li>
             <li className="nav-link-sidebar nav-link__about">
-              {this.state.cart > 0 ? (
-                <div
-                  onClick={this.checkCartAbout}
-                  className="links-home"
-                  href="/gallery"
-                >
-                  Gallery
-                </div>
-              ) : (
-                <a className="links-home" href="/gallery">
-                  Gallery
-                </a>
-              )}
+              <a className="links-home" href="/gallery">
+                Gallery
+              </a>
             </li>
             <li className="nav-link-sidebar nav-link__products">
-              {this.state.cart > 0 ? (
-                <div
-                  onClick={this.checkCartProducts}
-                  className="links-home"
-                  href="/products"
-                >
-                  Create my product
-                </div>
-              ) : (
-                <a className="links-home" href="/products">
-                  Create my product
-                </a>
-              )}
+              <a className="links-home" href="/products">
+                Custom Products
+              </a>
             </li>
-            <li className="nav-link-sidebar nav-link__products">
-              {this.state.cart > 0 ? (
-                <div
-                  onClick={this.checkCartGeneralProducts}
-                  className="links-home"
-                  href="/general_products"
-                >
-                  More...
-                </div>
-              ) : (
-                <a className="links-home" href="/general_products">
-                  More...
-                </a>
-              )}
+            <li className="nav-link-sidebar nav-link__cool_products">
+              <a className="links-home" href="/general_products">
+                Cool Products
+              </a>
             </li>
             <li className="nav-link-sidebar nav-link__contact">
-              {this.state.cart > 0 ? (
-                <div
-                  onClick={this.checkCartContact}
-                  className="links-home"
-                  href="/contact"
-                >
-                  Contact
-                </div>
-              ) : (
-                <a className="links-home" href="/contact">
-                  Contact
-                </a>
-              )}
+              <a className="links-home" href="/contact">
+                Contact
+              </a>
             </li>
           </nav>
         ) : null}

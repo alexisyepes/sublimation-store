@@ -85,11 +85,11 @@ class index extends Component {
 
   render() {
     return (
-      <div>
+      <div className="main-container-generalProducts">
         <div className="shoppingCart-container">
           <ShoppingCart onRef={(ref) => (this.shoppingCartComponent = ref)} />
         </div>
-        <h1 className="text-center more-products__heading">More products</h1>
+        <h1 className="text-center more-products__heading">Special products</h1>
         <div className="products-general-wrapper">
           {this.props.products.products.data ? (
             this.props.products.products.data.map((product) => {
@@ -98,38 +98,38 @@ class index extends Component {
                   key={product._id}
                   className="product-general-products-container"
                 >
-                  <h2 className="text-center keychain-facemask-heading">
+                  <h2 className="text-center item-heading">
                     {product.productName}{" "}
                   </h2>
 
-                  <div className="keychain-facemask-img-container">
+                  <div className="item-img-container">
                     <img
-                      className="keychain-facemask-img"
+                      className="item-img"
                       src={product.images[0]}
-                      alt="keychain"
+                      alt="item"
                     />
                   </div>
-                  <div className="keychain-facemask-img-container__purse">
-                    <i className="zoomIcon fas fa-search-plus"></i>
+                  <div className="item-img-container__product1">
+                    {/* <i className="zoomIcon fas fa-search-plus"></i> */}
                     <img
-                      className="keychain-facemask-img__purse"
+                      className="item-img__product1"
                       src={product.images[1]}
-                      alt="keychain"
+                      alt="item"
                     />
-                    <p className="text-center article-not-included">
+                    {/* <p className="text-center article-not-included">
                       Purse not included
-                    </p>
+                    </p> */}
                   </div>
-                  <div className="keychain-facemask-img-container__backpack">
-                    <i className="zoomIcon__backpack fas fa-search-plus"></i>
+                  <div className="item-img-container__product2">
+                    {/* <i className="zoomIcon fas fa-search-plus"></i> */}
                     <img
-                      className="keychain-facemask-img__backpack"
+                      className="item-img__product2"
                       src={product.images[2]}
-                      alt="keychain"
+                      alt="item"
                     />{" "}
-                    <p className="text-center article-not-included">
+                    {/* <p className="text-center article-not-included">
                       Backpack not included
-                    </p>
+                    </p> */}
                   </div>
                   <div className="product-general-info-container">
                     <h4 className="text-center productGeneral-info-heading">
@@ -145,7 +145,7 @@ class index extends Component {
                       <strong>Price:</strong> ${product.price / 100}
                     </p>
                     {this.state.productBeingAdded === product.productName ? (
-                      <div className="qty-container">
+                      <div className="qty-container__general-products">
                         <h4 className="h2-qty">
                           QTY:
                           <div className="qty-symbols qty-symbols__number">

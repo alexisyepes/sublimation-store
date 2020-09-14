@@ -427,11 +427,10 @@ class index extends Component {
 
         {/* //modalToCheckout */}
         <Modal
-          // appElement={document.getElementById("root")}
-          // style={customStylesCheckout}
+          classNames={{
+            modal: "customModalCheckout",
+          }}
           open={this.state.modalToCheckout}
-          // className="ModalToCheckOut"
-          // overlayClassName="Overlay"
           onClose={this.closeModalCheckout}
           closeIcon={
             <span
@@ -595,7 +594,7 @@ class index extends Component {
           ) : (
             <div>
               <div className="cart-summary-container">
-                <h3 className="text-center">
+                <h3 className="text-center order_summary-modal-title">
                   Order Summary <i className="fas fa-cart-arrow-down"></i>
                 </h3>
                 <div className="contentInCart-mainWrapper">
