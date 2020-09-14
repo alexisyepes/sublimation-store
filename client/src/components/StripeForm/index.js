@@ -23,6 +23,7 @@ const Index = (props) => {
   // });
 
   const CheckoutForm = () => {
+    window.scrollTo(0, 0);
     const stripe = useStripe();
     const elements = useElements();
     const handleSubmitCheckoutForm = async (event) => {
@@ -200,7 +201,7 @@ const Index = (props) => {
       <h1 className="text-center payment-info-title">Checkout</h1>
       <hr />
       <div className="cart-summary-container">
-        <h3 className="text-center">Order Summary</h3>
+        <h3 className="text-center order-summary-title-modal">Order Summary</h3>
         {props.itemsInCartList}
         <p className="cart-info-parag">
           Subtotal: ${(props.subTotal / 100).toFixed(2)}

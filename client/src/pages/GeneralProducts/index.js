@@ -66,6 +66,7 @@ class index extends Component {
         let productToAddToCart = {
           _id: res.data._id,
           productName: res.data.productName,
+          productImage: res.data.images[0],
           price: res.data.price,
           qty: this.state.qty,
           subTotal: res.data.price * this.state.qty,

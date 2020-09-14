@@ -108,6 +108,10 @@
   }
 }
 
+// .step3-mainWrapper {
+//   width: 80%;
+// }
+
 .step-btn {
   outline: 0;
   border: none;
@@ -135,19 +139,26 @@
   }
 }
 
-.thumbs-up {
-  width: 80px;
-  margin: 10px auto;
+.product-created-modal-container {
+  background-color: black;
+  color: white;
+  padding: 40px;
+
+  .thumbs-up {
+    width: 80px;
+    margin: 10px auto;
+  }
 }
 
 .order-summary {
+  max-width: 500px;
   font-weight: 700;
   background-color: rgb(252, 252, 252);
   font-size: 20px;
   text-align: right;
   padding: 10px;
-  margin: 10px;
-  border: black solid 1px;
+  margin: 10px auto;
+  border: rgb(145, 144, 144) solid 1px;
   border-radius: 5px;
 
   .checkout-step3 {

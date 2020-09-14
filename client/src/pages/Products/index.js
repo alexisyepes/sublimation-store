@@ -4,7 +4,9 @@ import { Link } from "react-scroll";
 import Select from "react-select";
 import html2canvas from "html2canvas";
 import JSZip from "jszip";
-import Modal from "react-modal";
+// import Modal from "react-modal";
+import "react-responsive-modal/styles.css";
+import { Modal } from "react-responsive-modal";
 import Mugs from "../../components/Mugs";
 import Shirts from "../../components/Shirt";
 import Pillow from "../../components/Pillow";
@@ -116,22 +118,6 @@ let sizeShirtsOptionsKid = [
     label: "One size",
   },
 ];
-
-const customStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    backgroundColor: "black",
-    color: "white",
-    borderRadius: "10px",
-    width: "60%",
-  },
-  overlay: { zIndex: 10000 },
-};
 
 const selectColorOptions = [
   {
@@ -549,8 +535,8 @@ class index extends Component {
         // console.log(res);
 
         await html2canvas(document.getElementById("product-screen-container"), {
-          width: 1200,
-          height: 1400,
+          width: 1600,
+          height: 1600,
         }).then(async (canvas) => {
           // zip and convert
           var zip = new JSZip();
@@ -825,11 +811,9 @@ class index extends Component {
         cartContent.map((item) => {
           return (
             <div key={item._id} className="itemInCart-wrapper">
-              <p className="cart-info-parag">
-                Product Name: {item.productName}
-              </p>
-              <p className="cart-info-parag">Price: ${item.price / 100}</p>
-              <div>
+              <div className="itemInCart-wrapper_productInfo">
+                <p className="cart-info-parag">Item: {item.productName}</p>
+                <p className="cart-info-parag">Price: ${item.price / 100}</p>
                 <p className="cart-info-parag">
                   <span>Qty: {item.qty}</span>{" "}
                   <button
@@ -856,8 +840,14 @@ class index extends Component {
                   </button>
                 </p>
               </div>
-
-              <hr />
+              <div className="itemInCart-wrapper_image hide-element">
+                <img
+                  className="productImage"
+                  src={item.productImage}
+                  alt="product"
+                />
+              </div>
+              <hr className="hr__cart" />
             </div>
           );
         })
@@ -870,26 +860,35 @@ class index extends Component {
       products.length > 0 ? (
         products.map((product) => {
           return (
-            <h2
-              onClick={() => this.handleProductSelect(product._id)}
-              key={product._id}
-              className="product-select"
+            <Link
+              activeClass="active"
+              to="product-screen-container"
+              spy={true}
+              smooth={true}
+              offset={-70}
+              duration={500}
             >
-              {product._id === "5f59fad398979f54486e2b40" ? (
-                <i className="fas fa-coffee productList-icons"></i>
-              ) : product._id === "5f59fb2a98979f54486e2b41" ? (
-                <i className="fas fa-tshirt productList-icons"></i>
-              ) : product._id === "5f59fb3d98979f54486e2b42" ? (
-                <i className="fas fa-bone productList-icons"></i>
-              ) : product._id === "5f59fb4e98979f54486e2b43" ? (
-                <i className="fas fa-couch productList-icons"></i>
-              ) : product._id === "5f59fb6298979f54486e2b44" ? (
-                <i className="fas fa-wallet productList-icons"></i>
-              ) : product._id === "5f59fb8298979f54486e2b45" ? (
-                <i className="fas fa-smile-wink productList-icons"></i>
-              ) : null}
-              {product.productName} ${product.price / 100}
-            </h2>
+              <h2
+                onClick={() => this.handleProductSelect(product._id)}
+                key={product._id}
+                className="product-select"
+              >
+                {product._id === "5f59fad398979f54486e2b40" ? (
+                  <i className="fas fa-coffee productList-icons"></i>
+                ) : product._id === "5f59fb2a98979f54486e2b41" ? (
+                  <i className="fas fa-tshirt productList-icons"></i>
+                ) : product._id === "5f59fb3d98979f54486e2b42" ? (
+                  <i className="fas fa-bone productList-icons"></i>
+                ) : product._id === "5f59fb4e98979f54486e2b43" ? (
+                  <i className="fas fa-couch productList-icons"></i>
+                ) : product._id === "5f59fb6298979f54486e2b44" ? (
+                  <i className="fas fa-wallet productList-icons"></i>
+                ) : product._id === "5f59fb8298979f54486e2b45" ? (
+                  <i className="fas fa-smile-wink productList-icons"></i>
+                ) : null}
+                {product.productName} ${product.price / 100}
+              </h2>
+            </Link>
           );
         })
       ) : (
@@ -990,8 +989,14 @@ class index extends Component {
                     &#8659;
                   </h1>
                   <div className="order-summary text-center">
-                    <h4>Cart Summary</h4>
-                    {itemsInCartList}
+                    <h4>
+                      Cart Summary <i className="fas fa-cart-arrow-down"></i>
+                    </h4>
+                    <div className="cart-summary-container">
+                      <div className="contentInCart-mainWrapper">
+                        {itemsInCartList}
+                      </div>
+                    </div>
                     <button
                       className="checkout-step3"
                       onClick={this.openModalToCheckOutFromProducts}
@@ -1016,6 +1021,7 @@ class index extends Component {
                   {this.state.toggleSelectProductBtn ? (
                     <div>
                       <button
+                        id="buildProduct-btn"
                         onClick={this.productSelectedConfirmed}
                         className={
                           this.state.step2ActualProd === "pillow"
@@ -1404,23 +1410,27 @@ class index extends Component {
 
             {/* Modal Confirming creation of product */}
             <Modal
-              appElement={document.getElementById("root")}
-              style={customStyles}
-              isOpen={this.state.modalToConfirm}
-              onRequestClose={this.closeModal}
+              // appElement={document.getElementById("root")}
+              // style={customStyles}
+              open={this.state.modalToConfirm}
+              onClose={this.closeModal}
+              closeIcon={
+                <span className="x-close-modal-step3" onClick={this.closeModal}>
+                  X
+                </span>
+              }
             >
-              <span className="x-close-modal-step3" onClick={this.closeModal}>
-                X
-              </span>
-              <h2 className="text-center">
-                Your product has been created! <br />
-                <img
-                  className="thumbs-up"
-                  src="./images/thumbs-up.png"
-                  alt="thumbs up"
-                />
-                <br /> You can proceed to step 3
-              </h2>
+              <div className="product-created-modal-container">
+                <h2 className="text-center">
+                  Your product has been created! <br />
+                  <img
+                    className="thumbs-up"
+                    src="./images/thumbs-up.png"
+                    alt="thumbs up"
+                  />
+                  <br /> You can proceed to step 3
+                </h2>
+              </div>
             </Modal>
           </div>
         </div>

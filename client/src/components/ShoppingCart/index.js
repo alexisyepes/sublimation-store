@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import "./style.scss";
-import Modal from "react-modal";
+// import Modal from "react-modal";
+import "react-responsive-modal/styles.css";
+import { Modal } from "react-responsive-modal";
 import Select from "react-select";
 import CheckoutStripe from "../../components/StripeForm";
 import { connect } from "react-redux";
@@ -349,6 +351,8 @@ class index extends Component {
     }
     this.setState({
       showCheckout: !this.state.showCheckout,
+      errorMsg: "",
+      errorCoupon: "",
     });
   };
 
@@ -359,7 +363,7 @@ class index extends Component {
         cartContent.map((item) => {
           return (
             <div key={item._id} className="itemInCart-wrapper">
-              <div>
+              <div className="itemInCart-wrapper_productInfo">
                 <p className="cart-info-parag">
                   Product Name: {item.productName}
                 </p>
@@ -390,11 +394,13 @@ class index extends Component {
                   </button>
                 </p>
               </div>
-              <img
-                className="productImage"
-                src={item.productImage}
-                alt="product"
-              />
+              <div className="itemInCart-wrapper_image">
+                <img
+                  className="productImage"
+                  src={item.productImage}
+                  alt="product"
+                />
+              </div>
 
               <hr className="hr__cart" />
             </div>
@@ -421,16 +427,21 @@ class index extends Component {
 
         {/* //modalToCheckout */}
         <Modal
-          appElement={document.getElementById("root")}
+          // appElement={document.getElementById("root")}
           // style={customStylesCheckout}
-          isOpen={this.state.modalToCheckout}
-          className="ModalToCheckOut"
-          overlayClassName="Overlay"
+          open={this.state.modalToCheckout}
+          // className="ModalToCheckOut"
+          // overlayClassName="Overlay"
+          onClose={this.closeModalCheckout}
+          closeIcon={
+            <span
+              className="x-close-modal-step3"
+              onClick={this.closeModalCheckout}
+            >
+              X
+            </span>
+          }
         >
-          {" "}
-          <span className="x-close-modal" onClick={this.closeModalCheckout}>
-            X
-          </span>
           <button
             onClick={this.trashAllCartItems}
             className="empty-cart-button__checkout-modal"
@@ -535,7 +546,7 @@ class index extends Component {
                     <Select
                       className="shippingOptionsSelect"
                       isSearchable={false}
-                      menuPlacement="top"
+                      menuPlacement="bottom"
                       placeholder="Choose one"
                       options={shippingOptions}
                       onChange={this.onSelectedShipping}
