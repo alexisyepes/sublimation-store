@@ -64,7 +64,7 @@ class index extends Component {
           <p className="contactPage-paragraph">
             Have questions? A special request? <br /> Fill out the form and
             we'll get back to you as soon as we can. <br /> Or send us an email
-            to:{" "}
+            at:{" "}
             <a className="email" href="mailto:aypsublimation@gmail.com">
               aypsublimation@gmail.com{" "}
             </a>
