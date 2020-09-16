@@ -11,24 +11,17 @@
   grid-template-rows: 100px auto;
   column-gap: 10px;
 
-  // .shoppingCart-container {
-  //   position: absolute;
-  //   width: 100%;
-  //   top: 15%;
-  //   left: 0;
-  // }
-
   .primary-heading-contact {
     grid-column: 1 / 3;
   }
 
   .contact-form-container {
-    .contact-paragraph {
+    .contactPage-paragraph {
       text-align: center;
       color: rgb(0, 0, 0);
       margin-top: 20px;
       font-size: 24px;
-      font-family: "Passion One", cursive;
+      // font-family: "Passion One", cursive;
       .email {
         text-decoration: none;
       }
@@ -114,12 +107,25 @@
 }
 
 @media only screen and (min-device-width: 300px) and (max-device-width: 759px) {
+  .contact-container {
+    grid-template-rows: 50px auto auto auto;
+  }
+
   .office-contact {
     display: none !important;
   }
 
+  .primary-heading-contact {
+    font-size: 22px;
+  }
+
   .contact-form-container {
     grid-column: 1 / 3;
+  }
+
+  .contactPage-paragraph,
+  .contact-form-textArea {
+    font-size: 18px !important;
   }
 
   .phone-img {

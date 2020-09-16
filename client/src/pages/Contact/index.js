@@ -61,7 +61,7 @@ class index extends Component {
           Contact us <hr className="hr-home" />
         </h1>
         <div className="contact-form-container">
-          <p className="contact-paragraph">
+          <p className="contactPage-paragraph">
             Have questions? A special request? <br /> Fill out the form and
             we'll get back to you as soon as we can. <br /> Or send us an email
             to:{" "}
