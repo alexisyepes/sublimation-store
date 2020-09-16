@@ -861,6 +861,7 @@ class index extends Component {
         products.map((product) => {
           return (
             <Link
+              key={product._id}
               activeClass="active"
               to="product-screen-container"
               spy={true}
@@ -870,7 +871,6 @@ class index extends Component {
             >
               <h2
                 onClick={() => this.handleProductSelect(product._id)}
-                key={product._id}
                 className="product-select"
               >
                 {product._id === "5f59fad398979f54486e2b40" ? (

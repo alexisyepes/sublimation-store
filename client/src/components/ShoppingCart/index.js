@@ -342,6 +342,9 @@ class index extends Component {
     this.setState({
       qty: 1,
       subTotal: null,
+      total: 0,
+      tax: 0,
+      modalToCheckout: false,
     });
   };
 
