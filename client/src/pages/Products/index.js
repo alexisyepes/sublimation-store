@@ -12,6 +12,7 @@ import Shirts from "../../components/Shirt";
 import Pillow from "../../components/Pillow";
 import PetTagBone from "../../components/PetTagBone";
 import CosmeticBag from "../../components/CosmeticBag";
+// import PencilCase from "../../components/PencilCase";
 import FaceMaskHolder from "../../components/FaceMaskHolder";
 // import LoadingPage from "../../components/LoadPage";
 import axios from "axios";
@@ -184,6 +185,7 @@ class index extends Component {
         "./images/pet-tag-bone.png",
         "./images/cartera-front.png",
         "./images/wood-sign-face-mask.png",
+        // "./images/pencilCase.png",
       ],
       productImg: "",
       productImgBack: "",
@@ -225,6 +227,7 @@ class index extends Component {
       petTagBonePhone: "123456789",
       petTagBonePetName: "Elsa",
       boneColor: "blue",
+      // pencilCaseActive: false,
 
       //Avatars
       avatarsArray: [],
@@ -298,6 +301,7 @@ class index extends Component {
       textFormatOptionsForCosmeticBag: true,
       photoControlPetTagBone: true,
       faceMaskHolderChosen: true,
+      pencilCaseActive: true,
     });
   };
 
@@ -682,38 +686,10 @@ class index extends Component {
     this.setState({
       toggleStep3: this.props.cart.length > 0 ? true : false,
     });
-    // const subTotal =
-    //   this.props.cart.length > 0
-    //     ? this.props.cart.map((item) => item.subTotal).reduce((a, b) => a + b)
-    //     : 0;
-    // const tax = subTotal * 0.13;
-
-    // if (this.props.cart.length === 0) {
-    //   this.setState({
-    //     modalToCheckout: false,
-    //     billingDetails: false,
-    //     showCheckout: false,
-    //   });
-    // }
-    // this.setState({
-    //   subTotal: subTotal,
-    //   tax: subTotal * 0.13,
-    //   total: subTotal + tax,
-    // });
   };
 
   increaseQtyInCart = ({ currentTarget }) => {
     this.props.increaseQtyInCart(currentTarget.value);
-    // const subTotal = this.props.cart
-    //   .map((item) => item.subTotal)
-    //   .reduce((a, b) => a + b);
-    // const tax = subTotal * 0.13;
-
-    // this.setState({
-    //   subTotal: subTotal,
-    //   tax: subTotal * 0.13,
-    //   total: subTotal + tax,
-    // });
   };
 
   decreaseQtyInCart = ({ currentTarget }) => {
@@ -725,17 +701,6 @@ class index extends Component {
       return;
     }
     this.props.decreaseQtyInCart(currentTarget.value);
-    // this.props.getCart();
-    // const subTotal = this.props.cart
-    //   .map((item) => item.subTotal)
-    //   .reduce((a, b) => a + b);
-    // const tax = subTotal * 0.13;
-
-    // this.setState({
-    //   subTotal: subTotal,
-    //   tax: subTotal * 0.13,
-    //   total: subTotal + tax,
-    // });
   };
 
   handleProductSelect = async (id) => {
@@ -802,6 +767,16 @@ class index extends Component {
         step2: true,
       });
     }
+
+    // //Pencil Case
+    // if (id === "5f6342c8ae7b0c021249076a") {
+    //   await this.setState({
+    //     step2ActualProd: "pencilCase",
+    //     productImgPencilCase: this.state.productImgArray[6],
+    //     productImg: "",
+    //     step2: true,
+    //   });
+    // }
   };
 
   render() {
@@ -885,7 +860,10 @@ class index extends Component {
                   <i className="fas fa-wallet productList-icons"></i>
                 ) : product._id === "5f59fb8298979f54486e2b45" ? (
                   <i className="fas fa-smile-wink productList-icons"></i>
-                ) : null}
+                ) : null}{" "}
+                {/* ) : product._id === "5f6342c8ae7b0c021249076a" ? (
+                  <i className="fas fa-pencil-alt productList-icons"></i>
+                ) : null}{" "} */}
                 {product.productName} ${product.price / 100}
               </h2>
             </Link>
@@ -1142,6 +1120,14 @@ class index extends Component {
                       />
                     </div>
                   ) : null}
+                  {/* {this.state.step2ActualProd === "pencilCase" ? (
+                    <div>
+                      <PencilCase
+                        img={this.state.productImgPencilCase}
+                        pencilCaseActive={this.state.pencilCaseActive}
+                      />
+                    </div>
+                  ) : null} */}
                 </div>
               </div>
             ) : (
@@ -1234,7 +1220,8 @@ class index extends Component {
                       ) : null}
                     </div>
 
-                    {this.state.step2ActualProd !== "faceMaskHolder" ? (
+                    {this.state.step2ActualProd !== "faceMaskHolder" &&
+                    this.state.step2ActualProd !== "pencilCase" ? (
                       <div className="upload-photo-parent">
                         <h2
                           onClick={() => {
@@ -1326,7 +1313,8 @@ class index extends Component {
                       </div>
                     ) : null}
                     {this.state.imagePreviewUrl.length > 0 ||
-                    this.state.textOnMugs !== "" ? (
+                    this.state.textOnMugs !== "" ||
+                    this.state.pencilCaseActive ? (
                       <div className="continue-button-container">
                         <p className="agree-with-order">
                           <input
@@ -1399,6 +1387,15 @@ class index extends Component {
                                 Click here if you're done &#10003;
                               </button>
                             ) : null}
+                            {/* ) : this.state.step2ActualProd === "pencilCase" ? (
+                              <button
+                                value="5f6342c8ae7b0c021249076a"
+                                onClick={this.addProductToCart}
+                                className="continue-button"
+                              >
+                                Click here when product is ready &#10003;
+                              </button>
+                            ) : null} */}
                           </Link>
                         )}
                       </div>
