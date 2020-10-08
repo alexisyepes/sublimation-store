@@ -850,9 +850,9 @@ class index extends Component {
               >
                 {product._id === "5f59fad398979f54486e2b40" ? (
                   <i className="fas fa-coffee productList-icons"></i>
-                ) : product._id === "5f59fb2a98979f54486e2b41" ? (
-                  <i className="fas fa-tshirt productList-icons"></i>
                 ) : product._id === "5f59fb3d98979f54486e2b42" ? (
+                  <i className="fas fa-tshirt productList-icons"></i>
+                ) : product._id === "5f59fb2a98979f54486e2b41" ? (
                   <i className="fas fa-bone productList-icons"></i>
                 ) : product._id === "5f59fb4e98979f54486e2b43" ? (
                   <i className="fas fa-couch productList-icons"></i>
