@@ -10,49 +10,11 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import "./SCSS/Main.scss";
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      cart: 0,
-      qty: 1,
-    };
-  }
-
-  setCartToZero = () => {
-    this.setState({
-      cart: 0,
-    });
-  };
-
-  setQtyToOne = () => {
-    this.setState({
-      qty: 1,
-    });
-  };
-
-  updateCartNumberAfterRemovingProduct = (qtyToRemove) => {
-    this.setState({
-      cart: this.state.cart - qtyToRemove,
-    });
-  };
-
-  setCartToNewQty = () => {
-    this.setState({
-      cart: this.state.cart + this.state.qty,
-    });
-  };
-
-  setCartToPrevQty = () => {
-    this.setState({
-      cart: this.state.cart - this.state.qty,
-    });
-  };
-
   render() {
     return (
       <Router>
         <div className="App">
-          <Navbar cart={this.state.cart} />
+          <Navbar />
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/about" component={About} />
@@ -62,22 +24,7 @@ class App extends Component {
               path="/general_products"
               render={() => <GeneralProducts />}
             />
-            <Route
-              exact
-              path="/products"
-              render={() => (
-                <Products
-                  resetCart={this.setCartToZero}
-                  resetQty={this.setQtyToOne}
-                  updateCart={this.setCartToNewQty}
-                  updateCartToPrevQty={this.setCartToPrevQty}
-                  cart={this.state.cart}
-                  qty={this.state.qty}
-                  increaseQty={this.increaseQty}
-                  decreaseQty={this.decreaseQty}
-                />
-              )}
-            />
+            <Route exact path="/products" render={() => <Products />} />
             <Route exact path="/contact" component={Contact} />
           </Switch>
           <Footer />
